@@ -18,6 +18,9 @@ Last updated on November 1st, 2023
 |Google Palm (*text-bison--001*)|87.9 %|12.1 %|36.2|92.4 %|
 |Google Palm-Chat (*chat-bison-001*)|72.8 %|27.2 %|221.1|88.8 %|
 
+## API Details
+For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, and ```gpt-4``` for GPT4. For the Cohere models, we used the ```/generate``` endpoint for *Cohere*, and ```/chat``` for *Cohere-Chat*. 
+
 **TODO**
 * Link to Github model. Replicate instructions on how to use model
 * Describe each llm version used above.
