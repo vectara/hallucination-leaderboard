@@ -15,8 +15,8 @@ Last updated on November 1st, 2023
 |Cohere|91.5 %|8.5 %|59.8|99.8 %|
 |Anthropic Claude 2|91.5 %|8.5 %|87.5|99.3 %|
 |Mistral 7B|90.6 %|9.4 %|96.1|98.7 %|
-|Google Palm (text-bison--001)|87.9 %|12.1 %|36.2|92.4 %|
-|Google Palm-Chat (chat-bison-001)|72.8 %|27.2 %|221.1|88.8 %|
+|Google Palm (*text-bison--001*)|87.9 %|12.1 %|36.2|92.4 %|
+|Google Palm-Chat (*chat-bison-001*)|72.8 %|27.2 %|221.1|88.8 %|
 
 **TODO**
 * Link to Github model. Replicate instructions on how to use model
