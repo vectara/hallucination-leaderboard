@@ -1,6 +1,6 @@
 # Hallucination Leaderboard
 
-Public LLM leaderboard computed using our Hallucination Evaluation Model. We plan to update this monthly, or sooner when appropriate.
+Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. We plan to update this monthly, or sooner when appropriate.
 
 Last updated on November 1st, 2023
 
@@ -19,7 +19,7 @@ Last updated on November 1st, 2023
 |Google Palm-Chat|72.8 % |27.2 % |88.8 % |221.1|
 
 ## Methodology
-To determine this leaderboard, we trained a model to detect hallucinations in LLM outputs, using open source datasets from the factual consistency research in summarization models. Using a model that is competitive with the best State of the Art models, we then fed 1000 short documents to each of the models above via their APIs and asked them to summarize each short document, using only facts presented in the document. Of these 1000 documents, only 821 document were summarized by every model, with some models refusing to summarize some documents based on their content. Using these 821 documents, we then computed an accuracy (no hallucinations) and a hallucination rate (100 - accuracy) for each model. The rate at which each model refuses to respond to the prompt is detailed in the 'Answer Rate' column.
+To determine this leaderboard, we trained a model to detect hallucinations in LLM outputs, using open source datasets from the factual consistency research in summarization models. Using a model that is competitive with the best State of the Art models, we then fed 1000 short documents to each of the models above via their APIs and asked them to summarize each short document, using only facts presented in the document. Of these 1000 documents, only 821 document were summarized by every model, with some models refusing to summarize some documents based on their content. Using these 821 documents, we then computed an accuracy (no hallucinations) and a hallucination rate (100 - accuracy) for each model. The rate at which each model refuses to respond to the prompt is detailed in the 'Answer Rate' column. We evaluate summarization accuracy instead of overall factual accuracy as it allows us to compare the model's response to the provided information. This is impossible to do for ad hoc questions as it's not known precisely what data each LLM is trained on. In addition, having a model that can determine whether any response is hallucinated without a reference source requires solving the hallucination problem and training a model as large or larger than these LLMs being evaluated. So looking at hallucination accuracy at the summarization task is a good analogue to determine how truthful the models are overall. In addition, LLMs are increasingly used in RAG (Retrieval Augmented Generation) pipelines to answer user queries, such as in Bing Chat and Google's chat integration. In a RAG system, the model is being deployed as a summarizer of the search results, so this leaderboard is also a good indicator for the accuracy of the models when used in RAG systems.
 
 ## API Details
 For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, and ```gpt-4``` for GPT4. For the 3 Llama models, we used the Anyscale hosted endpoints for each model. For the Cohere models, we used the ```/generate``` endpoint for *Cohere*, and ```/chat``` for *Cohere-Chat*. For Anthropic, we used the largest ```claude 2``` model they offer through their API. For the Miustral 7B model, we used the  [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model, hosted via Hugging Face's API. For Google Palm we used the ```text-bison-001``` model, and for Google Palm Chat we used ```chat-bison-001```.
@@ -27,4 +27,5 @@ For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, and ```gpt-
 **TODO**
 * Link to Github model. Replicate my HF instructions on how to use model
 * Links to the 2 blog posts.
+* Add in Citation Accuracy (or mention it's coming soon).
 
