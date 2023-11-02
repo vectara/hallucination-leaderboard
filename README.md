@@ -37,7 +37,5 @@ When calling the API, the &lt;PASSAGE&gt; token was then replaced with the sourc
 ## API Details
 For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, and ```gpt-4``` for GPT4. For the 3 Llama models, we used the Anyscale hosted endpoints for each model. For the Cohere models, we used the ```/generate``` endpoint for *Cohere*, and ```/chat``` for *Cohere-Chat*. For Anthropic, we used the largest ```claude 2``` model they offer through their API. For the Miustral 7B model, we used the  [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model, hosted via Hugging Face's API. For Google Palm we used the ```text-bison-001``` model, and for Google Palm Chat we used ```chat-bison-001```.
 
-**TODO**
-* Links to the 2 blog posts.
-* Add in Citation Accuracy (or mention it's coming soon).
-
+## Coming Soon
+We will also be adding a leaderboard on citation accuracy. As a builder of RAG systems, we have noticed that LLMs tend to mis-attribute sources sometimes when answering a question based on supplied search results. We'd like to be able to measure this so we can help mitigate it within our platform.
