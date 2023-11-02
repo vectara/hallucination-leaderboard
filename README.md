@@ -27,7 +27,7 @@ We evaluate summarization accuracy instead of overall factual accuracy because i
 For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, and ```gpt-4``` for GPT4. For the 3 Llama models, we used the Anyscale hosted endpoints for each model. For the Cohere models, we used the ```/generate``` endpoint for *Cohere*, and ```/chat``` for *Cohere-Chat*. For Anthropic, we used the largest ```claude 2``` model they offer through their API. For the Miustral 7B model, we used the  [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model, hosted via Hugging Face's API. For Google Palm we used the ```text-bison-001``` model, and for Google Palm Chat we used ```chat-bison-001```.
 
 **TODO**
-* Link to Github model. Replicate my HF instructions on how to use model
+* Link to HF model. Replicate my HF instructions on how to use model
 * Links to the 2 blog posts.
 * Add in Citation Accuracy (or mention it's coming soon).
 
