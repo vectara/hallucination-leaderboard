@@ -1,6 +1,6 @@
 # Hallucination Leaderboard
 
-Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. We plan to update this monthly, or sooner when appropriate.
+Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. We plan to update this regularly as our model and the LLMs get updated over time.
 
 Last updated on November 1st, 2023
 
