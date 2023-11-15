@@ -25,6 +25,8 @@ You can find the model used to compute this leaderboard open sourced for commerc
 See [leaderboard-summaries.csv](https://github.com/vectara/hallucination-leaderboard/blob/main/leaderboard_summaries.csv) for the generated summaries we used to evaluate the models with.
 
 ## Methodology
+For a detailed explanation of the work that went into this model please refer to our blog post on the release: [Cut the Bull…. Detecting Hallucinations in Large Language Models](https://vectara.com/cut-the-bull-detecting-hallucinations-in-large-language-models/).
+
 To determine this leaderboard, we trained a model to detect hallucinations in LLM outputs, using various open source datasets from the factual consistency research into summarization models. Using a model that is competitive with the best state of the art models, we then fed 1000 short documents to each of the LLMs above via their public APIs and asked them to summarize each short document, using only the facts presented in the document. Of these 1000 documents, only 831 document were summarized by every model, the remaining documents were rejected by at least one model due to content restrictions. Using these 831 documents, we then computed the overall accuracy (no hallucinations) and hallucination rate (100 - accuracy) for each model. The rate at which each model refuses to respond to the prompt is detailed in the 'Answer Rate' column. None of the content sent to the models contained illicit or 'not safe for work' content but the present of trigger words was enough to trigger some of the content filters. The documents were taken primarily from the [CNN / Daily Mail Corpus](https://huggingface.co/datasets/cnn_dailymail/viewer/1.0.0/test). 
 
 We evaluate summarization accuracy instead of overall factual accuracy because it allows us to compare the model's response to the provided information. In other words, is the summary provided 'factualy consistent' with the source document. Determining halucinations is impossible to do for any ad hoc question as it's not known precisely what data every LLM is trained on. In addition, having a model that can determine whether any response was hallucinated without a reference source requires solving the hallucination problem and presumably training a model as large or larger than these LLMs being evaluated. So we instead chose to look at the hallucination rate within the summarization task as this is a good analogue to determine how truthful the models are overall. In addition, LLMs are increasingly used in RAG (Retrieval Augmented Generation) pipelines to answer user queries, such as in Bing Chat and Google's chat integration. In a RAG system, the model is being deployed as a summarizer of the search results, so this leaderboard is also a good indicator for the accuracy of the models when used in RAG systems.
@@ -46,6 +48,12 @@ For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, and ```gpt-
 
 * **Qu.** What about xAI's Grok LLM?
 * **Answer** Currently (as of 11/14/2023) Grok is not publicly available and we do not have access. Those with early access I suspect are probably legally forbidden from doing this sort of evaluation on the model. Once the model is available via a public API we will look to add it, along with any other LLMs that are popular enough.
+
+* **Qu..** Can't a model just score a 100% by providing either no answers or very short answers?
+* **Answer** We explicitly filtered out such responses from every model, doing the final evaluation only on documents that all models provided a summary for. You can find out more technical details in our [blog post]([https://vectara.com/cut-the-bull-detecting-hallucinations-in-large-language-models/) on the topic.
+
+* **Qu.** Wouldn't an extractive summarizer model that just copies and pastes from the original summary score 100% (0 hallucination) on this task?
+* **Answer** Absolutely as by definition such a model would have no hallucinations and provide a faithful summary. We do not claim to be evaluating summarization quality, that is a separate and **orthogonal** task, and should be evaluated separately. We are **not** evaluating the quality of the summaries, only the **factual consistency** of them, as we point out in the blog post.
 
 ## Coming Soon
 * GPT4 Turbo results
