@@ -7,7 +7,8 @@ Last updated on November 1st, 2023
 |Model|Accuracy|Hallucination Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
 |GPT 4|97.0 %|3.0 %|100.0 %|81.1|
-|GPT 3.5|96.5 %|3.5 %|99.6 %|84.1|
+|GPT 4 Turbo|97.0 %|3.0 %|100.0 %|94.3|
+|GPT 3.5 Turbo|96.5 %|3.5 %|99.6 %|84.1|
 |Llama 2 70B|94.9 %|5.1 %|99.9 %|84.9|
 |Llama 2 7B|94.4 %|5.6 %|99.6 %|119.9|
 |Llama 2 13B|94.1 %|5.9 %|99.8 %|82.1|
@@ -17,6 +18,8 @@ Last updated on November 1st, 2023
 |Mistral 7B |90.6 % |9.4 % |98.7 % |96.1 |
 |Google Palm|87.9 % |12.1 % |92.4 % |36.2|
 |Google Palm-Chat|72.8 % |27.2 % |88.8 % |221.1|
+
+**Note** on GPT4 Turbo. While the above figures show it to be comparable to GPT4, this is due to us filtering out some documents that some of the models refuse to summarize. When comparing to GPT 4 on all summaries (both GPT4 models summarize all summaries) the turbo model is around 0.3% worse than GPT4, but still better than GPT 3.5 Turbo.
 
 ## Model
 You can find the model used to compute this leaderboard open sourced for commercial use on hugging face: https://huggingface.co/vectara/hallucination_evaluation_model along with instructions how to use the model.
@@ -37,7 +40,7 @@ We evaluate summarization accuracy instead of overall factual accuracy because i
 When calling the API, the &lt;PASSAGE&gt; token was then replaced with the source document (see the 'source' column in [leaderboard-summaries.csv](https://github.com/vectara/hallucination-leaderboard/blob/main/leaderboard_summaries.csv) ). 
 
 ## API Details
-For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, and ```gpt-4``` for GPT4, and we used the ```ChatCompletion``` endpoint from the python client library. For the 3 Llama models, we used the Anyscale hosted endpoints for each model. For the Cohere models, we used their ```/generate``` endpoint for *Cohere*, and ```/chat``` for *Cohere-Chat*. For Anthropic, we used the largest ```claude 2``` model they offer through their API. For the Miustral 7B model, we used the  [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model, hosted via Hugging Face's API. For Google Palm we used the ```text-bison-001``` model, and for Google Palm Chat we used ```chat-bison-001```.
+For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, ```gpt-4``` for GPT4, '''gpt-4-1106-preview''' for GPT 4 Turbo (as per open AI's docs) and we used the ```chat.completions.create``` endpoint from the python client library. For the 3 Llama models, we used the Anyscale hosted endpoints for each model. For the Cohere models, we used their ```/generate``` endpoint for *Cohere*, and ```/chat``` for *Cohere-Chat*. For Anthropic, we used the largest ```claude 2``` model they offer through their API. For the Miustral 7B model, we used the  [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model, hosted via Hugging Face's API. For Google Palm we used the ```text-bison-001``` model, and for Google Palm Chat we used ```chat-bison-001```.
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
