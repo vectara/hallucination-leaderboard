@@ -53,7 +53,7 @@ For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, and ```gpt-
 * **Answer** We explicitly filtered out such responses from every model, doing the final evaluation only on documents that all models provided a summary for. You can find out more technical details in our [blog post]([https://vectara.com/cut-the-bull-detecting-hallucinations-in-large-language-models/) on the topic.
 
 * **Qu.** Wouldn't an extractive summarizer model that just copies and pastes from the original summary score 100% (0 hallucination) on this task?
-* **Answer** Absolutely as by definition such a model would have no hallucinations and provide a faithful summary. We do not claim to be evaluating summarization quality, that is a separate and **orthogonal** task, and should be evaluated separately. We are **not** evaluating the quality of the summaries, only the **factual consistency** of them, as we point out in the blog post.
+* **Answer** Absolutely as by definition such a model would have no hallucinations and provide a faithful summary. We do not claim to be evaluating summarization quality, that is a separate and **orthogonal** task, and should be evaluated independently. We are **not** evaluating the quality of the summaries, only the **factual consistency** of them, as we point out in the blog post.
 
 ## Coming Soon
 * GPT4 Turbo results
