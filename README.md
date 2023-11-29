@@ -27,7 +27,7 @@ Last updated on November 1st, 2023
       <img src="img/candle.png" width="50" height="50">
     </td>
     <td style="text-align: left; vertical-align: middle; border: none;">
-      In loving memory of <a href="https://www.ivinsfuneralhome.com/obituaries/Simon-Mark-Hughes?obId=30000023">Simon Mark Hughes...</a>
+      In loving memory of <a href="https://www.ivinsfuneralhome.com/obituaries/Simon-Mark-Hughes?obId=30000023">Simon Mark Hughes</a>...
     </td>
   </tr>
 </table>
