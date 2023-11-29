@@ -21,6 +21,17 @@ Last updated on November 1st, 2023
 
 **Note** on GPT4 Turbo. While the above figures show it to be comparable to GPT4, this is due to us filtering out some documents that some of the models refuse to summarize. When comparing to GPT 4 on all summaries (both GPT4 models summarize all documents) the turbo model is around 0.3% worse than GPT4, but still better than GPT 3.5 Turbo.
 
+<table>
+  <tr>
+    <td style="text-align: center; vertical-align: middle;">
+      <img src="img/candle.png" width="50" height="50">
+    </td>
+    <td style="text-align: left; vertical-align: middle;">
+      In loving memory of Simon Mark Hughes...
+    </td>
+  </tr>
+</table>
+
 ## Model
 You can find the model used to compute this leaderboard open sourced for commercial use on hugging face: https://huggingface.co/vectara/hallucination_evaluation_model along with instructions how to use the model.
 
