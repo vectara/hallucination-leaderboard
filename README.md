@@ -2,7 +2,7 @@
 
 Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. This evaluates how often an LLM introduces hallucinations when summarizing a document. We plan to update this regularly as our model and the LLMs get updated over time.
 
-Last updated on November 1st, 2023
+Last updated on November 29th, 2023
 
 |Model|Accuracy|Hallucination Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
