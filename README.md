@@ -15,7 +15,9 @@ Last updated on November 1st, 2023
 |Cohere-Chat|92.5 %|7.5 %|98.0 %|74.4|
 |Cohere |91.5 % |8.5 % |99.8 % |59.8 |
 |Anthropic Claude 2 |91.5 % |8.5 % |99.3 % |87.5 |
+|Google Palm 2 (beta) |91.4 % |8.6 % |99.8 % |86.6 |
 |Mistral 7B |90.6 % |9.4 % |98.7 % |96.1 |
+|Google Palm 2 Chat (beta) |90.0 % |10.0 % |100.0 % |66.2 |
 |Google Palm 2|87.9 % |12.1 % |92.4 % |36.2|
 |Google Palm 2 Chat|72.8 % |27.2 % |88.8 % |221.1|
 
@@ -50,7 +52,7 @@ We evaluate summarization accuracy instead of overall factual accuracy because i
 When calling the API, the &lt;PASSAGE&gt; token was then replaced with the source document (see the 'source' column in [leaderboard-summaries.csv](https://github.com/vectara/hallucination-leaderboard/blob/main/leaderboard_summaries.csv) ). 
 
 ## API Details
-For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, ```gpt-4``` for GPT4, '''gpt-4-1106-preview''' for GPT 4 Turbo (as per open AI's docs) and we used the ```chat.completions.create``` endpoint from the python client library. For the 3 Llama models, we used the Anyscale hosted endpoints for each model. For the Cohere models, we used their ```/generate``` endpoint for *Cohere*, and ```/chat``` for *Cohere-Chat*. For Anthropic, we used the largest ```claude 2``` model they offer through their API. For the Miustral 7B model, we used the  [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model, hosted via Hugging Face's API. For Google Palm 2 we used the ```text-bison-001``` model, and for Google Palm 2 Chat we used ```chat-bison-001```.
+For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, ```gpt-4``` for GPT4, '''gpt-4-1106-preview''' for GPT 4 Turbo (as per open AI's docs) and we used the ```chat.completions.create``` endpoint from the python client library. For the 3 Llama models, we used the Anyscale hosted endpoints for each model. For the Cohere models, we used their ```/generate``` endpoint for *Cohere*, and ```/chat``` for *Cohere-Chat*. For Anthropic, we used the largest ```claude 2``` model they offer through their API. For the Mistral 7B model, we used the  [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model, hosted via Hugging Face's API. For Google Palm 2 we used the ```text-bison-001``` model, and for Google Palm 2 Chat we used ```chat-bison-001```. For Google Palm 2 (beta) and Google Palm 2-chat (beta), we used ```text-bison``` and ```chat-bison```, respectively, using Vertex AI API (https://cloud.google.com/vertex-ai?hl=en). 
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
