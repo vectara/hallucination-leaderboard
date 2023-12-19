@@ -2,13 +2,14 @@
 
 Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. This evaluates how often an LLM introduces hallucinations when summarizing a document. We plan to update this regularly as our model and the LLMs get updated over time.
 
-Last updated on November 29th, 2023
+Last updated on December 18th, 2023
 
 |Model|Accuracy|Hallucination Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
 |GPT 4|97.0 %|3.0 %|100.0 %|81.1|
 |GPT 4 Turbo|97.0 %|3.0 %|100.0 %|94.3|
 |GPT 3.5 Turbo|96.5 %|3.5 %|99.6 %|84.1|
+|Google Gemini Pro|95.2 %|4.8 %|98.4 %|89.5|
 |Llama 2 70B|94.9 %|5.1 %|99.9 %|84.9|
 |Llama 2 7B|94.4 %|5.6 %|99.6 %|119.9|
 |Llama 2 13B|94.1 %|5.9 %|99.8 %|82.1|
@@ -16,6 +17,7 @@ Last updated on November 29th, 2023
 |Cohere |91.5 % |8.5 % |99.8 % |59.8 |
 |Anthropic Claude 2 |91.5 % |8.5 % |99.3 % |87.5 |
 |Google Palm 2 (beta) |91.4 % |8.6 % |99.8 % |86.6 |
+|Mixtral 8x7B |90.7 % |9.3 % |99.9 % |90.7 |
 |Mistral 7B |90.6 % |9.4 % |98.7 % |96.1 |
 |Google Palm 2 Chat (beta) |90.0 % |10.0 % |100.0 % |66.2 |
 |Google Palm 2|87.9 % |12.1 % |92.4 % |36.2|
@@ -62,8 +64,35 @@ We evaluate summarization accuracy instead of overall factual accuracy because i
 
 When calling the API, the &lt;PASSAGE&gt; token was then replaced with the source document (see the 'source' column in [leaderboard-summaries.csv](https://github.com/vectara/hallucination-leaderboard/blob/main/leaderboard_summaries.csv) ). 
 
-## API Details
-For GPT 3.5 we used the model name ```gpt-3.5-turbo``` in their API, ```gpt-4``` for GPT4, ```gpt-4-1106-preview``` for GPT 4 Turbo (as per open AI's docs) and we used the ```chat.completions.create``` endpoint from the python client library. For the 3 Llama models, different in model size (7B, 13B, and 70B), we used the Anyscale hosted endpoints for each model. For Cohere, we used their model called ```command``` and ```/generate``` endpoint for *Cohere*, and ```/chat``` for *Cohere-Chat*. For Anthropic, we used the largest ```claude 2``` model they offer through their API. For the Mistral 7B model, we used the  [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model, hosted via Hugging Face's API. For Google Palm 2 we used the ```text-bison-001``` model, and for Google Palm 2 Chat we used ```chat-bison-001```. For Google Palm 2 (beta) and Google Palm 2-chat (beta), we used ```text-bison``` and ```chat-bison```, respectively, via Vertex AI API. For detailed information on each model identifier and version, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versionin). 
+## API Integration Details
+Below is a detailed overview of the models integrated and their specific endpoints:
+
+### OpenAI Models
+- **GPT-3.5**: Accessed using the model name `gpt-3.5-turbo` through OpenAI's Python client library, specifically via the `chat.completions.create` endpoint.
+- **GPT-4**: Integrated with the model identifier `gpt-4`.
+- **GPT-4 Turbo**: Utilized under the model name `gpt-4-1106-preview`, in line with OpenAI's documentation.
+
+### Llama Models via Anyscale
+- **Llama 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints, tailored to each model's capacity.
+
+### Cohere Models
+- **Cohere Command**: Employed using the model `command` and the `/generate` endpoint.
+- **Cohere-Chat**: Integrated through the `/chat` endpoint for enhanced conversational capabilities.
+
+### Anthropic Model
+- **Claude 2**: The largest model offered by Anthropic, `claude 2`, is integrated via their API. 
+
+### Mistral AI Models on Hugging Face
+- **Mistral 7B**: The [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model is integrated using Hugging Face's API.
+- **Mixtral 8x7B**: Similarly, the [Mixtral-8x7B-Instruct-v0.1](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1) model is accessed via Hugging Face's API.
+
+### Google Palm Models via Vertex AI
+- **Google Palm 2 and Google Palm 2 Chat**: Implemented using the `text-bison-001` and `chat-bison-001` models, respectively.
+- **Google Palm 2 (Beta) and Google Palm 2-Chat (Beta)**: Utilized with the model identifiers `text-bison` and `chat-bison`.
+- **Gemini Pro**: Google's `gemini-pro` model is incorporated for enhanced language processing, accessible on Vertex AI.
+
+For an in-depth understanding of each model's version and lifecycle, especially those offered by Google, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versioning) on Vertex AI.
+
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
