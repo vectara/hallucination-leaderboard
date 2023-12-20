@@ -2,7 +2,7 @@
 
 Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. This evaluates how often an LLM introduces hallucinations when summarizing a document. We plan to update this regularly as our model and the LLMs get updated over time.
 
-Last updated on December 18th, 2023
+Last updated on December 19th, 2023
 
 |Model|Accuracy|Hallucination Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -18,6 +18,7 @@ Last updated on December 18th, 2023
 |Anthropic Claude 2 |91.5 % |8.5 % |99.3 % |87.5 |
 |Google Palm 2 (beta) |91.4 % |8.6 % |99.8 % |86.6 |
 |Mixtral 8x7B |90.7 % |9.3 % |99.9 % |90.7 |
+|Amazon Titan Express |90.6 % |9.4 % |99.5 % |98.4 |
 |Mistral 7B |90.6 % |9.4 % |98.7 % |96.1 |
 |Google Palm 2 Chat (beta) |90.0 % |10.0 % |100.0 % |66.2 |
 |Google Palm 2|87.9 % |12.1 % |92.4 % |36.2|
@@ -92,6 +93,9 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **Gemini Pro**: Google's `gemini-pro` model is incorporated for enhanced language processing, accessible on Vertex AI.
 
 For an in-depth understanding of each model's version and lifecycle, especially those offered by Google, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versioning) on Vertex AI.
+
+### Titan Models on Amazon Bedrock
+- **Amazon Titan Express**: The [model](https://aws.amazon.com/bedrock/titan/) is accessed on Amazon Bedrock with model identifier of `amazon.titan-text-express-v1`.
 
 
 ## Frequently Asked Questions
