@@ -1,0 +1,30 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Vectara Hallucination Leaderboard
+message: >-
+  If you use this dataset, please cite it using the metadata
+  from this file.
+type: dataset
+authors:
+  - email: simon@vectara.com
+    given-names: Simon
+    family-names: Hughes
+  - given-names: Minseok
+    family-names: Bae
+    email: minseok@vectara.com
+repository-code: 'https://github.com/vectara/hallucination-leaderboard'
+url: >-
+  https://github.com/vectara/hallucination-leaderboard/blob/main/README.md
+abstract: >-
+  A leaderboard comparing LLM performance at maintaining
+  factual consistency when summarizing a set of facts.
+keywords:
+  - nlp
+  - llm
+  - hallucination
+  - nli
+  - machine learning
+license: Apache-2.0
+date-released: '2023-11-01'
