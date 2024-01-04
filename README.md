@@ -2,27 +2,29 @@
 
 Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. This evaluates how often an LLM introduces hallucinations when summarizing a document. We plan to update this regularly as our model and the LLMs get updated over time.
 
-Last updated on December 19th, 2023
+Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
+Last updated on January 4th, 2024
 
-|Model|Accuracy|Hallucination Rate|Answer Rate|Average Summary Length (Words)|
+|Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
-|GPT 4|97.0 %|3.0 %|100.0 %|81.1|
-|GPT 4 Turbo|97.0 %|3.0 %|100.0 %|94.3|
-|GPT 3.5 Turbo|96.5 %|3.5 %|99.6 %|84.1|
-|Google Gemini Pro|95.2 %|4.8 %|98.4 %|89.5|
-|Llama 2 70B|94.9 %|5.1 %|99.9 %|84.9|
-|Llama 2 7B|94.4 %|5.6 %|99.6 %|119.9|
-|Llama 2 13B|94.1 %|5.9 %|99.8 %|82.1|
-|Cohere-Chat|92.5 %|7.5 %|98.0 %|74.4|
-|Cohere |91.5 % |8.5 % |99.8 % |59.8 |
-|Anthropic Claude 2 |91.5 % |8.5 % |99.3 % |87.5 |
-|Google Palm 2 (beta) |91.4 % |8.6 % |99.8 % |86.6 |
-|Mixtral 8x7B |90.7 % |9.3 % |99.9 % |90.7 |
-|Amazon Titan Express |90.6 % |9.4 % |99.5 % |98.4 |
-|Mistral 7B |90.6 % |9.4 % |98.7 % |96.1 |
-|Google Palm 2 Chat (beta) |90.0 % |10.0 % |100.0 % |66.2 |
-|Google Palm 2|87.9 % |12.1 % |92.4 % |36.2|
-|Google Palm 2 Chat|72.8 % |27.2 % |88.8 % |221.1|
+|GPT 4|3.0 %|97.0 %|100.0 %|81.1|
+|GPT 4 Turbo|3.0 %|97.0 %|100.0 %|94.3|
+|GPT 3.5 Turbo|3.5 %|96.5 %|99.6 %|84.1|
+|Google Gemini Pro|4.8 %|95.2 %|98.4 %|89.5|
+|Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
+|Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
+|Llama 2 13B|5.9 %|94.1 %|99.8 %|82.1|
+|Cohere-Chat|7.5 %|92.5 %|98.0 %|74.4|
+|Cohere|8.5 %|91.5 %|99.8 %|59.8|
+|Anthropic Claude 2|8.5 %|91.5 %|99.3 %|87.5|
+|Google Palm 2 (beta)|8.6 %|91.4 %|99.8 %|86.6|
+|Mixtral 8x7B|9.3 %|90.7 %|99.9 %|90.7|
+|Amazon Titan Express|9.4 %|90.6 %|99.5 %|98.4|
+|Mistral 7B|9.4 %|90.6 %|98.7 %|96.1|
+|Google Palm 2 Chat (beta)|10.0 %|90.0 %|100.0 %|66.2|
+|Google Palm 2|12.1 %|87.9 %|92.4 %|36.2|
+|Google Palm 2 Chat|27.2 %|72.8 %|88.8 %|221.1|
+
 
 **Note** on GPT4 Turbo. While the above figures show it to be comparable to GPT4, this is due to us filtering out some documents that some of the models refuse to summarize. When comparing to GPT 4 on all summaries (both GPT4 models summarize all documents) the turbo model is around 0.3% worse than GPT4, but still better than GPT 3.5 Turbo.
 
