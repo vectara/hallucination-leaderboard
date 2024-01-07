@@ -45,7 +45,7 @@ Last updated on January 6th, 2024
 You can find the model used to compute this leaderboard open sourced for commercial use on hugging face: https://huggingface.co/vectara/hallucination_evaluation_model along with instructions how to use the model.
 
 ## Data
-See [leaderboard-summaries.csv](https://github.com/vectara/hallucination-leaderboard/blob/main/leaderboard_summaries.csv) for the generated summaries we used to evaluate the models with.
+See [leaderboard-summaries.csv](https://drive.google.com/drive/folders/1TUlFlOIFfDjzobGz7WMx7hoUmIyV0x0x?usp=drive_link) for the generated summaries we used to evaluate the models with.
 
 ## Prior Research
 Much prior work in this area has been done. For some of the top papers in this area (factual consistency in summarization) please see here:
