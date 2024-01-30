@@ -4,12 +4,13 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
-Last updated on January 6th, 2024
+Last updated on January 19th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
 |GPT 4|3.0 %|97.0 %|100.0 %|81.1|
 |GPT 4 Turbo|3.0 %|97.0 %|100.0 %|94.3|
+|Microsoft Orca-2-13b|3.2 %|96.8 %|100.0 %|66.2|
 |GPT 3.5 Turbo|3.5 %|96.5 %|99.6 %|84.1|
 |Google Gemini Pro|4.8 %|95.2 %|98.4 %|89.5|
 |Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
@@ -19,13 +20,12 @@ Last updated on January 6th, 2024
 |Cohere|8.5 %|91.5 %|99.8 %|59.8|
 |Anthropic Claude 2|8.5 %|91.5 %|99.3 %|87.5|
 |Microsoft Phi 2|8.5 %|91.5 %|91.5 %|80.8|
-|Google Palm 2 (beta)|8.6 %|91.4 %|99.8 %|86.6|
+|Google Palm 2|8.6 %|91.4 %|99.8 %|86.6|
 |Mixtral 8x7B|9.3 %|90.7 %|99.9 %|90.7|
 |Amazon Titan Express|9.4 %|90.6 %|99.5 %|98.4|
 |Mistral 7B|9.4 %|90.6 %|98.7 %|96.1|
-|Google Palm 2 Chat (beta)|10.0 %|90.0 %|100.0 %|66.2|
-|Google Palm 2|12.1 %|87.9 %|92.4 %|36.2|
-|Google Palm 2 Chat|27.2 %|72.8 %|88.8 %|221.1|
+|Google Palm 2 Chat|10.0 %|90.0 %|100.0 %|66.2|
+|Google flan-t5-large|15.8 %|84.2 %|99.3 %|20.9|
 
 
 **Note** on GPT4 Turbo. While the above figures show it to be comparable to GPT4, this is due to us filtering out some documents that some of the models refuse to summarize. When comparing to GPT 4 on all summaries (both GPT4 models summarize all documents) the turbo model is around 0.3% worse than GPT4, but still better than GPT 3.5 Turbo.
@@ -103,6 +103,10 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### Microsoft Models on Hugging Face
 - **Microsoft Phi-2**: The [phi-2](https://huggingface.co/microsoft/phi-2) model is accessed via Hugging Face's API.
+- **Microsoft Orca-2-13b**: The [Orca-2-13b](https://huggingface.co/microsoft/Orca-2-13b) model is accessed via Hugging Face's API.
+
+### Google Models on Hugging Face
+- **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API. 
 
 
 ## Frequently Asked Questions
