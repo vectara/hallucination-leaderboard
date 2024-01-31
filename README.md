@@ -4,7 +4,7 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
-Last updated on January 19th, 2024
+Last updated on January 30th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -26,6 +26,7 @@ Last updated on January 19th, 2024
 |Mistral 7B|9.4 %|90.6 %|98.7 %|96.1|
 |Google Palm 2 Chat|10.0 %|90.0 %|100.0 %|66.2|
 |Google flan-t5-large|15.8 %|84.2 %|99.3 %|20.9|
+|tiiuae falcon-7b-instruct|16.2 %|83.8 %|90.0 %|75.5|
 
 
 **Note** on GPT4 Turbo. While the above figures show it to be comparable to GPT4, this is due to us filtering out some documents that some of the models refuse to summarize. When comparing to GPT 4 on all summaries (both GPT4 models summarize all documents) the turbo model is around 0.3% worse than GPT4, but still better than GPT 3.5 Turbo.
@@ -108,6 +109,8 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### Google Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API. 
 
+### tiiuae Models on Hugging Face
+- **tiiuae/falcon-7b-instruct**: The [falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct) model is accessed via Hugging Face's API. 
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
