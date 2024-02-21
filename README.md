@@ -4,7 +4,7 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
-Last updated on January 30th, 2024
+Last updated on February 21st, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -16,6 +16,7 @@ Last updated on January 30th, 2024
 |Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
 |Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
 |Llama 2 13B|5.9 %|94.1 %|99.8 %|82.1|
+|Google Gamma-7b-it|7.5 %|92.5 %|100.0 %|113.0|
 |Cohere-Chat|7.5 %|92.5 %|98.0 %|74.4|
 |Cohere|8.5 %|91.5 %|99.8 %|59.8|
 |Anthropic Claude 2|8.5 %|91.5 %|99.3 %|87.5|
@@ -46,7 +47,7 @@ Last updated on January 30th, 2024
 You can find the model used to compute this leaderboard open sourced for commercial use on hugging face: https://huggingface.co/vectara/hallucination_evaluation_model along with instructions how to use the model.
 
 ## Data
-See [leaderboard-summaries.csv](https://drive.google.com/drive/folders/1TUlFlOIFfDjzobGz7WMx7hoUmIyV0x0x?usp=drive_link) for the generated summaries we used to evaluate the models with.
+See [link](https://drive.google.com/drive/folders/1TUlFlOIFfDjzobGz7WMx7hoUmIyV0x0x?usp=drive_link) for the generated summaries we used to evaluate the models with.
 
 ## Prior Research
 Much prior work in this area has been done. For some of the top papers in this area (factual consistency in summarization) please see here:
@@ -107,7 +108,8 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Microsoft Orca-2-13b**: The [Orca-2-13b](https://huggingface.co/microsoft/Orca-2-13b) model is accessed via Hugging Face's API.
 
 ### Google Models on Hugging Face
-- **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API. 
+- **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
+- **Google gemma-7b-it**: The [gemma-7b-it](https://huggingface.co/google/gemma-7b-it) model is accessed via Hugging Face's API. 
 
 ### tiiuae Models on Hugging Face
 - **tiiuae/falcon-7b-instruct**: The [falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct) model is accessed via Hugging Face's API. 
