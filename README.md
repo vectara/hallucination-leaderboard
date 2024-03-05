@@ -69,7 +69,7 @@ We evaluate summarization factual consistency rate instead of overall factual ac
 ## Prompt Used
 > You are a chat bot answering questions using data. You must stick to the answers provided solely by the text in the passage provided. You are asked the question 'Provide a concise summary of the following passage, covering the core pieces of information described.'  &lt;PASSAGE&gt;'
 
-When calling the API, the &lt;PASSAGE&gt; token was then replaced with the source document (see the 'source' column in [leaderboard-summaries.csv](https://github.com/vectara/hallucination-leaderboard/blob/main/leaderboard_summaries.csv) ). 
+When calling the API, the &lt;PASSAGE&gt; token was then replaced with the source document (see the 'source' column in [leaderboard-summaries.csv](https://drive.google.com/file/d/1oZ-26S5VHbM6CSGkNrIY9vk_xdvV-BY0/view?usp=drive_link) ). 
 
 ## API Integration Details
 Below is a detailed overview of the models integrated and their specific endpoints:
