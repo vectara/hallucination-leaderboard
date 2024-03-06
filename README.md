@@ -4,7 +4,7 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
-Last updated on February 21st, 2024
+Last updated on March 5th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -16,6 +16,8 @@ Last updated on February 21st, 2024
 |Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
 |Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
 |Llama 2 13B|5.9 %|94.1 %|99.8 %|82.1|
+|Anthropic Claude 3 Sonnet|6.0 %|94.0 %|100.0 %|108.5|
+|Anthropic Claude 3 Opus|7.4 %|92.6 %|95.5 %|92.1|
 |Google Gemma-7b-it|7.5 %|92.5 %|100.0 %|113.0|
 |Cohere-Chat|7.5 %|92.5 %|98.0 %|74.4|
 |Cohere|8.5 %|91.5 %|99.8 %|59.8|
@@ -87,7 +89,10 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **Cohere-Chat**: Integrated through the `/chat` endpoint for enhanced conversational capabilities.
 
 ### Anthropic Model
-- **Claude 2**: The largest model offered by Anthropic, `claude 2`, is integrated via their API. 
+- **Claude 2**: Invoked the model using `claude-2.0` for the API call.
+- **Claude 3 Opus**: Invoked the model using `claude-3-opus-20240229` for the API call.
+- **Claude 3 Sonnet**: Invoked the model using `claude-3-sonnet-20240229` for the API call.
+Details on each model can be found on their [website](https://docs.anthropic.com/claude/docs/models-overview).
 
 ### Mistral AI Models on Hugging Face
 - **Mistral 7B**: The [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model is integrated using Hugging Face's API.
