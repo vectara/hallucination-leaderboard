@@ -4,6 +4,7 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
+
 Last updated on March 15th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
@@ -16,7 +17,6 @@ Last updated on March 15th, 2024
 |Cohere Command R|3.9 %|96.1 %|99.9 %|51.2|
 |Google Gemini Pro|4.8 %|95.2 %|98.4 %|89.5|
 |Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
-|Cohere Command R 8bitq|5.3 %|94.7 %|100.0 %|55.2|
 |Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
 |Llama 2 13B|5.9 %|94.1 %|99.8 %|82.1|
 |Anthropic Claude 3 Sonnet|6.0 %|94.0 %|100.0 %|108.5|
@@ -91,7 +91,6 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **Cohere Command**: Employed using the model `command` and the `/generate` endpoint.
 - **Cohere-Chat**: Integrated through the `/chat` endpoint for enhanced conversational capabilities.
 - **Cohere Command R**: Employed using the model `command-r` and the `/chat` endpoint.
-- **Cohere Command R 8bitq**: Same model with 8 bit quantization.
 
 For more information about Cohere's models, refer to their [website](https://docs.cohere.com/docs/models).
 
