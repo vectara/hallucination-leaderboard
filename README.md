@@ -4,10 +4,12 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
-Last updated on March 14th, 2024
+
+Last updated on March 15th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
+|Intel Neural Chat 7B|2.8 %|97.2 %|89.5 %|57.6|
 |GPT 4|3.0 %|97.0 %|100.0 %|81.1|
 |GPT 4 Turbo|3.0 %|97.0 %|100.0 %|94.3|
 |Microsoft Orca-2-13b|3.2 %|96.8 %|100.0 %|66.2|
@@ -121,7 +123,10 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Google gemma-7b-it**: The [gemma-7b-it](https://huggingface.co/google/gemma-7b-it) model is accessed via Hugging Face's API. 
 
 ### tiiuae Models on Hugging Face
-- **tiiuae/falcon-7b-instruct**: The [falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct) model is accessed via Hugging Face's API. 
+- **tiiuae/falcon-7b-instruct**: The [falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct) model is accessed via Hugging Face's API.
+
+### Intel Models on Hugging Face
+- **Intel/neural-chat-7b-v3-3**: The [Intel/neural-chat-7b-v3-3](https://huggingface.co/Intel/neural-chat-7b-v3-3) model is accessed via Hugging Face's API. 
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
