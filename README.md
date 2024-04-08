@@ -125,8 +125,8 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### Google Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
 - **Google gemma-7b-it**: The [gemma-7b-it](https://huggingface.co/google/gemma-7b-it) model is accessed via Hugging Face's API. 
-- **Google gemma-1.1-7b-it** : The [gemma-1.1-7b-it](https://huggingface.co/google/gemma-1.1-7b-it) model is accessed via Hugging Face's API. 
-- **Google gemma-1.1-2b-it** : The [gemma-1.1-7b-it](https://huggingface.co/google/gemma-1.1-2b-it) model is accessed via Hugging Face's API.
+- **Google gemma-1.1-7b-it** : The [gemma-1.1-7b-it](https://huggingface.co/google/gemma-1.1-7b-it) model is accessed locally via Hugging Face's checkpoint. 
+- **Google gemma-1.1-2b-it** : The [gemma-1.1-7b-it](https://huggingface.co/google/gemma-1.1-2b-it) model is accessed locally via Hugging Face's checkpoint.
 
 ### tiiuae Models on Hugging Face
 - **tiiuae/falcon-7b-instruct**: The [falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct) model is accessed via Hugging Face's API.
