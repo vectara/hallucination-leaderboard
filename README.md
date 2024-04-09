@@ -21,6 +21,7 @@ Last updated on March 24th, 2024
 |Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
 |Llama 2 13B|5.9 %|94.1 %|99.8 %|82.1|
 |Anthropic Claude 3 Sonnet|6.0 %|94.0 %|100.0 %|108.5|
+|Google Gemma-1.1-7b-it|6.3 %|93.7 %|100.0 %|64.3|
 |Anthropic Claude 3 Opus|7.4 %|92.6 %|95.5 %|92.1|
 |Google Gemma-7b-it|7.5 %|92.5 %|100.0 %|113.0|
 |Cohere-Chat|7.5 %|92.5 %|98.0 %|74.4|
@@ -32,6 +33,7 @@ Last updated on March 24th, 2024
 |Amazon Titan Express|9.4 %|90.6 %|99.5 %|98.4|
 |Mistral 7B Instruct-v0.1|9.4 %|90.6 %|98.7 %|96.1|
 |Google Palm 2 Chat|10.0 %|90.0 %|100.0 %|66.2|
+|Google Gemma-1.1-2b-it|11.2 %|88.8 %|100.0 %|66.8|
 |Google flan-t5-large|15.8 %|84.2 %|99.3 %|20.9|
 |tiiuae falcon-7b-instruct|16.2 %|83.8 %|90.0 %|75.5|
 
@@ -123,6 +125,8 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### Google Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
 - **Google gemma-7b-it**: The [gemma-7b-it](https://huggingface.co/google/gemma-7b-it) model is accessed via Hugging Face's API. 
+- **Google gemma-1.1-7b-it** : The [gemma-1.1-7b-it](https://huggingface.co/google/gemma-1.1-7b-it) model is accessed by being loaded from Hugging Face's checkpoint. 
+- **Google gemma-1.1-2b-it** : The [gemma-1.1-7b-it](https://huggingface.co/google/gemma-1.1-2b-it) model is accessed via being loaded from Hugging Face's checkpoint
 
 ### tiiuae Models on Hugging Face
 - **tiiuae/falcon-7b-instruct**: The [falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct) model is accessed via Hugging Face's API.
