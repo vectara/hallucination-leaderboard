@@ -14,6 +14,7 @@ Last updated on March 24th, 2024
 |GPT 4 Turbo|3.0 %|97.0 %|100.0 %|94.3|
 |Microsoft Orca-2-13b|3.2 %|96.8 %|100.0 %|66.2|
 |GPT 3.5 Turbo|3.5 %|96.5 %|99.6 %|84.1|
+|Cohere Command R Plus|3.8 %|96.2 %|100.0 %|71.2|
 |Cohere Command R|3.9 %|96.1 %|99.9 %|51.2|
 |Mistral 7B Instruct-v0.2|4.5 %|95.5 %|100.0 %|106.1|
 |Google Gemini Pro|4.8 %|95.2 %|98.4 %|89.5|
@@ -94,6 +95,7 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **Cohere Command**: Employed using the model `command` and the `/generate` endpoint.
 - **Cohere-Chat**: Integrated through the `/chat` endpoint for enhanced conversational capabilities.
 - **Cohere Command R**: Employed using the model `command-r` and the `/chat` endpoint.
+- **Cohere Command R Plus**: Employed using the model `command-r-plus` and the `/chat` endpoint.
 
 For more information about Cohere's models, refer to their [website](https://docs.cohere.com/docs/models).
 
