@@ -5,7 +5,7 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
 
-Last updated on March 24th, 2024
+Last updated on April 14th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -22,6 +22,7 @@ Last updated on March 24th, 2024
 |Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
 |Llama 2 13B|5.9 %|94.1 %|99.8 %|82.1|
 |Anthropic Claude 3 Sonnet|6.0 %|94.0 %|100.0 %|108.5|
+|Databricks DBRX Instruct|6.1 %|93.9 %|100.0 %|85.9|
 |Google Gemma-1.1-7b-it|6.3 %|93.7 %|100.0 %|64.3|
 |Anthropic Claude 3 Opus|7.4 %|92.6 %|95.5 %|92.1|
 |Google Gemma-7b-it|7.5 %|92.5 %|100.0 %|113.0|
@@ -135,6 +136,9 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### Intel Models on Hugging Face
 - **Intel/neural-chat-7b-v3-3**: The [Intel/neural-chat-7b-v3-3](https://huggingface.co/Intel/neural-chat-7b-v3-3) model is accessed via Hugging Face's API. 
+
+### Databricks Model
+- **Databricks/dbrx-instruct**: Accessed via Together AI's API using the model `databricks/dbrx-instruct` and the `chat` endpoint. 
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
