@@ -5,13 +5,13 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
 
-Last updated on April 14th, 2024
+Last updated on April 15th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
+|GPT 4 Turbo|2.5 %|97.5 %|100.0 %|86.2|
 |Intel Neural Chat 7B|2.8 %|97.2 %|89.5 %|57.6|
 |GPT 4|3.0 %|97.0 %|100.0 %|81.1|
-|GPT 4 Turbo|3.0 %|97.0 %|100.0 %|94.3|
 |Microsoft Orca-2-13b|3.2 %|96.8 %|100.0 %|66.2|
 |GPT 3.5 Turbo|3.5 %|96.5 %|99.6 %|84.1|
 |Cohere Command R Plus|3.8 %|96.2 %|100.0 %|71.2|
@@ -39,8 +39,6 @@ Last updated on April 14th, 2024
 |Google flan-t5-large|15.8 %|84.2 %|99.3 %|20.9|
 |tiiuae falcon-7b-instruct|16.2 %|83.8 %|90.0 %|75.5|
 
-
-**Note** on GPT4 Turbo. While the above figures show it to be comparable to GPT4, this is due to us filtering out some documents that some of the models refuse to summarize. When comparing to GPT 4 on all summaries (both GPT4 models summarize all documents) the turbo model is around 0.3% worse than GPT4, but still better than GPT 3.5 Turbo.
 
 <table style="border-collapse: collapse;">
   <tr>
@@ -87,7 +85,7 @@ Below is a detailed overview of the models integrated and their specific endpoin
 ### OpenAI Models
 - **GPT-3.5**: Accessed using the model name `gpt-3.5-turbo` through OpenAI's Python client library, specifically via the `chat.completions.create` endpoint.
 - **GPT-4**: Integrated with the model identifier `gpt-4`.
-- **GPT-4 Turbo**: Utilized under the model name `gpt-4-1106-preview`, in line with OpenAI's documentation.
+- **GPT-4 Turbo**: Utilized under the model name `gpt-4-turbo-2024-04-09`, in line with OpenAI's documentation.
 
 ### Llama Models via Anyscale
 - **Llama 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints, tailored to each model's capacity.
