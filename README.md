@@ -18,6 +18,7 @@ Last updated on April 15th, 2024
 |Cohere Command R|3.9 %|96.1 %|99.9 %|51.2|
 |Mistral 7B Instruct-v0.2|4.5 %|95.5 %|100.0 %|106.1|
 |Google Gemini Pro|4.8 %|95.2 %|98.4 %|89.5|
+|Microsoft WizardLm-2-8x22B|5.0 %|95.0 %|99.9 %|140.8|
 |Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
 |Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
 |Llama 2 13B|5.9 %|94.1 %|99.8 %|82.1|
@@ -55,7 +56,7 @@ Last updated on April 15th, 2024
 You can find the model used to compute this leaderboard open sourced for commercial use on hugging face: https://huggingface.co/vectara/hallucination_evaluation_model along with instructions how to use the model.
 
 ## Data
-See [link](https://drive.google.com/drive/folders/1TUlFlOIFfDjzobGz7WMx7hoUmIyV0x0x?usp=drive_link) for the generated summaries we used to evaluate the models with.
+See [link](https://drive.google.com/drive/folders/1OGc2fIHeTSyJHgIyVfWVabRbojExhoYw?usp=sharing) for the generated summaries we used to evaluate the models with.
 
 ## Prior Research
 Much prior work in this area has been done. For some of the top papers in this area (factual consistency in summarization) please see here:
@@ -77,7 +78,7 @@ We evaluate summarization factual consistency rate instead of overall factual ac
 ## Prompt Used
 > You are a chat bot answering questions using data. You must stick to the answers provided solely by the text in the passage provided. You are asked the question 'Provide a concise summary of the following passage, covering the core pieces of information described.'  &lt;PASSAGE&gt;'
 
-When calling the API, the &lt;PASSAGE&gt; token was then replaced with the source document (see the 'source' column in [leaderboard-summaries.csv](https://drive.google.com/file/d/1oZ-26S5VHbM6CSGkNrIY9vk_xdvV-BY0/view?usp=drive_link) ). 
+When calling the API, the &lt;PASSAGE&gt; token was then replaced with the source document (see the 'source' column in [leaderboard-summaries.csv](https://drive.google.com/drive/folders/1OGc2fIHeTSyJHgIyVfWVabRbojExhoYw?usp=sharing) ). 
 
 ## API Integration Details
 Below is a detailed overview of the models integrated and their specific endpoints:
@@ -119,9 +120,10 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### Titan Models on Amazon Bedrock
 - **Amazon Titan Express**: The [model](https://aws.amazon.com/bedrock/titan/) is accessed on Amazon Bedrock with model identifier of `amazon.titan-text-express-v1`.
 
-### Microsoft Models on Hugging Face
+### Microsoft Models
 - **Microsoft Phi-2**: The [phi-2](https://huggingface.co/microsoft/phi-2) model is accessed via Hugging Face's API.
 - **Microsoft Orca-2-13b**: The [Orca-2-13b](https://huggingface.co/microsoft/Orca-2-13b) model is accessed via Hugging Face's API.
+- **Microsoft WizardLM-2-8x22B**: Accessed via Together AI's API using the model `microsoft/WizardLM-2-8x22B` and the `chat` endpoint.  
 
 ### Google Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
