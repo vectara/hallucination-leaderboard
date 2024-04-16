@@ -18,7 +18,7 @@ Last updated on April 15th, 2024
 |Cohere Command R|3.9 %|96.1 %|99.9 %|51.2|
 |Mistral 7B Instruct-v0.2|4.5 %|95.5 %|100.0 %|106.1|
 |Google Gemini Pro|4.8 %|95.2 %|98.4 %|89.5|
-|Microsoft WizardLm-2-8x22B|5.0 %|95.0 %|99.9 %|140.8|
+|Microsoft WizardLM-2-8x22B|5.0 %|95.0 %|99.9 %|140.8|
 |Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
 |Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
 |Llama 2 13B|5.9 %|94.1 %|99.8 %|82.1|
