@@ -5,7 +5,7 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
 
-Last updated on April 15th, 2024
+Last updated on April 18th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -15,6 +15,7 @@ Last updated on April 15th, 2024
 |Microsoft Orca-2-13b|3.2 %|96.8 %|100.0 %|66.2|
 |GPT 3.5 Turbo|3.5 %|96.5 %|99.6 %|84.1|
 |Cohere Command R Plus|3.8 %|96.2 %|100.0 %|71.2|
+|Mixtral 8x22B|3.8 %|96.2 %|99.9 %|92.0|
 |Cohere Command R|3.9 %|96.1 %|99.9 %|51.2|
 |Mistral 7B Instruct-v0.2|4.5 %|95.5 %|100.0 %|106.1|
 |Google Gemini Pro|4.8 %|95.2 %|98.4 %|89.5|
@@ -109,6 +110,7 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Mistral 7B Instruct-v0.1**: The [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model is integrated using Hugging Face's API.
 - **Mistral 7B Instruct-v0.2**: The [Mistral-7B-Instruct-v0.2](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2) model is integrated using Hugging Face's API.
 - **Mixtral 8x7B**: Similarly, the [Mixtral-8x7B-Instruct-v0.1](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1) model is accessed via Hugging Face's API.
+- **Mixtral 8x22B**: Accessed via Together AI's API using the model `mistralai/Mixtral-8x22B-Instruct-v0.1` and the `chat` endpoint.  
 
 ### Google Palm Models via Vertex AI
 - **Google Palm 2 and Google Palm 2 Chat**: Implemented using the `text-bison-001` and `chat-bison-001` models, respectively.
