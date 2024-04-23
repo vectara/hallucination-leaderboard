@@ -5,7 +5,7 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
 
-Last updated on April 18th, 2024
+Last updated on April 23rd, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -19,6 +19,7 @@ Last updated on April 18th, 2024
 |Cohere Command R|3.9 %|96.1 %|99.9 %|51.2|
 |Mistral 7B Instruct-v0.2|4.5 %|95.5 %|100.0 %|106.1|
 |Llama 3 70B|4.5 %|95.5 %|99.2 %|68.5|
+|Google Gemini 1.5 Pro|4.6 %|95.4 %|89.3 %|82.1|
 |Google Gemini Pro|4.8 %|95.2 %|98.4 %|89.5|
 |Microsoft WizardLM-2-8x22B|5.0 %|95.0 %|99.9 %|140.8|
 |Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
@@ -119,6 +120,7 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Google Palm 2 and Google Palm 2 Chat**: Implemented using the `text-bison-001` and `chat-bison-001` models, respectively.
 - **Google Palm 2 (Beta) and Google Palm 2-Chat (Beta)**: Utilized with the model identifiers `text-bison` and `chat-bison`.
 - **Gemini Pro**: Google's `gemini-pro` model is incorporated for enhanced language processing, accessible on Vertex AI.
+- **Gemini 1.5 Pro**: Accessed using model `gemini-1.5-pro-latest` 
 
 For an in-depth understanding of each model's version and lifecycle, especially those offered by Google, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versioning) on Vertex AI.
 
