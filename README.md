@@ -17,11 +17,13 @@ Last updated on April 23rd, 2024
 |Cohere Command R Plus|3.8 %|96.2 %|100.0 %|71.2|
 |Mixtral 8x22B|3.8 %|96.2 %|99.9 %|92.0|
 |Cohere Command R|3.9 %|96.1 %|99.9 %|51.2|
+|Microsoft Phi-3-mini-128k|4.1 %|95.9 %|100.0 %|60.1|
 |Mistral 7B Instruct-v0.2|4.5 %|95.5 %|100.0 %|106.1|
 |Llama 3 70B|4.5 %|95.5 %|99.2 %|68.5|
 |Google Gemini 1.5 Pro|4.6 %|95.4 %|89.3 %|82.1|
 |Google Gemini Pro|4.8 %|95.2 %|98.4 %|89.5|
 |Microsoft WizardLM-2-8x22B|5.0 %|95.0 %|99.9 %|140.8|
+|Microsoft Phi-3-mini-4k|5.1 %|94.9 %|100.0 %|86.8|
 |Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
 |Llama 3 8B|5.4 %|94.6 %|99.8 %|79.7|
 |Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
@@ -131,6 +133,8 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Microsoft Phi-2**: The [phi-2](https://huggingface.co/microsoft/phi-2) model is accessed via Hugging Face's API.
 - **Microsoft Orca-2-13b**: The [Orca-2-13b](https://huggingface.co/microsoft/Orca-2-13b) model is accessed via Hugging Face's API.
 - **Microsoft WizardLM-2-8x22B**: Accessed via Together AI's API using the model `microsoft/WizardLM-2-8x22B` and the `chat` endpoint.  
+- **Microsoft Phi-3-mini-4k**: The [phi-3-mini-4k](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct) model is accessed via Hugging Face's checkpoint.
+- **Microsoft Phi-3-mini-4k**: The [phi-3-mini-128k](https://huggingface.co/microsoft/Phi-3-mini-128k-instruct) model is accessed via Hugging Face's checkpoint.
 
 ### Google Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
