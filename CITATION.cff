@@ -14,6 +14,9 @@ authors:
   - given-names: Minseok
     family-names: Bae
     email: minseok@vectara.com
+  - given-names: Miaoran
+    family-names: Li
+    email: miaoran@vectara.com
 repository-code: 'https://github.com/vectara/hallucination-leaderboard'
 url: >-
   https://github.com/vectara/hallucination-leaderboard/blob/main/README.md
