@@ -5,11 +5,12 @@ Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
 
 
-Last updated on April 23rd, 2024
+Last updated on April 25th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
 |GPT 4 Turbo|2.5 %|97.5 %|100.0 %|86.2|
+|Snowflake Arctic|2.6 %|97.4 %|100.0 %|68.7|
 |Intel Neural Chat 7B|2.8 %|97.2 %|89.5 %|57.6|
 |GPT 4|3.0 %|97.0 %|100.0 %|81.1|
 |Microsoft Orca-2-13b|3.2 %|96.8 %|100.0 %|66.2|
@@ -150,6 +151,9 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### Databricks Model
 - **Databricks/dbrx-instruct**: Accessed via Together AI's API using the model `databricks/dbrx-instruct` and the `chat` endpoint. 
+
+### Snowflake Model
+- **Snowflake/snowflake-arctic-instruct**: Accessed via Replicate's API using the model `snowflake/snowflake-arctic-instruct`. 
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
