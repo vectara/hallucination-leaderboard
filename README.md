@@ -1,8 +1,20 @@
 # Hallucination Leaderboard
 
-Public LLM leaderboard computed using Vectara's Hallucination Evaluation Model. This evaluates how often an LLM introduces hallucinations when summarizing a document. We plan to update this regularly as our model and the LLMs get updated over time.
+Public LLM leaderboard computed using Vectara's [Hughes Hallucination Evaluation Model](https://huggingface.co/vectara/hallucination_evaluation_model). This evaluates how often an LLM introduces hallucinations when summarizing a document. We plan to update this regularly as our model and the LLMs get updated over time.
 
-Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in HuggingFace. 
+Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in Hugging Face. 
+
+
+<table style="border-collapse: collapse;">
+  <tr>
+    <td style="text-align: center; vertical-align: middle; border: none;">
+      <img src="img/candle.png" width="50" height="50">
+    </td>
+    <td style="text-align: left; vertical-align: middle; border: none;">
+      In loving memory of <a href="https://www.ivinsfuneralhome.com/obituaries/Simon-Mark-Hughes?obId=30000023">Simon Mark Hughes</a>...
+    </td>
+  </tr>
+</table>
 
 
 Last updated on April 25th, 2024
@@ -48,19 +60,8 @@ Last updated on April 25th, 2024
 |tiiuae falcon-7b-instruct|16.2 %|83.8 %|90.0 %|75.5|
 
 
-<table style="border-collapse: collapse;">
-  <tr>
-    <td style="text-align: center; vertical-align: middle; border: none;">
-      <img src="img/candle.png" width="50" height="50">
-    </td>
-    <td style="text-align: left; vertical-align: middle; border: none;">
-      In loving memory of <a href="https://www.ivinsfuneralhome.com/obituaries/Simon-Mark-Hughes?obId=30000023">Simon Mark Hughes</a>...
-    </td>
-  </tr>
-</table>
-
 ## Model
-You can find the model used to compute this leaderboard open sourced for commercial use on hugging face: https://huggingface.co/vectara/hallucination_evaluation_model along with instructions how to use the model.
+You can find the model used to compute this leaderboard open sourced for commercial use on [Hugging Face](https://huggingface.co/vectara/hallucination_evaluation_model) and [Kaggle](https://www.kaggle.com/models/vectara/hallucination_evaluation_model), along with instructions on how to use the model.
 
 ## Data
 See [link](https://drive.google.com/drive/folders/1OGc2fIHeTSyJHgIyVfWVabRbojExhoYw?usp=sharing) for the generated summaries we used to evaluate the models with.
