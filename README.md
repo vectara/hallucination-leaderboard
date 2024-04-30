@@ -17,7 +17,7 @@ Also, feel free to check out our [hallucination leaderboard](https://huggingface
 </table>
 
 
-Last updated on April 25th, 2024
+Last updated on April 30th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -58,6 +58,7 @@ Last updated on April 25th, 2024
 |Google Gemma-1.1-2b-it|11.2 %|88.8 %|100.0 %|66.8|
 |Google flan-t5-large|15.8 %|84.2 %|99.3 %|20.9|
 |tiiuae falcon-7b-instruct|16.2 %|83.8 %|90.0 %|75.5|
+|Apple OpenELM-3B-Instruct|22.4 %|77.6 %|99.3 %|47.2|
 
 
 ## Model
@@ -154,7 +155,10 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Databricks/dbrx-instruct**: Accessed via Together AI's API using the model `databricks/dbrx-instruct` and the `chat` endpoint. 
 
 ### Snowflake Model
-- **Snowflake/snowflake-arctic-instruct**: Accessed via Replicate's API using the model `snowflake/snowflake-arctic-instruct`. 
+- **Snowflake/snowflake-arctic-instruct**: Accessed via Replicate's API using the model `snowflake/snowflake-arctic-instruct`.
+
+### Apple Model
+- **Apple/OpenELM-3B-Instruct**: The [OpenELM-3B-Instruct](https://huggingface.co/apple/OpenELM-3B-Instruct) model is accessed via being loaded from Hugging Face's checkpoint. The prompt for this model is the original prompt plus ''\n\nA concise summary is as follows:''
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
