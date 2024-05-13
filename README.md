@@ -17,7 +17,7 @@ Also, feel free to check out our [hallucination leaderboard](https://huggingface
 </table>
 
 
-Last updated on April 30th, 2024
+Last updated on May 13th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -27,6 +27,7 @@ Last updated on April 30th, 2024
 |GPT 4|3.0 %|97.0 %|100.0 %|81.1|
 |Microsoft Orca-2-13b|3.2 %|96.8 %|100.0 %|66.2|
 |GPT 3.5 Turbo|3.5 %|96.5 %|99.6 %|84.1|
+|GPT 4o|3.7 %|96.3 %|100 %|77.8|
 |Cohere Command R Plus|3.8 %|96.2 %|100.0 %|71.2|
 |Mixtral 8x22B|3.8 %|96.2 %|99.9 %|92.0|
 |Cohere Command R|3.9 %|96.1 %|99.9 %|51.2|
@@ -96,6 +97,7 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **GPT-3.5**: Accessed using the model name `gpt-3.5-turbo` through OpenAI's Python client library, specifically via the `chat.completions.create` endpoint.
 - **GPT-4**: Integrated with the model identifier `gpt-4`.
 - **GPT-4 Turbo**: Utilized under the model name `gpt-4-turbo-2024-04-09`, in line with OpenAI's documentation.
+- **GPT-4o**: Accessed using the model name `gpt-4o`.
 
 ### Llama Models
 - **Llama 2 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints using model `meta-llama/Llama-2-xxb-chat-hf`, where `xxb` can be `7b`, `13b`, and `70b`, tailored to each model's capacity.
