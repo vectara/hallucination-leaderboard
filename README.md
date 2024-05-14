@@ -17,7 +17,7 @@ Also, feel free to check out our [hallucination leaderboard](https://huggingface
 </table>
 
 
-Last updated on May 13th, 2024
+Last updated on May 14th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -39,6 +39,7 @@ Last updated on May 13th, 2024
 |Microsoft WizardLM-2-8x22B|5.0 %|95.0 %|99.9 %|140.8|
 |Microsoft Phi-3-mini-4k|5.1 %|94.9 %|100.0 %|86.8|
 |Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
+|Google Gemini 1.5 Flash|5.3 %|94.7 %|98.1 %|62.8|
 |Llama 3 8B|5.4 %|94.6 %|99.8 %|79.7|
 |Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
 |Llama 2 13B|5.9 %|94.1 %|99.8 %|82.1|
@@ -128,6 +129,7 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Google Palm 2 (Beta) and Google Palm 2-Chat (Beta)**: Utilized with the model identifiers `text-bison` and `chat-bison`.
 - **Gemini Pro**: Google's `gemini-pro` model is incorporated for enhanced language processing, accessible on Vertex AI.
 - **Gemini 1.5 Pro**: Accessed using model `gemini-1.5-pro-latest` 
+- **Gemini 1.5 Flash**: Accessed using model `gemini-1.5-flash-latest` 
 
 For an in-depth understanding of each model's version and lifecycle, especially those offered by Google, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versioning) on Vertex AI.
 
