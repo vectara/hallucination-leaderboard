@@ -17,7 +17,7 @@ Also, feel free to check out our [hallucination leaderboard](https://huggingface
 </table>
 
 
-Last updated on May 14th, 2024
+Last updated on June 25th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
