@@ -17,7 +17,7 @@ Also, feel free to check out our [hallucination leaderboard](https://huggingface
 </table>
 
 
-Last updated on May 14th, 2024
+Last updated on June 25th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -46,6 +46,7 @@ Last updated on May 14th, 2024
 |Anthropic Claude 3 Sonnet|6.0 %|94.0 %|100.0 %|108.5|
 |Databricks DBRX Instruct|6.1 %|93.9 %|100.0 %|85.9|
 |Google Gemma-1.1-7b-it|6.3 %|93.7 %|100.0 %|64.3|
+|Anthropic Claude 3.5 Sonnet|6.7 %|93.3 %|100.0 %|103.0|
 |Anthropic Claude 3 Opus|7.4 %|92.6 %|95.5 %|92.1|
 |Google Gemma-7b-it|7.5 %|92.5 %|100.0 %|113.0|
 |Cohere-Chat|7.5 %|92.5 %|98.0 %|74.4|
@@ -116,6 +117,7 @@ For more information about Cohere's models, refer to their [website](https://doc
 - **Claude 2**: Invoked the model using `claude-2.0` for the API call.
 - **Claude 3 Opus**: Invoked the model using `claude-3-opus-20240229` for the API call.
 - **Claude 3 Sonnet**: Invoked the model using `claude-3-sonnet-20240229` for the API call.
+- **Claude 3.5 Sonnet**: Invoked the model using `claude-3-5-sonnet-20240620` for the API call.
 Details on each model can be found on their [website](https://docs.anthropic.com/claude/docs/models-overview).
 
 ### Mistral AI Models on Hugging Face
