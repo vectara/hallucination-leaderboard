@@ -17,7 +17,7 @@ Also, feel free to check out our [hallucination leaderboard](https://huggingface
 </table>
 
 
-Last updated on June 28th, 2024
+Last updated on July 19th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -25,6 +25,7 @@ Last updated on June 28th, 2024
 |Snowflake Arctic|2.6 %|97.4 %|100.0 %|68.7|
 |Intel Neural Chat 7B|2.8 %|97.2 %|89.5 %|57.6|
 |GPT 4|3.0 %|97.0 %|100.0 %|81.1|
+|GPT 4o mini|3.1 %|96.9 %|100.0 %|76.3|
 |Microsoft Orca-2-13b|3.2 %|96.8 %|100.0 %|66.2|
 |GPT 3.5 Turbo|3.5 %|96.5 %|99.6 %|84.1|
 |GPT 4o|3.7 %|96.3 %|100.0 %|77.8|
@@ -101,6 +102,7 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **GPT-4**: Integrated with the model identifier `gpt-4`.
 - **GPT-4 Turbo**: Utilized under the model name `gpt-4-turbo-2024-04-09`, in line with OpenAI's documentation.
 - **GPT-4o**: Accessed using the model name `gpt-4o`.
+- **GPT-4o-mini**: Accessed using the model name `gpt-4o-mini`.
 
 ### Llama Models
 - **Llama 2 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints using model `meta-llama/Llama-2-xxb-chat-hf`, where `xxb` can be `7b`, `13b`, and `70b`, tailored to each model's capacity.
@@ -144,7 +146,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Microsoft Orca-2-13b**: The [Orca-2-13b](https://huggingface.co/microsoft/Orca-2-13b) model is accessed via Hugging Face's API.
 - **Microsoft WizardLM-2-8x22B**: Accessed via Together AI's API using the model `microsoft/WizardLM-2-8x22B` and the `chat` endpoint.  
 - **Microsoft Phi-3-mini-4k**: The [phi-3-mini-4k](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct) model is accessed via Hugging Face's checkpoint.
-- **Microsoft Phi-3-mini-4k**: The [phi-3-mini-128k](https://huggingface.co/microsoft/Phi-3-mini-128k-instruct) model is accessed via Hugging Face's checkpoint.
+- **Microsoft Phi-3-mini-128k**: The [phi-3-mini-128k](https://huggingface.co/microsoft/Phi-3-mini-128k-instruct) model is accessed via Hugging Face's checkpoint.
 
 ### Google Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
