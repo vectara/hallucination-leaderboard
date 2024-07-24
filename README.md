@@ -17,7 +17,7 @@ Also, feel free to check out our [hallucination leaderboard](https://huggingface
 </table>
 
 
-Last updated on July 19th, 2024
+Last updated on July 24th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -34,14 +34,17 @@ Last updated on July 19th, 2024
 |Cohere Command R|3.9 %|96.1 %|99.9 %|51.2|
 |Microsoft Phi-3-mini-128k|4.1 %|95.9 %|100.0 %|60.1|
 |Mistral 7B Instruct-v0.2|4.5 %|95.5 %|100.0 %|106.1|
+|Llama-3.1-405B-Instruct|4.5 %|95.5 %|99.6 %|86.1|
 |Llama 3 70B|4.5 %|95.5 %|99.2 %|68.5|
 |Google Gemini 1.5 Pro|4.6 %|95.4 %|89.3 %|82.1|
 |Google Gemini Pro|4.8 %|95.2 %|98.4 %|89.5|
+|Llama-3.1-70B-Instruct|5.0 %|95.0 %|100.0 %|79.6|
 |Microsoft WizardLM-2-8x22B|5.0 %|95.0 %|99.9 %|140.8|
 |Microsoft Phi-3-mini-4k|5.1 %|94.9 %|100.0 %|86.8|
 |Llama 2 70B|5.1 %|94.9 %|99.9 %|84.9|
 |Google Gemini 1.5 Flash|5.3 %|94.7 %|98.1 %|62.8|
 |Llama 3 8B|5.4 %|94.6 %|99.8 %|79.7|
+|Llama-3.1-8B-Instruct|5.5 %|94.5 %|100.0 %|71.0|
 |Llama 2 7B|5.6 %|94.4 %|99.6 %|119.9|
 |Llama 2 13B|5.9 %|94.1 %|99.8 %|82.1|
 |Anthropic Claude 3 Sonnet|6.0 %|94.0 %|100.0 %|108.5|
@@ -107,6 +110,7 @@ Below is a detailed overview of the models integrated and their specific endpoin
 ### Llama Models
 - **Llama 2 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints using model `meta-llama/Llama-2-xxb-chat-hf`, where `xxb` can be `7b`, `13b`, and `70b`, tailored to each model's capacity.
 - **Llama 3 8B and 70B**: These models are accessed via Together AI `chat` endpoint and using the model `meta-llama/Llama-3-xxB-chat-hf`,  where `xxB` can be `8B` and `70B`. 
+- **Llama 3.1 8B, 70B and 405B**: The models [meta-llama/Meta-Llama-3.1-70B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-70B-Instruct) and [meta-llama/Meta-Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct) are accessed via Hugging Face's checkpoint. The model `Meta-Llama-3.1-405B-Instruct` is accessed via Replicate's API using the model `meta/meta-llama-3.1-405b-instruct`.
 
 ### Cohere Models
 - **Cohere Command**: Employed using the model `command` and the `/generate` endpoint.
