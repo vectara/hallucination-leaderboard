@@ -30,6 +30,7 @@ Last updated on July 25th, 2024
 |Microsoft Orca-2-13b|3.2 %|96.8 %|100.0 %|66.2|
 |Qwen2-72B-Instruct|3.5 %|96.5 %|100.0 %|100.1| 
 |GPT 3.5 Turbo|3.5 %|96.5 %|99.6 %|84.1|
+|Mistral-Large2|3.6 %|96.4 %|100.0|77.4|
 |01-AI Yi-1.5-9B-Chat|3.7 %|96.3 %|100.0 %|85.7| 
 |GPT 4o|3.7 %|96.3 %|100.0 %|77.8|
 |Cohere Command R Plus|3.8 %|96.2 %|100.0 %|71.2|
@@ -132,11 +133,12 @@ For more information about Cohere's models, refer to their [website](https://doc
 - **Claude 3.5 Sonnet**: Invoked the model using `claude-3-5-sonnet-20240620` for the API call.
 Details on each model can be found on their [website](https://docs.anthropic.com/claude/docs/models-overview).
 
-### Mistral AI Models on Hugging Face
+### Mistral AI Models
 - **Mistral 7B Instruct-v0.1**: The [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model is integrated using Hugging Face's API.
 - **Mistral 7B Instruct-v0.2**: The [Mistral-7B-Instruct-v0.2](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2) model is integrated using Hugging Face's API.
 - **Mixtral 8x7B**: Similarly, the [Mixtral-8x7B-Instruct-v0.1](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1) model is accessed via Hugging Face's API.
 - **Mixtral 8x22B**: Accessed via Together AI's API using the model `mistralai/Mixtral-8x22B-Instruct-v0.1` and the `chat` endpoint.  
+- **Mistral Large2**: Accessed via Mistral AI's API using the model `mistral-large-latest`
 
 ### Google Palm Models via Vertex AI
 - **Google Palm 2 and Google Palm 2 Chat**: Implemented using the `text-bison-001` and `chat-bison-001` models, respectively.
