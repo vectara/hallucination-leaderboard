@@ -17,22 +17,27 @@ Also, feel free to check out our [hallucination leaderboard](https://huggingface
 </table>
 
 
-Last updated on July 24th, 2024
+Last updated on July 25th, 2024
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
 |GPT 4 Turbo|2.5 %|97.5 %|100.0 %|86.2|
 |Snowflake Arctic|2.6 %|97.4 %|100.0 %|68.7|
 |Intel Neural Chat 7B|2.8 %|97.2 %|89.5 %|57.6|
+|01-AI Yi-1.5-34B-Chat|3.0 %|97.0 %|100.0 %|83.7| 
 |GPT 4|3.0 %|97.0 %|100.0 %|81.1|
 |GPT 4o mini|3.1 %|96.9 %|100.0 %|76.3|
 |Microsoft Orca-2-13b|3.2 %|96.8 %|100.0 %|66.2|
+|Qwen2-72B-Instruct|3.5 %|96.5 %|100.0 %|100.1| 
 |GPT 3.5 Turbo|3.5 %|96.5 %|99.6 %|84.1|
+|01-AI Yi-1.5-9B-Chat|3.7 %|96.3 %|100.0 %|85.7| 
 |GPT 4o|3.7 %|96.3 %|100.0 %|77.8|
 |Cohere Command R Plus|3.8 %|96.2 %|100.0 %|71.2|
 |Mixtral 8x22B|3.8 %|96.2 %|99.9 %|92.0|
 |Cohere Command R|3.9 %|96.1 %|99.9 %|51.2|
 |Microsoft Phi-3-mini-128k|4.1 %|95.9 %|100.0 %|60.1|
+|01-AI Yi-1.5-6B-Chat|4.1 %|95.9 %|100.0 %|98.9| 
+|Zhipu AI GLM-4-9B-Chat|4.2 %|95.8 %|100.0 %|58.1|
 |Mistral 7B Instruct-v0.2|4.5 %|95.5 %|100.0 %|106.1|
 |Llama-3.1-405B-Instruct|4.5 %|95.5 %|99.6 %|86.1|
 |Llama 3 70B|4.5 %|95.5 %|99.2 %|68.5|
@@ -173,6 +178,15 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### Apple Model
 - **Apple/OpenELM-3B-Instruct**: The [OpenELM-3B-Instruct](https://huggingface.co/apple/OpenELM-3B-Instruct) model is accessed via being loaded from Hugging Face's checkpoint. The prompt for this model is the original prompt plus ''\n\nA concise summary is as follows:''
+
+### 01-AI Models
+- **01-AI/Yi-1.5-Chat 6B, 9B, 34B**: The models [01-ai/Yi-1.5-6B-Chat](https://huggingface.co/01-ai/Yi-1.5-6B-Chat), [01-ai/Yi-1.5-9B-Chat](https://huggingface.co/01-ai/Yi-1.5-9B-Chat), and [01-ai/Yi-1.5-34B-Chat](https://huggingface.co/01-ai/Yi-1.5-34B-Chat) are accessed via Hugging Face's checkpoint.
+
+### Zhipu AI Model
+- **Zhipu-AI/GLM-4-9B-Chat**: The [GLM-4-9B-Chat](https://huggingface.co/THUDM/glm-4-9b-chat) is accessed via Hugging Face's checkpoint.
+
+### Qwen Model
+- **Qwen/Qwen2-72B-Instruct**: Acccessed via Together AI `chat` endpoint with model name `Qwen/Qwen2-72B-Instruct`.
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
