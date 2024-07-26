@@ -68,7 +68,6 @@ Last updated on July 25th, 2024
 |Google Gemma-1.1-2B-it|27.8 %|72.2 %|100.0|66.8|
 |Google Gemini-1.5-Pro|28.1 %|71.9 %|89.3|82.1|
 |TII falcon-7B-instruct|29.9 %|70.1 %|90.0|75.5|
-|Google PaLM-2-Chat|69.8 %|30.2 %|100.0|66.2|
 
 
 ## Model
@@ -137,8 +136,7 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Mistral Large2**: Accessed via Mistral AI's API using the model `mistral-large-latest`
 
 ### Google Palm Models via Vertex AI
-- **Google Palm 2 and Google Palm 2 Chat**: Implemented using the `text-bison-001` and `chat-bison-001` models, respectively.
-- **Google Palm 2 (Beta) and Google Palm 2-Chat (Beta)**: Utilized with the model identifiers `text-bison` and `chat-bison`.
+- **Google Palm 2**: Implemented using the `text-bison-001` model, respectively.
 - **Gemini Pro**: Google's `gemini-pro` model is incorporated for enhanced language processing, accessible on Vertex AI.
 - **Gemini 1.5 Pro**: Accessed using model `gemini-1.5-pro-latest` 
 - **Gemini 1.5 Flash**: Accessed using model `gemini-1.5-flash-latest` 
