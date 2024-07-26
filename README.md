@@ -2,7 +2,7 @@
 
 Public LLM leaderboard computed using Vectara's [Hughes Hallucination Evaluation Model](https://huggingface.co/vectara/hallucination_evaluation_model). This evaluates how often an LLM introduces hallucinations when summarizing a document. We plan to update this regularly as our model and the LLMs get updated over time.
 
-Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) in Hugging Face. 
+Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) on Hugging Face. 
 
 
 <table style="border-collapse: collapse;">
@@ -69,12 +69,11 @@ Last updated on July 25th, 2024
 |Google Gemini-1.5-Pro|28.1 %|71.9 %|89.3|82.1|
 |TII falcon-7B-instruct|29.9 %|70.1 %|90.0|75.5|
 
-
 ## Model
 You can find the model used to compute this leaderboard open sourced for commercial use on [Hugging Face](https://huggingface.co/vectara/hallucination_evaluation_model) and [Kaggle](https://www.kaggle.com/models/vectara/hallucination_evaluation_model), along with instructions on how to use the model.
 
 ## Data
-See [link](https://drive.google.com/drive/folders/1OGc2fIHeTSyJHgIyVfWVabRbojExhoYw?usp=sharing) for the generated summaries we used to evaluate the models with.
+See [this dataset](https://huggingface.co/datasets/vectara/leaderboard_results) for the generated summaries we used for evaluating the models.
 
 ## Prior Research
 Much prior work in this area has been done. For some of the top papers in this area (factual consistency in summarization) please see here:
