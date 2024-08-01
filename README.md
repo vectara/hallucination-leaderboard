@@ -28,6 +28,7 @@ Last updated on July 25th, 2024
 |GPT-4|1.8 %|98.2 %|100.0|81.1|
 |GPT-3.5-Turbo|1.9 %|98.1 %|99.6|84.1|
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0|66.2|
+|Intel Neural-Chat-7B-v3-3|2.7 %|97.3 %|100.0|60.7|
 |Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0|68.7|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0|60.1|
 |01-AI Yi-1.5-34B-Chat|3.9 %|96.1 %|100.0|83.7|
@@ -67,8 +68,6 @@ Last updated on July 25th, 2024
 |Google Gemma-1.1-2B-it|27.8 %|72.2 %|100.0|66.8|
 |Google Gemini-1.5-Pro|28.1 %|71.9 %|89.3|82.1|
 |TII falcon-7B-instruct|29.9 %|70.1 %|90.0|75.5|
-|Google PaLM-2-Chat|69.8 %|30.2 %|100.0|66.2|
-
 
 ## Model
 You can find the model used to compute this leaderboard open sourced for commercial use on [Hugging Face](https://huggingface.co/vectara/hallucination_evaluation_model) and [Kaggle](https://www.kaggle.com/models/vectara/hallucination_evaluation_model), along with instructions on how to use the model.
@@ -136,8 +135,7 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Mistral Large2**: Accessed via Mistral AI's API using the model `mistral-large-latest`
 
 ### Google Palm Models via Vertex AI
-- **Google Palm 2 and Google Palm 2 Chat**: Implemented using the `text-bison-001` and `chat-bison-001` models, respectively.
-- **Google Palm 2 (Beta) and Google Palm 2-Chat (Beta)**: Utilized with the model identifiers `text-bison` and `chat-bison`.
+- **Google Palm 2**: Implemented using the `text-bison-001` model, respectively.
 - **Gemini Pro**: Google's `gemini-pro` model is incorporated for enhanced language processing, accessible on Vertex AI.
 - **Gemini 1.5 Pro**: Accessed using model `gemini-1.5-pro-latest` 
 - **Gemini 1.5 Flash**: Accessed using model `gemini-1.5-flash-latest` 
@@ -164,8 +162,8 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### TII Models on Hugging Face
 - **tiiuae/falcon-7b-instruct**: The [falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct) model is accessed via Hugging Face's API.
 
-### Intel Models on Hugging Face
-- **Intel/neural-chat-7b-v3-3**: The [Intel/neural-chat-7b-v3-3](https://huggingface.co/Intel/neural-chat-7b-v3-3) model is accessed via Hugging Face's API. 
+### Intel Model on Hugging Face
+- **Intel/neural-chat-7b-v3-3**: The [Intel/neural-chat-7b-v3-3](https://huggingface.co/Intel/neural-chat-7b-v3-3) model is accessed via Hugging Face's checkpoint. 
 
 ### Databricks Model
 - **Databricks/dbrx-instruct**: Accessed via Together AI's API using the model `databricks/dbrx-instruct` and the `chat` endpoint. 
