@@ -4,7 +4,7 @@ Public LLM leaderboard computed using Vectara's [Hughes Hallucination Evaluation
 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) on Hugging Face. 
 
-This leaderboard is based on the [HHEM-2.1-Open](https://huggingface.co/vectara/hallucination_evaluation_model) hallucination evaluation model. 
+This leaderboard is based on the HHEM-2.1 hallucination evaluation model. 
 If you are interested in the previous leaderboard based on HHEM-1.0, it is available [here](https://github.com/vectara/hallucination-leaderboard/tree/hhem-1.0-final)
 
 
@@ -21,6 +21,8 @@ If you are interested in the previous leaderboard based on HHEM-1.0, it is avail
 
 
 Last updated on July 25th, 2024
+
+![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
