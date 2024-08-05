@@ -101,7 +101,7 @@ We evaluate summarization factual consistency rate instead of overall factual ac
 ## Prompt Used
 > You are a chat bot answering questions using data. You must stick to the answers provided solely by the text in the passage provided. You are asked the question 'Provide a concise summary of the following passage, covering the core pieces of information described.'  &lt;PASSAGE&gt;'
 
-When calling the API, the &lt;PASSAGE&gt; token was then replaced with the source document (see the 'source' column in [leaderboard-summaries.csv](https://drive.google.com/drive/folders/1OGc2fIHeTSyJHgIyVfWVabRbojExhoYw?usp=sharing) ). 
+When calling the API, the &lt;PASSAGE&gt; token was then replaced with the source document (see the 'source' column in [this dataset](https://huggingface.co/datasets/vectara/leaderboard_results) ). 
 
 ## API Integration Details
 Below is a detailed overview of the models integrated and their specific endpoints:
