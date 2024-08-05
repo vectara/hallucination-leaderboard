@@ -4,8 +4,8 @@ Public LLM leaderboard computed using Vectara's [Hughes Hallucination Evaluation
 
 Also, feel free to check out our [hallucination leaderboard](https://huggingface.co/spaces/vectara/leaderboard) on Hugging Face. 
 
-This leaderboard is based on the HHEM-2.1 hallucination evaluation model. 
-If you are interested in the previous leaderboard based on HHEM-1.0, it is available [here](https://github.com/vectara/hallucination-leaderboard/tree/hhem-1.0-final)
+The rankings in this leaderboard are computed using the HHEM-2.1 hallucination evaluation model. 
+If you are interested in the previous leaderboard, which was based on HHEM-1.0, it is available [here](https://github.com/vectara/hallucination-leaderboard/tree/hhem-1.0-final)
 
 
 <table style="border-collapse: collapse;">
@@ -78,7 +78,7 @@ Last updated on August 5th, 2024
 |TII falcon-7B-instruct|29.9 %|70.1 %|90.0 %|75.5|
 
 ## Model
-You can find the model used to compute this leaderboard open sourced for commercial use on [Hugging Face](https://huggingface.co/vectara/hallucination_evaluation_model) and [Kaggle](https://www.kaggle.com/models/vectara/hallucination_evaluation_model), along with instructions on how to use the model.
+This leaderboard uses HHEM-2.1, Vectara's commercial hallucination evaluation model, to compute the LLM rankings. You can find an open-source variant of that model, HHEM-2.1-Open on [Hugging Face](https://huggingface.co/vectara/hallucination_evaluation_model) and [Kaggle](https://www.kaggle.com/models/vectara/hallucination_evaluation_model).
 
 ## Data
 See [this dataset](https://huggingface.co/datasets/vectara/leaderboard_results) for the generated summaries we used for evaluating the models.
