@@ -20,7 +20,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on July 25th, 2024
+Last updated on August 5th, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -49,12 +49,14 @@ Last updated on July 25th, 2024
 |Llama-2-70B-Chat-hf|5.9 %|94.1 %|99.9 %|84.9|
 |Google Gemini-1.5-flash|6.6 %|93.4 %|98.1 %|62.8|
 |Microsoft phi-2|6.7 %|93.3 %|91.5 %|80.8|
+|Google Gemma-2-2B-it|7.0 %|93.0 %|100.0 %|62.2|
 |Llama-3-8B-Chat-hf|7.4 %|92.6 %|99.8 %|79.7|
 |Google Gemini-Pro|7.7 %|92.3 %|98.4 %|89.5|
 |CohereForAI c4ai-command-r-plus|7.8 %|92.2 %|100.0 %|71.2|
 |01-AI Yi-1.5-6B-Chat|8.2 %|91.8 %|100.0 %|98.9|
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
 |Anthropic Claude-3-5-sonnet|8.6 %|91.4 %|100.0 %|103.0|
+|Mistral-7B-Instruct-v0.3|9.8 %|90.2 %|100.0 %|98.4|
 |Anthropic Claude-3-opus|10.1 %|89.9 %|95.5 %|92.1|
 |Google Gemma-2-9B-it|10.1 %|89.9 %|100.0 %|70.2|
 |Llama-2-13B-Chat-hf|10.5 %|89.5 %|99.8 %|82.1|
@@ -134,11 +136,10 @@ For more information about Cohere's models, refer to their [website](https://doc
 Details on each model can be found on their [website](https://docs.anthropic.com/claude/docs/models-overview).
 
 ### Mistral AI Models
-- **Mistral 7B Instruct-v0.1**: The [Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1) model is integrated using Hugging Face's API.
-- **Mistral 7B Instruct-v0.2**: The [Mistral-7B-Instruct-v0.2](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2) model is integrated using Hugging Face's API.
-- **Mixtral 8x7B**: Similarly, the [Mixtral-8x7B-Instruct-v0.1](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1) model is accessed via Hugging Face's API.
+- **Mixtral 8x7B**: The [Mixtral-8x7B-Instruct-v0.1](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1) model is accessed via Hugging Face's API.
 - **Mixtral 8x22B**: Accessed via Together AI's API using the model `mistralai/Mixtral-8x22B-Instruct-v0.1` and the `chat` endpoint.  
-- **Mistral Large2**: Accessed via Mistral AI's API using the model `mistral-large-latest`
+- **Mistral Large2**: Accessed via Mistral AI's API using the model `mistral-large-latest`.
+- **Mistral-7B-Instruct-v0.3**: The [Mistral-7B-Instruct-v0.3](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3) model is accessed by being loaded from Hugging Face's checkpoint.
 
 ### Google Palm Models via Vertex AI
 - **Google Palm 2**: Implemented using the `text-bison-001` model, respectively.
@@ -162,8 +163,9 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
 - **Google gemma-7b-it**: The [gemma-7b-it](https://huggingface.co/google/gemma-7b-it) model is accessed via Hugging Face's API. 
 - **Google gemma-1.1-7b-it** : The [gemma-1.1-7b-it](https://huggingface.co/google/gemma-1.1-7b-it) model is accessed by being loaded from Hugging Face's checkpoint. 
-- **Google gemma-1.1-2b-it** : The [gemma-1.1-2b-it](https://huggingface.co/google/gemma-1.1-2b-it) model is accessed via being loaded from Hugging Face's checkpoint
-- **Google gemma-2-9b-it** : The [gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it) model is accessed via being loaded from Hugging Face's checkpoint
+- **Google gemma-1.1-2b-it** : The [gemma-1.1-2b-it](https://huggingface.co/google/gemma-1.1-2b-it) model is accessed via being loaded from Hugging Face's checkpoint.
+- **Google gemma-2-9b-it** : The [gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it) model is accessed via being loaded from Hugging Face's checkpoint.
+- **Google gemma-2-2b-it** : The [gemma-2-2b-it](https://huggingface.co/google/gemma-2-2b-it) model is accessed via being loaded from Hugging Face's checkpoint.
 
 ### TII Models on Hugging Face
 - **tiiuae/falcon-7b-instruct**: The [falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct) model is accessed via Hugging Face's API.
