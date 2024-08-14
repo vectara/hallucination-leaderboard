@@ -69,7 +69,7 @@ Last updated on August 14th, 2024
 |Anthropic Claude-3-sonnet|16.3 %|83.7 %|100.0 %|108.5|
 |Google Gemma-1.1-7B-it|17.0 %|83.0 %|100.0 %|64.3|
 |Anthropic Claude-2|17.4 %|82.6 %|99.3 %|87.5|
-|Google Flan-T5-large|18.3 %|81.7 %|99.3|20.9|
+|Google Flan-T5-large|18.3 %|81.7 %|99.3 %|20.9|
 |Cohere|18.9 %|81.1 %|99.8 %|59.8|
 |Mixtral-8x7B-Instruct-v0.1|20.1 %|79.9 %|99.9 %|90.7|
 |Apple OpenELM-3B-Instruct|24.8 %|75.2 %|99.3 %|47.2|
