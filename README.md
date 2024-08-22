@@ -20,7 +20,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on August 14th, 2024
+Last updated on August 22nd, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -39,6 +39,7 @@ Last updated on August 14th, 2024
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
 |Llama-3.1-405B-Instruct|3.9 %|96.1 %|99.6 %|85.7|
 |Microsoft Phi-3-mini-4k-instruct|4.0 %|96.0 %|100.0 %|86.8|
+|Microsoft Phi-3.5-mini-instruct|4.1 %|95.9 %|100.0 %|75.0|
 |Mistral-Large2|4.1 %|95.9 %|100.0 %|77.4|
 |Llama-3-70B-Chat-hf|4.1 %|95.9 %|99.2 %|68.5|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
@@ -158,6 +159,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Microsoft WizardLM-2-8x22B**: Accessed via Together AI's API using the model `microsoft/WizardLM-2-8x22B` and the `chat` endpoint.  
 - **Microsoft Phi-3-mini-4k**: The [phi-3-mini-4k](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct) model is accessed via Hugging Face's checkpoint.
 - **Microsoft Phi-3-mini-128k**: The [phi-3-mini-128k](https://huggingface.co/microsoft/Phi-3-mini-128k-instruct) model is accessed via Hugging Face's checkpoint.
+- **Microsoft Phi-3.5-mini-instruct**: The [phi-3.5-mini-instruct](https://huggingface.co/microsoft/Phi-3.5-mini-instruct) model is accessed via Hugging Face's checkpoint.
 
 ### Google Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
