@@ -20,7 +20,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on August 22nd, 2024
+Last updated on August 23rd, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -33,7 +33,9 @@ Last updated on August 22nd, 2024
 |GPT-4|1.8 %|98.2 %|100.0 %|81.1|
 |GPT-3.5-Turbo|1.9 %|98.1 %|99.6 %|84.1|
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0 %|66.2|
+|Microsoft Phi-3.5-MoE-instruct|2.5 %|97.5 %|96.3 %|69.7|
 |Intel Neural-Chat-7B-v3-3|2.6 %|97.4 %|100.0 %|60.7|
+|AI21 Jamba-1.5-Mini|2.9 %|97.1 %|95.6 %|74.5|
 |Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0 %|68.7|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
@@ -61,6 +63,7 @@ Last updated on August 22nd, 2024
 |Anthropic Claude-3-opus|10.1 %|89.9 %|95.5 %|92.1|
 |Google Gemma-2-9B-it|10.1 %|89.9 %|100.0 %|70.2|
 |Llama-2-13B-Chat-hf|10.5 %|89.5 %|99.8 %|82.1|
+|Mistral-Nemo-Instruct|11.2 %|88.8 %|100.0 %|69.9|
 |Llama-2-7B-Chat-hf|11.3 %|88.7 %|99.6 %|119.9|
 |Microsoft WizardLM-2-8x22B|11.7 %|88.3 %|99.9 %|140.8|
 |Amazon Titan-Express|13.5 %|86.5 %|99.5 %|98.4|
@@ -141,6 +144,7 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Mixtral 8x22B**: Accessed via Together AI's API using the model `mistralai/Mixtral-8x22B-Instruct-v0.1` and the `chat` endpoint.  
 - **Mistral Large2**: Accessed via Mistral AI's API using the model `mistral-large-latest`.
 - **Mistral-7B-Instruct-v0.3**: The [Mistral-7B-Instruct-v0.3](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3) model is accessed by being loaded from Hugging Face's checkpoint.
+- **Mistral-Nemo-Instruct** The [Mistral-Nemo-Instruct-2407](https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407) model is accessed via Hugging Face's checkpoint.
 
 ### Google Palm Models via Vertex AI
 - **Google Palm 2**: Implemented using the `text-bison-001` model, respectively.
@@ -160,6 +164,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Microsoft Phi-3-mini-4k**: The [phi-3-mini-4k](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct) model is accessed via Hugging Face's checkpoint.
 - **Microsoft Phi-3-mini-128k**: The [phi-3-mini-128k](https://huggingface.co/microsoft/Phi-3-mini-128k-instruct) model is accessed via Hugging Face's checkpoint.
 - **Microsoft Phi-3.5-mini-instruct**: The [phi-3.5-mini-instruct](https://huggingface.co/microsoft/Phi-3.5-mini-instruct) model is accessed via Hugging Face's checkpoint.
+- **Microsoft Phi-3.5-MoE-instruct**: The [phi-3.5-MoE-instruct](https://huggingface.co/microsoft/Phi-3.5-MoE-instruct) model is accessed via Hugging Face's checkpoint.
 
 ### Google Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
@@ -192,6 +197,9 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### Qwen Model
 - **Qwen/Qwen2-72B-Instruct**: Acccessed via Together AI `chat` endpoint with model name `Qwen/Qwen2-72B-Instruct`.
+
+### AI21 Model
+- **AI21-Jamba-1.5-Mini**: The [Jamba-1.5-Mini](https://huggingface.co/ai21labs/AI21-Jamba-1.5-Mini) model is accessed via Hugging Face's checkpoint.
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
