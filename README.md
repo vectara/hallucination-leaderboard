@@ -20,7 +20,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on September 3rd, 2024
+Last updated on September 5th, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -44,6 +44,7 @@ Last updated on September 3rd, 2024
 |Microsoft Phi-3.5-mini-instruct|4.1 %|95.9 %|100.0 %|75.0|
 |Mistral-Large2|4.1 %|95.9 %|100.0 %|77.4|
 |Llama-3-70B-Chat-hf|4.1 %|95.9 %|99.2 %|68.5|
+|Qwen2-VL-7B-Instruct|4.2 %|95.8 %|100.0 %|73.9|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
@@ -59,6 +60,7 @@ Last updated on September 3rd, 2024
 |Google Gemini-Pro|7.7 %|92.3 %|98.4 %|89.5|
 |01-AI Yi-1.5-6B-Chat|7.9 %|92.1 %|100.0 %|98.9|
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
+|Qwen2-VL-2B-Instruct|8.3 %|91.7 %|100.0 %|81.8|
 |Anthropic Claude-3-5-sonnet|8.6 %|91.4 %|100.0 %|103.0|
 |Mistral-7B-Instruct-v0.3|9.5 %|90.5 %|100.0 %|98.4|
 |Anthropic Claude-3-opus|10.1 %|89.9 %|95.5 %|92.1|
@@ -194,6 +196,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### Qwen Model
 - **Qwen/Qwen2-72B-Instruct**: Acccessed via Together AI `chat` endpoint with model name `Qwen/Qwen2-72B-Instruct`.
+- **Qwen/Qwen2-VL-Instruct 2B, 7B**: The models [Qwen/Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct) and [Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) are accessed via Hugging Face's checkpoint.
 
 ### AI21 Model
 - **AI21-Jamba-1.5-Mini**: The [Jamba-1.5-Mini](https://huggingface.co/ai21labs/AI21-Jamba-1.5-Mini) model is accessed via Hugging Face's checkpoint.

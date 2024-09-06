@@ -15,8 +15,10 @@ for record in performance_table:
 
 # construct dataframe
 df = pd.DataFrame.from_dict(results, orient='index', columns=["hallucination_rate"])
-df_sorted = df.sort_values(by='hallucination_rate', ascending=True).head(25).reset_index()
+df_sorted = df.sort_values(by='hallucination_rate', ascending=True).reset_index()
 df_sorted.columns = ['LLM','hallucination_rate']
+score_threshold = df_sorted.iloc[25]['hallucination_rate']
+df_sorted = df_sorted.loc[df_sorted['hallucination_rate'] <= score_threshold]
 
 # plot top 25 LLMs
 plt.figure(figsize=(10, 6))
