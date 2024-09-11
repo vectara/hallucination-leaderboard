@@ -20,7 +20,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on September 5th, 2024
+Last updated on September 11th, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -32,6 +32,7 @@ Last updated on September 5th, 2024
 |GPT-4-Turbo|1.7 %|98.3 %|100.0 %|86.2|
 |GPT-4|1.8 %|98.2 %|100.0 %|81.1|
 |GPT-3.5-Turbo|1.9 %|98.1 %|99.6 %|84.1|
+|DeepSeek-V2.5|2.4 %|97.6 %|100.0 %|83.2|
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0 %|66.2|
 |Microsoft Phi-3.5-MoE-instruct|2.5 %|97.5 %|96.3 %|69.7|
 |Intel Neural-Chat-7B-v3-3|2.6 %|97.4 %|100.0 %|60.7|
@@ -200,6 +201,9 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### AI21 Model
 - **AI21-Jamba-1.5-Mini**: The [Jamba-1.5-Mini](https://huggingface.co/ai21labs/AI21-Jamba-1.5-Mini) model is accessed via Hugging Face's checkpoint.
+
+### DeepSeek Model
+- **DeepSeek V2.5**: Accessed via DeepSeek's API using `deepseek-chat` model and the `chat` endpoint.
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
