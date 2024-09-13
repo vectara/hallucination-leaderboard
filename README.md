@@ -20,13 +20,14 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on September 11th, 2024
+Last updated on September 13th, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
 |Zhipu AI GLM-4-9B-Chat|1.3 %|98.7 %|100.0 %|58.1|
+|OpenAI-o1-mini|1.4 %|98.6 %|100.0 %|78.3|
 |GPT-4o|1.5 %|98.5 %|100.0 %|77.8|
 |GPT-4o-mini|1.7 %|98.3 %|100.0 %|76.3|
 |GPT-4-Turbo|1.7 %|98.3 %|100.0 %|86.2|
@@ -39,6 +40,7 @@ Last updated on September 11th, 2024
 |AI21 Jamba-1.5-Mini|2.9 %|97.1 %|95.6 %|74.5|
 |Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0 %|68.7|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
+|OpenAI-o1-preview|3.3 %|96.7 %|100.0 %|119.3|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
 |Llama-3.1-405B-Instruct|3.9 %|96.1 %|99.6 %|85.7|
 |Microsoft Phi-3-mini-4k-instruct|4.0 %|96.0 %|100.0 %|86.8|
@@ -121,6 +123,8 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **GPT-4 Turbo**: Utilized under the model name `gpt-4-turbo-2024-04-09`, in line with OpenAI's documentation.
 - **GPT-4o**: Accessed using the model name `gpt-4o`.
 - **GPT-4o-mini**: Accessed using the model name `gpt-4o-mini`.
+- **o1-mini**: Accessed using the model name `o1-mini`.
+- **o1-preview**: Accessed using the model name `o1-preview`
 
 ### Llama Models
 - **Llama 2 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints using model `meta-llama/Llama-2-xxb-chat-hf`, where `xxb` can be `7b`, `13b`, and `70b`, tailored to each model's capacity.
