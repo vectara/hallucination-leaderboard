@@ -20,7 +20,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on September 20th, 2024
+Last updated on September 23th, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
