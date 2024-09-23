@@ -20,7 +20,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on September 16th, 2024
+Last updated on September 23rd, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -37,8 +37,10 @@ Last updated on September 16th, 2024
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0 %|66.2|
 |Microsoft Phi-3.5-MoE-instruct|2.5 %|97.5 %|96.3 %|69.7|
 |Intel Neural-Chat-7B-v3-3|2.6 %|97.4 %|100.0 %|60.7|
+|Qwen2.5-7B-Instruct|2.8 %|97.2 %|100.0 %|71.0|
 |AI21 Jamba-1.5-Mini|2.9 %|97.1 %|95.6 %|74.5|
 |Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0 %|68.7|
+|Qwen2.5-32B-Instruct|3.0 %|97.0 %|100.0 %|67.9|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
 |OpenAI-o1-preview|3.3 %|96.7 %|100.0 %|119.3|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
@@ -48,6 +50,8 @@ Last updated on September 16th, 2024
 |Mistral-Large2|4.1 %|95.9 %|100.0 %|77.4|
 |Llama-3-70B-Chat-hf|4.1 %|95.9 %|99.2 %|68.5|
 |Qwen2-VL-7B-Instruct|4.2 %|95.8 %|100.0 %|73.9|
+|Qwen2.5-14B-Instruct|4.2 %|95.8 %|100.0 %|74.8|
+|Qwen2.5-72B-Instruct|4.3 %|95.7 %|100.0 %|80.0|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
@@ -60,6 +64,7 @@ Last updated on September 16th, 2024
 |Google Gemini-1.5-Flash|6.6 %|93.4 %|99.9 %|63.3|
 |Microsoft phi-2|6.7 %|93.3 %|91.5 %|80.8|
 |Google Gemma-2-2B-it|7.0 %|93.0 %|100.0 %|62.2|
+|Qwen2.5-3B-Instruct|7.0 %|93.0 %|100.0 %|70.4|
 |Llama-3-8B-Chat-hf|7.4 %|92.6 %|99.8 %|79.7|
 |Google Gemini-Pro|7.7 %|92.3 %|98.4 %|89.5|
 |01-AI Yi-1.5-6B-Chat|7.9 %|92.1 %|100.0 %|98.9|
@@ -78,12 +83,14 @@ Last updated on September 16th, 2024
 |Amazon Titan-Express|13.5 %|86.5 %|99.5 %|98.4|
 |Google PaLM-2|14.1 %|85.9 %|99.8 %|86.6|
 |Google Gemma-7B-it|14.8 %|85.2 %|100.0 %|113.0|
+|Qwen2.5-1.5B-Instruct|15.8 %|84.2 %|100.0 %|70.7|
 |Anthropic Claude-3-sonnet|16.3 %|83.7 %|100.0 %|108.5|
 |Google Gemma-1.1-7B-it|17.0 %|83.0 %|100.0 %|64.3|
 |Anthropic Claude-2|17.4 %|82.6 %|99.3 %|87.5|
 |Google Flan-T5-large|18.3 %|81.7 %|99.3 %|20.9|
 |Mixtral-8x7B-Instruct-v0.1|20.1 %|79.9 %|99.9 %|90.7|
 |Apple OpenELM-3B-Instruct|24.8 %|75.2 %|99.3 %|47.2|
+|Qwen2.5-0.5B-Instruct|25.2 %|74.8 %|100.0 %|72.6|
 |Google Gemma-1.1-2B-it|27.8 %|72.2 %|100.0 %|66.8|
 |TII falcon-7B-instruct|29.9 %|70.1 %|90.0 %|75.5|
 
@@ -203,9 +210,10 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### Zhipu AI Model
 - **Zhipu-AI/GLM-4-9B-Chat**: The [GLM-4-9B-Chat](https://huggingface.co/THUDM/glm-4-9b-chat) is accessed via Hugging Face's checkpoint.
 
-### Qwen Model
+### Qwen Models
 - **Qwen/Qwen2-72B-Instruct**: Acccessed via Together AI `chat` endpoint with model name `Qwen/Qwen2-72B-Instruct`.
-- **Qwen/Qwen2-VL-Instruct 2B, 7B**: The models [Qwen/Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct) and [Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) are accessed via Hugging Face's checkpoint.
+- **Qwen/Qwen2-VL-Instruct 2B, 7B**: The models [Qwen/Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct) and [Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) are accessed via Hugging Face's checkpoints.
+- **Qwen/Qwen2.5-Instruct 0.5B, 1.5B, 3B, 7B, 14B, 32B, 72B**: The models [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct), [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct), [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct), [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct), [Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct), [Qwen2.5-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct), and [Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct) are accessed via Hugging Face's checkpoints.
 
 ### AI21 Model
 - **AI21-Jamba-1.5-Mini**: The [Jamba-1.5-Mini](https://huggingface.co/ai21labs/AI21-Jamba-1.5-Mini) model is accessed via Hugging Face's checkpoint.
