@@ -40,6 +40,7 @@ Last updated on September 20th, 2024
 |Qwen2.5-7B-Instruct|2.8 %|97.2 %|100.0 %|71.0|
 |AI21 Jamba-1.5-Mini|2.9 %|97.1 %|95.6 %|74.5|
 |Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0 %|68.7|
+|Qwen2.5-32B-Instruct|3.0 %|97.0 %|100.0 %|67.9|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
 |OpenAI-o1-preview|3.3 %|96.7 %|100.0 %|119.3|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
@@ -50,6 +51,7 @@ Last updated on September 20th, 2024
 |Llama-3-70B-Chat-hf|4.1 %|95.9 %|99.2 %|68.5|
 |Qwen2-VL-7B-Instruct|4.2 %|95.8 %|100.0 %|73.9|
 |Qwen2.5-14B-Instruct|4.2 %|95.8 %|100.0 %|74.8|
+|Qwen2.5-72B-Instruct|4.3 %|95.7 %|100.0 %|80.0|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
@@ -211,7 +213,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### Qwen Models
 - **Qwen/Qwen2-72B-Instruct**: Acccessed via Together AI `chat` endpoint with model name `Qwen/Qwen2-72B-Instruct`.
 - **Qwen/Qwen2-VL-Instruct 2B, 7B**: The models [Qwen/Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct) and [Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) are accessed via Hugging Face's checkpoints.
-- **Qwen/Qwen2.5-Instruct 0.5B, 1.5B, 3B, 7B, 14B-**: The models [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct), [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct), [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct), [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct), and [Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct) are accessed via Hugging Face's checkpoints.
+- **Qwen/Qwen2.5-Instruct 0.5B, 1.5B, 3B, 7B, 14B, 32B, 72B**: The models [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct), [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct), [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct), [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct), [Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct), [Qwen2.5-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct), and [Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct) are accessed via Hugging Face's checkpoints.
 
 ### AI21 Model
 - **AI21-Jamba-1.5-Mini**: The [Jamba-1.5-Mini](https://huggingface.co/ai21labs/AI21-Jamba-1.5-Mini) model is accessed via Hugging Face's checkpoint.

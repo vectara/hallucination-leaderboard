@@ -36,7 +36,7 @@ ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
 # Set x-axis limit
-ax.set_xlim(0, 10)
+ax.set_xlim(0, 6)
 
 plt.tight_layout()
 plt.savefig('hallucination_rates_of_various_LLMs.png', dpi=300, bbox_inches='tight')
