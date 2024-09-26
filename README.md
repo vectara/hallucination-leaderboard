@@ -20,7 +20,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on September 23rd, 2024
+Last updated on September 26th, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -52,6 +52,7 @@ Last updated on September 23rd, 2024
 |Qwen2-VL-7B-Instruct|4.2 %|95.8 %|100.0 %|73.9|
 |Qwen2.5-14B-Instruct|4.2 %|95.8 %|100.0 %|74.8|
 |Qwen2.5-72B-Instruct|4.3 %|95.7 %|100.0 %|80.0|
+|Llama-3.2-90B-Vision-Instruct|4.3 %|95.7 %|100.0 %|79.8|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
@@ -59,6 +60,7 @@ Last updated on September 23rd, 2024
 |Llama-3.1-70B-Instruct|5.0 %|95.0 %|100.0 %|79.6|
 |Llama-3.1-8B-Instruct|5.4 %|94.6 %|100.0 %|71.0|
 |Cohere Command-R-Plus|5.4 %|94.6 %|100.0 %|68.4|
+|Llama-3.2-11B-Vision-Instruct|5.5 %|94.5 %|100.0 %|67.3|
 |Llama-2-70B-Chat-hf|5.9 %|94.1 %|99.9 %|84.9|
 |Google Gemini-Flash-Experimental|6.3 %|93.7 %|99.9 %|58.9|
 |Google Gemini-1.5-Flash|6.6 %|93.4 %|99.9 %|63.3|
@@ -68,6 +70,7 @@ Last updated on September 23rd, 2024
 |Llama-3-8B-Chat-hf|7.4 %|92.6 %|99.8 %|79.7|
 |Google Gemini-Pro|7.7 %|92.3 %|98.4 %|89.5|
 |01-AI Yi-1.5-6B-Chat|7.9 %|92.1 %|100.0 %|98.9|
+|Llama-3.2-3B-Instruct|7.9 %|92.1 %|100.0 %|72.2|
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
 |Qwen2-VL-2B-Instruct|8.3 %|91.7 %|100.0 %|81.8|
 |Anthropic Claude-3-5-sonnet|8.6 %|91.4 %|100.0 %|103.0|
@@ -89,6 +92,7 @@ Last updated on September 23rd, 2024
 |Anthropic Claude-2|17.4 %|82.6 %|99.3 %|87.5|
 |Google Flan-T5-large|18.3 %|81.7 %|99.3 %|20.9|
 |Mixtral-8x7B-Instruct-v0.1|20.1 %|79.9 %|99.9 %|90.7|
+|Llama-3.2-1B-Instruct|20.7 %|79.3 %|100.0 %|71.5|
 |Apple OpenELM-3B-Instruct|24.8 %|75.2 %|99.3 %|47.2|
 |Qwen2.5-0.5B-Instruct|25.2 %|74.8 %|100.0 %|72.6|
 |Google Gemma-1.1-2B-it|27.8 %|72.2 %|100.0 %|66.8|
@@ -139,6 +143,8 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **Llama 2 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints using model `meta-llama/Llama-2-xxb-chat-hf`, where `xxb` can be `7b`, `13b`, and `70b`, tailored to each model's capacity.
 - **Llama 3 8B and 70B**: These models are accessed via Together AI `chat` endpoint and using the model `meta-llama/Llama-3-xxB-chat-hf`,  where `xxB` can be `8B` and `70B`. 
 - **Llama 3.1 8B, 70B and 405B**: The models [meta-llama/Meta-Llama-3.1-70B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-70B-Instruct) and [meta-llama/Meta-Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct) are accessed via Hugging Face's checkpoint. The model `Meta-Llama-3.1-405B-Instruct` is accessed via Replicate's API using the model `meta/meta-llama-3.1-405b-instruct`.
+- **Llama 3.2 1B and 3B**: The model [meta-llama/Meta-Llama-3.2-1B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.2-1B-Instruct) is accessed via Hugging Face's checkpoint. The model `Meta-Llama-3.2-3B-Instruct` is accessed via Together AI `chat` endpoint using model `meta-llama/Llama-3.2-3B-Instruct-Turbo`.
+- **Llama 3.2 Vision 11B and 90B**:The models `Llama-3.2-11B-Vision-Instruct` and `Llama-3.2-90B-Vision-Instruct` are accessed via Together AI `chat` endpoint using model `meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo` and `meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo`.
 
 ### Cohere Models
 - **Cohere Command R**: Employed using the model `command-r-08-2024` and the `/chat` endpoint.
