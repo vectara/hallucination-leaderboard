@@ -52,6 +52,7 @@ Last updated on September 26th, 2024
 |Qwen2-VL-7B-Instruct|4.2 %|95.8 %|100.0 %|73.9|
 |Qwen2.5-14B-Instruct|4.2 %|95.8 %|100.0 %|74.8|
 |Qwen2.5-72B-Instruct|4.3 %|95.7 %|100.0 %|80.0|
+|Llama-3.2-90B-Vision-Instruct|4.3 %|95.7 %|100.0 %|79.8|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
@@ -59,6 +60,7 @@ Last updated on September 26th, 2024
 |Llama-3.1-70B-Instruct|5.0 %|95.0 %|100.0 %|79.6|
 |Llama-3.1-8B-Instruct|5.4 %|94.6 %|100.0 %|71.0|
 |Cohere Command-R-Plus|5.4 %|94.6 %|100.0 %|68.4|
+|Llama-3.2-11B-Vision-Instruct|5.5 %|94.5 %|100.0 %|67.3|
 |Llama-2-70B-Chat-hf|5.9 %|94.1 %|99.9 %|84.9|
 |Google Gemini-Flash-Experimental|6.3 %|93.7 %|99.9 %|58.9|
 |Google Gemini-1.5-Flash|6.6 %|93.4 %|99.9 %|63.3|
@@ -66,14 +68,12 @@ Last updated on September 26th, 2024
 |Google Gemma-2-2B-it|7.0 %|93.0 %|100.0 %|62.2|
 |Qwen2.5-3B-Instruct|7.0 %|93.0 %|100.0 %|70.4|
 |Llama-3-8B-Chat-hf|7.4 %|92.6 %|99.8 %|79.7|
-|Llama-3.2-90B-Vision-Instruct|7.6 %|92.4 %|100.0 %|83.3|
 |Google Gemini-Pro|7.7 %|92.3 %|98.4 %|89.5|
 |01-AI Yi-1.5-6B-Chat|7.9 %|92.1 %|100.0 %|98.9|
 |Llama-3.2-3B-Instruct|7.9 %|92.1 %|100.0 %|72.2|
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
 |Qwen2-VL-2B-Instruct|8.3 %|91.7 %|100.0 %|81.8|
 |Anthropic Claude-3-5-sonnet|8.6 %|91.4 %|100.0 %|103.0|
-|Llama-3.2-11B-Vision-Instruct|8.9 %|91.1 %|100.0 %|73.1|
 |Mistral-7B-Instruct-v0.3|9.5 %|90.5 %|100.0 %|98.4|
 |Google Gemini-1.5-Pro|9.1 %|90.9 %|99.8 %|61.6|
 |Google Gemini-Pro-Experimental|10.0 %|90.0 %|99.8 %|65.6|
