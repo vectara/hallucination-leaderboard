@@ -20,7 +20,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on September 26th, 2024
+Last updated on October 2nd, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -43,6 +43,7 @@ Last updated on September 26th, 2024
 |Qwen2.5-32B-Instruct|3.0 %|97.0 %|100.0 %|67.9|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
 |OpenAI-o1-preview|3.3 %|96.7 %|100.0 %|119.3|
+|Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
 |Llama-3.1-405B-Instruct|3.9 %|96.1 %|99.6 %|85.7|
 |Microsoft Phi-3-mini-4k-instruct|4.0 %|96.0 %|100.0 %|86.8|
@@ -62,7 +63,7 @@ Last updated on September 26th, 2024
 |Cohere Command-R-Plus|5.4 %|94.6 %|100.0 %|68.4|
 |Llama-3.2-11B-Vision-Instruct|5.5 %|94.5 %|100.0 %|67.3|
 |Llama-2-70B-Chat-hf|5.9 %|94.1 %|99.9 %|84.9|
-|Google Gemini-Flash-Experimental|6.3 %|93.7 %|99.9 %|58.9|
+|Google Gemini-1.5-Pro-002|6.6 %|93.7 %|99.9 %|62.0|
 |Google Gemini-1.5-Flash|6.6 %|93.4 %|99.9 %|63.3|
 |Microsoft phi-2|6.7 %|93.3 %|91.5 %|80.8|
 |Google Gemma-2-2B-it|7.0 %|93.0 %|100.0 %|62.2|
@@ -76,7 +77,6 @@ Last updated on September 26th, 2024
 |Anthropic Claude-3-5-sonnet|8.6 %|91.4 %|100.0 %|103.0|
 |Mistral-7B-Instruct-v0.3|9.5 %|90.5 %|100.0 %|98.4|
 |Google Gemini-1.5-Pro|9.1 %|90.9 %|99.8 %|61.6|
-|Google Gemini-Pro-Experimental|10.0 %|90.0 %|99.8 %|65.6|
 |Anthropic Claude-3-opus|10.1 %|89.9 %|95.5 %|92.1|
 |Google Gemma-2-9B-it|10.1 %|89.9 %|100.0 %|70.2|
 |Llama-2-13B-Chat-hf|10.5 %|89.5 %|99.8 %|82.1|
@@ -170,8 +170,8 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Gemini Pro**: Google's `gemini-pro` model is incorporated for enhanced language processing, accessible on Vertex AI.
 - **Gemini 1.5 Pro**: Accessed using model `gemini-1.5-pro-001` on Vertex AI. 
 - **Gemini 1.5 Flash**: Accessed using model `gemini-1.5-flash-001` on Vertex AI. 
-- **Gemini Pro Experimental**: Accessed using model `gemini-pro-experimental` on Vertex AI.
-- **Gemini Flase Experimental**: Accessed using model `gemini-flash-experimental` on Vertex AI. 
+- **Gemini 1.5 Pro 002**: Accessed using model `gemini-1.5-pro-002` on Vertex AI.
+- **Gemini 1.5 Flase 002**: Accessed using model `gemini-1.5-flash-002` on Vertex AI. 
 
 For an in-depth understanding of each model's version and lifecycle, especially those offered by Google, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versioning) on Vertex AI.
 
