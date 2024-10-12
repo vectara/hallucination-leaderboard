@@ -7,7 +7,6 @@ Also, feel free to check out our [hallucination leaderboard](https://huggingface
 The rankings in this leaderboard are computed using the HHEM-2.1 hallucination evaluation model. 
 If you are interested in the previous leaderboard, which was based on HHEM-1.0, it is available [here](https://github.com/vectara/hallucination-leaderboard/tree/hhem-1.0-final)
 
-
 <table style="border-collapse: collapse;">
   <tr>
     <td style="text-align: center; vertical-align: middle; border: none;">
@@ -262,3 +261,5 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 * We will also be adding a leaderboard on citation accuracy. As a builder of RAG systems, we have noticed that LLMs tend to mis-attribute sources sometimes when answering a question based on supplied search results. We'd like to be able to measure this so we can help mitigate it within our platform.
 * We will also look to expand the benchmark to cover other RAG tasks, such as multi-document summarization.
 * We also plan to cover more languages than just english. Our current platform covers over 100 languages, and we want to develop hallucination detectors with comparable multi-lingual coverage.
+
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=5f53f560-5ba6-4e73-917b-c7049e9aea2c" />
