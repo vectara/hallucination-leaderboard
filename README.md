@@ -20,7 +20,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on October 2nd, 2024
+Last updated on October 22nd, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -54,6 +54,7 @@ Last updated on October 2nd, 2024
 |Qwen2.5-14B-Instruct|4.2 %|95.8 %|100.0 %|74.8|
 |Qwen2.5-72B-Instruct|4.3 %|95.7 %|100.0 %|80.0|
 |Llama-3.2-90B-Vision-Instruct|4.3 %|95.7 %|100.0 %|79.8|
+|Anthropic Claude-3-5-sonnet|4.6 %|95.4 %|100.0 %|95.9|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
@@ -74,7 +75,6 @@ Last updated on October 2nd, 2024
 |Llama-3.2-3B-Instruct|7.9 %|92.1 %|100.0 %|72.2|
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
 |Qwen2-VL-2B-Instruct|8.3 %|91.7 %|100.0 %|81.8|
-|Anthropic Claude-3-5-sonnet|8.6 %|91.4 %|100.0 %|103.0|
 |Mistral-7B-Instruct-v0.3|9.5 %|90.5 %|100.0 %|98.4|
 |Google Gemini-1.5-Pro|9.1 %|90.9 %|99.8 %|61.6|
 |Anthropic Claude-3-opus|10.1 %|89.9 %|95.5 %|92.1|
@@ -155,7 +155,7 @@ For more information about Cohere's models, refer to their [website](https://doc
 - **Claude 2**: Invoked the model using `claude-2.0` for the API call.
 - **Claude 3 Opus**: Invoked the model using `claude-3-opus-20240229` for the API call.
 - **Claude 3 Sonnet**: Invoked the model using `claude-3-sonnet-20240229` for the API call.
-- **Claude 3.5 Sonnet**: Invoked the model using `claude-3-5-sonnet-20240620` for the API call.
+- **Claude 3.5 Sonnet**: Invoked the model using `claude-3-5-sonnet-20241022` for the API call.
 Details on each model can be found on their [website](https://docs.anthropic.com/claude/docs/models-overview).
 
 ### Mistral AI Models
