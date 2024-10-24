@@ -53,6 +53,7 @@ Last updated on October 24th, 2024
 |Qwen2.5-14B-Instruct|4.2 %|95.8 %|100.0 %|74.8|
 |Qwen2.5-72B-Instruct|4.3 %|95.7 %|100.0 %|80.0|
 |Llama-3.2-90B-Vision-Instruct|4.3 %|95.7 %|100.0 %|79.8|
+|XAI Grok|4.6 %|95.4 %|100.0 %|91.0|
 |Anthropic Claude-3-5-sonnet|4.6 %|95.4 %|100.0 %|95.9|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
@@ -230,6 +231,10 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### IBM Models
 - **Granite-3.0-Instruct 2B, 8B**: The models [ibm-granite/granite-3.0-8b-instruct](https://huggingface.co/ibm-granite/granite-3.0-8b-instruct) and [ibm-granite/granite-3.0-2b-instruct](https://huggingface.co/ibm-granite/granite-3.0-2b-instruct) are accessed via Hugging Face's checkpoints.
+
+### XAI Model
+- **Grok**: Accessed via xAI's API using the model `grok-beta` and the `chat/completions` endpoint.
+
 
 
 ## Frequently Asked Questions
