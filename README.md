@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on October 22nd, 2024
+Last updated on October 24th, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -63,6 +63,7 @@ Last updated on October 22nd, 2024
 |Cohere Command-R-Plus|5.4 %|94.6 %|100.0 %|68.4|
 |Llama-3.2-11B-Vision-Instruct|5.5 %|94.5 %|100.0 %|67.3|
 |Llama-2-70B-Chat-hf|5.9 %|94.1 %|99.9 %|84.9|
+|IBM Granite-3.0-8B-Instruct|6.5 %|93.5 %|100.0 %|74.2|
 |Google Gemini-1.5-Pro-002|6.6 %|93.7 %|99.9 %|62.0|
 |Google Gemini-1.5-Flash|6.6 %|93.4 %|99.9 %|63.3|
 |Microsoft phi-2|6.7 %|93.3 %|91.5 %|80.8|
@@ -74,6 +75,7 @@ Last updated on October 22nd, 2024
 |Llama-3.2-3B-Instruct|7.9 %|92.1 %|100.0 %|72.2|
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
 |Qwen2-VL-2B-Instruct|8.3 %|91.7 %|100.0 %|81.8|
+|IBM Granite-3.0-2B-Instruct|8.8 %|91.2 %|100.0 %|81.6|
 |Mistral-7B-Instruct-v0.3|9.5 %|90.5 %|100.0 %|98.4|
 |Google Gemini-1.5-Pro|9.1 %|90.9 %|99.8 %|61.6|
 |Anthropic Claude-3-opus|10.1 %|89.9 %|95.5 %|92.1|
@@ -225,6 +227,10 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### DeepSeek Model
 - **DeepSeek V2.5**: Accessed via DeepSeek's API using `deepseek-chat` model and the `chat` endpoint.
+
+### IBM Models
+- **Granite-3.0-Instruct 2B, 8B**: The models [ibm-granite/granite-3.0-8b-instruct](https://huggingface.co/ibm-granite/granite-3.0-8b-instruct) and [ibm-granite/granite-3.0-2b-instruct](https://huggingface.co/ibm-granite/granite-3.0-2b-instruct) are accessed via Hugging Face's checkpoints.
+
 
 ## Frequently Asked Questions
 * **Qu.** Why are you are using a model to evaluate a model?
