@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on October 24th, 2024
+Last updated on October 28th, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -76,6 +76,7 @@ Last updated on October 24th, 2024
 |Llama-3.2-3B-Instruct|7.9 %|92.1 %|100.0 %|72.2|
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
 |Qwen2-VL-2B-Instruct|8.3 %|91.7 %|100.0 %|81.8|
+|Cohere Aya Expanse 32B|8.5 %|91.5 %|99.9 %|81.9|
 |IBM Granite-3.0-2B-Instruct|8.8 %|91.2 %|100.0 %|81.6|
 |Mistral-7B-Instruct-v0.3|9.5 %|90.5 %|100.0 %|98.4|
 |Google Gemini-1.5-Pro|9.1 %|90.9 %|99.8 %|61.6|
@@ -85,6 +86,7 @@ Last updated on October 24th, 2024
 |Mistral-Nemo-Instruct|11.2 %|88.8 %|100.0 %|69.9|
 |Llama-2-7B-Chat-hf|11.3 %|88.7 %|99.6 %|119.9|
 |Microsoft WizardLM-2-8x22B|11.7 %|88.3 %|99.9 %|140.8|
+|Cohere Aya Expanse 8B|12.2 %|87.8 %|99.9 %|83.9|
 |Amazon Titan-Express|13.5 %|86.5 %|99.5 %|98.4|
 |Google PaLM-2|14.1 %|85.9 %|99.8 %|86.6|
 |Google Gemma-7B-it|14.8 %|85.2 %|100.0 %|113.0|
@@ -151,6 +153,7 @@ Below is a detailed overview of the models integrated and their specific endpoin
 ### Cohere Models
 - **Cohere Command R**: Employed using the model `command-r-08-2024` and the `/chat` endpoint.
 - **Cohere Command R Plus**: Employed using the model `command-r-plus-08-2024` and the `/chat` endpoint.
+- **Aya Expanse 8B, 32B**: Accessed using models `c4ai-aya-expanse-8b` and `c4ai-aya-expanse-32b`.
 For more information about Cohere's models, refer to their [website](https://docs.cohere.com/docs/models).
 
 ### Anthropic Model
