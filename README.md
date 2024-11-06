@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on October 28th, 2024
+Last updated on November 6th, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -57,6 +57,7 @@ Last updated on October 28th, 2024
 |Anthropic Claude-3-5-sonnet|4.6 %|95.4 %|100.0 %|95.9|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
+|Anthropic Claude-3-5-haiku|4.9 %|95.1 %|100.0 %|92.9|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
 |Cohere Command-R|4.9 %|95.1 %|100.0 %|68.7|
 |Llama-3.1-70B-Instruct|5.0 %|95.0 %|100.0 %|79.6|
@@ -161,6 +162,8 @@ For more information about Cohere's models, refer to their [website](https://doc
 - **Claude 3 Opus**: Invoked the model using `claude-3-opus-20240229` for the API call.
 - **Claude 3 Sonnet**: Invoked the model using `claude-3-sonnet-20240229` for the API call.
 - **Claude 3.5 Sonnet**: Invoked the model using `claude-3-5-sonnet-20241022` for the API call.
+- **Claude 3.5 Haiku**: Invoked the model using `claude-3-5-haiku-20241022` for the API call.
+- **Claude 3.5 Haiku**: 
 Details on each model can be found on their [website](https://docs.anthropic.com/claude/docs/models-overview).
 
 ### Mistral AI Models
