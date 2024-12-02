@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on November 6th, 2024
+Last updated on December 2nd, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -84,6 +84,8 @@ Last updated on November 6th, 2024
 |Anthropic Claude-3-opus|10.1 %|89.9 %|95.5 %|92.1|
 |Google Gemma-2-9B-it|10.1 %|89.9 %|100.0 %|70.2|
 |Llama-2-13B-Chat-hf|10.5 %|89.5 %|99.8 %|82.1|
+|AllenAI-OLMo-2-13B-Instruct|10.8 %|89.2 %|100.0 %|82.0|
+|AllenAI-OLMo-2-7B-Instruct|11.1 %|88.9 %|100.0 %|112.6|
 |Mistral-Nemo-Instruct|11.2 %|88.8 %|100.0 %|69.9|
 |Llama-2-7B-Chat-hf|11.3 %|88.7 %|99.6 %|119.9|
 |Microsoft WizardLM-2-8x22B|11.7 %|88.3 %|99.9 %|140.8|
@@ -240,6 +242,9 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### XAI Model
 - **Grok**: Accessed via xAI's API using the model `grok-beta` and the `chat/completions` endpoint.
+
+### AllenAI Models
+- **OLMo-2 7B, 13B**: The models [allenai/OLMo-2-1124-7B-Instruct](https://huggingface.co/allenai/OLMo-2-1124-7B-Instruct) and [allenai/OLMo-2-1124-13B-Instruct](https://huggingface.co/allenai/OLMo-2-1124-13B-Instruct) are accessed via Hugging Face's checkpoints.
 
 
 
