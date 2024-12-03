@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on December 2nd, 2024
+Last updated on December 3rd, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
 
@@ -94,6 +94,7 @@ Last updated on December 2nd, 2024
 |Google PaLM-2|14.1 %|85.9 %|99.8 %|86.6|
 |Google Gemma-7B-it|14.8 %|85.2 %|100.0 %|113.0|
 |Qwen2.5-1.5B-Instruct|15.8 %|84.2 %|100.0 %|70.7|
+|Qwen-QwQ-32B-Preview|16.1 %|83.9 %|100.0 %|201.5|
 |Anthropic Claude-3-sonnet|16.3 %|83.7 %|100.0 %|108.5|
 |Google Gemma-1.1-7B-it|17.0 %|83.0 %|100.0 %|64.3|
 |Anthropic Claude-2|17.4 %|82.6 %|99.3 %|87.5|
@@ -230,6 +231,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Qwen/Qwen2-72B-Instruct**: Acccessed via Together AI `chat` endpoint with model name `Qwen/Qwen2-72B-Instruct`.
 - **Qwen/Qwen2-VL-Instruct 2B, 7B**: The models [Qwen/Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct) and [Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) are accessed via Hugging Face's checkpoints.
 - **Qwen/Qwen2.5-Instruct 0.5B, 1.5B, 3B, 7B, 14B, 32B, 72B**: The models [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct), [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct), [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct), [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct), [Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct), [Qwen2.5-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct), and [Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct) are accessed via Hugging Face's checkpoints.
+- **Qwen/QwQ-32B-Preview**: The model [Qwen/QwQ-32B-Preview](https://huggingface.co/Qwen/QwQ-32B-Preview) is accessed via Hugging Face's checkpoint.
 
 ### AI21 Model
 - **AI21-Jamba-1.5-Mini**: The [Jamba-1.5-Mini](https://huggingface.co/ai21labs/AI21-Jamba-1.5-Mini) model is accessed via Hugging Face's checkpoint.
