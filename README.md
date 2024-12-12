@@ -26,7 +26,7 @@ Last updated on December 11th, 2024
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
 |Zhipu AI GLM-4-9B-Chat|1.3 %|98.7 %|100.0 %|58.1|
-|Google Gemini-2.0-Flash|1.3 %|98.7 %|99.9 %|60.0|
+|Google Gemini-2.0-Flash-Exp|1.3 %|98.7 %|99.9 %|60.0|
 |OpenAI-o1-mini|1.4 %|98.6 %|100.0 %|78.3|
 |GPT-4o|1.5 %|98.5 %|100.0 %|77.8|
 |GPT-4o-mini|1.7 %|98.3 %|100.0 %|76.3|
@@ -186,7 +186,7 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Gemini 1.5 Flash**: Accessed using model `gemini-1.5-flash-001` on Vertex AI. 
 - **Gemini 1.5 Pro 002**: Accessed using model `gemini-1.5-pro-002` on Vertex AI.
 - **Gemini 1.5 Flase 002**: Accessed using model `gemini-1.5-flash-002` on Vertex AI. 
-- **Gemini 2.0 Flash**: Accessed using model `gemini-2.0-flash-exp` on Vertex AI. 
+- **Gemini 2.0 Flash Exp**: Accessed using model `gemini-2.0-flash-exp` on Vertex AI. 
 
 For an in-depth understanding of each model's version and lifecycle, especially those offered by Google, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versioning) on Vertex AI.
 
