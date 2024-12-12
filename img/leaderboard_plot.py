@@ -50,7 +50,7 @@ ax.spines['right'].set_visible(False)
 ax.set_xlim(0, 5)
 
 # Add logo
-logo_path = '/home/miaoran/hallucination-leaderboard/img/vectara_logo.png'
+logo_path = 'vectara_logo.png'
 image = plt.imread(logo_path)
 imagebox = OffsetImage(image, zoom=0.04)
 annotation_box = AnnotationBbox(imagebox, (0.9, 1), frameon=False, xycoords='axes fraction', box_alignment=(1, 1))
