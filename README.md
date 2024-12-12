@@ -21,7 +21,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 
 Last updated on December 11th, 2024
 
-![Plot: hallucination rates of various LLMs](./img/hallucination_rates_of_various_LLMs.png)
+![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
