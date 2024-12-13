@@ -232,7 +232,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Zhipu-AI/GLM-4-9B-Chat**: The [GLM-4-9B-Chat](https://huggingface.co/THUDM/glm-4-9b-chat) is accessed via Hugging Face's checkpoint.
 
 ### Qwen Models
-- **Qwen/Qwen2-72B-Instruct**: Acccessed via Together AI `chat` endpoint with model name `Qwen/Qwen2-72B-Instruct`.
+- **Qwen/Qwen2-72B-Instruct**: Accessed via Together AI `chat` endpoint with model name `Qwen/Qwen2-72B-Instruct`.
 - **Qwen/Qwen2-VL-Instruct 2B, 7B**: The models [Qwen/Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct) and [Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) are accessed via Hugging Face's checkpoints.
 - **Qwen/Qwen2.5-Instruct 0.5B, 1.5B, 3B, 7B, 14B, 32B, 72B**: The models [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct), [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct), [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct), [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct), [Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct), [Qwen2.5-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct), and [Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct) are accessed via Hugging Face's checkpoints.
 - **Qwen/QwQ-32B-Preview**: The model [Qwen/QwQ-32B-Preview](https://huggingface.co/Qwen/QwQ-32B-Preview) is accessed via Hugging Face's checkpoint.
