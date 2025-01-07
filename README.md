@@ -264,9 +264,6 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 * **Qu.** What version of model XYZ did you use?
 * **Answer** Please see the API details section for specifics about the model versions used and how they were called, as well as the date the leaderboard was last updated. Please contact us (create an issue in the repo) if you need more clarity. 
 
-* **Qu.** What about xAI's Grok LLM?
-* **Answer** Currently (as of 11/14/2023) Grok is not publicly available and we do not have access. Those with early access I suspect are probably legally forbidden from doing this sort of evaluation on the model. Once the model is available via a public API we will look to add it, along with any other LLMs that are popular enough.
-
 * **Qu.** Can't a model just score a 100% by providing either no answers or very short answers?
 * **Answer** We explicitly filtered out such responses from every model, doing the final evaluation only on documents that all models provided a summary for. You can find out more technical details in our [blog post]([https://vectara.com/blog/cut-the-bull-detecting-hallucinations-in-large-language-models/) on the topic. See also the 'Answer Rate' and 'Average Summary Length' columns in the table above.
 
