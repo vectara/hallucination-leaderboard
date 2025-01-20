@@ -151,7 +151,7 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **GPT-4o-mini**: Accessed using the model name `gpt-4o-mini`.
 - **o1-mini**: Accessed using the model name `o1-mini`.
 - **o1-preview**: Accessed using the model name `o1-preview`.
-- **o1**: Accessed using the model name o1.
+- **o1**: Accessed using the model name `o1`.
 
 ### Llama Models
 - **Llama 2 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints using model `meta-llama/Llama-2-xxb-chat-hf`, where `xxb` can be `7b`, `13b`, and `70b`, tailored to each model's capacity.
