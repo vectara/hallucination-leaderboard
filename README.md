@@ -47,7 +47,7 @@ Last updated on January 20th, 2025
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
 |Llama-3.1-405B-Instruct|3.9 %|96.1 %|99.6 %|85.7|
-|DeepSeek-V3|3.9%|96.1 %|100.0 %|88.2|
+|DeepSeek-V3|3.9 %|96.1 %|100.0 %|88.2|
 |Microsoft Phi-3-mini-4k-instruct|4.0 %|96.0 %|100.0 %|86.8|
 |Llama-3.3-70B-Instruct|4.0 %|96.0 %|100.0 %|85.3|
 |Microsoft Phi-3.5-mini-instruct|4.1 %|95.9 %|100.0 %|75.0|
