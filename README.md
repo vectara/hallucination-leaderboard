@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on January 15th, 2025
+Last updated on December 11th, 2024
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -33,7 +33,6 @@ Last updated on January 15th, 2025
 |GPT-4-Turbo|1.7 %|98.3 %|100.0 %|86.2|
 |GPT-4|1.8 %|98.2 %|100.0 %|81.1|
 |GPT-3.5-Turbo|1.9 %|98.1 %|99.6 %|84.1|
-|OpenAI-o1|2.4 %|97.6 %|99.9 %|73.0|
 |DeepSeek-V2.5|2.4 %|97.6 %|100.0 %|83.2|
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0 %|66.2|
 |Microsoft Phi-3.5-MoE-instruct|2.5 %|97.5 %|96.3 %|69.7|
@@ -47,7 +46,6 @@ Last updated on January 15th, 2025
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
 |Llama-3.1-405B-Instruct|3.9 %|96.1 %|99.6 %|85.7|
-|DeepSeek-V3|3.9 %|96.1 %|100.0 %|88.2|
 |Microsoft Phi-3-mini-4k-instruct|4.0 %|96.0 %|100.0 %|86.8|
 |Llama-3.3-70B-Instruct|4.0 %|96.0 %|100.0 %|85.3|
 |Microsoft Phi-3.5-mini-instruct|4.1 %|95.9 %|100.0 %|75.0|
@@ -60,7 +58,6 @@ Last updated on January 15th, 2025
 |XAI Grok|4.6 %|95.4 %|100.0 %|91.0|
 |Anthropic Claude-3-5-sonnet|4.6 %|95.4 %|100.0 %|95.9|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
-|Microsoft Phi-4|4.7 %|95.3 %|100.0 %|100.3|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
 |Anthropic Claude-3-5-haiku|4.9 %|95.1 %|100.0 %|92.9|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
@@ -150,8 +147,7 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **GPT-4o**: Accessed using the model name `gpt-4o`.
 - **GPT-4o-mini**: Accessed using the model name `gpt-4o-mini`.
 - **o1-mini**: Accessed using the model name `o1-mini`.
-- **o1-preview**: Accessed using the model name `o1-preview`.
-- **o1**: Accessed using the model name `o1`.
+- **o1-preview**: Accessed using the model name `o1-preview`
 
 ### Llama Models
 - **Llama 2 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints using model `meta-llama/Llama-2-xxb-chat-hf`, where `xxb` can be `7b`, `13b`, and `70b`, tailored to each model's capacity.
@@ -205,7 +201,6 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Microsoft Phi-3-mini-128k**: The [phi-3-mini-128k](https://huggingface.co/microsoft/Phi-3-mini-128k-instruct) model is accessed via Hugging Face's checkpoint.
 - **Microsoft Phi-3.5-mini-instruct**: The [phi-3.5-mini-instruct](https://huggingface.co/microsoft/Phi-3.5-mini-instruct) model is accessed via Hugging Face's checkpoint.
 - **Microsoft Phi-3.5-MoE-instruct**: The [phi-3.5-MoE-instruct](https://huggingface.co/microsoft/Phi-3.5-MoE-instruct) model is accessed via Hugging Face's checkpoint.
-- **Microsoft Phi-4**: The [phi-4](https://huggingface.co/microsoft/phi-4) model is accessed via Hugging Face's checkpoint.
 
 ### Google Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
@@ -247,7 +242,6 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### DeepSeek Model
 - **DeepSeek V2.5**: Accessed via DeepSeek's API using `deepseek-chat` model and the `chat` endpoint.
-- **DeepSeek V3**: Accessed via DeepSeek's API using `deepseek-chat` model and the `chat` endpoint.
 
 ### IBM Models
 - **Granite-3.0-Instruct 2B, 8B**: The models [ibm-granite/granite-3.0-8b-instruct](https://huggingface.co/ibm-granite/granite-3.0-8b-instruct) and [ibm-granite/granite-3.0-2b-instruct](https://huggingface.co/ibm-granite/granite-3.0-2b-instruct) are accessed via Hugging Face's checkpoints.
