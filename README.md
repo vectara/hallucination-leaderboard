@@ -83,6 +83,7 @@ Last updated on January 28th, 2025
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
 |Qwen2-VL-2B-Instruct|8.3 %|91.7 %|100.0 %|81.8|
 |Cohere Aya Expanse 32B|8.5 %|91.5 %|99.9 %|81.9|
+|IBM Granite-3.1-8B-Instruct|8.6 %|91.4 %|100.0 %|107.4|
 |IBM Granite-3.0-2B-Instruct|8.8 %|91.2 %|100.0 %|81.6|
 |Mistral-7B-Instruct-v0.3|9.5 %|90.5 %|100.0 %|98.4|
 |Google Gemini-1.5-Pro|9.1 %|90.9 %|99.8 %|61.6|
@@ -99,6 +100,7 @@ Last updated on January 28th, 2025
 |Google PaLM-2|14.1 %|85.9 %|99.8 %|86.6|
 |DeepSeek-R1|14.3 %|85.7 %|100.0%|77.1|
 |Google Gemma-7B-it|14.8 %|85.2 %|100.0 %|113.0|
+|IBM Granite-3.1-2B-Instruct|15.7 %|84.3 %|100.0 %|107.7|
 |Qwen2.5-1.5B-Instruct|15.8 %|84.2 %|100.0 %|70.7|
 |Qwen-QwQ-32B-Preview|16.1 %|83.9 %|100.0 %|201.5|
 |Anthropic Claude-3-sonnet|16.3 %|83.7 %|100.0 %|108.5|
@@ -253,6 +255,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### IBM Models
 - **Granite-3.0-Instruct 2B, 8B**: The models [ibm-granite/granite-3.0-8b-instruct](https://huggingface.co/ibm-granite/granite-3.0-8b-instruct) and [ibm-granite/granite-3.0-2b-instruct](https://huggingface.co/ibm-granite/granite-3.0-2b-instruct) are accessed via Hugging Face's checkpoints.
+- **Granite-3.1-Instruct 2B, 8B**: The models [ibm-granite/granite-3.1-8b-instruct](https://huggingface.co/ibm-granite/granite-3.1-8b-instruct) and [ibm-granite/granite-3.1-2b-instruct](https://huggingface.co/ibm-granite/granite-3.1-2b-instruct) are accessed via Hugging Face's checkpoints.
 
 ### XAI Model
 - **Grok**: Accessed via xAI's API using the model `grok-beta` and the `chat/completions` endpoint.
