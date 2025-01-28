@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on January 20th, 2025
+Last updated on January 28th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -97,6 +97,7 @@ Last updated on January 20th, 2025
 |Cohere Aya Expanse 8B|12.2 %|87.8 %|99.9 %|83.9|
 |Amazon Titan-Express|13.5 %|86.5 %|99.5 %|98.4|
 |Google PaLM-2|14.1 %|85.9 %|99.8 %|86.6|
+|DeepSeek-R1|14.3 %|85.7 %|100.0%|77.1|
 |Google Gemma-7B-it|14.8 %|85.2 %|100.0 %|113.0|
 |Qwen2.5-1.5B-Instruct|15.8 %|84.2 %|100.0 %|70.7|
 |Qwen-QwQ-32B-Preview|16.1 %|83.9 %|100.0 %|201.5|
@@ -248,6 +249,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### DeepSeek Model
 - **DeepSeek V2.5**: Accessed via DeepSeek's API using `deepseek-chat` model and the `chat` endpoint.
 - **DeepSeek V3**: Accessed via DeepSeek's API using `deepseek-chat` model and the `chat` endpoint.
+- **DeepSeek R1**: Accessed via DeepSeek's API using `deepseek-reasoner` model and the `reasoner` endpoint.
 
 ### IBM Models
 - **Granite-3.0-Instruct 2B, 8B**: The models [ibm-granite/granite-3.0-8b-instruct](https://huggingface.co/ibm-granite/granite-3.0-8b-instruct) and [ibm-granite/granite-3.0-2b-instruct](https://huggingface.co/ibm-granite/granite-3.0-2b-instruct) are accessed via Hugging Face's checkpoints.
