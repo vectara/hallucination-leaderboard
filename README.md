@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on January 29th, 2025
+Last updated on January 30th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -44,6 +44,7 @@ Last updated on January 29th, 2025
 |Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0 %|68.7|
 |Qwen2.5-32B-Instruct|3.0 %|97.0 %|100.0 %|67.9|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
+|Mistral Small3|3.1 %|96.9 %|100.0 %|74.9|
 |OpenAI-o1-preview|3.3 %|96.7 %|100.0 %|119.3|
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
@@ -74,17 +75,21 @@ Last updated on January 29th, 2025
 |IBM Granite-3.0-8B-Instruct|6.5 %|93.5 %|100.0 %|74.2|
 |Google Gemini-1.5-Pro-002|6.6 %|93.7 %|99.9 %|62.0|
 |Google Gemini-1.5-Flash|6.6 %|93.4 %|99.9 %|63.3|
+|Mistral-Pixtral|6.6 %|93.4 %|100.0 %|76.4|
 |Microsoft phi-2|6.7 %|93.3 %|91.5 %|80.8|
 |Google Gemma-2-2B-it|7.0 %|93.0 %|100.0 %|62.2|
 |Qwen2.5-3B-Instruct|7.0 %|93.0 %|100.0 %|70.4|
 |Llama-3-8B-Chat-hf|7.4 %|92.6 %|99.8 %|79.7|
+|Mistral-Ministral-8B|7.5 %|92.5 %|100.0 %|62.7|
 |Google Gemini-Pro|7.7 %|92.3 %|98.4 %|89.5|
 |01-AI Yi-1.5-6B-Chat|7.9 %|92.1 %|100.0 %|98.9|
 |Llama-3.2-3B-Instruct|7.9 %|92.1 %|100.0 %|72.2|
+|Mistral-Ministral-3B|8.3 %|91.7 %|100.0 %|73.2|
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
 |Qwen2-VL-2B-Instruct|8.3 %|91.7 %|100.0 %|81.8|
 |Cohere Aya Expanse 32B|8.5 %|91.5 %|99.9 %|81.9|
 |IBM Granite-3.1-8B-Instruct|8.6 %|91.4 %|100.0 %|107.4|
+|Mistral-Small2|8.6 %|91.4 %|100.0 %|74.2|
 |IBM Granite-3.0-2B-Instruct|8.8 %|91.2 %|100.0 %|81.6|
 |Mistral-7B-Instruct-v0.3|9.5 %|90.5 %|100.0 %|98.4|
 |Google Gemini-1.5-Pro|9.1 %|90.9 %|99.8 %|61.6|
@@ -182,10 +187,15 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 
 ### Mistral AI Models
 - **Mixtral 8x7B**: The [Mixtral-8x7B-Instruct-v0.1](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1) model is accessed via Hugging Face's API.
-- **Mixtral 8x22B**: Accessed via Together AI's API using the model `mistralai/Mixtral-8x22B-Instruct-v0.1` and the `chat` endpoint.  
+- **Mixtral 8x22B**: Accessed via Together AI's API using the model `mistralai/Mixtral-8x22B-Instruct-v0.1` and the `chat` endpoint.
+- **Mistral Pixtral Large**: Accessed via Mistral AI's API using the model `pixtral-large-latest`.
 - **Mistral Large2**: Accessed via Mistral AI's API using the model `mistral-large-latest`.
+- **Mistral Small2**: Accessed via Mistral AI's API using the model `mistral-small-latest`.
+- **Mistral Small3**: The [Mistral Small3](https://huggingface.co/mistralai/Mistral-Small-24B-Instruct-2501) model is accessed by being loaded from Hugging Face's checkpoint.
 - **Mistral-7B-Instruct-v0.3**: The [Mistral-7B-Instruct-v0.3](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3) model is accessed by being loaded from Hugging Face's checkpoint.
 - **Mistral-Nemo-Instruct** The [Mistral-Nemo-Instruct-2407](https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407) model is accessed via Hugging Face's checkpoint.
+- **Mistral Ministral 3B**: Accessed via Mistral AI's API using the model `ministral-3b-latest`.
+- **Mistral Ministral 8B**: Accessed via Mistral AI's API using the model `ministral-8b-latest`.
 
 ### Google Closed-Source Models via Vertex AI
 - **Google Palm 2**: Implemented using the `text-bison-001` model, respectively.
