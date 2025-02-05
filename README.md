@@ -25,7 +25,10 @@ Last updated on February 5th, 2025
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
+|Google Gemini-2.0-Flash-001|0.7 %|99.3 %|100.0 %|65.2|
+|Google Gemini-2.0-Pro-Exp|0.8 %|99.2 %|99.7 %|61.5|
 |OpenAI-o3-mini-high-reasoning|0.8 %|99.2 %|100.0 %|79.5|
+|Google Gemini-2.0-Flash-Lite-Preview|1.2 %|98.8 %|99.5 %|60.9|
 |Zhipu AI GLM-4-9B-Chat|1.3 %|98.7 %|100.0 %|58.1|
 |Google Gemini-2.0-Flash-Exp|1.3 %|98.7 %|99.9 %|60.0|
 |OpenAI-o1-mini|1.4 %|98.6 %|100.0 %|78.3|
@@ -210,7 +213,10 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Gemini 1.5 Pro 002**: Accessed using model `gemini-1.5-pro-002` on Vertex AI.
 - **Gemini 1.5 Flase 002**: Accessed using model `gemini-1.5-flash-002` on Vertex AI. 
 - **Gemini 2.0 Flash Exp**: Accessed using model `gemini-2.0-flash-exp` on Vertex AI. 
-- **Gemini 2.0 Flash Thinking Exp**: Accessed using model `gemini-2.0-flash-thinking-exp` on Vertex AI. 
+- **Gemini 2.0 Flash**: Accessed using model `gemini-2.0-flash-001` on Vertex AI. 
+- **Gemini 2.0 Flash Lite**: Accessed using model `gemini-2.0-flash-lite-preview-02-05` on Vertex AI. 
+- **Gemini 2.0 Flash Thinking Exp**: Accessed using model `gemini-2.0-flash-thinking-exp` on Vertex AI.
+- **Gemini 2.0 Pro Exp**: Accessed using model `gemini-2.0-pro-exp-02-05` on Vertex AI. 
 
 ### Google Open-Source Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
