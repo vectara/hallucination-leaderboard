@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on January 31st, 2025
+Last updated on February 5th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -30,10 +30,13 @@ Last updated on January 31st, 2025
 |Google Gemini-2.0-Flash-Exp|1.3 %|98.7 %|99.9 %|60.0|
 |OpenAI-o1-mini|1.4 %|98.6 %|100.0 %|78.3|
 |GPT-4o|1.5 %|98.5 %|100.0 %|77.8|
+|Amazon Nova-Micro-V1|1.6 %|98.4 %|100.0 %|90.0|
 |GPT-4o-mini|1.7 %|98.3 %|100.0 %|76.3|
 |GPT-4-Turbo|1.7 %|98.3 %|100.0 %|86.2|
 |Google Gemini-2.0-Flash-Thinking-Exp|1.8 %|98.2 %|99.3 %|73.2|
+|Amazon Nova-Lite-V1|1.8 %|98.2 %|99.9 %|80.7|
 |GPT-4|1.8 %|98.2 %|100.0 %|81.1|
+|Amazon Nova-Pro-V1|1.8 %|98.2 %|100.0 %|85.5|
 |GPT-3.5-Turbo|1.9 %|98.1 %|99.6 %|84.1|
 |OpenAI-o1|2.4 %|97.6 %|99.9 %|73.0|
 |DeepSeek-V2.5|2.4 %|97.6 %|100.0 %|83.2|
@@ -219,8 +222,9 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 
 For an in-depth understanding of each model's version and lifecycle, especially those offered by Google, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versioning) on Vertex AI.
 
-### Titan Models on Amazon Bedrock
+### Amazon Models
 - **Amazon Titan Express**: The [model](https://aws.amazon.com/bedrock/titan/) is accessed on Amazon Bedrock with model identifier of `amazon.titan-text-express-v1`.
+- **Amazon Nova V1 Pro, Lite, Micro**: The Amazon Nova V1 [Pro](https://openrouter.ai/amazon/nova-pro-v1), [Lite](https://openrouter.ai/amazon/nova-lite-v1), [Micro](https://openrouter.ai/amazon/nova-micro-v1) are accessed via OpenRouter API with parameter `"temperature": 0`.
 
 ### Microsoft Models
 - **Microsoft Phi-2**: The [phi-2](https://huggingface.co/microsoft/phi-2) model is accessed via Hugging Face's API.
