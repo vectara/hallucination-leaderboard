@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on February 6th, 2025
+Last updated on February 11th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -41,6 +41,7 @@ Last updated on February 6th, 2025
 |GPT-4|1.8 %|98.2 %|100.0 %|81.1|
 |Amazon Nova-Pro-V1|1.8 %|98.2 %|100.0 %|85.5|
 |GPT-3.5-Turbo|1.9 %|98.1 %|99.6 %|84.1|
+|XAI-2|1.9 %|98.1|100.0 %|86.5|
 |OpenAI-o1|2.4 %|97.6 %|99.9 %|73.0|
 |DeepSeek-V2.5|2.4 %|97.6 %|100.0 %|83.2|
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0 %|66.2|
@@ -48,6 +49,7 @@ Last updated on February 6th, 2025
 |Intel Neural-Chat-7B-v3-3|2.6 %|97.4 %|100.0 %|60.7|
 |Qwen2.5-7B-Instruct|2.8 %|97.2 %|100.0 %|71.0|
 |AI21 Jamba-1.5-Mini|2.9 %|97.1 %|95.6 %|74.5|
+|XAI-2-Vision|2.9 %|97.1|100.0 %|79.8|
 |Qwen2.5-Max|2.9 %|97.1 %|88.8 %|90.4|
 |Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0 %|68.7|
 |Qwen2.5-32B-Instruct|3.0 %|97.0 %|100.0 %|67.9|
@@ -285,6 +287,8 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### XAI Model
 - **Grok**: Accessed via xAI's API using the model `grok-beta` and the `chat/completions` endpoint.
+- **Grok-2**: The [model](https://openrouter.ai/x-ai/grok-2-1212) are accessed via OpenRouter API with endpoint `x-ai/grok-2-1212`.
+- **Grok-2-Vision**: The [model](https://openrouter.ai/x-ai/grok-2-vision-1212) are accessed via OpenRouter API with endpoint `x-ai/grok-2-vision-1212`.
 
 ### AllenAI Models
 - **OLMo-2 7B, 13B**: The models [allenai/OLMo-2-1124-7B-Instruct](https://huggingface.co/allenai/OLMo-2-1124-7B-Instruct) and [allenai/OLMo-2-1124-13B-Instruct](https://huggingface.co/allenai/OLMo-2-1124-13B-Instruct) are accessed via Hugging Face's checkpoints.
