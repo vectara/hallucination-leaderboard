@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on February 11th, 2025
+Last updated on February 24th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -62,6 +62,7 @@ Last updated on February 11th, 2025
 |DeepSeek-V3|3.9 %|96.1 %|100.0 %|88.2|
 |Microsoft Phi-3-mini-4k-instruct|4.0 %|96.0 %|100.0 %|86.8|
 |Llama-3.3-70B-Instruct|4.0 %|96.0 %|100.0 %|85.3|
+|InternLM3-8B-Instruct|4.0 %|96.0 %|100.0 %|97.5|
 |Microsoft Phi-3.5-mini-instruct|4.1 %|95.9 %|100.0 %|75.0|
 |Mistral-Large2|4.1 %|95.9 %|100.0 %|77.4|
 |Llama-3-70B-Chat-hf|4.1 %|95.9 %|99.2 %|68.5|
@@ -293,6 +294,8 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### AllenAI Models
 - **OLMo-2 7B, 13B**: The models [allenai/OLMo-2-1124-7B-Instruct](https://huggingface.co/allenai/OLMo-2-1124-7B-Instruct) and [allenai/OLMo-2-1124-13B-Instruct](https://huggingface.co/allenai/OLMo-2-1124-13B-Instruct) are accessed via Hugging Face's checkpoints.
 
+### InternLM Models
+- **InternLM3-8B-Instruct**: The model [internlm/internlm3-8b-instruct](https://huggingface.co/internlm/internlm3-8b-instruct) are accessed via HuggingFace's checkpoint.
 
 
 ## Frequently Asked Questions
