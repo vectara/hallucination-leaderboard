@@ -70,6 +70,8 @@ Last updated on February 24th, 2025
 |Qwen2.5-14B-Instruct|4.2 %|95.8 %|100.0 %|74.8|
 |Qwen2.5-72B-Instruct|4.3 %|95.7 %|100.0 %|80.0|
 |Llama-3.2-90B-Vision-Instruct|4.3 %|95.7 %|100.0 %|79.8|
+|Claude-3.7-Sonnet|4.4 %|95.6 %|100.0 %|97.8|
+|Claude-3.7-Sonnet-Think|4.5 %|95.5 %|99.8 %|99.9|
 |XAI Grok|4.6 %|95.4 %|100.0 %|91.0|
 |Anthropic Claude-3-5-sonnet|4.6 %|95.4 %|100.0 %|95.9|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
@@ -194,7 +196,7 @@ For more information about Cohere's models, refer to their [website](https://doc
 - **Claude 3 Sonnet**: Invoked the model using `claude-3-sonnet-20240229` for the API call.
 - **Claude 3.5 Sonnet**: Invoked the model using `claude-3-5-sonnet-20241022` for the API call.
 - **Claude 3.5 Haiku**: Invoked the model using `claude-3-5-haiku-20241022` for the API call.
-- **Claude 3.5 Haiku**: 
+- **Claude 3.7 Sonnet/Sonnet-Thinking**: Invoked the model using `claude-3-7-sonnet-20250219` for the API call. 
 Details on each model can be found on their [website](https://docs.anthropic.com/claude/docs/models-overview).
 
 ### Mistral AI Models
