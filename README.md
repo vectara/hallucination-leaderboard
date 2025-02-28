@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on February 24th, 2025
+Last updated on February 28th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -29,6 +29,7 @@ Last updated on February 24th, 2025
 |Google Gemini-2.0-Pro-Exp|0.8 %|99.2 %|99.7 %|61.5|
 |OpenAI-o3-mini-high-reasoning|0.8 %|99.2 %|100.0 %|79.5|
 |Google Gemini-2.0-Flash-Lite-Preview|1.2 %|98.8 %|99.5 %|60.9|
+|OpenAI-GPT-4.5-Preview|1.2 %|98.8 %|100.0 %|77.0|
 |Zhipu AI GLM-4-9B-Chat|1.3 %|98.7 %|100.0 %|58.1|
 |Google Gemini-2.0-Flash-Exp|1.3 %|98.7 %|99.9 %|60.0|
 |OpenAI-o1-mini|1.4 %|98.6 %|100.0 %|78.3|
@@ -174,7 +175,8 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **o1-mini**: Accessed using the model name `o1-mini`.
 - **o1-preview**: Accessed using the model name `o1-preview`.
 - **o1**: Accessed using the model name `o1`.
-- **o3-mini-high-reasoning**: Accessed using the model name `o3-mini`, with parameter `reasoning_effort="low"`.
+- **o3-mini-high-reasoning**: Accessed using the model name `o3-mini`, with parameter `reasoning_effort="high"`.
+- **GPT-4.5-preview**: Accessed using the model name `gpt-4.5-preview-2025-02-27`.
 
 ### Llama Models
 - **Llama 2 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints using model `meta-llama/Llama-2-xxb-chat-hf`, where `xxb` can be `7b`, `13b`, and `70b`, tailored to each model's capacity.
