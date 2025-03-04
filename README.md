@@ -291,6 +291,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### IBM Models
 - **Granite-3.0-Instruct 2B, 8B**: The models [ibm-granite/granite-3.0-8b-instruct](https://huggingface.co/ibm-granite/granite-3.0-8b-instruct) and [ibm-granite/granite-3.0-2b-instruct](https://huggingface.co/ibm-granite/granite-3.0-2b-instruct) are accessed via Hugging Face's checkpoints.
 - **Granite-3.1-Instruct 2B, 8B**: The models [ibm-granite/granite-3.1-8b-instruct](https://huggingface.co/ibm-granite/granite-3.1-8b-instruct) and [ibm-granite/granite-3.1-2b-instruct](https://huggingface.co/ibm-granite/granite-3.1-2b-instruct) are accessed via Hugging Face's checkpoints.
+- **Granite-3.2-Instruct 2B, 8B**: The models [ibm-granite/granite-3.2-8b-instruct](https://huggingface.co/ibm-granite/granite-3.2-8b-instruct) and [ibm-granite/granite-3.2-2b-instruct](https://huggingface.co/ibm-granite/granite-3.2-2b-instruct) are accessed via Hugging Face's checkpoints. Summaries are generated with `thinking=True`.
 
 ### XAI Model
 - **Grok**: Accessed via xAI's API using the model `grok-beta` and the `chat/completions` endpoint.
