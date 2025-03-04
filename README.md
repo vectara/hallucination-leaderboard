@@ -58,6 +58,7 @@ Last updated on March 4th, 2025
 |Mistral Small3|3.1 %|96.9 %|100.0 %|74.9|
 |OpenAI-o1-preview|3.3 %|96.7 %|100.0 %|119.3|
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
+|Microsoft Phi-4-mini-instruct|3.4 %|96.6 %|100.0 %|69.7|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
 |Llama-3.1-405B-Instruct|3.9 %|96.1 %|99.6 %|85.7|
 |DeepSeek-V3|3.9 %|96.1 %|100.0 %|88.2|
@@ -104,7 +105,7 @@ Last updated on March 4th, 2025
 |Cohere Aya Expanse 32B|8.5 %|91.5 %|99.9 %|81.9|
 |IBM Granite-3.1-8B-Instruct|8.6 %|91.4 %|100.0 %|107.4|
 |Mistral-Small2|8.6 %|91.4 %|100.0 %|74.2|
-|IBM Granite-3.1-8B-Instruct|8.7 %|91.3 %|100.0 %|120.1|
+|IBM Granite-3.2-8B-Instruct|8.7 %|91.3 %|100.0 %|120.1|
 |IBM Granite-3.0-2B-Instruct|8.8 %|91.2 %|100.0 %|81.6|
 |Mistral-7B-Instruct-v0.3|9.5 %|90.5 %|100.0 %|98.4|
 |Google Gemini-1.5-Pro|9.1 %|90.9 %|99.8 %|61.6|
@@ -250,7 +251,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Microsoft Phi-3-mini-128k**: The [phi-3-mini-128k](https://huggingface.co/microsoft/Phi-3-mini-128k-instruct) model is accessed via Hugging Face's checkpoint.
 - **Microsoft Phi-3.5-mini-instruct**: The [phi-3.5-mini-instruct](https://huggingface.co/microsoft/Phi-3.5-mini-instruct) model is accessed via Hugging Face's checkpoint.
 - **Microsoft Phi-3.5-MoE-instruct**: The [phi-3.5-MoE-instruct](https://huggingface.co/microsoft/Phi-3.5-MoE-instruct) model is accessed via Hugging Face's checkpoint.
-- **Microsoft Phi-4**: The [phi-4](https://huggingface.co/microsoft/phi-4) model is accessed via Hugging Face's checkpoint.
+- **Microsoft Phi-4/Phi-4-Mini**: The [phi-4](https://huggingface.co/microsoft/phi-4) and [phi-4-mini](https://huggingface.co/microsoft/Phi-4-mini-instruct) models are accessed via Hugging Face's checkpoint.
 
 ### TII Models on Hugging Face
 - **tiiuae/falcon-7b-instruct**: The [falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct) model is accessed via Hugging Face's API.
