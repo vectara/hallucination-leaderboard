@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on February 28th, 2025
+Last updated on March 4th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -104,6 +104,7 @@ Last updated on February 28th, 2025
 |Cohere Aya Expanse 32B|8.5 %|91.5 %|99.9 %|81.9|
 |IBM Granite-3.1-8B-Instruct|8.6 %|91.4 %|100.0 %|107.4|
 |Mistral-Small2|8.6 %|91.4 %|100.0 %|74.2|
+|IBM Granite-3.1-8B-Instruct|8.7 %|91.3 %|100.0 %|120.1|
 |IBM Granite-3.0-2B-Instruct|8.8 %|91.2 %|100.0 %|81.6|
 |Mistral-7B-Instruct-v0.3|9.5 %|90.5 %|100.0 %|98.4|
 |Google Gemini-1.5-Pro|9.1 %|90.9 %|99.8 %|61.6|
@@ -124,6 +125,7 @@ Last updated on February 28th, 2025
 |Qwen2.5-1.5B-Instruct|15.8 %|84.2 %|100.0 %|70.7|
 |Qwen-QwQ-32B-Preview|16.1 %|83.9 %|100.0 %|201.5|
 |Anthropic Claude-3-sonnet|16.3 %|83.7 %|100.0 %|108.5|
+|IBM Granite-3.2-2B-Instruct|16.5 %|83.5 %|100.0 %|117.7|
 |Google Gemma-1.1-7B-it|17.0 %|83.0 %|100.0 %|64.3|
 |Anthropic Claude-2|17.4 %|82.6 %|99.3 %|87.5|
 |Google Flan-T5-large|18.3 %|81.7 %|99.3 %|20.9|
