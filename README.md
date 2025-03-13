@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on March 4th, 2025
+Last updated on March 13th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -74,6 +74,7 @@ Last updated on March 4th, 2025
 |Llama-3.2-90B-Vision-Instruct|4.3 %|95.7 %|100.0 %|79.8|
 |Claude-3.7-Sonnet|4.4 %|95.6 %|100.0 %|97.8|
 |Claude-3.7-Sonnet-Think|4.5 %|95.5 %|99.8 %|99.9|
+|Cohere Command-A|4.5 %|95.5 %|100.0 %|77.3|
 |XAI Grok|4.6 %|95.4 %|100.0 %|91.0|
 |Anthropic Claude-3-5-sonnet|4.6 %|95.4 %|100.0 %|95.9|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
@@ -193,6 +194,7 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **Cohere Command R**: Employed using the model `command-r-08-2024` and the `/chat` endpoint.
 - **Cohere Command R Plus**: Employed using the model `command-r-plus-08-2024` and the `/chat` endpoint.
 - **Aya Expanse 8B, 32B**: Accessed using models `c4ai-aya-expanse-8b` and `c4ai-aya-expanse-32b`.
+- **Cohere Command A**: Employed using the model `command-a-03-2025` and the `/chat` endpoint.
 For more information about Cohere's models, refer to their [website](https://docs.cohere.com/docs/models).
 
 ### Anthropic Model
