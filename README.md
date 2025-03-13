@@ -74,7 +74,7 @@ Last updated on March 13th, 2025
 |Llama-3.2-90B-Vision-Instruct|4.3 %|95.7 %|100.0 %|79.8|
 |Claude-3.7-Sonnet|4.4 %|95.6 %|100.0 %|97.8|
 |Claude-3.7-Sonnet-Think|4.5 %|95.5 %|99.8 %|99.9|
-|Cohere Command-A|4.9 %|95.5 %|100.0 %|77.3|
+|Cohere Command-A|4.5 %|95.5 %|100.0 %|77.3|
 |XAI Grok|4.6 %|95.4 %|100.0 %|91.0|
 |Anthropic Claude-3-5-sonnet|4.6 %|95.4 %|100.0 %|95.9|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
