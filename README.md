@@ -48,10 +48,12 @@ Last updated on March 13th, 2025
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0 %|66.2|
 |Microsoft Phi-3.5-MoE-instruct|2.5 %|97.5 %|96.3 %|69.7|
 |Intel Neural-Chat-7B-v3-3|2.6 %|97.4 %|100.0 %|60.7|
+|Google Gemma-3-12B-Instruct|2.8 %|97.2 %|100.0 %|69.6|
 |Qwen2.5-7B-Instruct|2.8 %|97.2 %|100.0 %|71.0|
 |AI21 Jamba-1.5-Mini|2.9 %|97.1 %|95.6 %|74.5|
 |XAI-2-Vision|2.9 %|97.1|100.0 %|79.8|
 |Qwen2.5-Max|2.9 %|97.1 %|88.8 %|90.4|
+|Google Gemma-3-27B-Instruct|3.0 %|97.0 %|100.0 %|62.5|
 |Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0 %|68.7|
 |Qwen2.5-32B-Instruct|3.0 %|97.0 %|100.0 %|67.9|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
@@ -59,6 +61,7 @@ Last updated on March 13th, 2025
 |OpenAI-o1-preview|3.3 %|96.7 %|100.0 %|119.3|
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |Microsoft Phi-4-mini-instruct|3.4 %|96.6 %|100.0 %|69.7|
+|Google Gemma-3-4B-Instruct|3.7 %|96.3 %|100.0 %|63.7|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
 |Llama-3.1-405B-Instruct|3.9 %|96.1 %|99.6 %|85.7|
 |DeepSeek-V3|3.9 %|96.1 %|100.0 %|88.2|
@@ -84,6 +87,7 @@ Last updated on March 13th, 2025
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
 |Cohere Command-R|4.9 %|95.1 %|100.0 %|68.7|
 |Llama-3.1-70B-Instruct|5.0 %|95.0 %|100.0 %|79.6|
+|Google Gemma-3-1B-Instruct|5.3 %|94.7 %|99.9 %|57.9|
 |Llama-3.1-8B-Instruct|5.4 %|94.6 %|100.0 %|71.0|
 |Cohere Command-R-Plus|5.4 %|94.6 %|100.0 %|68.4|
 |Llama-3.2-11B-Vision-Instruct|5.5 %|94.5 %|100.0 %|67.3|
@@ -238,6 +242,7 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Google gemma-1.1-2b-it** : The [gemma-1.1-2b-it](https://huggingface.co/google/gemma-1.1-2b-it) model is accessed via being loaded from Hugging Face's checkpoint.
 - **Google gemma-2-9b-it** : The [gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it) model is accessed via being loaded from Hugging Face's checkpoint.
 - **Google gemma-2-2b-it** : The [gemma-2-2b-it](https://huggingface.co/google/gemma-2-2b-it) model is accessed via being loaded from Hugging Face's checkpoint.
+- **Google gemma-3-1b/4b/12b/27b-it** : The [gemma-3-1b-it](https://huggingface.co/google/gemma-3-1b-it), [gemma-3-4b-it](https://huggingface.co/google/gemma-3-4b-it), [gemma-3-12b-it](https://huggingface.co/google/gemma-3-12b-it), [gemma-3-27b-it](https://huggingface.co/google/gemma-3-27b-it) models are accessed via being loaded from Hugging Face's checkpoint.
 
 For an in-depth understanding of each model's version and lifecycle, especially those offered by Google, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versioning) on Vertex AI.
 
