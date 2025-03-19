@@ -43,6 +43,7 @@ Last updated on March 13th, 2025
 |Amazon Nova-Pro-V1|1.8 %|98.2 %|100.0 %|85.5|
 |GPT-3.5-Turbo|1.9 %|98.1 %|99.6 %|84.1|
 |XAI-2|1.9 %|98.1|100.0 %|86.5|
+|AI21 Jamba-1.6-Large|2.3 %|97.7 %|99.9 %|85.6 |
 |OpenAI-o1|2.4 %|97.6 %|99.9 %|73.0|
 |DeepSeek-V2.5|2.4 %|97.6 %|100.0 %|83.2|
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0 %|66.2|
@@ -78,6 +79,7 @@ Last updated on March 13th, 2025
 |Claude-3.7-Sonnet|4.4 %|95.6 %|100.0 %|97.8|
 |Claude-3.7-Sonnet-Think|4.5 %|95.5 %|99.8 %|99.9|
 |Cohere Command-A|4.5 %|95.5 %|100.0 %|77.3|
+|AI21 Jamba-1.6-Mini|4.6 %|95.4 %|100.0 %|82.3 |
 |XAI Grok|4.6 %|95.4 %|100.0 %|91.0|
 |Anthropic Claude-3-5-sonnet|4.6 %|95.4 %|100.0 %|95.9|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
@@ -292,6 +294,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### AI21 Model
 - **AI21-Jamba-1.5-Mini**: The [Jamba-1.5-Mini](https://huggingface.co/ai21labs/AI21-Jamba-1.5-Mini) model is accessed via Hugging Face's checkpoint.
+- **AI21 Jamba-1.6-Large / Mini**: The [Jamba-1.6-Large](https://openrouter.ai/ai21/jamba-1.6-large) and [Jamba-1.6-Mini](https://openrouter.ai/ai21/jamba-1.6-mini) are accessed via OpenRouter API with endpoint `ai21/jamba-1.6-large` and `ai21/jamba-1.6-mini`.
 
 ### DeepSeek Model
 - **DeepSeek V2.5**: Accessed via DeepSeek's API using `deepseek-chat` model and the `chat` endpoint.
