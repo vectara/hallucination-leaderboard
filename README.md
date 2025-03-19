@@ -90,6 +90,7 @@ Last updated on March 13th, 2025
 |Google Gemma-3-1B-Instruct|5.3 %|94.7 %|99.9 %|57.9|
 |Llama-3.1-8B-Instruct|5.4 %|94.6 %|100.0 %|71.0|
 |Cohere Command-R-Plus|5.4 %|94.6 %|100.0 %|68.4|
+|Mistral-Small-3.1-24B-Instruct|5.6 %|94.4 %|100.0 %|73.1|
 |Llama-3.2-11B-Vision-Instruct|5.5 %|94.5 %|100.0 %|67.3|
 |Llama-2-70B-Chat-hf|5.9 %|94.1 %|99.9 %|84.9|
 |IBM Granite-3.0-8B-Instruct|6.5 %|93.5 %|100.0 %|74.2|
@@ -217,6 +218,7 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Mistral Large2**: Accessed via Mistral AI's API using the model `mistral-large-latest`.
 - **Mistral Small2**: Accessed via Mistral AI's API using the model `mistral-small-latest`.
 - **Mistral Small3**: The [Mistral Small3](https://huggingface.co/mistralai/Mistral-Small-24B-Instruct-2501) model is accessed by being loaded from Hugging Face's checkpoint.
+- **Mistral-Small-3.1-24B-Instruct**: The [Mistral Small 3.1](mistralai/Mistral-Small-3.1-24B-Instruct-2503) model is accessed by being loaded from Hugging Face's checkpoint.
 - **Mistral-7B-Instruct-v0.3**: The [Mistral-7B-Instruct-v0.3](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3) model is accessed by being loaded from Hugging Face's checkpoint.
 - **Mistral-Nemo-Instruct** The [Mistral-Nemo-Instruct-2407](https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407) model is accessed via Hugging Face's checkpoint.
 - **Mistral Ministral 3B**: Accessed via Mistral AI's API using the model `ministral-3b-latest`.
