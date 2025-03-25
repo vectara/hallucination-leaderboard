@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on March 20th, 2025
+Last updated on March 25th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -28,6 +28,7 @@ Last updated on March 20th, 2025
 |Google Gemini-2.0-Flash-001|0.7 %|99.3 %|100.0 %|65.2|
 |Google Gemini-2.0-Pro-Exp|0.8 %|99.2 %|99.7 %|61.5|
 |OpenAI-o3-mini-high-reasoning|0.8 %|99.2 %|100.0 %|79.5|
+|Google Gemini-2.5-Pro-Exp-0325|1.1 %|98.9 %|95.1 %|72.9|
 |Google Gemini-2.0-Flash-Lite-Preview|1.2 %|98.8 %|99.5 %|60.9|
 |OpenAI-GPT-4.5-Preview|1.2 %|98.8 %|100.0 %|77.0|
 |Zhipu AI GLM-4-9B-Chat|1.3 %|98.7 %|100.0 %|58.1|
@@ -108,6 +109,7 @@ Last updated on March 20th, 2025
 |Google Gemini-Pro|7.7 %|92.3 %|98.4 %|89.5|
 |01-AI Yi-1.5-6B-Chat|7.9 %|92.1 %|100.0 %|98.9|
 |Llama-3.2-3B-Instruct|7.9 %|92.1 %|100.0 %|72.2|
+|DeepSeek-V3-0324|8.0 %|92.0 %|100.0 %|78.9|
 |Mistral-Ministral-3B|8.3 %|91.7 %|100.0 %|73.2|
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
 |Qwen2-VL-2B-Instruct|8.3 %|91.7 %|100.0 %|81.8|
@@ -240,6 +242,7 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 - **Gemini 2.0 Flash Lite**: Accessed using model `gemini-2.0-flash-lite-preview-02-05` on Vertex AI. 
 - **Gemini 2.0 Flash Thinking Exp**: Accessed using model `gemini-2.0-flash-thinking-exp` on Vertex AI.
 - **Gemini 2.0 Pro Exp**: Accessed using model `gemini-2.0-pro-exp-02-05` on Vertex AI. 
+- **Gemini 2.5 Pro Exp**: Accessed using model `gemini-2.5-pro-exp-03-25` on Vertex AI. 
 
 ### Google Open-Source Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
@@ -301,6 +304,7 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 ### DeepSeek Model
 - **DeepSeek V2.5**: Accessed via DeepSeek's API using `deepseek-chat` model and the `chat` endpoint.
 - **DeepSeek V3**: Accessed via DeepSeek's API using `deepseek-chat` model and the `chat` endpoint.
+- **DeepSeek V3-0324**: Accessed via DeepSeek's API using `deepseek-chat` model and the `chat` endpoint.
 - **DeepSeek R1**: Accessed via DeepSeek's API using `deepseek-reasoner` model and the `reasoner` endpoint.
 
 ### IBM Models
