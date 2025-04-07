@@ -28,6 +28,7 @@ Last updated on April 7th, 2025
 |Google Gemini-2.0-Flash-001|0.7 %|99.3 %|100.0 %|65.2|
 |Google Gemini-2.0-Pro-Exp|0.8 %|99.2 %|99.7 %|61.5|
 |OpenAI-o3-mini-high-reasoning|0.8 %|99.2 %|100.0 %|79.5|
+|Vectara Mockingbird-2-Echo|0.9 %|99.1 %|100.0 %|74.0|
 |Google Gemini-2.5-Pro-Exp-0325|1.1 %|98.9 %|95.1 %|72.9|
 |Google Gemini-2.0-Flash-Lite-Preview|1.2 %|98.8 %|99.5 %|60.9|
 |OpenAI-GPT-4.5-Preview|1.2 %|98.8 %|100.0 %|77.0|
