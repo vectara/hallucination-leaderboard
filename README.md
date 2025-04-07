@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on March 25th, 2025
+Last updated on April 7th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -82,8 +82,10 @@ Last updated on March 25th, 2025
 |Claude-3.7-Sonnet-Think|4.5 %|95.5 %|99.8 %|99.9|
 |Cohere Command-A|4.5 %|95.5 %|100.0 %|77.3|
 |AI21 Jamba-1.6-Mini|4.6 %|95.4 %|100.0 %|82.3 |
+|Meta Llama-4-Maverick|4.6 %|95.4 %|100.0 %|84.8|
 |XAI Grok|4.6 %|95.4 %|100.0 %|91.0|
 |Anthropic Claude-3-5-sonnet|4.6 %|95.4 %|100.0 %|95.9|
+|Meta Llama-4-Scout|4.7 %|95.3 %|100.0 %|80.7|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Microsoft Phi-4|4.7 %|95.3 %|100.0 %|100.3|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
@@ -200,6 +202,7 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **Llama 3.2 1B and 3B**: The model [meta-llama/Meta-Llama-3.2-1B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.2-1B-Instruct) is accessed via Hugging Face's checkpoint. The model `Meta-Llama-3.2-3B-Instruct` is accessed via Together AI `chat` endpoint using model `meta-llama/Llama-3.2-3B-Instruct-Turbo`.
 - **Llama 3.2 Vision 11B and 90B**:The models `Llama-3.2-11B-Vision-Instruct` and `Llama-3.2-90B-Vision-Instruct` are accessed via Together AI `chat` endpoint using model `meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo` and `meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo`.
 - **Llama 3.3 70B**: The model [meta-llama/Llama-3.3-70B-Instruct](https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct) is accessed via Hugging Face's checkpoint.
+- **Llama 4 Maverick and Scout**: The llama 4 [Maverick](https://openrouter.ai/meta-llama/llama-4-maverick) and [Scout](https://openrouter.ai/meta-llama/llama-4-scout) are accessed via OpenRouter API.
 
 ### Cohere Models
 - **Cohere Command R**: Employed using the model `command-r-08-2024` and the `/chat` endpoint.
