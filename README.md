@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on April 7th, 2025
+Last updated on April 10th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -44,7 +44,8 @@ Last updated on April 7th, 2025
 |GPT-4|1.8 %|98.2 %|100.0 %|81.1|
 |Amazon Nova-Pro-V1|1.8 %|98.2 %|100.0 %|85.5|
 |GPT-3.5-Turbo|1.9 %|98.1 %|99.6 %|84.1|
-|XAI-2|1.9 %|98.1|100.0 %|86.5|
+|XAI Grok-2|1.9 %|98.1|100.0 %|86.5|
+|XAI Grok-3-Beta|2.1 %|97.8|100.0 %|97.7|
 |AI21 Jamba-1.6-Large|2.3 %|97.7 %|99.9 %|85.6 |
 |OpenAI O1-Pro|2.4 %|97.6 %|100.0 %|81.0|
 |OpenAI-o1|2.4 %|97.6 %|99.9 %|73.0|
@@ -55,13 +56,14 @@ Last updated on April 7th, 2025
 |Google Gemma-3-12B-Instruct|2.8 %|97.2 %|100.0 %|69.6|
 |Qwen2.5-7B-Instruct|2.8 %|97.2 %|100.0 %|71.0|
 |AI21 Jamba-1.5-Mini|2.9 %|97.1 %|95.6 %|74.5|
-|XAI-2-Vision|2.9 %|97.1|100.0 %|79.8|
+|XAI Grok-2-Vision|2.9 %|97.1|100.0 %|79.8|
 |Qwen2.5-Max|2.9 %|97.1 %|88.8 %|90.4|
 |Google Gemma-3-27B-Instruct|3.0 %|97.0 %|100.0 %|62.5|
 |Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0 %|68.7|
 |Qwen2.5-32B-Instruct|3.0 %|97.0 %|100.0 %|67.9|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
 |Mistral Small3|3.1 %|96.9 %|100.0 %|74.9|
+|XAI Grok-3-Mini-Beta|3.3 %|96.7|100.0 %|90.2|
 |OpenAI-o1-preview|3.3 %|96.7 %|100.0 %|119.3|
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |Microsoft Phi-4-mini-instruct|3.4 %|96.6 %|100.0 %|69.7|
@@ -318,8 +320,8 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 
 ### XAI Model
 - **Grok**: Accessed via xAI's API using the model `grok-beta` and the `chat/completions` endpoint.
-- **Grok-2**: The [model](https://openrouter.ai/x-ai/grok-2-1212) are accessed via OpenRouter API with endpoint `x-ai/grok-2-1212`.
-- **Grok-2-Vision**: The [model](https://openrouter.ai/x-ai/grok-2-vision-1212) are accessed via OpenRouter API with endpoint `x-ai/grok-2-vision-1212`.
+- **Grok-2, 2-Vision**: The [grok-2](https://openrouter.ai/x-ai/grok-2-1212) and [grok-2-vision] are accessed via OpenRouter API with endpoint `x-ai/grok-2-1212` and `x-ai/grok-2-vision-1212`.
+- **Grok-3-beta, 3-mini-beta**: Accessed via xAI's API using the model `grok-3-beta` and `grok-3-mini-beta`.
 
 ### AllenAI Models
 - **OLMo-2 7B, 13B**: The models [allenai/OLMo-2-1124-7B-Instruct](https://huggingface.co/allenai/OLMo-2-1124-7B-Instruct) and [allenai/OLMo-2-1124-13B-Instruct](https://huggingface.co/allenai/OLMo-2-1124-13B-Instruct) are accessed via Hugging Face's checkpoints.
