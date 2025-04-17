@@ -47,7 +47,7 @@ ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
 # Set x-axis limit
-ax.set_xlim(0, 3.0)
+ax.set_xlim(0, 2.6)
 
 # Add logo
 logo_path = 'vectara_logo.png'

@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on April 10th, 2025
+Last updated on April 17th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -27,28 +27,31 @@ Last updated on April 10th, 2025
 |----|----:|----:|----:|----:|
 |Google Gemini-2.0-Flash-001|0.7 %|99.3 %|100.0 %|65.2|
 |Google Gemini-2.0-Pro-Exp|0.8 %|99.2 %|99.7 %|61.5|
-|OpenAI-o3-mini-high-reasoning|0.8 %|99.2 %|100.0 %|79.5|
+|OpenAI o3-mini-high|0.8 %|99.2 %|100.0 %|79.5|
 |Vectara Mockingbird-2-Echo|0.9 %|99.1 %|100.0 %|74.0|
 |Google Gemini-2.5-Pro-Exp-0325|1.1 %|98.9 %|95.1 %|72.9|
 |Google Gemini-2.0-Flash-Lite-Preview|1.2 %|98.8 %|99.5 %|60.9|
-|OpenAI-GPT-4.5-Preview|1.2 %|98.8 %|100.0 %|77.0|
+|OpenAI GPT-4.5-Preview|1.2 %|98.8 %|100.0 %|77.0|
 |Zhipu AI GLM-4-9B-Chat|1.3 %|98.7 %|100.0 %|58.1|
 |Google Gemini-2.0-Flash-Exp|1.3 %|98.7 %|99.9 %|60.0|
 |OpenAI-o1-mini|1.4 %|98.6 %|100.0 %|78.3|
-|GPT-4o|1.5 %|98.5 %|100.0 %|77.8|
+|OpenAI GPT-4o|1.5 %|98.5 %|100.0 %|77.8|
 |Amazon Nova-Micro-V1|1.6 %|98.4 %|100.0 %|90.0|
-|GPT-4o-mini|1.7 %|98.3 %|100.0 %|76.3|
-|GPT-4-Turbo|1.7 %|98.3 %|100.0 %|86.2|
+|OpenAI GPT-4o-mini|1.7 %|98.3 %|100.0 %|76.3|
+|OpenAI GPT-4-Turbo|1.7 %|98.3 %|100.0 %|86.2|
 |Google Gemini-2.0-Flash-Thinking-Exp|1.8 %|98.2 %|99.3 %|73.2|
 |Amazon Nova-Lite-V1|1.8 %|98.2 %|99.9 %|80.7|
-|GPT-4|1.8 %|98.2 %|100.0 %|81.1|
+|OpenAI GPT-4|1.8 %|98.2 %|100.0 %|81.1|
 |Amazon Nova-Pro-V1|1.8 %|98.2 %|100.0 %|85.5|
-|GPT-3.5-Turbo|1.9 %|98.1 %|99.6 %|84.1|
+|OpenAI GPT-3.5-Turbo|1.9 %|98.1 %|99.6 %|84.1|
 |XAI Grok-2|1.9 %|98.1|100.0 %|86.5|
+|OpenAI GPT-4.1-nano|2.0 %|98.0 %|100.0 %|70.2|
+|OpenAI GPT-4.1|2.0 %|98.0 %|100.0 %|71.9|
 |XAI Grok-3-Beta|2.1 %|97.8|100.0 %|97.7|
+|OpenAI GPT-4.1-mini|2.2 %|97.8 %|100.0 %|79.6|
 |AI21 Jamba-1.6-Large|2.3 %|97.7 %|99.9 %|85.6 |
-|OpenAI O1-Pro|2.4 %|97.6 %|100.0 %|81.0|
-|OpenAI-o1|2.4 %|97.6 %|99.9 %|73.0|
+|OpenAI o1-Pro|2.4 %|97.6 %|100.0 %|81.0|
+|OpenAI o1|2.4 %|97.6 %|99.9 %|73.0|
 |DeepSeek-V2.5|2.4 %|97.6 %|100.0 %|83.2|
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0 %|66.2|
 |Microsoft Phi-3.5-MoE-instruct|2.5 %|97.5 %|96.3 %|69.7|
@@ -64,7 +67,7 @@ Last updated on April 10th, 2025
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
 |Mistral Small3|3.1 %|96.9 %|100.0 %|74.9|
 |XAI Grok-3-Mini-Beta|3.3 %|96.7|100.0 %|90.2|
-|OpenAI-o1-preview|3.3 %|96.7 %|100.0 %|119.3|
+|OpenAI o1-preview|3.3 %|96.7 %|100.0 %|119.3|
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |Microsoft Phi-4-mini-instruct|3.4 %|96.6 %|100.0 %|69.7|
 |Google Gemma-3-4B-Instruct|3.7 %|96.3 %|100.0 %|63.7|
@@ -187,16 +190,11 @@ Below is a detailed overview of the models integrated and their specific endpoin
 
 ### OpenAI Models
 - **GPT-3.5**: Accessed using the model name `gpt-3.5-turbo` through OpenAI's Python client library, specifically via the `chat.completions.create` endpoint.
-- **GPT-4**: Integrated with the model identifier `gpt-4`.
-- **GPT-4 Turbo**: Utilized under the model name `gpt-4-turbo-2024-04-09`, in line with OpenAI's documentation.
-- **GPT-4o**: Accessed using the model name `gpt-4o`.
-- **GPT-4o-mini**: Accessed using the model name `gpt-4o-mini`.
-- **o1-mini**: Accessed using the model name `o1-mini`.
-- **o1-preview**: Accessed using the model name `o1-preview`.
-- **o1**: Accessed using the model name `o1`.
-- **o1-pro**: Accessed using the model name `o1-pro`.
-- **o3-mini-high-reasoning**: Accessed using the model name `o3-mini`, with parameter `reasoning_effort="high"`.
+- **GPT-4, GPT-4 Turbo, GPT-4o, GPT-4o-mini**: Integrated with the model identifier `gpt-4`, `gpt-4-turbo-2024-04-09`, `gpt-4o`, `gpt-4o-mini`.
+- **GPT-4.1, GPT-4.1-mini, GPT-4.1-nano**: Accessed using the model name `gpt-4.1`, `gpt-4.1-mini`, `gpt-4.1-nano`
 - **GPT-4.5-preview**: Accessed using the model name `gpt-4.5-preview-2025-02-27`.
+- **o1-mini, o1-preview, o1, o1-pro**: Accessed using the model name `o1-mini`, `o1-preview`, `o1`, `o1-pro`.
+- **o3-mini-high**: Accessed using the model name `o3-mini`, with parameter `reasoning_effort="high"`.
 
 ### Llama Models
 - **Llama 2 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints using model `meta-llama/Llama-2-xxb-chat-hf`, where `xxb` can be `7b`, `13b`, and `70b`, tailored to each model's capacity.
