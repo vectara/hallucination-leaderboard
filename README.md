@@ -87,6 +87,7 @@ Last updated on April 17th, 2025
 |Claude-3.7-Sonnet|4.4 %|95.6 %|100.0 %|97.8|
 |Claude-3.7-Sonnet-Think|4.5 %|95.5 %|99.8 %|99.9|
 |Cohere Command-A|4.5 %|95.5 %|100.0 %|77.3|
+|OpenAI o4-mini|4.6 %|95.4 %|100.0 %|82.0|
 |AI21 Jamba-1.6-Mini|4.6 %|95.4 %|100.0 %|82.3 |
 |Meta Llama-4-Maverick|4.6 %|95.4 %|100.0 %|84.8|
 |XAI Grok|4.6 %|95.4 %|100.0 %|91.0|
@@ -110,6 +111,7 @@ Last updated on April 17th, 2025
 |Google Gemini-1.5-Flash|6.6 %|93.4 %|99.9 %|63.3|
 |Mistral-Pixtral|6.6 %|93.4 %|100.0 %|76.4|
 |Microsoft phi-2|6.7 %|93.3 %|91.5 %|80.8|
+|OpenAI o3|6.8 %|93.2 %|100.0 %|77.7|
 |Google Gemma-2-2B-it|7.0 %|93.0 %|100.0 %|62.2|
 |Qwen2.5-3B-Instruct|7.0 %|93.0 %|100.0 %|70.4|
 |Llama-3-8B-Chat-hf|7.4 %|92.6 %|99.8 %|79.7|
@@ -194,7 +196,8 @@ Below is a detailed overview of the models integrated and their specific endpoin
 - **GPT-4.1, GPT-4.1-mini, GPT-4.1-nano**: Accessed using the model name `gpt-4.1`, `gpt-4.1-mini`, `gpt-4.1-nano`
 - **GPT-4.5-preview**: Accessed using the model name `gpt-4.5-preview-2025-02-27`.
 - **o1-mini, o1-preview, o1, o1-pro**: Accessed using the model name `o1-mini`, `o1-preview`, `o1`, `o1-pro`.
-- **o3-mini-high**: Accessed using the model name `o3-mini`, with parameter `reasoning_effort="high"`.
+- **o3-mini-high, o3**: Accessed using the model name `o3-mini` (with parameter `reasoning_effort="high"`), `o3`.
+- **o4-mini**: Accessed using the model name `o4-mini`.
 
 ### Llama Models
 - **Llama 2 7B, 13B, and 70B**: These models of varying sizes are accessed through Anyscale hosted endpoints using model `meta-llama/Llama-2-xxb-chat-hf`, where `xxb` can be `7b`, `13b`, and `70b`, tailored to each model's capacity.
