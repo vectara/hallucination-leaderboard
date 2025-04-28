@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on April 17th, 2025
+Last updated on April 28th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -34,6 +34,7 @@ Last updated on April 17th, 2025
 |OpenAI GPT-4.5-Preview|1.2 %|98.8 %|100.0 %|77.0|
 |Zhipu AI GLM-4-9B-Chat|1.3 %|98.7 %|100.0 %|58.1|
 |Google Gemini-2.0-Flash-Exp|1.3 %|98.7 %|99.9 %|60.0|
+|Google Gemini-2.5-Flash-Preview|1.3 %|98.7 %|91.2 %|71.1|
 |OpenAI-o1-mini|1.4 %|98.6 %|100.0 %|78.3|
 |OpenAI GPT-4o|1.5 %|98.5 %|100.0 %|77.8|
 |Amazon Nova-Micro-V1|1.6 %|98.4 %|100.0 %|90.0|
@@ -240,16 +241,9 @@ Details on each model can be found on their [website](https://docs.anthropic.com
 ### Google Closed-Source Models via Vertex AI
 - **Google Palm 2**: Implemented using the `text-bison-001` model, respectively.
 - **Gemini Pro**: Google's `gemini-pro` model is incorporated for enhanced language processing, accessible on Vertex AI.
-- **Gemini 1.5 Pro**: Accessed using model `gemini-1.5-pro-001` on Vertex AI. 
-- **Gemini 1.5 Flash**: Accessed using model `gemini-1.5-flash-001` on Vertex AI. 
-- **Gemini 1.5 Pro 002**: Accessed using model `gemini-1.5-pro-002` on Vertex AI.
-- **Gemini 1.5 Flase 002**: Accessed using model `gemini-1.5-flash-002` on Vertex AI. 
-- **Gemini 2.0 Flash Exp**: Accessed using model `gemini-2.0-flash-exp` on Vertex AI. 
-- **Gemini 2.0 Flash**: Accessed using model `gemini-2.0-flash-001` on Vertex AI. 
-- **Gemini 2.0 Flash Lite**: Accessed using model `gemini-2.0-flash-lite-preview-02-05` on Vertex AI. 
-- **Gemini 2.0 Flash Thinking Exp**: Accessed using model `gemini-2.0-flash-thinking-exp` on Vertex AI.
-- **Gemini 2.0 Pro Exp**: Accessed using model `gemini-2.0-pro-exp-02-05` on Vertex AI. 
-- **Gemini 2.5 Pro Exp**: Accessed using model `gemini-2.5-pro-exp-03-25` on Vertex AI. 
+- **Gemini 1.5 Pro, Flash, Pro 002, Flase 002**: Accessed using model `gemini-1.5-pro-001`, `gemini-1.5-flash-001`, `gemini-1.5-pro-002`, `gemini-1.5-flash-002` on Vertex AI. 
+- **Gemini 2.0 Flash Exp, Flash, Flash Lite, Flash Thinking Exp, Pro Exp**: Accessed using model `gemini-2.0-flash-exp`, `gemini-2.0-flash-001`, `gemini-2.0-flash-lite-preview-02-05`, `gemini-2.0-flash-thinking-exp`, `gemini-2.0-pro-exp-02-05` on Vertex AI. 
+- **Gemini 2.5 Pro Exp, Flash Preview**: Accessed using model `gemini-2.5-pro-exp-03-25`, `gemini-2.5-flash-preview-04-17` on Vertex AI. 
 
 ### Google Open-Source Models on Hugging Face
 - **Google flan-t5-large**: The [flan-t5-large](https://huggingface.co/google/flan-t5-large) model is accessed via Hugging Face's API.
