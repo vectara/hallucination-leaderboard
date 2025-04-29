@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on April 28th, 2025
+Last updated on April 29th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -50,6 +50,7 @@ Last updated on April 28th, 2025
 |OpenAI GPT-4.1|2.0 %|98.0 %|100.0 %|71.9|
 |XAI Grok-3-Beta|2.1 %|97.8|100.0 %|97.7|
 |OpenAI GPT-4.1-mini|2.2 %|97.8 %|100.0 %|79.6|
+|Qwen3-14B|2.2 %|97.8 %|100.0 %|82.4|
 |AI21 Jamba-1.6-Large|2.3 %|97.7 %|99.9 %|85.6 |
 |OpenAI o1-Pro|2.4 %|97.6 %|100.0 %|81.0|
 |OpenAI o1|2.4 %|97.6 %|99.9 %|73.0|
@@ -57,14 +58,17 @@ Last updated on April 28th, 2025
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0 %|66.2|
 |Microsoft Phi-3.5-MoE-instruct|2.5 %|97.5 %|96.3 %|69.7|
 |Intel Neural-Chat-7B-v3-3|2.6 %|97.4 %|100.0 %|60.7|
+|Qwen3-4B|2.7 %|97.3 %|100.0 %|87.7|
 |Google Gemma-3-12B-Instruct|2.8 %|97.2 %|100.0 %|69.6|
 |Qwen2.5-7B-Instruct|2.8 %|97.2 %|100.0 %|71.0|
+|Qwen3-32B|2.8 %|97.2 %|100.0 %|82.4|
 |AI21 Jamba-1.5-Mini|2.9 %|97.1 %|95.6 %|74.5|
 |XAI Grok-2-Vision|2.9 %|97.1|100.0 %|79.8|
 |Qwen2.5-Max|2.9 %|97.1 %|88.8 %|90.4|
 |Google Gemma-3-27B-Instruct|3.0 %|97.0 %|100.0 %|62.5|
-|Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0 %|68.7|
 |Qwen2.5-32B-Instruct|3.0 %|97.0 %|100.0 %|67.9|
+|Snowflake-Arctic-Instruct|3.0 %|97.0 %|100.0 %|68.7|
+|Qwen3-8B|3.0 %|97.0 %|100.0 %|78.2|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
 |Mistral Small3|3.1 %|96.9 %|100.0 %|74.9|
 |XAI Grok-3-Mini-Beta|3.3 %|96.7|100.0 %|90.2|
@@ -72,6 +76,7 @@ Last updated on April 28th, 2025
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |Microsoft Phi-4-mini-instruct|3.4 %|96.6 %|100.0 %|69.7|
 |Google Gemma-3-4B-Instruct|3.7 %|96.3 %|100.0 %|63.7|
+|Qwen3-0.6B|3.7 %|96.3 %|100.0 %|65.3|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
 |Llama-3.1-405B-Instruct|3.9 %|96.1 %|99.6 %|85.7|
 |DeepSeek-V3|3.9 %|96.1 %|100.0 %|88.2|
@@ -85,6 +90,7 @@ Last updated on April 28th, 2025
 |Qwen2.5-14B-Instruct|4.2 %|95.8 %|100.0 %|74.8|
 |Qwen2.5-72B-Instruct|4.3 %|95.7 %|100.0 %|80.0|
 |Llama-3.2-90B-Vision-Instruct|4.3 %|95.7 %|100.0 %|79.8|
+|Qwen3-1.7B|4.4 %|95.6 %|100.0 %|69.0|
 |Claude-3.7-Sonnet|4.4 %|95.6 %|100.0 %|97.8|
 |Claude-3.7-Sonnet-Think|4.5 %|95.5 %|99.8 %|99.9|
 |Cohere Command-A|4.5 %|95.5 %|100.0 %|77.3|
@@ -292,11 +298,10 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 - **Zhipu-AI/GLM-4-9B-Chat**: The [GLM-4-9B-Chat](https://huggingface.co/THUDM/glm-4-9b-chat) is accessed via Hugging Face's checkpoint.
 
 ### Qwen Models
-- **Qwen/Qwen2-72B-Instruct**: Accessed via Together AI `chat` endpoint with model name `Qwen/Qwen2-72B-Instruct`.
-- **Qwen/Qwen2-VL-Instruct 2B, 7B**: The models [Qwen/Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct) and [Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) are accessed via Hugging Face's checkpoints.
-- **Qwen/Qwen2.5-Instruct 0.5B, 1.5B, 3B, 7B, 14B, 32B, 72B**: The models [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct), [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct), [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct), [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct), [Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct), [Qwen2.5-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct), and [Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct) are accessed via Hugging Face's checkpoints.
-- **Qwen/QwQ-32B-Preview**: The model [Qwen/QwQ-32B-Preview](https://huggingface.co/Qwen/QwQ-32B-Preview) is accessed via Hugging Face's checkpoint.
-- **Qwen2.5-Max**: The model [Qwen2.5-max](https://openrouter.ai/qwen/qwen-max) are accessed via OpenRouter API with parameter `"temperature": 0`.
+- **Qwen2-72B-Instruct, -VL-Instruct 2B, 7B**: Qwen2-72B-Instruct is accessed via Together AI `chat` endpoint with model name `Qwen/Qwen2-72B-Instruct`. The models [Qwen/Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct) and [Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) are accessed via Hugging Face's checkpoints.
+- **Qwen2.5-Instruct 0.5B, 1.5B, 3B, 7B, 14B, 32B, 72B, Max**: The models [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct), [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct), [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct), [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct), [Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct), [Qwen2.5-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct), and [Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct) are accessed via Hugging Face's checkpoints. The model [Qwen2.5-max](https://openrouter.ai/qwen/qwen-max) are accessed via OpenRouter API with parameter `"temperature": 0`.
+- **Qwen-QwQ-32B-Preview**: The model [Qwen/QwQ-32B-Preview](https://huggingface.co/Qwen/QwQ-32B-Preview) is accessed via Hugging Face's checkpoint.
+- **Qwen3-0.6B, 1.7B, 4B, 8B, 14B, 32B**: The models [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B), [Qwen3-1.7B](https://huggingface.co/Qwen/Qwen3-1.7B), [Qwen3-4B](https://huggingface.co/Qwen/Qwen3-4B), [Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B), [Qwen3-14B](https://huggingface.co/Qwen/Qwen3-14B), [Qwen3-32B](https://huggingface.co/Qwen/Qwen3-32B) are accessed via Hugging Face's checkpoints with `enable_thinking=False`.
 
 ### AI21 Model
 - **AI21-Jamba-1.5-Mini**: The [Jamba-1.5-Mini](https://huggingface.co/ai21labs/AI21-Jamba-1.5-Mini) model is accessed via Hugging Face's checkpoint.
