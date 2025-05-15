@@ -74,7 +74,7 @@ class AbstractLLM:
 
     def summarize(self, prepared_text: str) -> str:
         """
-        (MUST DEFINE)
+        (MUST DEFINE for new children)
         Requests LLM to generate a summary given the input
 
         Args:
