@@ -13,7 +13,8 @@ class AbstractLLM:
             article from LLM
         prepare_article_for_llm(article): Injects prompt and slightly reformats
             article text
-        summarize(prepared_text): (MUST DEFINE) Requests LLM to summarize the given text
+        summarize(prepared_text): (MUST DEFINE) Requests LLM to summarize the
+            given text
     """
     def __init__(self, name: str):
         self.name = name
