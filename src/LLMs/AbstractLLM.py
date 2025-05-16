@@ -18,7 +18,7 @@ class AbstractLLM:
     """
     def __init__(self, name: str):
         self.name = name
-        # Do we need a pad token at start?
+        '''Do we need a pad token at start?'''
         self.prompt = ("You are a chat bot answering questions using data."
             "You must stick to the answers provided solely by the text in the "
             "passage provided. You are asked the question 'Provide a concise "
