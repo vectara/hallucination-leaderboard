@@ -6,7 +6,7 @@ import os
 class GPTd4p1(AbstractLLM):
 
     def __init__(self):
-        super().__init__("OpenAI GPT-4.1")
+        super().__init__("OpenAI_GPT-4.1")
         load_dotenv()
         self.api_key = os.getenv("OPENAI_KEY")
         self.client = OpenAI(api_key=self.api_key)

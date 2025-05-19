@@ -1,5 +1,6 @@
 from src.logging.Logger import logger
 from src.tests.TestLLM import TestLLM
+from dotenv import load_dotenv
 
 from src.LLMs.AbstractLLM import AbstractLLM
 from src.LLMs.OpenAI_GPTd4p1.GPTd4p1 import GPTd4p1
@@ -12,6 +13,7 @@ def run_tests():
 def test_models():
     logger.log("Testing models")
     llm_tester = TestLLM()
+    '''Add new models in list below'''
     models = [GPTd4p1()]
     test_model_summarize(models, llm_tester)
     logger.log("Finished testing models")
@@ -26,4 +28,5 @@ def test_model_summarize(models: list[AbstractLLM], llm_tester: TestLLM):
         logger.log(f"{model.get_name()} passed")
 
 if __name__ == "__main__":
+    load_dotenv()
     run_tests()

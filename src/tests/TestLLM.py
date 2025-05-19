@@ -1,13 +1,11 @@
 from src.tests.AbstractTest import AbstractTest
 from src.LLMs.AbstractLLM import AbstractLLM
-from dotenv import load_dotenv
 import os
 import csv
 
 class TestLLM(AbstractTest):
     def __init__(self):
         super().__init__()
-        load_dotenv()
         data_path = os.getenv("TEST_DATA")
         self.sample_article = None
         with open(data_path) as csvfile:
