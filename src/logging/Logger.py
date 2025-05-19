@@ -8,26 +8,28 @@ class Logger:
         file_name (str): full file name
 
     Methods:
-        append_log(log): appends a log to the file
+        log(msg): appends a log to the file
     
     """
-    def __init__(self, log_name="live_log"):
+    def __init__(self, log_name="log"):
         self.file_name = log_name + ".txt"
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open(self.file_name, 'a') as f:
             intro_msg = f"--- {log_name} started on {timestamp} ---\n"
             f.write(intro_msg)
 
-    def add_log(self, log: str):
+    def log(self, msg: str):
         """
-        Given a log, adds a timestamp to it and appends it to the file
+        Given a message, adds a timestamp to it and appends it to the file
 
         Args:
-            log(str): log message
+            msg(str): log message
 
         Returns:
             None
         """
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open(self.file_name, 'a') as f:
-            f.write(f"{timestamp} - {log}\n")
+            f.write(f"{timestamp} - {msg}\n")
+
+logger = Logger()

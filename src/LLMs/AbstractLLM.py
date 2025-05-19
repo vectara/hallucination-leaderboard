@@ -13,6 +13,7 @@ class AbstractLLM:
             article from LLM
         prepare_article_for_llm(article): Injects prompt and slightly reformats
             article text
+        get_name(): returns name of model
         summarize(prepared_text): (MUST DEFINE) Requests LLM to summarize the
             given text
     """
@@ -73,6 +74,18 @@ class AbstractLLM:
         prepared_text = f"{self.prompt} '{article}'"
         return prepared_text
 
+    def get_name(self):
+        """
+        Returns name of model
+
+        Args:
+            N/A
+
+        Returns:
+            str: Name of model
+        """
+        return self.name
+
     def summarize(self, prepared_text: str) -> str:
         """
         (MUST DEFINE for new children)
@@ -85,4 +98,5 @@ class AbstractLLM:
             str: Generated LLM summary
         """
         pass
+
 
