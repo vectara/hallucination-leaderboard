@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 
 .env
+test_log.txt
+live_log.txt
