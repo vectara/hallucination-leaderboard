@@ -76,13 +76,14 @@ def generate_and_save_summaries(
         None
     """
     article_texts = article_df['text'].tolist()
+    article_ids = article_df['article_id'].tolist()
     summaries = model.summarize_articles(article_texts)
-    summary_records = create_summary_records(summaries, article_df)
+    summary_records = create_summary_records(summaries, article_ids)
     save_to_json(json_path, summary_records)
 
 def create_summary_records(
         summaries: list[str],
-        article_df: pd.DataFrame
+        article_ids: list[int]
     ) -> list[dict]:
     """
     Reformats summary and article data into JSON format
@@ -91,8 +92,6 @@ def create_summary_records(
     {
         'article_id': int
         'summary': str
-        'source_article': str
-        'dataset': str
     }
 
     Args:
@@ -101,18 +100,13 @@ def create_summary_records(
     Returns:
         (dict): JSON formatted dictionary
     """
-    article_texts = article_df['text'].tolist()
-    article_ids = article_df['article_id'].tolist()
-    article_datasets = article_df['dataset'].tolist()
     model_summary_dict = [
         {
             "article_id": a_id,
             "summary": summ,
-            "source_article": source,
-            "dataset": ds
         }
-        for a_id, summ, source, ds in zip(
-            article_ids, summaries, article_texts, article_datasets
+        for a_id, summ in zip(
+            article_ids, summaries
         )
     ]
     return model_summary_dict
