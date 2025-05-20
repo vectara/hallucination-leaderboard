@@ -80,7 +80,7 @@ class AbstractLLM:
         Returns name of model
 
         Args:
-            N/A
+            None
 
         Returns:
             str: Name of model

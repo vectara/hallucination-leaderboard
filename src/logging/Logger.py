@@ -9,7 +9,6 @@ class Logger:
 
     Methods:
         log(msg): appends a log to the file
-    
     """
     def __init__(self, log_name="log"):
         self.file_name = log_name + ".txt"
