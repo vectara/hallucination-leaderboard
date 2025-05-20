@@ -98,6 +98,6 @@ class AbstractLLM:
         Returns:
             str: Generated LLM summary
         """
-        pass
+        return None
 
 
