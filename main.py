@@ -1,5 +1,6 @@
 from src.logging.Logger import logger
 from src.scripts import get_summaries
+from dotenv import load_dotenv
 
 
 
