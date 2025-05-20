@@ -8,4 +8,4 @@ if __name__ == "__main__":
     load_dotenv()
     logger.log("Starting main program")
     get_summaries.run()
-    logger.log("Main program exiting")
+    logger.log("Main program exiting.")
