@@ -4,6 +4,7 @@ import inspect
 import os
 import json
 
+from src.LLMs.AbstractLLM import AbstractLLM
 from src.LLMs.OpenAI_GPTd4p1.GPTd4p1 import GPTd4p1
 
 """
@@ -12,11 +13,24 @@ summary data is detected. Summaries can be forced to be regenerated. Stores the
 summary data as a JSON file local to associated LLM class.
 
 Functions:
-
+    run()
+    generate_and_save_summaries(model, article_df, json_path)
+    create_summary_records(summaries, article_df)
+    save_to_json(json_path, summary_records)
+    summaries_json_exists(full_path)
 """
 
-'''Need to do something about article IDs here'''
 def run():
+    """
+    Generates summaries for a given model if the corresponding JSON file does 
+    not exist
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     logger.log("Starting to generate summaries")
 
     models = [GPTd4p1()]
@@ -33,44 +47,101 @@ def run():
         json_path = os.path.join(obj_dir, json_file)
 
         if summaries_json_exists(json_path):
-            logger.log("Summaries json file exists, moving to next model")
+            logger.log(f"Summaries JSON file exists for {model_name}, skipping")
             continue
         else:
-            logger.log("Summaries json file does not exist, generating...")
+            logger.log("Summaries JSON file does not exist, generating...")
             generate_and_save_summaries(model, article_df, json_path)
+            logger.log(f"Finished generating and saving for {model_name}")
+        
+        logger.log("Moving on to next model")
     
-    logger.log("Finished generating and saving summaries")
+    logger.log("Finished generating and saving summaries for all models")
 
+def generate_and_save_summaries(
+        model: AbstractLLM,
+        article_df: pd.DataFrame,
+        json_path: str
+    ):
+    """
+    Generates the summaries, reformats the data for a JSON file, and saves the
+    record to a JSON file in the folder with the corresponding object.
 
-def generate_and_save_summaries(model, article_df, json_path):
+    Args:
+        model (AbstractLLM): LLM model
+        article_df (DataFrame): Article data
+        json_path (str): path for the new json file
+
+    Returns:
+        None
+    """
     article_texts = article_df['text'].tolist()
     summaries = model.summarize_articles(article_texts)
     summary_records = create_summary_records(summaries, article_df)
     save_to_json(json_path, summary_records)
 
+def create_summary_records(
+        summaries: list[str],
+        article_df: pd.DataFrame
+    ) -> list[dict]:
+    """
+    Reformats summary and article data into JSON format
 
-def save_to_json(json_path, summary_records):
-    logger.log("Saving json file")
-    with open(json_path, "w") as f:
-        json.dump(summary_records, f, indent=4)
+    Current JSON format
+    {
+        'article_id': int
+        'summary': str
+        'source_article': str
+        'dataset': str
+    }
 
-def create_summary_records(summaries, article_df):
+    Args:
+        summaries (list[str]): List of summaries
+    
+    Returns:
+        (dict): JSON formatted dictionary
+    """
     article_texts = article_df['text'].tolist()
     article_ids = article_df['article_id'].tolist()
     article_datasets = article_df['dataset'].tolist()
     model_summary_dict = [
-        {"article_id": a_id, "summary": summ,
-            "source_article": source, "dataset": ds}
+        {
+            "article_id": a_id,
+            "summary": summ,
+            "source_article": source,
+            "dataset": ds
+        }
         for a_id, summ, source, ds in zip(
             article_ids, summaries, article_texts, article_datasets
         )
     ]
     return model_summary_dict
 
-
-def summaries_json_exists(full_path):
+def save_to_json(json_path: str, summary_records: list[dict]):
     """
-    
+    Saves JSON formatted data to disk in the folder with the respective model
+
+    Args:
+        json_path (str): Path to the JSON file
+        summary_records (list[dict{}]): JSON formatted data
+
+    Returns:
+        None
+    """
+    logger.log("Saving json file")
+    with open(json_path, "w") as f:
+        json.dump(summary_records, f, indent=4)
+    logger.log("JSON file saved")
+
+def summaries_json_exists(full_path: str) -> bool:
+    """
+    Checks if JSON file exists, returns True if so else False
+
+    Args:
+        full_path (str): Path to JSON file
+
+    Returns:
+        (bool): State of file existing
     """
     if os.path.isfile(full_path):
         return True
