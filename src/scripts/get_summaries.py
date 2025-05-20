@@ -87,7 +87,7 @@ def create_summary_records(
     """
     Reformats summary and article data into JSON format
 
-    Current JSON format
+    Current JSON format, *Format may not align with code in future, check code*
     {
         'article_id': int
         'summary': str
