@@ -1,4 +1,5 @@
 from src.logging.Logger import logger
+from typing import Literal
 import pandas as pd
 import inspect
 import os
@@ -13,10 +14,22 @@ Gets the HHEM scores for all LLMs that have an existing summary JSON file. HHEM
 score data is stored as a JSON file local to the associated LLM class.
 
 Functions:
-
+    run(models)
+    generate_and_save_hhem_scores(hhem_model, df, hhem_json_path)
+    create_hhem_records(article_ids, hhem_scores, hhem_labels)
 """
 
 def run(models: list[AbstractLLM]):
+    """
+    Generates and saves HHEM scores for a given model only if it has its 
+    respective summaries_model.json file
+
+    Args:
+        models (list[AbstractLLM]): list of LLMs
+
+    Returns:
+        None
+    """
     logger.log("Starting to generate HHEM scores")
 
     article_df = pd.read_csv(os.getenv("LB_DATA"))
@@ -39,6 +52,7 @@ def run(models: list[AbstractLLM]):
                 article_df, summaries_df,
                 on='article_id', how='inner'
             )
+
             hhem_json_file = f"hhem_scores_{model_name}.json"
             hhem_json_path = os.path.join(obj_dir, hhem_json_file)
 
@@ -58,6 +72,17 @@ def run(models: list[AbstractLLM]):
 def generate_and_save_hhem_scores(
         hhem_model: HHEM_2_3, df: pd.DataFrame, hhem_json_path: str
     ):
+    """
+    For a given models output, request the HHEM model to predict the scores and
+    save them in a JSON file
+
+    Args:
+        hhem_model (HHEM_2_3): HHEM model
+        df (DataFrame): contains article and summaries merged on article_id
+        hhem_json_path (str): path to new JSON file
+    Returns:
+        None
+    """
     article_texts = df['text'].tolist()
     article_summaries = df['summary'].tolist()
     article_ids = df['article_id'].tolist()
@@ -72,7 +97,27 @@ def generate_and_save_hhem_scores(
     hhem_records = create_hhem_records(article_ids, hhem_scores, hhem_labels)
     save_to_json(hhem_json_path, hhem_records)
 
-def create_hhem_records(article_ids, hhem_scores, hhem_labels):
+def create_hhem_records(
+        article_ids: list[int],
+        hhem_scores: list[float], hhem_labels: list[Literal[0,1]]
+    ):
+    """
+    Creates the HHEM score records for a given article_id
+
+    Current JSON format, *Format may not align with code in future, check code*
+    {
+        'article_id': int
+        'hhem_score': float
+        'hhem_label': Literal[0,1]
+    }
+
+    Args:
+        article_ids (list[int]):
+        hhem_scores (list[float]):
+        hhem_labels (list[Literal[0,1]]):
+    Returns:
+        list[dict]: hhem score records in JSON format
+    """
     hhem_score_records = [
         {
             "article_id": a_id,

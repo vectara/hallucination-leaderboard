@@ -12,7 +12,7 @@ summary data is detected. Summaries can be forced to be regenerated. Stores the
 summary data as a JSON file local to associated LLM class.
 
 Functions:
-    run()
+    run(models)
     generate_and_save_summaries(model, article_df, json_path)
     create_summary_records(summaries, article_df)
 """
