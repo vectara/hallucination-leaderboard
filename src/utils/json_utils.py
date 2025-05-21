@@ -2,6 +2,13 @@ import json
 import os
 from src.logging.Logger  import logger
 
+def load_json(json_path: str) -> list:
+    json_data = None
+    with open(json_path, "r") as f:
+        json_data = json.load(f)
+    return json_data
+
+
 def save_to_json(json_path: str, summary_records: list[dict]):
     """
     Saves JSON formatted data to disk at specified path
