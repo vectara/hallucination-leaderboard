@@ -6,8 +6,8 @@ Functions:
 
 """
 
-def run():
+def run(models):
     pass
 
 if __name__ == "__main__":
-    run()
+    pass
