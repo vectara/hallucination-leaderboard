@@ -73,7 +73,9 @@ def generate_and_save_summaries(
     """
     article_texts = article_df['text'].tolist()
     article_ids = article_df['article_id'].tolist()
-    summaries = model.summarize_articles(article_texts)
+    summaries = []
+    with model as m: 
+        summaries = m.summarize_articles(article_texts)
     summary_records = create_summary_records(summaries, article_ids)
     save_to_json(json_path, summary_records)
 

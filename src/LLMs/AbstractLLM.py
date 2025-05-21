@@ -1,4 +1,6 @@
-class AbstractLLM:
+from abc import ABC, abstractmethod
+
+class AbstractLLM(ABC):
     """
     Abstract Class. To add new LLMs create a new folder and inherit this class
 
@@ -26,6 +28,13 @@ class AbstractLLM:
             "summary of the following passage, covering the core pieces of "
             "information described.'"
         )
+
+    def __enter__(self):
+        self.setup()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_t):
+        self.teardown()
 
     def summarize_articles(self, articles: list[str]) -> list[str]:
         """
@@ -87,9 +96,9 @@ class AbstractLLM:
         """
         return self.name
 
+    @abstractmethod
     def summarize(self, prepared_text: str) -> str:
         """
-        (MUST DEFINE for new children)
         Requests LLM to generate a summary given the input
 
         Args:
@@ -100,4 +109,26 @@ class AbstractLLM:
         """
         return None
 
+    @abstractmethod
+    def setup(self):
+        """
+        Setup model for use
 
+        Args:
+            None
+        Returns:
+            None
+        """
+        return None
+
+    @abstractmethod
+    def teardown(self):
+        """
+        Teardown model
+
+        Args:
+            None
+        Returns:
+            None
+        """
+        return None
