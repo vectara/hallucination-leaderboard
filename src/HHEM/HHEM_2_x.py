@@ -1,6 +1,6 @@
 from typing import List, Literal
 from pydantic import BaseModel
-# import torch
+import torch
 
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from transformers import pipeline
