@@ -110,4 +110,4 @@ def create_summary_records(
     return model_summary_dict
 
 if __name__ == "__main__":
-    run()
+    pass
