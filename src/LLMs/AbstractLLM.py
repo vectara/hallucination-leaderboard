@@ -1,4 +1,147 @@
+# TODO: Create children for all models on the HHEM LB
+'''
+Model List
+    - Google Gemini-2.0-Flash-001
+    - Google Gemini-2.0-Pro-Exp
+    - OpenAI o3-mini-high
+    - Vectara Mockingbird-2-Echo
+    - Google Gemini-2.5-Pro-Exp-0325
+    - Google Gemini-2.0-Flash-Lite-Preview
+    - OpenAI GPT-4.5-Preview
+    - Zhipu AI GLM-4-9B-Chat	
+    - Google Gemini-2.0-Flash-Exp
+    - Google Gemini-2.5-Flash-Preview
+    - OpenAI-o1-mini
+    - OpenAI GPT-4o
+    - Amazon Nova-Micro-V1
+    - OpenAI GPT-4o-mini
+    - OpenAI GPT-4-Turbo
+    - Google Gemini-2.0-Flash-Thinking-Exp
+    - Amazon Nova-Lite-V1
+    - OpenAI GPT-4
+    - Amazon Nova-Pro-V1
+    - OpenAI GPT-3.5-Turbo
+    - XAI Grok-2
+    - OpenAI GPT-4.1-nano
+    - OpenAI GPT-4.1 DONE
+    - XAI Grok-3-Beta
+    - OpenAI GPT-4.1-mini
+    - Qwen3-14B
+    - AI21 Jamba-1.6-Large
+    - OpenAI o1-Pro
+    - OpenAI o1
+    - DeepSeek-V2.5
+    - Microsoft Orca-2-13b
+    - Microsoft Phi-3.5-MoE-instruct
+    - Intel Neural-Chat-7B-v3-3
+    - Qwen3-4B
+    - Google Gemma-3-12B-Instruct
+    - Qwen2.5-7B-Instruct
+    - Qwen3-32B
+    - AI21 Jamba-1.5-Mini
+    - XAI Grok-2-Vision
+    - Qwen2.5-Max
+    - Google Gemma-3-27B-Instruct
+    - Qwen2.5-32B-Instruct
+    - Snowflake-Arctic-Instruct
+    - Qwen3-8B
+    - Microsoft Phi-3-mini-128k-instruct
+    - Mistral Small3
+    - XAI Grok-3-Mini-Beta
+    - OpenAI o1-preview
+    - Google Gemini-1.5-Flash-002
+    - Microsoft Phi-4-mini-instruct
+    - Google Gemma-3-4B-Instruct
+    - Qwen3-0.6B
+    - 01-AI Yi-1.5-34B-Chat
+    - Llama-3.1-405B-Instruct
+    - DeepSeek-V3
+    - Microsoft Phi-3-mini-4k-instruct
+    - Mistral-Large2
+    - Llama-3.3-70B-Instruct
+    - Qwen2-VL-7B-Instruct
+    - Qwen2.5-14B-Instruct
+    - Qwen2.5-72B-Instruct
+    - Llama-3.2-90B-Vision-Instruct
+    - Qwen3-1.7B
+    - Claude-3.7-Sonnet
+    - Claude-3.7-Sonnet-Think
+    - Cohere Command-A
+    - OpenAI o4-mini
+    - AI21 Jamba-1.6-Mini
+    - Meta Llama-4-Maverick
+    - XAI Grok
+    - Anthropic Claude-3-5-sonnet
+    - Meta Llama-4-Scout
+    - Qwen2-72B-Instruct
+    - Microsoft Phi-4
+    - Mixtral-8x22B-Instruct-v0.1
+    - Anthropic Claude-3-5-haiku
+    - 01-AI Yi-1.5-9B-Chat
+    - Cohere Command-R
+    - Llama-3.1-70B-Instruct
+    - Google Gemma-3-1B-Instruct
+    - Llama-3.1-8B-Instruct
+    - Cohere Command-R-Plus
+    - Mistral-Small-3.1-24B-Instruct
+    - Llama-3.2-11B-Vision-Instruct
+    - Llama-2-70B-Chat-hf
+    - IBM Granite-3.0-8B-Instruct
+    - Google Gemini-1.5-Pro-002
+    - Google Gemini-1.5-Flash
+    - Mistral-Pixtral
+    - Microsoft phi-2
+    - OpenAI o3
+    - Google Gemma-2-2B-it
+    - Qwen2.5-3B-Instruct
+    - Llama-3-8B-Chat-hf
+    - Mistral-Ministral-8B
+    - Google Gemini-Pro
+    - 01-AI Yi-1.5-6B-Chat
+    - Llama-3.2-3B-Instruct
+    - DeepSeek-V3-0324
+    - Mistral-Ministral-3B
+    - databricks dbrx-instruct
+    - Qwen2-VL-2B-Instruct
+    - Cohere Aya Expanse 32B
+    - IBM Granite-3.1-8B-Instruct
+    - Mistral-Small2
+    - IBM Granite-3.2-8B-Instruct
+    - IBM Granite-3.0-2B-Instruct
+    - Mistral-7B-Instruct-v0.3
+    - Google Gemini-1.5-Pro
+    - Anthropic Claude-3-opus
+    - Google Gemma-2-9B-it
+    - Llama-2-13B-Chat-hf
+    - AllenAI-OLMo-2-13B-Instruct
+    - AllenAI-OLMo-2-7B-Instruct
+    - Mistral-Nemo-Instruct
+    - Llama-2-7B-Chat-hf
+    - Microsoft WizardLM-2-8x22B
+    - Cohere Aya Expanse 8B
+    - Amazon Titan-Express
+    - Google PaLM-2
+    - DeepSeek-R1
+    - Google Gemma-7B-it
+    - IBM Granite-3.1-2B-Instruct
+    - Qwen2.5-1.5B-Instruct
+    - Qwen-QwQ-32B-Preview
+    - Anthropic Claude-3-sonnet
+    - IBM Granite-3.2-2B-Instruct
+    - Google Gemma-1.1-7B-it
+    - Anthropic Claude-2
+    - Google Flan-T5-large
+    - Mixtral-8x7B-Instruct-v0.1
+    - Llama-3.2-1B-Instruct
+    - Apple OpenELM-3B-Instruct
+    - Qwen2.5-0.5B-Instruct
+    - Google Gemma-1.1-2B-it
+    - TII falcon-7B-instruct
+'''
+
+
 from abc import ABC, abstractmethod
+
 
 class AbstractLLM(ABC):
     """
@@ -16,7 +159,7 @@ class AbstractLLM(ABC):
         prepare_article_for_llm(article): Injects prompt and slightly reformats
             article text
         get_name(): returns name of model
-        summarize(prepared_text): (MUST DEFINE) Requests LLM to summarize the
+        summarize(prepared_text): Requests LLM to summarize the
             given text
     """
     def __init__(self, name: str):
