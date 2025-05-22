@@ -1,4 +1,4 @@
-
+# Likely Remove Later
 class HHEM:
     """
     Hughes Hallucination Evaluation Model(HHEM)
@@ -107,14 +107,4 @@ class HHEM:
         """
         Initializes the HHEM model 
         """
-        pass
-
-
-
-
-
-    def verify_articles_summaries_aligned(self):
-        # Plan is to have an ID associated with articles and their corresponding
-        # summaries
-        # Not sure this should be in this class
         pass
