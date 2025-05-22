@@ -47,6 +47,7 @@ def run(models: list[AbstractLLM], force: bool):
 
         summaries_json_file = f"summaries_{model_name}.json"
         summaries_json_path = os.path.join(obj_dir, summaries_json_file)
+
         if json_exists(summaries_json_path):
             logger.log(f"Summary JSON found for {model_name}")
             summaries_df = pd.read_json(summaries_json_path)
@@ -57,25 +58,37 @@ def run(models: list[AbstractLLM], force: bool):
 
             hhem_json_file = f"hhem_scores_{model_name}.json"
             hhem_json_path = os.path.join(obj_dir, hhem_json_file)
-            if json_exists(hhem_json_path) and not force:
-                logger.log(f"HHEM JSON file exists for {model_name}, skipping")
-                continue
-            else:
-                if not force:
-                    logger.log("HHEM JSON file does not exist, generating...")
-                else:
-                    logger.log("Overwriting previous HHEM score JSON...")
-                generate_and_save_hhem_scores(
-                    hhem_model, article_summaries_df, hhem_json_path
-                )
-                logger.log("Finished generating and saving HHEM scores")
-                logger.log("Moving on to next model")
+            run_generation_save_flow(
+                hhem_model,
+                article_summaries_df,
+                hhem_json_path,
+                model_name,
+                force
+            )
         else:
             logger.log(
                 f"Summary JSON not found for {model_name}, skipping model"
             )
             continue
     logger.log("Finished generating and saving HHEM scores for all models")
+
+def run_generation_save_flow(hhem_model, df, hhem_json_path, model_name, force):
+    """
+
+    """
+    if json_exists(hhem_json_path) and not force:
+        logger.log(f"HHEM JSON file exists for {model_name}, skipping")
+    else:
+        if not force:
+            logger.log("HHEM JSON file does not exist, generating...")
+        else:
+            logger.log("Overwriting previous HHEM score JSON...")
+        generate_and_save_hhem_scores(
+            hhem_model, df, hhem_json_path
+        )
+        logger.log("Finished generating and saving HHEM scores")
+        logger.log("Moving on to next model")
+
 
 def generate_and_save_hhem_scores(
         hhem_model: HHEM_2_3, df: pd.DataFrame, hhem_json_path: str
