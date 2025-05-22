@@ -155,6 +155,7 @@ class AbstractLLM(ABC):
     Methods:
         summarize_articles(articles): Requests summary for a given
             list of articles
+        try_to_summarize_one_article(article): exception handler method
         summarize_one_article(article): Requests summary of input
             article from LLM
         prepare_article_for_llm(article): Injects prompt and slightly reformats
@@ -199,6 +200,18 @@ class AbstractLLM(ABC):
         return summaries
 
     def try_to_summarize_one_article(self, article: str) -> str:
+        """
+        Tries to request the model to summarize an Article. Logs warnings if it
+        fails but continues the program with dummy output indicative of the 
+        failure
+
+        Args:
+            Article (str): Article to be summarized
+
+        Returns:
+            str: Summary of article or dummy string output
+        
+        """
         llm_summary = None
 
         try:
