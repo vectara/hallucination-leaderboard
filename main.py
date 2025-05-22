@@ -10,13 +10,13 @@ def main(args: argparse.ArgumentParser):
     models = [GPTd4p1()]
 
     if args.process == "get_summ":
-        get_summaries.run(models)
+        get_summaries.run(models, force=args.force)
     elif args.process == "get_hhem":
         get_hhem_scores.run(models)
     elif args.process == "combine_hhem":
         combine_hhem_scores.run(models)
     else:
-        get_summaries.run(models)
+        get_summaries.run(models, force=args.force)
         get_hhem_scores.run(models)
         combine_hhem_scores.run(models)
 
@@ -28,7 +28,10 @@ def main(args: argparse.ArgumentParser):
 
 if __name__ == "__main__":
     load_dotenv()
-    parser = argparse.ArgumentParser(description="HHEM LB")
+    parser = argparse.ArgumentParser(
+        description="HHEM Leaderboard Backend",
+        formatter_class=argparse.RawTextHelpFormatter
+    )
     parser.add_argument(
         "process",
         choices=["get_summ", "get_hhem", "combine_hhem"],
@@ -39,7 +42,7 @@ if __name__ == "__main__":
             "in a JSON file\n"
             "   get_hhem      - generates and stores HHEM scores for all "
             "models in a JSON file\n"
-            "   combine_hhem  - combines HHEM scores for all modles into a "
+            "   combine_hhem  - combines HHEM scores for all models into a "
             "singular JSON file\n"
             "If none specified all will run: (get_summ>get_hhem>combine_hhem)"
         )

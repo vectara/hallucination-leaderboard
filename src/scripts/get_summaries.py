@@ -17,18 +17,21 @@ Functions:
     create_summary_records(summaries, article_df)
 """
 
-def run(models: list[AbstractLLM]):
+def run(models: list[AbstractLLM], force=False):
     """
     Generates summaries for a given model if the corresponding JSON file does 
     not exist
 
     Args:
         models (list[AbstractLLM]): list of LLMs
+        force (bool): flag to specify if JSON should still be created if exists
 
     Returns:
         None
     """
     logger.log("Starting to generate summaries")
+    if force:
+        logger.log("Force flag enabled. Overwriting previous JSON data")
 
     article_df = pd.read_csv(os.getenv("LB_DATA"))
 
@@ -42,11 +45,12 @@ def run(models: list[AbstractLLM]):
         json_file = f"summaries_{model_name}.json"
         summaries_json_path = os.path.join(obj_dir, json_file)
 
-        if json_exists(summaries_json_path):
+        if json_exists(summaries_json_path) and not force:
             logger.log(f"Summaries JSON file exists for {model_name}, skipping")
             continue
         else:
-            logger.log("Summaries JSON file does not exist, generating...")
+            if not force:
+                logger.log("Summaries JSON file does not exist, generating...")
             generate_and_save_summaries(model, article_df, summaries_json_path)
             logger.log(f"Finished generating and saving for {model_name}")
         
