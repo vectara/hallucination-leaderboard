@@ -141,6 +141,7 @@ Model List
 
 
 from abc import ABC, abstractmethod
+from src.logging.Logger import logger
 
 
 class AbstractLLM(ABC):
@@ -193,9 +194,31 @@ class AbstractLLM(ABC):
         """
         summaries = []
         for article in articles:
-            summary = self.summarize_one_article(article)
+            summary = self.try_to_summarize_one_article(article)
             summaries.append(summary)
         return summaries
+
+    def try_to_summarize_one_article(self, article: str) -> str:
+        llm_summary = None
+
+        try:
+            llm_summary = self.summarize_one_article(article)
+        except Exception as e:
+            logger.log((
+                f"~WARNING~ Model call failed for {self.name}: {e} "
+            ))
+            return "MODEL FAILED TO RETURN ANY OUTPUT"
+
+        if not isinstance(llm_summary, str):
+            bad_output = llm_summary
+            logger.log((
+                f"~WARNING~ Model returned unexpected output. Expected a "
+                f"string but got {type(bad_output).__name__}. "
+                f"Replacing output."
+            ))
+            return f"DID NOT RECEIVE A STRING TYPE FROM OUTPUT FOR {self.name}"
+        return llm_summary
+
 
     def summarize_one_article(self, article: str) -> str:
         """
@@ -210,8 +233,9 @@ class AbstractLLM(ABC):
 
         """
         prepared_llm_input = self.prepare_article_for_llm(article)
-        '''Probably need try except block here in future'''
+
         llm_summary = self.summarize(prepared_llm_input)
+
         return llm_summary
 
     def prepare_article_for_llm(self, article: str) -> str:
