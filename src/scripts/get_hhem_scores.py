@@ -26,7 +26,7 @@ def run(models: list[AbstractLLM], force: bool):
 
     Args:
         models (list[AbstractLLM]): list of LLMs
-
+        force (bool): flag for forcing json to be overwritten if it exists
     Returns:
         None
     """
