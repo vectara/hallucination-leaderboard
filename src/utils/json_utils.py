@@ -3,6 +3,15 @@ import os
 from src.logging.Logger  import logger
 
 def load_json(json_path: str) -> list:
+    """
+    Load a JSON file at the given path
+
+    Args:
+        json_path (str): Path to JSON file
+
+    Returns:
+        (list or dict): JSON formatted data
+    """
     json_data = None
     with open(json_path, "r") as f:
         json_data = json.load(f)

@@ -10,7 +10,7 @@ if __name__ == "__main__":
     load_dotenv()
     models = [GPTd4p1()]
     logger.log("Starting main program")
-    # get_summaries.run(models)
-    # get_hhem_scores.run(models)
+    get_summaries.run(models)
+    get_hhem_scores.run(models)
     combine_hhem_scores.run(models)
     logger.log("Main program exiting.")

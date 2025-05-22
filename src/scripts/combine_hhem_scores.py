@@ -8,10 +8,21 @@ Combines HHEM scores for all LLMs that have HHEM scores into a single JSON file
 usable for the app leaderboard.
 
 Functions:
+    run(models)
 
 """
 
 def run(models: list[AbstractLLM]):
+    """
+    Loads hhem_scores_model.json files if it exists and adds it a larger 
+    JSON file that includes scores for all models.
+
+    Args:
+        models (list[AbstractLLM]): models 
+    
+    Returns:
+        None
+    """
     logger.log("Starting combine HHEM scores")
 
     combined_hhem_scores = {}
@@ -19,19 +30,28 @@ def run(models: list[AbstractLLM]):
 
     for model in models:
         model_name = model.get_name()
+
         logger.log(f"Gathering {model_name} HHEM data")
+
         obj_file_path = inspect.getfile(type(model))
         obj_dir = os.path.dirname(os.path.abspath(obj_file_path))
-
         hhem_json_file = f"hhem_scores_{model_name}.json"
         hhem_json_path = os.path.join(obj_dir, hhem_json_file)
+
         if json_exists(hhem_json_path):
+
             logger.log(f"HHEM score JSON found for {model_name}")
+
             json_data = load_json(hhem_json_path)
             if model_name not in combined_hhem_scores:
                 combined_hhem_scores[model_name] = json_data
             else:
-                logger.log(f"{model_name} was found to already have an entry. Skipping. This message occured likely because this model is being processed twice or has the same name as another model.")
+                logger.log((
+                    f"{model_name} was found to already have an entry, "
+                    "skipping. This message occured likely because this model"
+                    "is being processed twice or has the same name as "
+                    "another model."
+                ))
         else:
             logger.log(
                 f"HHEM JSON score not found for {model_name}, skipping model"
