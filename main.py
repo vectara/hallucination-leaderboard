@@ -31,7 +31,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="HHEM LB")
     parser.add_argument(
         "process",
-        choices=["get_summ", "get_hhem", "combine_hhem"]
+        choices=["get_summ", "get_hhem", "combine_hhem"],
         nargs="?",
         help=(
             "Run a specific process. All will run if not specified.\n"
