@@ -19,7 +19,7 @@ Functions:
     create_hhem_records(article_ids, hhem_scores, hhem_labels)
 """
 
-def run(models: list[AbstractLLM]):
+def run(models: list[AbstractLLM], force: bool):
     """
     Generates and saves HHEM scores for a given model only if it has its 
     respective summaries_model.json file
@@ -31,6 +31,8 @@ def run(models: list[AbstractLLM]):
         None
     """
     logger.log("Starting to generate HHEM scores")
+    if force:
+        logger.log("Force flag enabled. Overwriting previous JSON data")
 
     article_df = pd.read_csv(os.getenv("LB_DATA"))
     hhem_model = HHEM_2_3()
@@ -55,13 +57,19 @@ def run(models: list[AbstractLLM]):
 
             hhem_json_file = f"hhem_scores_{model_name}.json"
             hhem_json_path = os.path.join(obj_dir, hhem_json_file)
-
-            logger.log("Generating HHEM scores...")
-            generate_and_save_hhem_scores(
-                hhem_model, article_summaries_df, hhem_json_path
-            )
-            logger.log("Finished generating and saving HHEM scores")
-            logger.log("Moving on to next model")
+            if json_exists(hhem_json_path) and not force:
+                logger.log(f"HHEM JSON file exists for {model_name}, skipping")
+                continue
+            else:
+                if not force:
+                    logger.log("HHEM JSON file does not exist, generating...")
+                else:
+                    logger.log("Overwriting previous HHEM score JSON...")
+                generate_and_save_hhem_scores(
+                    hhem_model, article_summaries_df, hhem_json_path
+                )
+                logger.log("Finished generating and saving HHEM scores")
+                logger.log("Moving on to next model")
         else:
             logger.log(
                 f"Summary JSON not found for {model_name}, skipping model"

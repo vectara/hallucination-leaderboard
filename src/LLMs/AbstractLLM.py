@@ -1,6 +1,7 @@
 # TODO: Create children for all models on the HHEM LB
 '''
 Model List
+    - Anthropic 4
     - Google Gemini-2.0-Flash-001
     - Google Gemini-2.0-Pro-Exp
     - OpenAI o3-mini-high

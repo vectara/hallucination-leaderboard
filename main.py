@@ -12,19 +12,13 @@ def main(args: argparse.ArgumentParser):
     if args.process == "get_summ":
         get_summaries.run(models, force=args.force)
     elif args.process == "get_hhem":
-        get_hhem_scores.run(models)
+        get_hhem_scores.run(models, force=args.force)
     elif args.process == "combine_hhem":
         combine_hhem_scores.run(models)
     else:
         get_summaries.run(models, force=args.force)
-        get_hhem_scores.run(models)
+        get_hhem_scores.run(models, force=args.force)
         combine_hhem_scores.run(models)
-
-
-
-
-
-
 
 if __name__ == "__main__":
     load_dotenv()
@@ -52,8 +46,8 @@ if __name__ == "__main__":
         "--force",
         action="store_true",
         help=(
-            "Forces get_summary process to regenerate all JSON files even if "
-            "they exist"
+            "Forces get_summary and/or get_hhem process to regenerate all JSON "
+            "files even if they exist"
         )
     )
 
