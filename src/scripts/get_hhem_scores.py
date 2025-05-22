@@ -69,12 +69,24 @@ def run(models: list[AbstractLLM], force: bool):
             logger.log(
                 f"Summary JSON not found for {model_name}, skipping model"
             )
-            continue
     logger.log("Finished generating and saving HHEM scores for all models")
 
-def run_generation_save_flow(hhem_model, df, hhem_json_path, model_name, force):
+def run_generation_save_flow(
+        hhem_model: HHEM_2_3,
+        df: pd.DataFrame,
+        hhem_json_path: str,
+        model_name: str,
+        force: bool
+    ):
     """
+    Controls logic flow for generating and saving HHEM scores depending on
+    force tag and whether JSON files exist
 
+    hhem_model (HHEM_2_3): hhem model
+    df (pd.DataFrame): data containing source articles and summaries aligned
+    hhem_json_path (str): path for new or possibly existing JSON file
+    model_name (str): name of model that generated the summaries
+    force (bool): flag that forces file to be overwritten even if it exists
     """
     if json_exists(hhem_json_path) and not force:
         logger.log(f"HHEM JSON file exists for {model_name}, skipping")
