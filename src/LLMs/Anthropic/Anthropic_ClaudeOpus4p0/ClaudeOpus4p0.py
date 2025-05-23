@@ -14,7 +14,7 @@ class ClaudeOpus4p0(AbstractLLM):
         chat_package = self.client.messages.create(
             model=self.model_type,
             messages=[{"role": "user", "content":prepared_text}],
-            max_tokens=1000 #TODO: This should be constant for all models
+            max_tokens=1024 #TODO: This should be constant for all models
         )
         summary = chat_package.content[0].text
         return summary
