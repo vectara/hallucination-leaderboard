@@ -9,7 +9,8 @@ from src.LLMs.Anthropic.Anthropic_ClaudeSonnet4p0.ClaudeSonnet4p0 import ClaudeS
 
 
 def main(args: argparse.ArgumentParser):
-    models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
+    # models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
+    models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
 
     if args.process == "get_summ":
         get_summaries.run(models, force=args.force)
