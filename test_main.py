@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 
 from src.LLMs.AbstractLLM import AbstractLLM
 from src.LLMs.OpenAI_GPTd4p1.GPTd4p1 import GPTd4p1
+from src.LLMs.Anthropic.Anthropic_ClaudeOpus4p0.ClaudeOpus4p0 import ClaudeOpus4p0
+from src.LLMs.Anthropic.Anthropic_ClaudeSonnet4p0.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
 """
 Runs program critical tests for functionality 
@@ -40,7 +42,7 @@ def test_models():
     llm_tester = TestLLM()
 
     '''Add new models in list below'''
-    models = [GPTd4p1()]
+    models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
 
     logger.log("Testing LLM functionality")
     for model in models:
