@@ -38,13 +38,12 @@ def run(models: list[AbstractLLM], force=False):
 
     for model in tqdm(models, desc="Model Loop"):
         model_name = model.get_name()
+        model_out_dir = model.get_model_out_dir()
 
         logger.log(f"Generating summaries for {model_name}")
 
-        obj_file_path = inspect.getfile(type(model))
-        obj_dir = os.path.dirname(os.path.abspath(obj_file_path))
         json_file = f"summaries_{model_name}.json"
-        summaries_json_path = os.path.join(obj_dir, json_file)
+        summaries_json_path = os.path.join(model_out_dir, json_file)
 
         if json_exists(summaries_json_path) and not force:
             logger.log(f"Summaries JSON file exists for {model_name}, skipping")

@@ -144,6 +144,7 @@ Model List
 from abc import ABC, abstractmethod
 from src.logging.Logger import logger
 from tqdm import tqdm
+import os
 
 
 class AbstractLLM(ABC):
@@ -176,6 +177,11 @@ class AbstractLLM(ABC):
             "summary of the following passage, covering the core pieces of "
             "information described.'"
         )
+
+        output_dir = os.getenv("OUTPUT_DIR")
+        model_output_dir = f"{output_dir}/{self.company}/{self.name}"
+        self.model_output_dir = model_output_dir
+        os.makedirs(model_output_dir, exist_ok=True)
 
     def __enter__(self):
         self.setup()
@@ -278,6 +284,31 @@ class AbstractLLM(ABC):
             str: Name of model
         """
         return self.name
+
+    def get_company(self):
+        """
+        Returns company name of model
+
+        Args:
+            None
+
+        Returns:
+            str: Company name of model
+        """
+        return self.company
+
+    def get_model_out_dir(self):
+        """
+        Returns path to model output directory
+
+        Args:
+            None
+
+        Returns:
+            str: Path to model output directory
+        """
+        return self.model_output_dir
+
 
     @abstractmethod
     def summarize(self, prepared_text: str) -> str:

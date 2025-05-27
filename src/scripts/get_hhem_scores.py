@@ -40,14 +40,12 @@ def run(models: list[AbstractLLM], force: bool):
 
     for model in tqdm(models, desc="Model Loop"):
         model_name = model.get_name()
+        model_out_dir = model.get_model_out_dir()
 
         logger.log(f"Generating HHEM scores for {model_name}")
 
-        obj_file_path = inspect.getfile(type(model))
-        obj_dir = os.path.dirname(os.path.abspath(obj_file_path))
-
         summaries_json_file = f"summaries_{model_name}.json"
-        summaries_json_path = os.path.join(obj_dir, summaries_json_file)
+        summaries_json_path = os.path.join(model_out_dir, summaries_json_file)
 
         if json_exists(summaries_json_path):
             logger.log(f"Summary JSON found for {model_name}")
@@ -58,7 +56,7 @@ def run(models: list[AbstractLLM], force: bool):
             )
 
             hhem_json_file = f"hhem_scores_{model_name}.json"
-            hhem_json_path = os.path.join(obj_dir, hhem_json_file)
+            hhem_json_path = os.path.join(model_out_dir, hhem_json_file)
             run_generation_save_flow(
                 hhem_model,
                 article_summaries_df,
