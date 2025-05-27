@@ -5,7 +5,7 @@ import os
 class ClaudeSonnet4p0(AbstractLLM):
 
     def __init__(self):
-        super().__init__("Anthropic_Claude-Sonnet-4.0")
+        super().__init__(name="Claude-Sonnet-4.0", company="Anthropic")
         api_key = os.getenv("ANTHROPIC_KEY")
         self.client = anthropic.Client(api_key=api_key)
         self.model_type = "claude-4-sonnet-20250514"

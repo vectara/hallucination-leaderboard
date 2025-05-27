@@ -166,7 +166,8 @@ class AbstractLLM(ABC):
         summarize(prepared_text): Requests LLM to summarize the
             given text
     """
-    def __init__(self, name: str):
+    def __init__(self, name: str, company="NullCompany"):
+        self.company = company
         self.name = name
         '''Do we need a pad token at start?'''
         self.prompt = ("You are a chat bot answering questions using data."

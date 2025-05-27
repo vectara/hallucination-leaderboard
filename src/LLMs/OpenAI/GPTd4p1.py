@@ -5,7 +5,7 @@ import os
 class GPTd4p1(AbstractLLM):
 
     def __init__(self):
-        super().__init__("OpenAI_GPT-4.1")
+        super().__init__(name="GPT-4.1", company="OpenAI")
         self.api_key = os.getenv("OPENAI_KEY")
         self.client = OpenAI(api_key=self.api_key)
         self.model_type = "gpt-4.1"
