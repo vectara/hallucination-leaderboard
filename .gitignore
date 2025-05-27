@@ -5,6 +5,7 @@ __pycache__/
 .env
 log.txt
 
+output
 *.json
 
 leaderboard_dataset_revised.csv
