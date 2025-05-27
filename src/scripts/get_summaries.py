@@ -18,6 +18,8 @@ Functions:
     create_summary_records(summaries, article_df)
 """
 
+# TODO: Add Valid summary field
+
 def run(models: list[AbstractLLM], force=False):
     """
     Generates summaries for a given model if the corresponding JSON file does 

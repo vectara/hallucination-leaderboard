@@ -27,17 +27,17 @@ def run(models: list[AbstractLLM]):
     logger.log("Starting combine HHEM scores")
 
     combined_hhem_scores = {}
-    combined_file_path = "output/combined_hhem_scores.json"
+    out_dir = os.getenv("OUTPUT_DIR")
+    combined_file_path = f"{out_dir}/combined_hhem_scores.json"
 
     for model in tqdm(models):
         model_name = model.get_name()
+        model_out_dir = model.get_model_out_dir()
 
         logger.log(f"Gathering {model_name} HHEM data")
 
-        obj_file_path = inspect.getfile(type(model))
-        obj_dir = os.path.dirname(os.path.abspath(obj_file_path))
         hhem_json_file = f"hhem_scores_{model_name}.json"
-        hhem_json_path = os.path.join(obj_dir, hhem_json_file)
+        hhem_json_path = os.path.join(model_out_dir, hhem_json_file)
 
         if json_exists(hhem_json_path):
 
