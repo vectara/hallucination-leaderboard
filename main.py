@@ -1,5 +1,5 @@
 from src.logging.Logger import logger
-from src.scripts import get_summaries, get_hhem_scores, combine_hhem_scores
+from src.scripts import get_summaries, get_hhem_scores, combine_hhem_scores, get_results
 from dotenv import load_dotenv
 import argparse
 
@@ -9,8 +9,8 @@ from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
 
 def main(args: argparse.ArgumentParser):
-    models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
-    # models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
+    # models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
+    models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
     # models = [GPTd4p1()]
 
     if args.process == "get_summ":
@@ -19,6 +19,8 @@ def main(args: argparse.ArgumentParser):
         get_hhem_scores.run(models, force=args.force)
     elif args.process == "combine_hhem":
         combine_hhem_scores.run(models)
+    elif args.process == "get_results":
+        get_results.run(models)
     elif args.process == "get_sum_hhem":
         get_summaries.run(models, force=args.force)
         get_hhem_scores.run(models, force=args.force)
@@ -35,7 +37,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "process",
-        choices=["get_summ", "get_hhem", "combine_hhem", "get_sum_hhem"],
+        choices=["get_summ", "get_hhem", "combine_hhem", "get_results", "get_sum_hhem"],
         nargs="?",
         help=(
             "Run a specific process. All will run if not specified.\n"
@@ -45,6 +47,7 @@ if __name__ == "__main__":
             "models in a JSON file\n"
             "   combine_hhem  - combines HHEM scores for all models into a "
             "singular JSON file\n"
+            "   get_results   - computers final metrics for display on LB\n"
             "   get_summ_hhem - performs get_summ then get_hhem\n"
             "If none specified all will run: (get_summ>get_hhem>combine_hhem)"
         )
