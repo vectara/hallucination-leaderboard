@@ -3,6 +3,7 @@ from typing import Literal
 import pandas as pd
 import inspect
 import os
+from tqdm import tqdm
 from src.utils.json_utils import save_to_json, json_exists
 
 from src.HHEM.HHEM_2_x import HHEM_2_3, HHEMOutput
@@ -37,7 +38,7 @@ def run(models: list[AbstractLLM], force: bool):
     article_df = pd.read_csv(os.getenv("LB_DATA"))
     hhem_model = HHEM_2_3()
 
-    for model in models:
+    for model in tqdm(models, desc="Model Loop"):
         model_name = model.get_name()
 
         logger.log(f"Generating HHEM scores for {model_name}")
@@ -122,7 +123,7 @@ def generate_and_save_hhem_scores(
 
     hhem_scores = []
     hhem_labels = []
-    for premise, hypothesis in zip(article_texts, article_summaries):
+    for premise, hypothesis in tqdm(zip(article_texts, article_summaries), desc="HHEM Loop"):
         input = (premise, hypothesis)
         hhem_out = hhem_model.predict(*input)
         hhem_scores.append(hhem_out.score)

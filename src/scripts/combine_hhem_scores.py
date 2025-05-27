@@ -1,6 +1,7 @@
 from src.logging.Logger import logger
 import inspect
 import os
+from tqdm import tqdm
 from src.utils.json_utils import save_to_json, json_exists, load_json
 from src.LLMs.AbstractLLM import AbstractLLM
 """
@@ -28,7 +29,7 @@ def run(models: list[AbstractLLM]):
     combined_hhem_scores = {}
     combined_file_path = "output/combined_hhem_scores.json"
 
-    for model in models:
+    for model in tqdm(models):
         model_name = model.get_name()
 
         logger.log(f"Gathering {model_name} HHEM data")

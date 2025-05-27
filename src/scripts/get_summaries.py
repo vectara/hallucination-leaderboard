@@ -2,6 +2,7 @@ from src.logging.Logger import logger
 import pandas as pd
 import inspect
 import os
+from tqdm import tqdm
 from src.utils.json_utils import save_to_json, json_exists
 
 from src.LLMs.AbstractLLM import AbstractLLM
@@ -33,9 +34,9 @@ def run(models: list[AbstractLLM], force=False):
     if force:
         logger.log("Force flag enabled. Overwriting previous JSON data")
 
-    article_df = pd.read_csv(os.getenv("LB_DATA"))
+    article_df = pd.read_csv(os.getenv("TEST_DATA"))
 
-    for model in models:
+    for model in tqdm(models, desc="Model Loop"):
         model_name = model.get_name()
 
         logger.log(f"Generating summaries for {model_name}")
