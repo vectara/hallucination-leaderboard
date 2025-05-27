@@ -19,6 +19,9 @@ def main(args: argparse.ArgumentParser):
         get_hhem_scores.run(models, force=args.force)
     elif args.process == "combine_hhem":
         combine_hhem_scores.run(models)
+    elif args.process == "get_sum_hhem":
+        get_summaries.run(models, force=args.force)
+        get_hhem_scores.run(models, force=args.force)
     else:
         get_summaries.run(models, force=args.force)
         get_hhem_scores.run(models, force=args.force)
@@ -32,7 +35,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "process",
-        choices=["get_summ", "get_hhem", "combine_hhem"],
+        choices=["get_summ", "get_hhem", "combine_hhem", "get_sum_hhem"],
         nargs="?",
         help=(
             "Run a specific process. All will run if not specified.\n"
@@ -42,6 +45,7 @@ if __name__ == "__main__":
             "models in a JSON file\n"
             "   combine_hhem  - combines HHEM scores for all models into a "
             "singular JSON file\n"
+            "   get_summ_hhem - performs get_summ then get_hhem\n"
             "If none specified all will run: (get_summ>get_hhem>combine_hhem)"
         )
     )
