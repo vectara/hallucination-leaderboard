@@ -129,7 +129,7 @@ def generate_and_save_hhem_scores(
 
     hhem_scores = []
     hhem_labels = []
-    for premise, hypothesis in tqdm(zip(article_texts, article_summaries), desc="HHEM Loop"):
+    for premise, hypothesis in tqdm(zip(article_texts, article_summaries), total=len(article_texts), desc="HHEM Loop"):
         input = (premise, hypothesis)
         hhem_out = hhem_model.predict(*input)
         hhem_scores.append(hhem_out.score)
