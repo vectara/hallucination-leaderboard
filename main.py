@@ -3,9 +3,9 @@ from src.scripts import get_summaries, get_hhem_scores, combine_hhem_scores
 from dotenv import load_dotenv
 import argparse
 
-from src.LLMs.OpenAI_GPTd4p1.GPTd4p1 import GPTd4p1
-from src.LLMs.Anthropic.Anthropic_ClaudeOpus4p0.ClaudeOpus4p0 import ClaudeOpus4p0
-from src.LLMs.Anthropic.Anthropic_ClaudeSonnet4p0.ClaudeSonnet4p0 import ClaudeSonnet4p0
+from src.LLMs.OpenAI.GPTd4p1 import GPTd4p1
+from src.LLMs.Anthropic.ClaudeOpus4p0.ClaudeOpus4p0 import ClaudeOpus4p0
+from src.LLMs.Anthropic.ClaudeSonnet4p0.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
 
 def main(args: argparse.ArgumentParser):
