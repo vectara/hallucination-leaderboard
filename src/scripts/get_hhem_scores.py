@@ -90,6 +90,12 @@ def run_generation_save_flow(
     force (bool): flag that forces file to be overwritten even if it exists
     """
     if json_exists(hhem_json_path) and not force:
+        print((
+            "WARNING: HHEM JSON file already exists, if you generated new "
+            "summaries you will not have HHEM scores that reflect these "
+            "summaries. Recall with --force to overwrite old data"
+            )
+        )
         logger.log(f"HHEM JSON file exists for {model_name}, skipping")
     else:
         if not force:
