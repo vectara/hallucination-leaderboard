@@ -2,9 +2,9 @@ from src.logging.Logger import logger
 from src.tests.TestLLM import TestLLM
 from dotenv import load_dotenv
 
-from src.LLMs.OpenAI_GPTd4p1.GPTd4p1 import GPTd4p1
-from src.LLMs.Anthropic.Anthropic_ClaudeOpus4p0.ClaudeOpus4p0 import ClaudeOpus4p0
-from src.LLMs.Anthropic.Anthropic_ClaudeSonnet4p0.ClaudeSonnet4p0 import ClaudeSonnet4p0
+from src.LLMs.OpenAI.GPTd4p1 import GPTd4p1
+from src.LLMs.Anthropic.ClaudeOpus4p0 import ClaudeOpus4p0
+from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
 """
 Runs program critical tests for functionality 
