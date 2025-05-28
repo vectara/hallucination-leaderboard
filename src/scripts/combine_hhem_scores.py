@@ -31,7 +31,7 @@ def run(models: list[AbstractLLM]):
     combined_file_path = f"{out_dir}/combined_hhem_scores.json"
 
     for model in tqdm(models):
-        model_name = model.get_name()
+        model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
         logger.log(f"Gathering {model_name} HHEM data")

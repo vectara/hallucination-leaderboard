@@ -1,29 +1,41 @@
 from src.logging.Logger import logger
 from src.scripts import get_summaries, get_hhem_scores, combine_hhem_scores, get_results
 from dotenv import load_dotenv
+import pandas as pd
 import argparse
+import os
 
 from src.LLMs.OpenAI.GPTd4p1 import GPTd4p1
+from src.LLMs.Fanar import Fanar
 from src.LLMs.Anthropic.ClaudeOpus4p0 import ClaudeOpus4p0
 from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
 
 def main(args: argparse.ArgumentParser):
+    data_path = os.getenv("TEST_DATA")
     # models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
-    models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
-    # models = [GPTd4p1()]
+    # models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
+    models = [Fanar("Fanar")]
 
     if args.process == "get_summ":
-        get_summaries.run(models, force=args.force)
+        article_df = pd.read_csv(data_path)
+        get_summaries.run(models, article_df, force=args.force)
     elif args.process == "get_hhem":
-        get_hhem_scores.run(models, force=args.force)
+        article_df = pd.read_csv(data_path)
+        get_hhem_scores.run(models, article_df, force=args.force)
     elif args.process == "combine_hhem":
         combine_hhem_scores.run(models)
     elif args.process == "get_results":
         get_results.run(models)
-    elif args.process == "get_sum_hhem":
-        get_summaries.run(models, force=args.force)
-        get_hhem_scores.run(models, force=args.force)
+    elif args.process == "get_summ_hhem":
+        article_df = pd.read_csv(data_path)
+        get_summaries.run(models, article_df, force=args.force)
+        get_hhem_scores.run(models, article_df, force=args.force)
+    elif args.process == "get_summ_hhem_results":
+        article_df = pd.read_csv(data_path)
+        get_summaries.run(models, article_df, force=args.force)
+        get_hhem_scores.run(models, article_df, force=args.force)
+        get_results.run(models)
     else:
         get_summaries.run(models, force=args.force)
         get_hhem_scores.run(models, force=args.force)
@@ -37,7 +49,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "process",
-        choices=["get_summ", "get_hhem", "combine_hhem", "get_results", "get_sum_hhem"],
+        choices=["get_summ", "get_hhem", "combine_hhem", "get_results", "get_summ_hhem", "get_summ_hhem_results"],
         nargs="?",
         help=(
             "Run a specific process. All will run if not specified.\n"
@@ -49,6 +61,7 @@ if __name__ == "__main__":
             "singular JSON file\n"
             "   get_results   - computers final metrics for display on LB\n"
             "   get_summ_hhem - performs get_summ then get_hhem\n"
+            "   get_summ_hhem_results - performs get_summ > get_hhem > get_results\n"
             "If none specified all will run: (get_summ>get_hhem>combine_hhem)"
         )
     )

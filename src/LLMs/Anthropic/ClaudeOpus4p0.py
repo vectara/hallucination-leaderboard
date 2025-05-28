@@ -5,7 +5,7 @@ import os
 class ClaudeOpus4p0(AbstractLLM):
 
     def __init__(self):
-        super().__init__(name="Claude-Opus-4.0", company="Anthropic")
+        super().__init__(model_name="Claude-Opus-4.0", company="Anthropic")
         api_key = os.getenv("ANTHROPIC_KEY")
         self.client = anthropic.Client(api_key=api_key)
         self.model_type = "claude-4-opus-20250514"

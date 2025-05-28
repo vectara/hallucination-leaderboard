@@ -163,13 +163,13 @@ class AbstractLLM(ABC):
             article from LLM
         prepare_article_for_llm(article): Injects prompt and slightly reformats
             article text
-        get_name(): returns name of model
+        get_model_name(): returns name of model
         summarize(prepared_text): Requests LLM to summarize the
             given text
     """
-    def __init__(self, name: str, company="NullCompany"):
+    def __init__(self, model_name: str, company="NullCompany"):
         self.company = company
-        self.name = name
+        self.model_name = model_name
         '''Do we need a pad token at start?'''
         self.prompt = ("You are a chat bot answering questions using data."
             "You must stick to the answers provided solely by the text in the "
@@ -179,7 +179,7 @@ class AbstractLLM(ABC):
         )
 
         output_dir = os.getenv("OUTPUT_DIR")
-        model_output_dir = f"{output_dir}/{self.company}/{self.name}"
+        model_output_dir = f"{output_dir}/{self.company}/{self.model_name}"
         self.model_output_dir = model_output_dir
         os.makedirs(model_output_dir, exist_ok=True)
 
@@ -227,7 +227,7 @@ class AbstractLLM(ABC):
             llm_summary = self.summarize_one_article(article)
         except Exception as e:
             logger.log((
-                f"~WARNING~ Model call failed for {self.name}: {e} "
+                f"~WARNING~ Model call failed for {self.model_name}: {e} "
             ))
             return "MODEL FAILED TO RETURN ANY OUTPUT"
 
@@ -238,7 +238,7 @@ class AbstractLLM(ABC):
                 f"string but got {type(bad_output).__name__}. "
                 f"Replacing output."
             ))
-            return f"DID NOT RECEIVE A STRING TYPE FROM OUTPUT FOR {self.name}"
+            return f"DID NOT RECEIVE A STRING TYPE FROM OUTPUT FOR {self.model_name}"
         return llm_summary
 
 
@@ -273,7 +273,7 @@ class AbstractLLM(ABC):
         prepared_text = f"{self.prompt} '{article}'"
         return prepared_text
 
-    def get_name(self):
+    def get_model_name(self):
         """
         Returns name of model
 
@@ -283,7 +283,7 @@ class AbstractLLM(ABC):
         Returns:
             str: Name of model
         """
-        return self.name
+        return self.model_name
 
     def get_company(self):
         """

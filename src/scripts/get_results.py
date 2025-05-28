@@ -11,7 +11,7 @@ def run(models: list[AbstractLLM]):
     logger.log("Starting results computation")
 
     for model in tqdm(models, desc="Model Loop"):
-        model_name = model.get_name()
+        model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
         logger.log(f"Generating results for {model_name}")

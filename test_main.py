@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from src.LLMs.OpenAI.GPTd4p1 import GPTd4p1
 from src.LLMs.Anthropic.ClaudeOpus4p0 import ClaudeOpus4p0
 from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
+from src.LLMs.Fanar import Fanar
 
 """
 Runs program critical tests for functionality 
@@ -41,14 +42,14 @@ def test_models():
     llm_tester = TestLLM()
 
     '''Add new models in list below'''
-    models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
+    models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0(), Fanar("Fanar")]
 
     logger.log("Testing LLM functionality")
     for model in models:
-        logger.log(f"Running tests on {model.get_name()}")
+        logger.log(f"Running tests on {model.get_model_name()}")
         llm_tester.set_model(model)
         llm_tester.run_tests()
-        logger.log(f"{model.get_name()} passed")
+        logger.log(f"{model.get_model_name()} passed")
     logger.log("Finished testing models")
 
 if __name__ == "__main__":

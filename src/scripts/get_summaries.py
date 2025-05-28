@@ -20,7 +20,7 @@ Functions:
 
 # TODO: Add Valid summary field
 
-def run(models: list[AbstractLLM], force=False):
+def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
     """
     Generates summaries for a given model if the corresponding JSON file does 
     not exist
@@ -36,10 +36,8 @@ def run(models: list[AbstractLLM], force=False):
     if force:
         logger.log("Force flag enabled. Overwriting previous JSON data")
 
-    article_df = pd.read_csv(os.getenv("TEST_DATA"))
-
     for model in tqdm(models, desc="Model Loop"):
-        model_name = model.get_name()
+        model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
         logger.log(f"Generating summaries for {model_name}")

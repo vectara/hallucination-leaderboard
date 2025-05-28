@@ -20,7 +20,7 @@ Functions:
     create_hhem_records(article_ids, hhem_scores, hhem_labels)
 """
 
-def run(models: list[AbstractLLM], force: bool):
+def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
     """
     Generates and saves HHEM scores for a given model only if it has its 
     respective summaries_model.json file
@@ -35,11 +35,10 @@ def run(models: list[AbstractLLM], force: bool):
     if force:
         logger.log("Force flag enabled. Overwriting previous JSON data")
 
-    article_df = pd.read_csv(os.getenv("LB_DATA"))
     hhem_model = HHEM_2_3()
 
     for model in tqdm(models, desc="Model Loop"):
-        model_name = model.get_name()
+        model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
         logger.log(f"Generating HHEM scores for {model_name}")
