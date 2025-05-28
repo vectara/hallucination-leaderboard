@@ -12,7 +12,7 @@ from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
 
 def main(args: argparse.ArgumentParser):
-    data_path = os.getenv("TEST_DATA")
+    data_path = os.getenv("LB_DATA")
     # models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
     # models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
     models = [Fanar("Fanar")]
