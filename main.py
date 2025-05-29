@@ -10,12 +10,14 @@ from src.LLMs.Fanar import Fanar
 from src.LLMs.Anthropic.ClaudeOpus4p0 import ClaudeOpus4p0
 from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
+#TODO: Fix metrics answer rate, new class system revamp
+
 
 def main(args: argparse.ArgumentParser):
     data_path = os.getenv("LB_DATA")
     # models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
-    # models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
-    models = [Fanar("Fanar")]
+    models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
+    # models = [Fanar("Fanar")]
 
     if args.process == "get_summ":
         article_df = pd.read_csv(data_path)

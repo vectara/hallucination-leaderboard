@@ -57,12 +57,12 @@ def generate_and_save_results(df: pd.DataFrame, results_json_path: str):
     metrics = HHEMMetrics()
 
     hr = round(
-        metrics.compute_hallucination_rate(article_hhem_scores)*100.0, 1
+        metrics.compute_hallucination_rate(article_hhem_scores, article_summaries)*100.0, 1
     )
     fcr = round(
-        metrics.compute_factual_consistancy_rate(article_hhem_scores)*100.0, 1
+        metrics.compute_factual_consistancy_rate(article_hhem_scores, article_summaries)*100.0, 1
     )
-    ar = round(metrics.compute_answer_rate(article_summaries), 1)
+    ar = round(metrics.compute_answer_rate(article_summaries)*100.0, 1)
     asl = round(metrics.compute_avg_summary_length(article_summaries), 1)
 
     results["hallucination_rate"] = hr

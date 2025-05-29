@@ -1,29 +1,35 @@
-
+from src.LLMs.AbstractLLM import MODEL_RETURNED_NON_STRING_TYPE_OUTPUT, MODEL_FAILED_TO_RETURN_OUTPUT
 class HHEMMetrics:
     def __init__(self):
         self.factual_consistancy_rate = None
         pass
 
     def compute_hallucination_rate(
-            self, hhem_scores: list[float], threshold=0.5
+            self, hhem_scores: list[float], summaries: list[float], threshold=0.5
         ):
         """
         
         """
         fcr = self.compute_factual_consistancy_rate(
-            hhem_scores, threshold=threshold
+            hhem_scores, summaries, threshold=threshold
         )
         hallucination_rate = 1.0 - fcr
         return hallucination_rate
 
     def compute_factual_consistancy_rate(
-            self, hhem_scores: list[float], threshold=0.5
+            self, hhem_scores: list[float], summaries: list[str], threshold=0.5
         ):
         """
         
         """
-        factual_count = sum(score >= threshold for score in hhem_scores)
-        factual_consistancy_rate = factual_count/len(hhem_scores)
+        total_count = 0
+        factual_count = 0
+        for score, summary in zip(hhem_scores, summaries):
+            if self.is_valid_summary(summary):
+                total_count += 1
+                if score >= threshold:
+                    factual_count += 1
+        factual_consistancy_rate = factual_count/total_count
         return factual_consistancy_rate
 
     def compute_answer_rate(self, summaries: list[str]):
@@ -52,7 +58,9 @@ class HHEMMetrics:
         """
 
         """
-        if len(summary.split()) >= 5:
+        if summary == MODEL_FAILED_TO_RETURN_OUTPUT or summary == MODEL_RETURNED_NON_STRING_TYPE_OUTPUT:
+            return False
+        elif len(summary.split()) >= 5:
             return True
         else:
             return False

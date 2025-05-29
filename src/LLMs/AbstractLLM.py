@@ -146,6 +146,9 @@ from src.logging.Logger import logger
 from tqdm import tqdm
 import os
 
+MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
+MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
+
 
 class AbstractLLM(ABC):
     """
@@ -229,16 +232,16 @@ class AbstractLLM(ABC):
             logger.log((
                 f"~WARNING~ Model call failed for {self.model_name}: {e} "
             ))
-            return "MODEL FAILED TO RETURN ANY OUTPUT"
+            return MODEL_FAILED_TO_RETURN_OUTPUT
 
         if not isinstance(llm_summary, str):
             bad_output = llm_summary
             logger.log((
-                f"~WARNING~ Model returned unexpected output. Expected a "
+                f"~WARNING~ {self.model_name} returned unexpected output. Expected a "
                 f"string but got {type(bad_output).__name__}. "
                 f"Replacing output."
             ))
-            return f"DID NOT RECEIVE A STRING TYPE FROM OUTPUT FOR {self.model_name}"
+            return MODEL_RETURNED_NON_STRING_TYPE_OUTPUT
         return llm_summary
 
 
