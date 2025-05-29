@@ -15,7 +15,7 @@ class Fanar(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         chat_package = self.client.chat.completions.create(
             model=self.model_name,
-            temperature=0,
+            temperature=self.temperature,
             messages=[{"role": "user", "content":prepared_text}]
         )
         summary = chat_package.choices[0].message.content

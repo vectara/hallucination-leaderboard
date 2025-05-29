@@ -11,7 +11,7 @@ class DeepSeekAI(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         messages = [{"role": "user", "content":prepared_text}]
-        client_package = self.client.chat_completion(messages, temperature=0.0)
+        client_package = self.client.chat_completion(messages, temperature=self.temperature)
         raw_summary = client_package.choices[0].message.content
         summary = re.sub(r'<think>.*?</think>\s*', '', raw_summary, flags=re.DOTALL)
         return summary
