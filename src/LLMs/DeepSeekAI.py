@@ -17,7 +17,7 @@ class DeepSeekAI(AbstractLLM):
         client_package = self.client.chat_completion(messages, temperature=self.temperature)
         elapsed_time = time.time() - start_time
         remaining_time = self.min_throttle_time - elapsed_time
-        if remaining_time > 0: # Delay only if it took longer than 4s
+        if remaining_time > 0: # Delay only if it wa shorter than 4s
             time.sleep(remaining_time)
         raw_summary = client_package.choices[0].message.content
         summary = re.sub(r'<think>.*?</think>\s*', '', raw_summary, flags=re.DOTALL)
