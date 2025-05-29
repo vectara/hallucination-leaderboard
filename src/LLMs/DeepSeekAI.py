@@ -16,7 +16,7 @@ class DeepSeekAI(AbstractLLM):
         return summary
 
     def setup(self):
-        self.model = pipeline("text-generation", model=self.full_model_name)
+        self.model = pipeline("text-generation", model=self.full_model_name, device=0)
 
     def teardown(self):
         del self.model
