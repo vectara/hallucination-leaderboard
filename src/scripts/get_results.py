@@ -2,7 +2,7 @@ from src.logging.Logger import logger
 import os
 from tqdm import tqdm
 from src.LLMs.AbstractLLM import AbstractLLM
-from src.utils.json_utils import json_exists, save_to_json
+from src.utils.json_utils import json_exists, save_to_json, load_json
 from src.metrics.HHEMMetrics import HHEMMetrics
 import pandas as pd
 
@@ -23,7 +23,8 @@ def run(models: list[AbstractLLM]):
 
         if json_exists(summaries_json_path) and json_exists(hhem_json_path):
             logger.log(f"Summary and HHEM JSON found for {model_name}")
-            summaries_df = pd.read_json(summaries_json_path)
+            summaries_json = load_json(summaries_json_path)
+            summaries_df = pd.DataFrame(summaries_json["summaries"])
             hhem_df = pd.read_json(hhem_json_path)
             if len(hhem_df) != len(summaries_df):
                 logger.log("HHEM Summaries data length mismatch, skipping model")

@@ -4,6 +4,7 @@ import inspect
 import os
 from tqdm import tqdm
 from src.utils.json_utils import save_to_json, json_exists
+from datetime import datetime, timezone
 
 from src.LLMs.AbstractLLM import AbstractLLM
 
@@ -102,7 +103,7 @@ def create_summary_records(
     Returns:
         (dict): JSON formatted dictionary
     """
-    model_summary_dict = [
+    model_summaries = [
         {
             "article_id": a_id,
             "summary": summ,
@@ -111,7 +112,14 @@ def create_summary_records(
             article_ids, summaries
         )
     ]
-    return model_summary_dict
+
+    current_utc_time = datetime.now(timezone.utc).isoformat()
+
+    package = {
+        "timestamp": current_utc_time,
+        "summaries": model_summaries
+    }
+    return package
 
 if __name__ == "__main__":
     pass

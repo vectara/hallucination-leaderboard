@@ -4,7 +4,7 @@ import pandas as pd
 import inspect
 import os
 from tqdm import tqdm
-from src.utils.json_utils import save_to_json, json_exists
+from src.utils.json_utils import save_to_json, json_exists, load_json
 
 from src.HHEM.HHEM_2_x import HHEM_2_3, HHEMOutput
 
@@ -48,7 +48,8 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
 
         if json_exists(summaries_json_path):
             logger.log(f"Summary JSON found for {model_name}")
-            summaries_df = pd.read_json(summaries_json_path)
+            summaries_json = load_json(summaries_json_path)
+            summaries_df = pd.DataFrame(summaries_json["summaries"])
             article_summaries_df = pd.merge(
                 article_df, summaries_df,
                 on='article_id', how='inner'

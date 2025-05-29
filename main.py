@@ -22,10 +22,11 @@ def main(args: argparse.ArgumentParser):
     else:
         data_path = os.getenv("LB_DATA")
     
+    models = [GPTd4p1()]
     # models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
     # models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
     # models = [Fanar("Fanar")]
-    models = [DeepSeekAI("DeepSeek-R1-0528")]
+    # models = [DeepSeekAI("DeepSeek-R1-0528")]
 
     if args.process == "get_summ":
         article_df = pd.read_csv(data_path)
@@ -50,6 +51,7 @@ def main(args: argparse.ArgumentParser):
         get_summaries.run(models, force=args.force)
         get_hhem_scores.run(models, force=args.force)
         combine_hhem_scores.run(models)
+        get_results.run(models)
 
 if __name__ == "__main__":
     load_dotenv()
