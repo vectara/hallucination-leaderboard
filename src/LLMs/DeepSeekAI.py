@@ -1,6 +1,7 @@
 from src.LLMs.AbstractLLM import AbstractLLM
 from huggingface_hub import InferenceClient
 import re
+import time
 
 class DeepSeekAI(AbstractLLM):
 
@@ -14,6 +15,7 @@ class DeepSeekAI(AbstractLLM):
         client_package = self.client.chat_completion(messages, temperature=self.temperature)
         raw_summary = client_package.choices[0].message.content
         summary = re.sub(r'<think>.*?</think>\s*', '', raw_summary, flags=re.DOTALL)
+        time.sleep(4) # Avoid Throttling
         return summary
 
     def setup(self):
