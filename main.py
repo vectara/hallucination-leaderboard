@@ -7,6 +7,7 @@ import os
 
 from src.LLMs.OpenAI.GPTd4p1 import GPTd4p1
 from src.LLMs.Fanar import Fanar
+from src.LLMs.DeepSeekAI import DeepSeekAI
 from src.LLMs.Anthropic.ClaudeOpus4p0 import ClaudeOpus4p0
 from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
@@ -14,10 +15,17 @@ from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
 
 def main(args: argparse.ArgumentParser):
-    data_path = os.getenv("LB_DATA")
+    data_path = None
+    if args.test:
+        print("Using test data, if this is not a test run results are not useful")
+        data_path = os.getenv("TEST_DATA")
+    else:
+        data_path = os.getenv("LB_DATA")
+    
     # models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
-    models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
+    # models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
     # models = [Fanar("Fanar")]
+    models = [DeepSeekAI("DeepSeek-R1-0528")]
 
     if args.process == "get_summ":
         article_df = pd.read_csv(data_path)
@@ -65,6 +73,14 @@ if __name__ == "__main__":
             "   get_summ_hhem - performs get_summ then get_hhem\n"
             "   get_summ_hhem_results - performs get_summ > get_hhem > get_results\n"
             "If none specified all will run: (get_summ>get_hhem>combine_hhem)"
+        )
+    )
+
+    parser.add_argument(
+        "--test",
+        action="store_true",
+        help=(
+            "Loads test data instead of Leaderboard Data"
         )
     )
 
