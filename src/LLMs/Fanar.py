@@ -2,6 +2,9 @@ from src.LLMs.AbstractLLM import AbstractLLM
 from openai import OpenAI
 import os
 
+from src.LLMs.model_registry import register_model
+
+@register_model("fanar")
 class Fanar(AbstractLLM):
 
     def __init__(self, model_name, data_code=None):

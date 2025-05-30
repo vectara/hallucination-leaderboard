@@ -1,7 +1,9 @@
 from src.LLMs.AbstractLLM import AbstractLLM
 import os
 import anthropic
+from src.LLMs.model_registry import register_model
 
+@register_model("anthropic")
 class Anthropic(AbstractLLM):
     claude_4 = ["claude-4-opus", "claude-4-sonnet"]
     def __init__(self, model_name, data_code=None):
@@ -20,7 +22,8 @@ class Anthropic(AbstractLLM):
             chat_package = self.client.messages.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
-                max_tokens=self.max_tokens
+                max_tokens=self.max_tokens,
+                temperature=self.temperature
             )
             summary = chat_package.content[0].text
         return summary

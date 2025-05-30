@@ -4,15 +4,12 @@ from dotenv import load_dotenv
 import pandas as pd
 import argparse
 import os
+from src.utils.json_utils import load_json, json_exists
+from src.LLMs.model_registry import MODEL_REGISTRY
+import src.LLMs
 
-from src.LLMs.OpenAI.GPTd4p1 import GPTd4p1
-from src.LLMs.Fanar import Fanar
-from src.LLMs.DeepSeekAI import DeepSeekAI
-from src.LLMs.Anthropic.ClaudeOpus4p0 import ClaudeOpus4p0
-from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
 #TODO: LLM Class Revamp, Documentation, Standard Dev
-
 
 def main(args: argparse.ArgumentParser):
     data_path = None
@@ -21,12 +18,17 @@ def main(args: argparse.ArgumentParser):
         data_path = os.getenv("TEST_DATA")
     else:
         data_path = os.getenv("LB_DATA")
+
+    config = None
+    if json_exists("config.json"):
+        config = load_json("config.json")
+    else:
+        logger.log("No Config file was found, exiting")
+        return
+
+    models = builds_models(config)
     
-    # models = [GPTd4p1()]
     # models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
-    # models = [ClaudeSonnet4p0(), ClaudeOpus4p0()]
-    # models = [Fanar("Fanar")]
-    models = [DeepSeekAI("DeepSeek-R1-0528")]
 
     if args.process == "get_summ":
         article_df = pd.read_csv(data_path)
@@ -52,6 +54,30 @@ def main(args: argparse.ArgumentParser):
         get_hhem_scores.run(models, force=args.force)
         # combine_hhem_scores.run(models)
         get_results.run(models)
+
+def builds_models(config):
+    models = []
+    for entry in config:
+        company = entry.get("company")
+        params = entry.get("params", {})
+
+        if not company:
+            logger.log("Missing Company key, skipping")
+            continue
+
+        model_class = MODEL_REGISTRY.get(company)
+        if not model_class:
+            logger.log("No registered model for this company, skipping")
+            continue
+            
+        print(f"adding {company}")
+
+        try:
+            models.append(model_class(**params))
+        except Exception as e:
+            logger.log(f"Failed to instantiate {company} model: {e}")
+
+    return models
 
 if __name__ == "__main__":
     load_dotenv()

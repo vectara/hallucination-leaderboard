@@ -3,8 +3,10 @@ from huggingface_hub import InferenceClient
 import re
 import time
 
-class DeepSeekAI(AbstractLLM):
+from src.LLMs.model_registry import register_model
 
+@register_model("deepseek-ai")
+class DeepSeekAI(AbstractLLM):
     def __init__(self, model_name, data_code=None):
         super().__init__(model_name=model_name, company="deepseek-ai")
         self.full_model_name = f"{self.company}/{self.model_name}"

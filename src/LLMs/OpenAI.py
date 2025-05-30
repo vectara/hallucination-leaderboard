@@ -1,7 +1,9 @@
 from src.LLMs.AbstractLLM import AbstractLLM
 import os
 from openai import OpenAI
+from src.LLMs.model_registry import register_model
 
+@register_model("openai")
 class OpenAI(AbstractLLM):
     gpt_4 = ["gpt-4.1"]
     def __init__(self, model_name, data_code=None):
@@ -19,6 +21,7 @@ class OpenAI(AbstractLLM):
         if self.model_name in self.gpt_4:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
+                temperature=self.temperature,
                 messages=[{"role": "user", "content":prepared_text}]
             )
             summary = chat_package.choices[0].message.content
