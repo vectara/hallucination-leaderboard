@@ -171,6 +171,7 @@ class AbstractLLM(ABC):
             given text
     """
     def __init__(self, model_name: str, company="NullCompany"):
+        self.max_tokens = 1024
         self.temperature = 0.0
         self.company = company
         self.model_name = model_name

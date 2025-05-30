@@ -11,7 +11,7 @@ from src.LLMs.DeepSeekAI import DeepSeekAI
 from src.LLMs.Anthropic.ClaudeOpus4p0 import ClaudeOpus4p0
 from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
 
-#TODO: Fix metrics answer rate, new class system revamp
+#TODO: LLM Class Revamp, Documentation, Standard Dev
 
 
 def main(args: argparse.ArgumentParser):
