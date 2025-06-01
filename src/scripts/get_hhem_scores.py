@@ -1,5 +1,6 @@
 from src.logging.Logger import logger
 from typing import Literal
+from tqdm import tqdm
 import pandas as pd
 import inspect
 import os
