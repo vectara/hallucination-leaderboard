@@ -152,11 +152,15 @@ MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = "DID NOT RECIEVE A STRING TYPE FROM OUTP
 
 class AbstractLLM(ABC):
     """
-    Abstract Class. To add new LLMs create a new folder and inherit this class
+    Abstract Class
 
     Attributes:
-        name (str): Name of the model
-        prompt (str): Prompt before asking to summarize. Static for all children
+        model_name (str): Name of the model
+        prompt (str): Summary prompt
+        company (str): Company of model
+        temperature (float): set to 0.0 to compare deterministic output
+        max_tokens (int): number of tokens for models
+
 
     Methods:
         summarize_articles(articles): Requests summary for a given
@@ -167,8 +171,12 @@ class AbstractLLM(ABC):
         prepare_article_for_llm(article): Injects prompt and slightly reformats
             article text
         get_model_name(): returns name of model
-        summarize(prepared_text): Requests LLM to summarize the
-            given text
+        summarize(prepared_text): Requests LLM to summarize the given text
+        setup(): setup model for runtime use
+        teardown(): teardown model when no longer needed for runtime use
+        get_name(): get name of model
+        get_company(): get company of model
+        get_model_out_dir(): get the output directory dedicated for this model
     """
     def __init__(self, model_name: str, company="NullCompany"):
         self.max_tokens = 1024

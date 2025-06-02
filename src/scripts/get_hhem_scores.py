@@ -27,6 +27,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
 
     Args:
         models (list[AbstractLLM]): list of LLMs
+        article_df (pd.DataFrame): article dataset
         force (bool): flag for forcing json to be overwritten if it exists
     Returns:
         None
@@ -81,12 +82,14 @@ def run_generation_save_flow(
     Controls logic flow for generating and saving HHEM scores depending on
     force tag and whether JSON files exist
 
-    hhem_model (HHEM_2_3): hhem model
-    df (pd.DataFrame): data containing source articles and summaries aligned
-    hhem_json_path (str): path for new or possibly existing JSON file
-    model_name (str): name of model that generated the summaries
-    force (bool): flag that forces file to be overwritten even if it exists
+    Args:
+        hhem_model (HHEM_2_3): hhem model
+        df (pd.DataFrame): data containing source articles and summaries aligned
+        hhem_json_path (str): path for new or possibly existing JSON file
+        model_name (str): name of model that generated the summaries
+        force (bool): flag that forces file to be overwritten even if it exists
     """
+
     if json_exists(hhem_json_path) and not force:
         print((
             "WARNING: HHEM JSON file already exists, if you generated new "

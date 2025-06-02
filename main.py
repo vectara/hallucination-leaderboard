@@ -9,9 +9,16 @@ from src.LLMs.model_registry import MODEL_REGISTRY
 import src.LLMs
 
 
-#TODO: LLM Class Revamp, Documentation, Standard Dev
+#TODO: Standard Dev
 
 def main(args: argparse.ArgumentParser):
+    """
+    Main function for program
+
+    Args:
+        args (argparse.ArgumentParser): console arguments
+    """
+
     data_path = None
     if args.test:
         print("Using test data, if this is not a test run results are not useful")
@@ -27,8 +34,6 @@ def main(args: argparse.ArgumentParser):
         return
 
     models = builds_models(config)
-    
-    # models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0()]
 
     if args.process == "get_summ":
         article_df = pd.read_csv(data_path)
@@ -50,12 +55,24 @@ def main(args: argparse.ArgumentParser):
         get_hhem_scores.run(models, article_df, force=args.force)
         get_results.run(models)
     else:
-        get_summaries.run(models, force=args.force)
-        get_hhem_scores.run(models, force=args.force)
-        # combine_hhem_scores.run(models)
-        get_results.run(models)
+        print("Nothing program type was specified, exiting program")
+    # else:
+    #     get_summaries.run(models, force=args.force)
+    #     get_hhem_scores.run(models, force=args.force)
+    #     # combine_hhem_scores.run(models)
+    #     get_results.run(models)
 
-def builds_models(config):
+def builds_models(config: list[dict]):
+    """
+    Given a config records, creates a list of model objects
+
+    Args:
+        config (list[dict]): list of dictionaries for model object init
+
+    Retunrs:
+        list[AbstractLLM]: list of models
+    """
+
     models = []
     for entry in config:
         company = entry.get("company")

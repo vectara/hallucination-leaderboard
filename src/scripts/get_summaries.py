@@ -28,11 +28,13 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
 
     Args:
         models (list[AbstractLLM]): list of LLMs
+        article_df (pd.DataFrame): article dataset
         force (bool): flag to specify if JSON should still be created if exists
 
     Returns:
         None
     """
+
     logger.log("Starting to generate summaries")
     if force:
         logger.log("Force flag enabled. Overwriting previous JSON data")
@@ -70,12 +72,13 @@ def generate_and_save_summaries(
 
     Args:
         model (AbstractLLM): LLM model
-        article_df (DataFrame): Article data
+        article_df (pd.DataFrame): Article data
         json_path (str): path for the new json file
 
     Returns:
         None
     """
+
     article_texts = article_df['text'].tolist()
     article_ids = article_df['article_id'].tolist()
     summaries = []
@@ -99,10 +102,12 @@ def create_summary_records(
 
     Args:
         summaries (list[str]): List of summaries
+        article_ids (list[int]): id associated with an article
     
     Returns:
-        (dict): JSON formatted dictionary
+        (list): JSON formatted dictionary
     """
+
     model_summaries = [
         {
             "article_id": a_id,

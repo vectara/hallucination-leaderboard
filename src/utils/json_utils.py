@@ -2,6 +2,15 @@ import json
 import os
 from src.logging.Logger  import logger
 
+"""
+Functions for handling JSON files
+
+Functions:
+    load_json(json_path)
+    save_to_json(json_path, records)
+    json_exists(json_path)
+"""
+
 def load_json(json_path: str) -> list:
     """
     Load a JSON file at the given path
@@ -18,23 +27,23 @@ def load_json(json_path: str) -> list:
     return json_data
 
 
-def save_to_json(json_path: str, summary_records: list[dict]):
+def save_to_json(json_path: str, records: list[dict]):
     """
     Saves JSON formatted data to disk at specified path
 
     Args:
         json_path (str): Path to the JSON file
-        summary_records (list[dict{}]): JSON formatted data
+        records (list[dict{}]): JSON formatted data
 
     Returns:
         None
     """
     logger.log("Saving JSON file")
     with open(json_path, "w") as f:
-        json.dump(summary_records, f, indent=4)
+        json.dump(records, f, indent=4)
     logger.log("JSON file saved")
 
-def json_exists(full_path: str) -> bool:
+def json_exists(json_path: str) -> bool:
     """
     Checks if JSON file exists, returns True if so else False
 
@@ -44,7 +53,7 @@ def json_exists(full_path: str) -> bool:
     Returns:
         (bool): State of file existing
     """
-    if os.path.isfile(full_path):
+    if os.path.isfile(json_path):
         return True
     else:
         return False

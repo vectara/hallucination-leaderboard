@@ -2,6 +2,8 @@ from src.LLMs.AbstractLLM import AbstractLLM
 from openai import OpenAI
 import os
 
+# No longer used
+
 class GPTd4p1(AbstractLLM):
 
     def __init__(self):

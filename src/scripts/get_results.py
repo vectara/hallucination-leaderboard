@@ -7,7 +7,24 @@ from src.metrics.HHEMMetrics import HHEMMetrics
 import pandas as pd
 
 
+"""
+Computes and saves results for list of all models
+
+Functions:
+    run(models)
+    generate_and_save_results(df, results_json_path)
+"""
+
 def run(models: list[AbstractLLM]):
+    """
+    For all models setup the necessary data needed to compute and save results
+
+    Args:
+        models (list[AbstractLLM]): list of llms
+
+    Returns:
+        None
+    """
     logger.log("Starting results computation")
 
     for model in tqdm(models, desc="Model Loop"):
@@ -45,6 +62,7 @@ def run(models: list[AbstractLLM]):
 
 def generate_and_save_results(df: pd.DataFrame, results_json_path: str):
     """
+    Computes all metrics, formats them, and saves them to disk as JSON file
 
     Args:
         df (DataFrame): contains hhem and summaries merged on article_id

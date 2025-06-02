@@ -7,6 +7,14 @@ from src.LLMs.model_registry import register_model
 
 @register_model("deepseek-ai")
 class DeepSeekAI(AbstractLLM):
+    """
+    Class for models from DeepSeekAI
+
+    Attributes:
+        client (InferenceClient): client associated with api calls
+        min_throttle_time (int): minimum time require per request to avoid
+            throttling with huggingface pro
+    """
     def __init__(self, model_name, data_code=None):
         super().__init__(model_name=model_name, company="deepseek-ai")
         self.full_model_name = f"{self.company}/{self.model_name}"

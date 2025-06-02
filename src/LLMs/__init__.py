@@ -1,6 +1,10 @@
 import os
 import importlib
 
+"""
+Import all LLM classes
+"""
+
 LLM_dir = os.path.dirname(__file__)
 
 for file in os.listdir(LLM_dir):

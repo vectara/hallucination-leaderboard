@@ -5,6 +5,18 @@ from src.LLMs.model_registry import register_model
 
 @register_model("anthropic")
 class Anthropic(AbstractLLM):
+    """
+    Class for models from Anthropic
+
+    Class Attributes:
+        claude_4: list of claude_4 tier models that follow the same protocol
+            for getting a summary
+
+    Attributes:
+        client (Client): client associated with api calls with anthropic
+        model (str): anthropic style model name
+    """
+
     claude_4 = ["claude-4-opus", "claude-4-sonnet"]
     def __init__(self, model_name, data_code=None):
         super().__init__(model_name=model_name, company="anthropic")

@@ -6,13 +6,19 @@ from src.LLMs.model_registry import register_model
 
 @register_model("fanar")
 class Fanar(AbstractLLM):
+    """
+    Class for models from Fanar
+
+    Attributes:
+        client (OpenAI): client associated with api calls
+    """
 
     def __init__(self, model_name, data_code=None):
         super().__init__(model_name=model_name, company="Fanar")
-        self.api_key = os.getenv("FANAR_API_KEY")
+        api_key = os.getenv("FANAR_API_KEY")
         self.client = OpenAI(
             base_url="https://api.fanar.qa/v1",
-            api_key=self.api_key
+            api_key=api_key
         )
 
     def summarize(self, prepared_text: str) -> str:

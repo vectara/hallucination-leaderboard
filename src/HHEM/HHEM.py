@@ -1,4 +1,4 @@
-# Likely Remove Later
+# Unused Class
 class HHEM:
     """
     Hughes Hallucination Evaluation Model(HHEM)

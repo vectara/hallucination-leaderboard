@@ -5,6 +5,18 @@ from src.LLMs.model_registry import register_model
 
 @register_model("openai")
 class OpenAI(AbstractLLM):
+    """
+    Class for models from OpenAI
+
+    Class Attributes:
+        gpt_4: list of gpt_4 tier models that follow the same protocol
+            for getting a summary
+
+    Attributes:
+        client (OpenAI): client associated with api calls
+        model (str): exact model name expected by OpenAI
+    """
+
     gpt_4 = ["gpt-4.1"]
     def __init__(self, model_name, data_code=None):
         super().__init__(model_name=model_name, company="openai")
