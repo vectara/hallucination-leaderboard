@@ -3,6 +3,7 @@ from typing import Literal
 from tqdm import tqdm
 import pandas as pd
 import inspect
+from datetime import datetime, timezone
 import os
 from tqdm import tqdm
 from src.utils.json_utils import save_to_json, json_exists, load_json
@@ -136,12 +137,15 @@ def generate_and_save_hhem_scores(
         hhem_out = hhem_model.predict(*input)
         hhem_scores.append(hhem_out.score)
         hhem_labels.append(hhem_out.label)
-    hhem_records = create_hhem_records(article_ids, hhem_scores, hhem_labels)
+    hhem_records = create_hhem_records(
+        article_ids, hhem_scores, hhem_labels, hhem_model.__str__
+    )
     save_to_json(hhem_json_path, hhem_records)
 
 def create_hhem_records(
         article_ids: list[int],
-        hhem_scores: list[float], hhem_labels: list[Literal[0,1]]
+        hhem_scores: list[float], hhem_labels: list[Literal[0,1]],
+        hhem_model_name: str
     ):
     """
     Creates the HHEM score records for a given article_id
@@ -170,7 +174,14 @@ def create_hhem_records(
             article_ids, hhem_scores, hhem_labels
         )
     ]
-    return hhem_score_records
+    current_utc_time = datetime.now(timezone.utc).isoformat()
+
+    package = {
+        "timestamp": current_utc_time,
+        "hhem_model": hhem_model_name,
+        "hhem_scores": hhem_score_records
+    }
+    return package
 
 if __name__ == "__main__":
     pass
