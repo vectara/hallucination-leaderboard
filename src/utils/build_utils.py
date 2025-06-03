@@ -26,8 +26,6 @@ def builds_models(config: list[dict]) -> list[AbstractLLM]:
         if not model_class:
             logger.log("No registered model for this company, skipping")
             continue
-            
-        print(f"adding {company}")
 
         try:
             models.append(model_class(**params))
