@@ -18,7 +18,6 @@ Functions:
 
 def run(models: list[AbstractLLM]):
     """
-    UPDATE
     For all models setup the necessary data needed to compute and save results
 
     Args:
@@ -52,11 +51,11 @@ def run(models: list[AbstractLLM]):
 
 def generate_and_save_results(hhem_json_path: str, model_name: str, results_json_path: str):
     """
-    UPDATE
-    Computes all metrics, formats them, and saves them to disk as JSON file
+    Loads metrics, computes all stats, formats them, and saves them to disk as JSON file
 
     Args:
-        df (DataFrame): contains hhem and summaries merged on article_id
+        hhem_json_path (str): path to metrics JSON
+        model_name (str): name of model
         results_json_path (str): path to new JSON file
     Returns:
         None
