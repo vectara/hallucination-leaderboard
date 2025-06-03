@@ -27,12 +27,10 @@ class HHEMMetrics:
             self, metrics_df: pd.DataFrame, threshold=0.5
         ):
         """
-        UPDATE
         Computes hallucination rate with default threshold of 0.5
 
         Args:
-            hhem_scores (list[float]): hhem scores aligned with summaries
-            summaries (list[str]): summaries aligned with hhem scores
+            metrics_df (pd.DataFrame): metrics dataframe
             threshold (float): confidence threshold for positive result
 
         Returns:
@@ -49,12 +47,10 @@ class HHEMMetrics:
             self, metrics_df: pd.DataFrame, threshold=0.5
         ):
         """
-        UPDATE
         Computes factual consistancy rate with default threshold of 0.5
 
         Args:
-            hhem_scores (list[float]): hhem scores aligned with summaries
-            summaries (list[str]): summaries aligned with hhem scores
+            metrics_df (pd.DataFrame): metrics dataframe
             threshold (float): confidence threshold for positive result
 
         Returns:
@@ -73,12 +69,11 @@ class HHEMMetrics:
 
     def compute_answer_rate(self, metrics_df: pd.DataFrame):
         """
-        UPDATE
         Computes the the rate valid summaries. A valid summary is a summary of
         reasonable length that attempts to summarize an article.
 
         Args:
-            summaries (list[str]): list of summaries
+            metrics_df (pd.DataFrame): metrics dataframe
 
         Returns:
             float: answer rate
@@ -89,11 +84,10 @@ class HHEMMetrics:
 
     def compute_avg_summary_length(self, metrics_df: pd.DataFrame):
         """
-        UPDATE
         Computes average summary length for all articles
 
         Args:
-            summaries (list[str]): list of summaries
+            metrics_df (pd.DataFrame): metrics dataframe
 
         Returns:
             float: Average summary length
@@ -101,6 +95,43 @@ class HHEMMetrics:
         valid_summs_df = metrics_df[metrics_df["valid_summary"]]
         avg_summary_length = valid_summs_df["summary_length"].mean()
         return avg_summary_length
+
+    def is_valid_summary(self, summary: str):
+        """
+        Checks if summary is valid and returns True if it is else False
+
+        Args:
+            summary (str): the summary
+
+        Returns:
+            bool: True if valid summary else False
+        """
+
+        if self.has_error_output(summary):
+            return False
+        elif len(summary.split()) >= 5:
+            return True
+        else:
+            return False
+
+    def has_error_output(self, summary: str):
+        """
+        Detects if summary contains error output and returns True if so
+
+        Args:
+            summary (str): the summary
+
+        Returns:
+            bool: True if summary is exact error output string
+        """
+
+        if (
+            summary == MODEL_FAILED_TO_RETURN_OUTPUT or
+            summary == MODEL_RETURNED_NON_STRING_TYPE_OUTPUT
+        ):
+            return True
+        else:
+            return False
 
     # def compute_hallucination_rate(
     #         self, hhem_scores: list[float], summaries: list[float], threshold=0.5
@@ -185,40 +216,3 @@ class HHEMMetrics:
     #             summary_lengths.append(summary_length)
     #     avg_summary_length = sum(summary_lengths)/len(summary_lengths)
     #     return avg_summary_length
-
-    def is_valid_summary(self, summary: str):
-        """
-        Checks if summary is valid and returns True if it is else False
-
-        Args:
-            summary (str): the summary
-
-        Returns:
-            bool: True if valid summary else False
-        """
-
-        if self.has_error_output(summary):
-            return False
-        elif len(summary.split()) >= 5:
-            return True
-        else:
-            return False
-
-    def has_error_output(self, summary: str):
-        """
-        Detects if summary contains error output and returns True if so
-
-        Args:
-            summary (str): the summary
-
-        Returns:
-            bool: True if summary is exact error output string
-        """
-
-        if (
-            summary == MODEL_FAILED_TO_RETURN_OUTPUT or
-            summary == MODEL_RETURNED_NON_STRING_TYPE_OUTPUT
-        ):
-            return True
-        else:
-            return False
