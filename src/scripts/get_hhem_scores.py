@@ -12,6 +12,7 @@ from src.metrics.HHEMMetrics import HHEMMetrics
 from src.HHEM.HHEM_2_x import HHEM_2_3, HHEMOutput
 
 from src.LLMs.AbstractLLM import AbstractLLM
+from src.scripts.get_summaries import SUMMARY_FILE_PREFIX
 
 """
 Gets the HHEM scores for all LLMs that have an existing summary JSON file. HHEM
@@ -22,6 +23,8 @@ Functions:
     generate_and_save_hhem_scores(hhem_model, df, hhem_json_path)
     create_hhem_records(article_ids, hhem_scores, hhem_labels)
 """
+
+METRICS_FILE_PREFIX = "hhem_scores"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
     """
@@ -35,7 +38,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
     Returns:
         None
     """
-    logger.log("Starting to generate HHEM scores")
+    logger.log(f"Starting to generate {METRICS_FILE_PREFIX} scores")
     if force:
         logger.log("Force flag enabled. Overwriting previous JSON data")
 
@@ -45,13 +48,13 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
         model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
-        logger.log(f"Generating HHEM scores for {model_name}")
+        logger.log(f"Generating {METRICS_FILE_PREFIX} scores for {model_name}")
 
-        summaries_json_file = f"summaries_{model_name}.json"
+        summaries_json_file = f"{SUMMARY_FILE_PREFIX}_{model_name}.json"
         summaries_json_path = os.path.join(model_out_dir, summaries_json_file)
 
         if json_exists(summaries_json_path):
-            logger.log(f"Summary JSON found for {model_name}")
+            logger.log(f"{SUMMARY_FILE_PREFIX} JSON found for {model_name}")
             summaries_json = load_json(summaries_json_path)
             summaries_df = pd.DataFrame(summaries_json["summaries"])
             article_summaries_df = pd.merge(
@@ -59,7 +62,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
                 on='article_id', how='inner'
             )
 
-            hhem_json_file = f"hhem_scores_{model_name}.json"
+            hhem_json_file = f"{METRICS_FILE_PREFIX}_{model_name}.json"
             hhem_json_path = os.path.join(model_out_dir, hhem_json_file)
             run_generation_save_flow(
                 hhem_model,
@@ -70,9 +73,9 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
             )
         else:
             logger.log(
-                f"Summary JSON not found for {model_name}, skipping model"
+                f"{SUMMARY_FILE_PREFIX} JSON not found for {model_name}, skipping model"
             )
-    logger.log("Finished generating and saving HHEM scores for all models")
+    logger.log(f"Finished generating and saving {METRICS_FILE_PREFIX} for all models")
 
 def run_generation_save_flow(
         hhem_model: HHEM_2_3,
@@ -95,21 +98,21 @@ def run_generation_save_flow(
 
     if json_exists(hhem_json_path) and not force:
         print((
-            "WARNING: HHEM JSON file already exists, if you generated new "
+            f"WARNING: {METRICS_FILE_PREFIX} JSON file already exists, if you generated new "
             "summaries you will not have HHEM scores that reflect these "
             "summaries. Recall with --force to overwrite old data"
             )
         )
-        logger.log(f"HHEM JSON file exists for {model_name}, skipping")
+        logger.log(f"{METRICS_FILE_PREFIX} JSON file exists for {model_name}, skipping")
     else:
         if not force:
-            logger.log("HHEM JSON file does not exist, generating...")
+            logger.log(f"{METRICS_FILE_PREFIX} JSON file does not exist, generating...")
         else:
-            logger.log("Overwriting previous HHEM score JSON...")
+            logger.log(f"Overwriting previous {METRICS_FILE_PREFIX} score JSON...")
         generate_and_save_metrics(
             hhem_model, df, hhem_json_path
         )
-        logger.log("Finished generating and saving HHEM scores")
+        logger.log(f"Finished generating and saving {METRICS_FILE_PREFIX} scores")
         logger.log("Moving on to next model")
 
 
@@ -149,7 +152,6 @@ def create_hhem_records(
         hhem_model_name: str
     ):
     """
-    UPDATE
     Creates the HHEM score records for a given article_id
 
     Current JSON format, *Format may not align with code in future, check code*
@@ -163,8 +165,10 @@ def create_hhem_records(
 
     Args:
         article_ids (list[int]):
+        article_summaries (list[str])
         hhem_scores (list[float]):
         hhem_labels (list[Literal[0,1]]):
+        hhem_model_name (str):
     Returns:
         list[dict]: hhem score records in JSON format
     """

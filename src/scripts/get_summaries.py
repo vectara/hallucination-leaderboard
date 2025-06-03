@@ -20,7 +20,7 @@ Functions:
     create_summary_records(summaries, article_df)
 """
 
-# TODO: Add Valid summary field
+SUMMARY_FILE_PREFIX = "summary"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
     """
@@ -36,7 +36,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
         None
     """
 
-    logger.log("Starting to generate summaries")
+    logger.log(f"Starting to generate {SUMMARY_FILE_PREFIX}")
     if force:
         logger.log("Force flag enabled. Overwriting previous JSON data")
 
@@ -44,23 +44,23 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
         model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
-        logger.log(f"Generating summaries for {model_name}")
+        logger.log(f"Generating {SUMMARY_FILE_PREFIX} for {model_name}")
 
-        json_file = f"summaries_{model_name}.json"
+        json_file = f"{SUMMARY_FILE_PREFIX}_{model_name}.json"
         summaries_json_path = os.path.join(model_out_dir, json_file)
 
         if json_exists(summaries_json_path) and not force:
-            logger.log(f"Summaries JSON file exists for {model_name}, skipping")
+            logger.log(f"{SUMMARY_FILE_PREFIX} JSON file exists for {model_name}, skipping")
             continue
         else:
             if not force:
-                logger.log("Summaries JSON file does not exist, generating...")
+                logger.log(f"{SUMMARY_FILE_PREFIX} JSON file does not exist, generating...")
             generate_and_save_summaries(model, article_df, summaries_json_path)
             logger.log(f"Finished generating and saving for {model_name}")
         
         logger.log("Moving on to next model")
     
-    logger.log("Finished generating and saving summaries for all models")
+    logger.log(f"Finished generating and saving {SUMMARY_FILE_PREFIX} for all models")
 
 def generate_and_save_summaries(
         model: AbstractLLM,

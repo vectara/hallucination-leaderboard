@@ -7,6 +7,9 @@ from src.metrics.HHEMMetrics import HHEMMetrics
 import pandas as pd
 from datetime import datetime, timezone
 
+from src.scripts.get_summaries import SUMMARY_FILE_PREFIX
+from src.scripts.get_hhem_scores import METRICS_FILE_PREFIX
+
 
 """
 Computes and saves results for list of all models
@@ -15,6 +18,8 @@ Functions:
     run(models)
     generate_and_save_results(df, results_json_path)
 """
+
+RESULTS_FILE_PREFIX = "results"
 
 def run(models: list[AbstractLLM]):
     """
@@ -34,18 +39,18 @@ def run(models: list[AbstractLLM]):
 
         logger.log(f"Generating results for {model_name}")
 
-        hhem_json_file = f"hhem_scores_{model_name}.json"
+        hhem_json_file = f"{METRICS_FILE_PREFIX}_{model_name}.json"
         hhem_json_path = os.path.join(model_out_dir, hhem_json_file)
 
         if json_exists(hhem_json_path):
-            logger.log(f"Summary and HHEM JSON found for {model_name}")
+            logger.log(f"{METRICS_FILE_PREFIX} JSON found for {model_name}")
 
-            results_json_file = f"results_{model_name}.json"
+            results_json_file = f"{RESULTS_FILE_PREFIX}_{model_name}.json"
             results_json_path = os.path.join(model_out_dir, results_json_file)
             generate_and_save_results(hhem_json_path, model_name, results_json_path)
         else:
             logger.log(
-                f"Summary or HHEM JSON not found for {model_name}, skipping model"
+                f"{METRICS_FILE_PREFIX} JSON not found for {model_name}, skipping model"
             )
     logger.log("Finished generating and saving results for all models")
 
