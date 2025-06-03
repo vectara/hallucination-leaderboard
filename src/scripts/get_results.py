@@ -42,7 +42,8 @@ def run(models: list[AbstractLLM]):
             logger.log(f"Summary and HHEM JSON found for {model_name}")
             summaries_json = load_json(summaries_json_path)
             summaries_df = pd.DataFrame(summaries_json["summaries"])
-            hhem_df = pd.read_json(hhem_json_path)
+            hhem_json = load_json(hhem_json_path)
+            hhem_df = pd.DataFrame(hhem_json["hhem_scores"])
             if len(hhem_df) != len(summaries_df):
                 logger.log("HHEM Summaries data length mismatch, skipping model")
                 continue
