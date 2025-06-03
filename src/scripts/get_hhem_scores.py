@@ -149,6 +149,7 @@ def create_hhem_records(
         hhem_model_name: str
     ):
     """
+    UPDATE
     Creates the HHEM score records for a given article_id
 
     Current JSON format, *Format may not align with code in future, check code*
@@ -170,22 +171,20 @@ def create_hhem_records(
     for a_id, summ, hhem_s, hhem_l in zip(article_ids, article_summaries, hhem_scores, hhem_labels):
         summary_length = len(summ.split())
         valid_summary = metrics.is_valid_summary(summ)
-        metric_record = [
-            {
+        metric_record = {
             "article_id": a_id,
             "hhem_score": hhem_s,
             "hhem_label": hhem_l,
             "summary_length": summary_length,
             "valid_summary": valid_summary
-            }
-        ]
+        }
         metric_records.append(metric_record)
 
     current_utc_time = datetime.now(timezone.utc).isoformat()
 
     package = {
         "timestamp": current_utc_time,
-        "hhem_model": hhem_model_name,
+        "hhem_version": hhem_model_name,
         "hhem_scores": metric_records
     }
     return package
