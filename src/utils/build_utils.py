@@ -1,7 +1,8 @@
 from src.logging.Logger import logger
 from src.LLMs.model_registry import MODEL_REGISTRY
+from src.LLMs.AbstractLLM import AbstractLLM
 
-def builds_models(config: list[dict]):
+def builds_models(config: list[dict]) -> list[AbstractLLM]:
     """
     Given a config records, creates a list of model objects
 

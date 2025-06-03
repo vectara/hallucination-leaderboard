@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 
 from src.utils.json_utils import json_exists, load_json
+from src.utils.build_utils import builds_models
 import src.LLMs
 """
 Runs program critical tests for functionality 
@@ -40,10 +41,10 @@ def test_models():
     llm_tester = TestLLM()
 
     config = None
-    if json_exists("config.json"):
-        config = load_json("config.json")
+    if json_exists("config_test.json"):
+        config = load_json("config_test.json")
     else:
-        logger.log("No Config file was found, exiting")
+        logger.log("config_test.json not found, exiting")
         return
 
     models = builds_models(config)
