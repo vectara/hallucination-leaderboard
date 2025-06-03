@@ -109,13 +109,11 @@ def create_summary_records(
         (list): JSON formatted dictionary
     """
     model_summaries = []
-    metrics = HHEMMetrics()
 
     for a_id, summ in zip(article_ids, summaries):
         record = {
             "article_id": a_id,
             "summary": summ,
-            "valid_summary": metrics.is_valid_summary(summ)
         }
         model_summaries.append(record)
 

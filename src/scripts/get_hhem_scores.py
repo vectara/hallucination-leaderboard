@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 import os
 from tqdm import tqdm
 from src.utils.json_utils import save_to_json, json_exists, load_json
+from src.metrics.HHEMMetrics import HHEMMetrics
 
 from src.HHEM.HHEM_2_x import HHEM_2_3, HHEMOutput
 
@@ -138,12 +139,12 @@ def generate_and_save_hhem_scores(
         hhem_scores.append(hhem_out.score)
         hhem_labels.append(hhem_out.label)
     hhem_records = create_hhem_records(
-        article_ids, hhem_scores, hhem_labels, hhem_model.__str__
+        article_ids, article_summaries, hhem_scores, hhem_labels, hhem_model.__str__()
     )
     save_to_json(hhem_json_path, hhem_records)
 
 def create_hhem_records(
-        article_ids: list[int],
+        article_ids: list[int], article_summaries: list[str],
         hhem_scores: list[float], hhem_labels: list[Literal[0,1]],
         hhem_model_name: str
     ):
@@ -164,22 +165,28 @@ def create_hhem_records(
     Returns:
         list[dict]: hhem score records in JSON format
     """
-    hhem_score_records = [
-        {
+    metric_records = []
+    metrics = HHEMMetrics()
+    for a_id, summ, hhem_s, hhem_l in zip(article_ids, article_summaries, hhem_scores, hhem_labels):
+        summary_length = len(summ.split())
+        valid_summary = metrics.is_valid_summary(summ)
+        metric_record = [
+            {
             "article_id": a_id,
             "hhem_score": hhem_s,
-            "hhem_label": hhem_l
-        }
-        for a_id, hhem_s, hhem_l in zip(
-            article_ids, hhem_scores, hhem_labels
-        )
-    ]
+            "hhem_label": hhem_l,
+            "summary_length": summary_length,
+            "valid_summary": valid_summary
+            }
+        ]
+        metric_records.append(metric_record)
+
     current_utc_time = datetime.now(timezone.utc).isoformat()
 
     package = {
         "timestamp": current_utc_time,
         "hhem_model": hhem_model_name,
-        "hhem_scores": hhem_score_records
+        "hhem_scores": metric_records
     }
     return package
 
