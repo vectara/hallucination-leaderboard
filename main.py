@@ -6,6 +6,7 @@ import argparse
 import os
 from src.utils.json_utils import load_json, json_exists
 from src.LLMs.model_registry import MODEL_REGISTRY
+from src.utils.build_utils import builds_models
 import src.LLMs
 
 
@@ -55,46 +56,13 @@ def main(args: argparse.ArgumentParser):
         get_hhem_scores.run(models, article_df, force=args.force)
         get_results.run(models)
     else:
-        print("Nothing program type was specified, exiting program")
+        print("No program type was specified, exiting program")
     # else:
     #     get_summaries.run(models, force=args.force)
     #     get_hhem_scores.run(models, force=args.force)
     #     # combine_hhem_scores.run(models)
     #     get_results.run(models)
 
-def builds_models(config: list[dict]):
-    """
-    Given a config records, creates a list of model objects
-
-    Args:
-        config (list[dict]): list of dictionaries for model object init
-
-    Retunrs:
-        list[AbstractLLM]: list of models
-    """
-
-    models = []
-    for entry in config:
-        company = entry.get("company")
-        params = entry.get("params", {})
-
-        if not company:
-            logger.log("Missing Company key, skipping")
-            continue
-
-        model_class = MODEL_REGISTRY.get(company)
-        if not model_class:
-            logger.log("No registered model for this company, skipping")
-            continue
-            
-        print(f"adding {company}")
-
-        try:
-            models.append(model_class(**params))
-        except Exception as e:
-            logger.log(f"Failed to instantiate {company} model: {e}")
-
-    return models
 
 if __name__ == "__main__":
     load_dotenv()
