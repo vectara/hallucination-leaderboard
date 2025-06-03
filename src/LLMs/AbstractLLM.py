@@ -191,7 +191,7 @@ class AbstractLLM(ABC):
             "information described.'"
         )
 
-        output_dir = os.getenv("OUTPUT_DIR")
+        output_dir = os.getenv("OUTPUT_DIR", "output")
         model_output_dir = f"{output_dir}/{self.company}/{self.model_name}"
         self.model_output_dir = model_output_dir
         os.makedirs(model_output_dir, exist_ok=True)
