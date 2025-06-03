@@ -5,6 +5,7 @@ import os
 from tqdm import tqdm
 from src.utils.json_utils import save_to_json, json_exists
 from datetime import datetime, timezone
+from src.metrics.HHEMMetrics import HHEMMetrics
 
 from src.LLMs.AbstractLLM import AbstractLLM
 
@@ -107,16 +108,15 @@ def create_summary_records(
     Returns:
         (list): JSON formatted dictionary
     """
+    model_summaries = []
 
-    model_summaries = [
-        {
+    for a_id, summ in zip(article_ids, summaries):
+        record = {
             "article_id": a_id,
             "summary": summ,
         }
-        for a_id, summ in zip(
-            article_ids, summaries
-        )
-    ]
+        model_summaries.append(record)
+
 
     current_utc_time = datetime.now(timezone.utc).isoformat()
 

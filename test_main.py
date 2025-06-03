@@ -2,11 +2,10 @@ from src.logging.Logger import logger
 from src.tests.TestLLM import TestLLM
 from dotenv import load_dotenv
 
-from src.LLMs.OpenAI.GPTd4p1 import GPTd4p1
-from src.LLMs.Anthropic.ClaudeOpus4p0 import ClaudeOpus4p0
-from src.LLMs.Anthropic.ClaudeSonnet4p0 import ClaudeSonnet4p0
-from src.LLMs.Fanar import Fanar
 
+from src.utils.json_utils import json_exists, load_json
+from src.utils.build_utils import builds_models
+import src.LLMs
 """
 Runs program critical tests for functionality 
 
@@ -41,8 +40,14 @@ def test_models():
     logger.log("Testing models")
     llm_tester = TestLLM()
 
-    '''Add new models in list below'''
-    models = [GPTd4p1(), ClaudeSonnet4p0(), ClaudeOpus4p0(), Fanar("Fanar")]
+    config = None
+    if json_exists("config_test.json"):
+        config = load_json("config_test.json")
+    else:
+        logger.log("config_test.json not found, exiting")
+        return
+
+    models = builds_models(config)
 
     logger.log("Testing LLM functionality")
     for model in models:

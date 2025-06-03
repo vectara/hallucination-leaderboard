@@ -4,7 +4,7 @@ from openai import OpenAI
 from src.LLMs.model_registry import register_model
 
 @register_model("openai")
-class OpenAI(AbstractLLM):
+class OpenAi(AbstractLLM):
     """
     Class for models from OpenAI
 
