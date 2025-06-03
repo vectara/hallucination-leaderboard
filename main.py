@@ -59,7 +59,7 @@ def main(args: argparse.ArgumentParser):
         get_hhem_scores.run(models, article_df, force=args.force)
         get_results.run(models)
     else:
-        print("No program type was specified, exiting program")
+        print("No program type was specified, exiting program. Run program with --help flag for info")
     # else:
     #     get_summaries.run(models, force=args.force)
     #     get_hhem_scores.run(models, force=args.force)
@@ -88,7 +88,6 @@ if __name__ == "__main__":
             "   get_results   - computers final metrics for display on LB\n"
             "   get_summ_hhem - performs get_summ then get_hhem\n"
             "   get_summ_hhem_results - performs get_summ > get_hhem > get_results\n"
-            "If none specified all will run: (get_summ>get_hhem>combine_hhem)"
         )
     )
 
