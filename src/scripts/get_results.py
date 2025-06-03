@@ -79,7 +79,7 @@ def generate_and_save_results(hhem_json_path: str, model_name: str, results_json
 
     hhem_json = load_json(hhem_json_path)
     hhem_version = hhem_json["hhem_version"]
-    metrics_df = pd.DataFrame(hhem_json["hhem_scores"])
+    metrics_df = pd.DataFrame(hhem_json["metrics"])
 
     hr = round(
         metrics.compute_hallucination_rate(metrics_df)*100.0, 1
@@ -97,7 +97,7 @@ def generate_and_save_results(hhem_json_path: str, model_name: str, results_json
         "timestamp": current_utc_time,
         "llm": model_name,
         "hhem_version": hhem_version,
-        "results": results
+        "stats": results
     }
 
     save_to_json(results_json_path, package)

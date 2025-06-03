@@ -106,14 +106,14 @@ def run_generation_save_flow(
             logger.log("HHEM JSON file does not exist, generating...")
         else:
             logger.log("Overwriting previous HHEM score JSON...")
-        generate_and_save_hhem_scores(
+        generate_and_save_metrics(
             hhem_model, df, hhem_json_path
         )
         logger.log("Finished generating and saving HHEM scores")
         logger.log("Moving on to next model")
 
 
-def generate_and_save_hhem_scores(
+def generate_and_save_metrics(
         hhem_model: HHEM_2_3, df: pd.DataFrame, hhem_json_path: str
     ):
     """
@@ -157,6 +157,8 @@ def create_hhem_records(
         'article_id': int
         'hhem_score': float
         'hhem_label': Literal[0,1]
+        'summary_length': int
+        'valid_summary': bool
     }
 
     Args:
@@ -185,7 +187,7 @@ def create_hhem_records(
     package = {
         "timestamp": current_utc_time,
         "hhem_version": hhem_model_name,
-        "hhem_scores": metric_records
+        "metrics": metric_records
     }
     return package
 
