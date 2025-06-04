@@ -11,9 +11,6 @@ import src.LLMs
 
 
 #TODO: Standard Dev
-# Summaries file change: remove valid, make it a list overall []
-# HHEM File CHange: HHEM score, summary length, valid summary
-# Results File Change: LLM Name, HHEM version, timestamp, remove consistancy rate
 
 def main(args: argparse.ArgumentParser):
     """
