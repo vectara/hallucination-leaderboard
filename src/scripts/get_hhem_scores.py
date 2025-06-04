@@ -24,7 +24,7 @@ Functions:
     create_hhem_records(article_ids, hhem_scores, hhem_labels)
 """
 
-METRICS_FILE_PREFIX = "hhem_scores"
+METRICS_FILE_PREFIX = "judgements"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
     """

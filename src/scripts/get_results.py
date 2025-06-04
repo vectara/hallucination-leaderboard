@@ -19,7 +19,7 @@ Functions:
     generate_and_save_results(df, results_json_path)
 """
 
-RESULTS_FILE_PREFIX = "results"
+RESULTS_FILE_PREFIX = "stats"
 
 def run(models: list[AbstractLLM]):
     """

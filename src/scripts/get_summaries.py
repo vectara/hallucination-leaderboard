@@ -20,7 +20,7 @@ Functions:
     create_summary_records(summaries, article_df)
 """
 
-SUMMARY_FILE_PREFIX = "summary"
+SUMMARY_FILE_PREFIX = "summaries"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
     """
