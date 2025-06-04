@@ -7,8 +7,8 @@ from pydantic import BaseModel
 # A `summaries.json` file is a list of Summary objects
 class Summary(BaseModel):
     timestamp: str
-    article_id: int
     llm: str
+    article_id: int
     summary: str
 
 # A `judgements.json` file is a list of Judgement objects
