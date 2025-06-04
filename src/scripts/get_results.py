@@ -39,13 +39,13 @@ def run(models: list[AbstractLLM]):
 
         logger.log(f"Generating results for {model_name}")
 
-        hhem_json_file = f"{METRICS_FILE_PREFIX}_{model_name}.json"
+        hhem_json_file = f"{METRICS_FILE_PREFIX}.json"
         hhem_json_path = os.path.join(model_out_dir, hhem_json_file)
 
         if json_exists(hhem_json_path):
             logger.log(f"{METRICS_FILE_PREFIX} JSON found for {model_name}")
 
-            results_json_file = f"{RESULTS_FILE_PREFIX}_{model_name}.json"
+            results_json_file = f"{RESULTS_FILE_PREFIX}.json"
             results_json_path = os.path.join(model_out_dir, results_json_file)
             generate_and_save_results(hhem_json_path, model_name, results_json_path)
         else:

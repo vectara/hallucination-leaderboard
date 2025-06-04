@@ -46,7 +46,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
 
         logger.log(f"Generating {SUMMARY_FILE_PREFIX} for {model_name}")
 
-        json_file = f"{SUMMARY_FILE_PREFIX}_{model_name}.json"
+        json_file = f"{SUMMARY_FILE_PREFIX}.json"
         summaries_json_path = os.path.join(model_out_dir, json_file)
 
         if json_exists(summaries_json_path) and not force:

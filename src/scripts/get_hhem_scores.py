@@ -50,7 +50,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
 
         logger.log(f"Generating {METRICS_FILE_PREFIX} scores for {model_name}")
 
-        summaries_json_file = f"{SUMMARY_FILE_PREFIX}_{model_name}.json"
+        summaries_json_file = f"{SUMMARY_FILE_PREFIX}.json"
         summaries_json_path = os.path.join(model_out_dir, summaries_json_file)
 
         if json_exists(summaries_json_path):
@@ -62,7 +62,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
                 on='article_id', how='inner'
             )
 
-            hhem_json_file = f"{METRICS_FILE_PREFIX}_{model_name}.json"
+            hhem_json_file = f"{METRICS_FILE_PREFIX}.json"
             hhem_json_path = os.path.join(model_out_dir, hhem_json_file)
             run_generation_save_flow(
                 hhem_model,
