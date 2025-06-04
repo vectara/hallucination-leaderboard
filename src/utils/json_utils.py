@@ -1,6 +1,7 @@
 import json
 import os
 from src.logging.Logger  import logger
+from pydantic import BaseModel
 
 """
 Functions for handling JSON files
@@ -25,6 +26,38 @@ def load_json(json_path: str) -> list:
     with open(json_path, "r") as f:
         json_data = json.load(f)
     return json_data
+
+def save_to_jsonl(jsonl_path: str, records: list[BaseModel]):
+    # TODO: Documentation
+    """
+    """
+    logger.log("Saving JSONL file")
+    with open(jsonl_path, "w") as f:
+        for record in records:
+            f.write(record.model_dump_json() + "\n")
+    logger.log("JSONL file saved")
+
+
+def append_to_jsonl(json_path: str, records: list[dict]):
+    # TODO: Documentation
+    """
+    """
+    pass
+
+def save_bm_to_json(json_path: str, record: BaseModel):
+    """
+    Saves BaseModel objects to JSON formatted data to disk at specified path
+
+    Args:
+        json_path (str): Path to the JSON file
+        records (list[BaseModel]): JSON formatted data
+
+    Returns:
+        None
+    """
+    bm_dict = record.model_dump()
+    with open(json_path, "w") as f:
+        json.dump(bm_dict, f, indent=4)
 
 
 def save_to_json(json_path: str, records: list[dict]):

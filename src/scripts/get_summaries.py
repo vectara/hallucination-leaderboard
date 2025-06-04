@@ -3,9 +3,10 @@ import pandas as pd
 import inspect
 import os
 from tqdm import tqdm
-from src.utils.json_utils import save_to_json, json_exists
+from src.utils.json_utils import save_to_jsonl, json_exists
 from datetime import datetime, timezone
 from src.metrics.HHEMMetrics import HHEMMetrics
+from src.data_struct.data_model import Summary
 
 from src.LLMs.AbstractLLM import AbstractLLM
 
@@ -46,16 +47,16 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
 
         logger.log(f"Generating {SUMMARY_FILE_PREFIX} for {model_name}")
 
-        json_file = f"{SUMMARY_FILE_PREFIX}.json"
-        summaries_json_path = os.path.join(model_out_dir, json_file)
+        jsonl_file = f"{SUMMARY_FILE_PREFIX}.jsonl"
+        summaries_jsonl_path = os.path.join(model_out_dir, jsonl_file)
 
-        if json_exists(summaries_json_path) and not force:
+        if json_exists(summaries_jsonl_path) and not force:
             logger.log(f"{SUMMARY_FILE_PREFIX} JSON file exists for {model_name}, skipping")
             continue
         else:
             if not force:
                 logger.log(f"{SUMMARY_FILE_PREFIX} JSON file does not exist, generating...")
-            generate_and_save_summaries(model, article_df, summaries_json_path)
+            generate_and_save_summaries(model, article_df, summaries_jsonl_path)
             logger.log(f"Finished generating and saving for {model_name}")
         
         logger.log("Moving on to next model")
@@ -65,7 +66,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
 def generate_and_save_summaries(
         model: AbstractLLM,
         article_df: pd.DataFrame,
-        json_path: str
+        jsonl_path: str
     ):
     """
     Generates the summaries, reformats the data for a JSON file, and saves the
@@ -85,13 +86,15 @@ def generate_and_save_summaries(
     summaries = []
     with model as m: 
         summaries = m.summarize_articles(article_texts)
-    summary_records = create_summary_records(summaries, article_ids)
-    save_to_json(json_path, summary_records)
+    summary_records = create_summary_records(summaries, article_ids, model.get_model_name())
+    save_to_jsonl(jsonl_path, summary_records)
 
 def create_summary_records(
         summaries: list[str],
-        article_ids: list[int]
+        article_ids: list[int],
+        model_name: str
     ) -> list[dict]:
+    #TODO: Update documentation
     """
     Reformats summary and article data into JSON format
 
@@ -108,23 +111,19 @@ def create_summary_records(
     Returns:
         (list): JSON formatted dictionary
     """
+    current_date = datetime.now(timezone.utc).date().isoformat()
     model_summaries = []
 
     for a_id, summ in zip(article_ids, summaries):
-        record = {
-            "article_id": a_id,
-            "summary": summ,
-        }
+        record = Summary(
+            timestamp=current_date,
+            llm=model_name,
+            article_id=a_id,
+            summary=summ
+        )
         model_summaries.append(record)
 
-
-    current_utc_time = datetime.now(timezone.utc).isoformat()
-
-    package = {
-        "timestamp": current_utc_time,
-        "summaries": model_summaries
-    }
-    return package
+    return model_summaries
 
 if __name__ == "__main__":
     pass

@@ -2,6 +2,7 @@ from src.LLMs.AbstractLLM import (
     MODEL_RETURNED_NON_STRING_TYPE_OUTPUT, MODEL_FAILED_TO_RETURN_OUTPUT
 )
 import pandas as pd
+from src.data_struct.data_model import Judgement
 
 class HHEMMetrics:
     """
@@ -58,10 +59,10 @@ class HHEMMetrics:
         
         """
 
-        valid_summs_df = metrics_df[metrics_df["valid_summary"]]
+        valid_summs_df = metrics_df[metrics_df[Judgement.Keys.VALID]]
         total_count = valid_summs_df.shape[0]
         factual_count = 0
-        for score in valid_summs_df["hhem_score"].tolist():
+        for score in valid_summs_df[Judgement.Keys.HHEM_SCORE].tolist():
             if score >= threshold:
                 factual_count += 1
         factual_consistancy_rate = factual_count/total_count
@@ -79,7 +80,7 @@ class HHEMMetrics:
             float: answer rate
         """
 
-        answer_rate = metrics_df["valid_summary"].mean()
+        answer_rate = metrics_df[Judgement.Keys.VALID].mean()
         return answer_rate
 
     def compute_avg_summary_length(self, metrics_df: pd.DataFrame):
@@ -92,8 +93,8 @@ class HHEMMetrics:
         Returns:
             float: Average summary length
         """
-        valid_summs_df = metrics_df[metrics_df["valid_summary"]]
-        avg_summary_length = valid_summs_df["summary_length"].mean()
+        valid_summs_df = metrics_df[metrics_df[Judgement.Keys.VALID]]
+        avg_summary_length = valid_summs_df[Judgement.Keys.SUMMARY_WORDS].mean()
         return avg_summary_length
 
     def is_valid_summary(self, summary: str):
