@@ -8,7 +8,7 @@ import pandas as pd
 from datetime import datetime, timezone
 
 from src.scripts.get_summaries import SUMMARY_FILE_PREFIX
-from src.scripts.get_hhem_scores import METRICS_FILE_PREFIX
+from src.scripts.get_judgements import METRICS_FILE_PREFIX
 
 
 """
