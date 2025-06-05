@@ -18,11 +18,11 @@ class OpenAi(AbstractLLM):
     """
 
     gpt_4 = ["gpt-4.1"]
-    def __init__(self, model_name, data_code=None):
+    def __init__(self, model_name, date_code=None):
         super().__init__(model_name=model_name, company="openai")
         api_key = os.getenv("OPENAI_API_KEY")
-        if data_code:
-            self.full_model_name = f"{self.company}/{self.model_name}-{data_code}"
+        if date_code:
+            self.full_model_name = f"{self.company}/{self.model_name}-{date_code}"
         else:
             self.full_model_name = f"{self.company}/{self.model_name}"
         self.client = OpenAI(api_key=api_key)
