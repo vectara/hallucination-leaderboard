@@ -145,6 +145,7 @@ from abc import ABC, abstractmethod
 from src.logging.Logger import logger
 from tqdm import tqdm
 import os
+import time
 
 MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
 MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
@@ -178,9 +179,10 @@ class AbstractLLM(ABC):
         get_company(): get company of model
         get_model_out_dir(): get the output directory dedicated for this model
     """
-    def __init__(self, model_name: str, company="NullCompany"):
+    def __init__(self, model_name: str, company="NullCompany", min_throttle_time=0):
         self.max_tokens = 1024
         self.temperature = 0.0
+        self.min_throttle_time = min_throttle_time
         self.company = company
         self.model_name = model_name
         '''Do we need a pad token at start?'''
@@ -256,6 +258,7 @@ class AbstractLLM(ABC):
 
 
     def summarize_one_article(self, article: str) -> str:
+        #TODO: Update Doc
         """
         Takes in a string representing a human written article, injects a prompt
         at the start and feeds into the LLM to generate a summary.
@@ -269,7 +272,12 @@ class AbstractLLM(ABC):
         """
         prepared_llm_input = self.prepare_article_for_llm(article)
 
+        start_time = time.time()
         llm_summary = self.summarize(prepared_llm_input)
+        elapsed_time = time.time() - start_time
+        remaining_time = self.min_throttle_time - elapsed_time
+        if remaining_time > 0: # Delay only if execution speed would surpass throttle
+            time.sleep(remaining_time)
 
         return llm_summary
 
