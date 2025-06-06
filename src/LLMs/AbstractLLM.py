@@ -180,7 +180,7 @@ class AbstractLLM(ABC):
         get_model_out_dir(): get the output directory dedicated for this model
     """
     def __init__(self, model_name: str, company="NullCompany", min_throttle_time=0):
-        self.max_tokens = 1024
+        self.max_tokens = 4096
         self.temperature = 0.0
         self.min_throttle_time = min_throttle_time
         self.company = company

@@ -30,7 +30,7 @@ class Google(AbstractLLM):
             contents=prepared_text,
             config=types.GenerateContentConfig(
                 max_output_tokens = self.max_tokens,
-                temperature = 0.10
+                temperature = self.temperature
             )
         )
         summary = response.text
