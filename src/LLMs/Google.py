@@ -1,5 +1,6 @@
 import os
 from google import genai
+from google.genai import types
 from src.LLMs.AbstractLLM import AbstractLLM
 from src.LLMs.model_registry import register_model
 
@@ -26,7 +27,11 @@ class Google(AbstractLLM):
         summary = None
         response = self.client.models.generate_content(
             model = self.model,
-            contents=prepared_text
+            contents=prepared_text,
+            config=types.GenerateContentConfig(
+                max_output_tokens = self.max_tokens,
+                temperature = self.temperature
+            )
         )
         summary = response.text
         return summary
