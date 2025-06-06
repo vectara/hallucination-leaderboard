@@ -7,6 +7,7 @@ import os
 from src.utils.json_utils import load_json, json_exists
 from src.LLMs.model_registry import MODEL_REGISTRY
 from src.utils.build_utils import builds_models
+from src.config import TEST_DATA_PATH, LB_DATA_PATH
 import src.LLMs
 
 
@@ -23,9 +24,9 @@ def main(args: argparse.ArgumentParser):
     data_path = None
     if args.test:
         print("Using test data, if this is not a test run results are not useful")
-        data_path = os.getenv("TEST_DATA")
+        data_path = TEST_DATA_PATH
     else:
-        data_path = os.getenv("LB_DATA")
+        data_path = LB_DATA_PATH
 
     config = None
     if json_exists("config.json"):

@@ -144,6 +144,7 @@ Model List
 from abc import ABC, abstractmethod
 from src.logging.Logger import logger
 from tqdm import tqdm
+from src.config import OUTPUT_DIR
 import os
 import time
 
@@ -193,7 +194,7 @@ class AbstractLLM(ABC):
             "information described.'"
         )
 
-        output_dir = os.getenv("OUTPUT_DIR", "output")
+        output_dir = OUTPUT_DIR
         model_output_dir = f"{output_dir}/{self.company}/{self.model_name}"
         self.model_output_dir = model_output_dir
         os.makedirs(model_output_dir, exist_ok=True)
