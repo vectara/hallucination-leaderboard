@@ -4,6 +4,7 @@ __pycache__/
 
 .env
 log.txt
+TODO.md
 
 output
 *.json
