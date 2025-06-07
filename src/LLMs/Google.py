@@ -16,7 +16,7 @@ class Google(AbstractLLM):
 
 
     def __init__(self, model_name, date_code=None):
-        super().__init__(model_name=model_name, company="google", min_throttle_time=0.5)
+        super().__init__(model_name=model_name, company="google", min_throttle_time=9)
         api_key = os.getenv("GEMINI_API_KEY")
         self.client = genai.Client(api_key=api_key)
         self.model = f"{model_name}"

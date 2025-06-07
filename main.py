@@ -6,8 +6,9 @@ import argparse
 import os
 from src.utils.json_utils import load_json, json_exists
 from src.LLMs.model_registry import MODEL_REGISTRY
-from src.utils.build_utils import builds_models
+from src.utils.build_utils import builds_models, convert_raw_config
 from src.config import TEST_DATA_PATH, LB_DATA_PATH
+from src.data_struct.config_model import ModelConfig
 import src.LLMs
 
 
@@ -28,14 +29,15 @@ def main(args: argparse.ArgumentParser):
     else:
         data_path = LB_DATA_PATH
 
-    config = None
+    valid_model_configs = None
     if json_exists("config.json"):
-        config = load_json("config.json")
+        raw_model_configs = load_json("config.json")
+        valid_model_configs = convert_raw_config(raw_model_configs)
     else:
         logger.log("No Config file was found, exiting")
         return
 
-    models = builds_models(config)
+    models = builds_models(valid_model_configs)
 
     if args.process == "get_summ":
         article_df = pd.read_csv(data_path)

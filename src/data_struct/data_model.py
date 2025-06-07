@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+#TODO: Doc
+
 # The data model is redundant but hopefully it will make things in the future easier
 
 # All summaries evaluated together should have the same timestamp in `summaries.json` and `judgements.json`
