@@ -22,7 +22,7 @@ Functions:
 """
 
 SUMMARY_FILE_PREFIX = "summaries"
-FILE_TYPE = "jsonl"
+OUTPUT_FILE_TYPE = "jsonl"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
     #TODO: Updates doc, style
@@ -41,7 +41,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
 
     logger.log(f"Starting to generate {SUMMARY_FILE_PREFIX}")
     if force:
-        logger.log(f"Force flag enabled. Overwriting previous {FILE_TYPE} data")
+        logger.log(f"Force flag enabled. Overwriting previous {OUTPUT_FILE_TYPE} data")
 
     for model in tqdm(models, desc="Model Loop"):
         model_name = model.get_model_name()
@@ -49,15 +49,15 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
 
         logger.log(f"Generating {SUMMARY_FILE_PREFIX} for {model_name}")
 
-        jsonl_file = f"{SUMMARY_FILE_PREFIX}.{FILE_TYPE}"
+        jsonl_file = f"{SUMMARY_FILE_PREFIX}.{OUTPUT_FILE_TYPE}"
         summaries_jsonl_path = os.path.join(model_out_dir, jsonl_file)
 
         if json_exists(summaries_jsonl_path) and not force:
-            logger.log(f"{SUMMARY_FILE_PREFIX} {FILE_TYPE} file exists for {model_name}, skipping")
+            logger.log(f"{SUMMARY_FILE_PREFIX} {OUTPUT_FILE_TYPE} file exists for {model_name}, skipping")
             continue
         else:
             if not force:
-                logger.log(f"{SUMMARY_FILE_PREFIX} {FILE_TYPE} file does not exist, generating...")
+                logger.log(f"{SUMMARY_FILE_PREFIX} {OUTPUT_FILE_TYPE} file does not exist, generating...")
             generate_and_save_summaries(model, article_df, summaries_jsonl_path)
             logger.log(f"Finished generating and saving for {model_name}")
         
