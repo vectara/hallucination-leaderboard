@@ -57,6 +57,7 @@ Last updated on April 29th, 2025
 |DeepSeek-V2.5|2.4 %|97.6 %|100.0 %|83.2|
 |Microsoft Orca-2-13b|2.5 %|97.5 %|100.0 %|66.2|
 |Microsoft Phi-3.5-MoE-instruct|2.5 %|97.5 %|96.3 %|69.7|
+|Google Gemini-2.5-Pro-Preview-06-05|2.6 %|97.4 %|99.6 %|73.1|
 |Intel Neural-Chat-7B-v3-3|2.6 %|97.4 %|100.0 %|60.7|
 |Qwen3-4B|2.7 %|97.3 %|100.0 %|87.7|
 |Google Gemma-3-12B-Instruct|2.8 %|97.2 %|100.0 %|69.6|
@@ -124,6 +125,7 @@ Last updated on April 29th, 2025
 |Llama-3-8B-Chat-hf|7.4 %|92.6 %|99.8 %|79.7|
 |Mistral-Ministral-8B|7.5 %|92.5 %|100.0 %|62.7|
 |Google Gemini-Pro|7.7 %|92.3 %|98.4 %|89.5|
+|DeepSeek-R1-0528|7.7 %|92.3 %|100.0 %|138.9|
 |01-AI Yi-1.5-6B-Chat|7.9 %|92.1 %|100.0 %|98.9|
 |Llama-3.2-3B-Instruct|7.9 %|92.1 %|100.0 %|72.2|
 |DeepSeek-V3-0324|8.0 %|92.0 %|100.0 %|78.9|
