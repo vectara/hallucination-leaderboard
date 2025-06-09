@@ -6,7 +6,7 @@ from tqdm import tqdm
 from src.utils.json_utils import save_to_jsonl, json_exists
 from datetime import datetime, timezone
 from src.metrics.HHEMMetrics import HHEMMetrics
-from src.data_struct.data_model import Summary
+from src.data_struct.data_model import Summary, SourceArticle
 
 from src.LLMs.AbstractLLM import AbstractLLM
 
@@ -83,8 +83,8 @@ def generate_and_save_summaries(
         None
     """
 
-    article_texts = article_df['text'].tolist()
-    article_ids = article_df['article_id'].tolist()
+    article_texts = article_df[SourceArticle.Keys.TEXT].tolist()
+    article_ids = article_df[SourceArticle.Keys.ARTICLE_ID].tolist()
     summaries = []
     with model as m: 
         summaries = m.summarize_articles(article_texts)
