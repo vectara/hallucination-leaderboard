@@ -13,7 +13,7 @@ from src.data_struct.data_model import Judgement
 from src.HHEM.HHEM_2_x import HHEM_2_3, HHEMOutput
 
 from src.LLMs.AbstractLLM import AbstractLLM
-from src.scripts.get_summaries import SUMMARY_FILE_PREFIX
+from src.scripts.get_summaries import SUMMARY_FILE
 
 
 #TODO: Documentation Update
@@ -26,10 +26,12 @@ Functions:
     create_hhem_records(article_ids, hhem_scores, hhem_labels)
 """
 
-METRICS_FILE_PREFIX = "judgements"
+# METRICS_FILE_PREFIX = "judgements"
+# OUTPUT_FILE_TYPE = "jsonl"
+JUDGEMENT_FILE = "judgements.jsonl"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
-    #TODO: Documentation Update
+    #TODO: Documentation Update, style
     """
     Generates and saves HHEM scores for a given model only if it has its 
     respective summaries_model.json file
@@ -41,9 +43,11 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
     Returns:
         None
     """
-    logger.log(f"Starting to generate {METRICS_FILE_PREFIX} scores")
+    logger.log(f"Starting to generate {JUDGEMENT_FILE} scores")
     if force:
-        logger.log("Force flag enabled. Overwriting previous JSONL data")
+        logger.log(
+            f"Force flag enabled. Overwriting previous {JUDGEMENT_FILE} data"
+        )
 
     hhem_model = HHEM_2_3()
 
@@ -51,21 +55,23 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
         model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
-        logger.log(f"Generating {METRICS_FILE_PREFIX} scores for {model_name}")
+        logger.log(f"Generating {JUDGEMENT_FILE} scores for {model_name}")
 
-        summaries_jsonl_file = f"{SUMMARY_FILE_PREFIX}.jsonl"
+        summaries_jsonl_file = f"{SUMMARY_FILE}"
         summaries_jsonl_path = os.path.join(model_out_dir, summaries_jsonl_file)
 
         if json_exists(summaries_jsonl_path):
-            logger.log(f"{SUMMARY_FILE_PREFIX} JSONL found for {model_name}")
+            logger.log(f"{SUMMARY_FILE} found for {model_name}")
             summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
             article_summaries_df = pd.merge(
                 article_df, summaries_df,
                 on='article_id', how='inner' #TODO: Remove article_id hardcode
             )
 
-            judgements_jsonl_file = f"{METRICS_FILE_PREFIX}.jsonl"
-            judgements_jsonl_path = os.path.join(model_out_dir, judgements_jsonl_file)
+            judgements_jsonl_file = f"{JUDGEMENT_FILE}"
+            judgements_jsonl_path = os.path.join(
+                model_out_dir, judgements_jsonl_file
+            )
             run_generation_save_flow(
                 hhem_model,
                 article_summaries_df,
@@ -75,9 +81,11 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
             )
         else:
             logger.log(
-                f"{SUMMARY_FILE_PREFIX} JSONL not found for {model_name}, skipping model"
+                f"{SUMMARY_FILE} not found for {model_name}, skipping model"
             )
-    logger.log(f"Finished generating and saving {METRICS_FILE_PREFIX} for all models")
+    logger.log(
+        f"Finished generating and saving {JUDGEMENT_FILE} for all models"
+    )
 
 def run_generation_save_flow(
         hhem_model: HHEM_2_3,
@@ -101,21 +109,21 @@ def run_generation_save_flow(
 
     if json_exists(judge_jsonl_path) and not force:
         print((
-            f"WARNING: {METRICS_FILE_PREFIX} JSONL file already exists, if you generated new "
+            f"WARNING: {JUDGEMENT_FILE} file already exists, if you generated new "
             "summaries you will not have metrics that reflect these "
             "summaries. Recall with --force to overwrite old data"
             )
         )
-        logger.log(f"{METRICS_FILE_PREFIX} JSONL file exists for {model_name}, skipping")
+        logger.log(f"{JUDGEMENT_FILE} file exists for {model_name}, skipping")
     else:
         if not force:
-            logger.log(f"{METRICS_FILE_PREFIX} JSONL file does not exist, generating...")
+            logger.log(f"{JUDGEMENT_FILE} file does not exist, generating...")
         else:
-            logger.log(f"Overwriting previous {METRICS_FILE_PREFIX} score JSONL...")
+            logger.log(f"Overwriting previous {JUDGEMENT_FILE}...")
         generate_and_save_metrics(
             hhem_model, df, judge_jsonl_path
         )
-        logger.log(f"Finished generating and saving {METRICS_FILE_PREFIX} scores")
+        logger.log(f"Finished generating and saving {JUDGEMENT_FILE}")
         logger.log("Moving on to next model")
 
 
