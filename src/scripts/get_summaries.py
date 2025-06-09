@@ -10,25 +10,21 @@ from src.data_struct.data_model import Summary, SourceArticle
 from src.LLMs.AbstractLLM import AbstractLLM
 
 """
-Requests all LLMS to produce a summary. Summaries are only produced if no 
-summary data is detected. Summaries can be forced to be regenerated. Stores the
-summary data as a JSON file local to associated LLM class.
+Loops through all given LLMs and requests a summary for the give article
+dataframe. 
 
 Functions:
     run(models)
     generate_and_save_summaries(model, article_df, json_path)
-    create_summary_records(summaries, article_df)
+    create_summary_records(summaries, article_ids, model_name)
 """
 
-# SUMMARY_FILE_PREFIX = "summaries"
-# SUMMARY_FILE_TYPE = "jsonl"
 SUMMARY_FILE = "summaries.jsonl"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
-    #TODO: Updates doc, style
     """
     Generates summaries for a given model if the corresponding JSON file does 
-    not exist
+    not exist, force flag will overwrite existing JSON file
 
     Args:
         models (list[AbstractLLM]): list of LLMs
@@ -41,7 +37,9 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
 
     logger.log(f"Starting to generate {SUMMARY_FILE}")
     if force:
-        logger.log(f"Force flag enabled. Overwriting previous {SUMMARY_FILE} data")
+        logger.log(
+            f"Force flag enabled. Overwriting previous {SUMMARY_FILE} data"
+        )
 
     for model in tqdm(models, desc="Model Loop"):
         model_name = model.get_model_name()
@@ -71,13 +69,13 @@ def generate_and_save_summaries(
         jsonl_path: str
     ):
     """
-    Generates the summaries, reformats the data for a JSON file, and saves the
-    record to a JSON file in the folder with the corresponding object.
+    Generates the summaries, reformats the data for a jsonl file, and saves the
+    record to a jsonl file.
 
     Args:
         model (AbstractLLM): LLM model
         article_df (pd.DataFrame): Article data
-        json_path (str): path for the new json file
+        json_path (str): path for the new jsonl file
 
     Returns:
         None
@@ -88,30 +86,29 @@ def generate_and_save_summaries(
     summaries = []
     with model as m: 
         summaries = m.summarize_articles(article_texts)
-    summary_records = create_summary_records(summaries, article_ids, model.get_model_name())
+    summary_records = create_summary_records(
+        summaries, article_ids, model.get_model_name()
+    )
     save_to_jsonl(jsonl_path, summary_records)
 
 def create_summary_records(
         summaries: list[str],
         article_ids: list[int],
         model_name: str
-    ) -> list[dict]:
-    #TODO: Update documentation
+    ) -> list[Summary]:
     """
-    Reformats summary and article data into JSON format
+    Returns list of Summary objects filled with data from the summaries and
+    article_ids lists.
 
-    Current JSON format, *Format may not align with code in future, check code*
-    {
-        'article_id': int
-        'summary': str
-    }
+    The summaries and article_ids are assumed to be in line by index
 
     Args:
         summaries (list[str]): List of summaries
         article_ids (list[int]): id associated with an article
+        model_name (str): unique model identifier
     
     Returns:
-        (list): JSON formatted dictionary
+        (list[Summary]): list of Summary records
     """
     current_date = datetime.now(timezone.utc).date().isoformat()
     model_summaries = []
