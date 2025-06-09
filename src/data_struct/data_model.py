@@ -8,6 +8,14 @@ from pydantic import BaseModel
 
 # A `summaries.json` file is a list of Summary objects
 class SourceArticle(BaseModel):
+    """
+    Representation of an Article record from LB dataset
+
+    Fields
+        article_id (int): unique id of article
+        text (str): content text of article
+        dataset (str): dataset that article belongs to (TODO: VERIFY TRUE)
+    """
     article_id: int
     text: str
     dataset: str
@@ -18,6 +26,16 @@ class SourceArticle(BaseModel):
         DATASET = "dataset"
 
 class Summary(BaseModel):
+    """
+    Representation of a Summary of an Article
+    
+    Fields:
+        timestamp (str): Date summary was produced
+        llm (str): unique llm identifier, matches the label the respective
+            company gave it
+        article_id (int): unique id of article
+        summary (str): llm generated summary of the text associated to article_id
+    """
     timestamp: str
     llm: str
     article_id: int
@@ -31,6 +49,7 @@ class Summary(BaseModel):
 
 # A `judgements.json` file is a list of Judgement objects
 class Judgement(BaseModel):
+    #TODO: Docs when finalized
     timestamp: str
     article_id: int
     hhem_version: str
@@ -48,6 +67,7 @@ class Judgement(BaseModel):
 
 # A `stats.json` file is a  Stats objects, aggregated from a list of Judgement objects
 class Stats(BaseModel):
+    #TODO: Docs when finalized
     timestamp: str
     llm: str
     hallucination_rate: float
