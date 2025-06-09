@@ -8,7 +8,7 @@ import os
 from tqdm import tqdm
 from src.utils.json_utils import save_to_jsonl, json_exists
 from src.metrics.HHEMMetrics import HHEMMetrics
-from src.data_struct.data_model import Judgement
+from src.data_struct.data_model import Judgement, Summary, SourceArticle
 
 from src.HHEM.HHEM_2_x import HHEM_2_3, HHEMOutput
 
@@ -65,7 +65,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
             summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
             article_summaries_df = pd.merge(
                 article_df, summaries_df,
-                on='article_id', how='inner' #TODO: Remove article_id hardcode
+                on=Summary.Keys.ARTICLE_ID, how='inner'
             )
 
             judgements_jsonl_file = f"{JUDGEMENT_FILE}"
@@ -142,9 +142,9 @@ def generate_and_save_metrics(
     Returns:
         None
     """
-    article_texts = df['text'].tolist()
-    article_summaries = df['summary'].tolist()
-    article_ids = df['article_id'].tolist()
+    article_texts = df[SourceArticle.Keys.TEXT].tolist()
+    article_summaries = df[Summary.Keys.SUMMARY].tolist()
+    article_ids = df[Summary.Keys.ARTICLE_ID].tolist()
 
     hhem_scores = []
     hhem_labels = []
