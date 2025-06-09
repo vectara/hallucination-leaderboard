@@ -19,9 +19,12 @@ def builds_models(config: list[ModelConfig]) -> list[AbstractLLM]:
     models = []
     for model in config:
 
-        if not model.enabled:
+        if model.enabled:
+            logger.log(f"{model.company}-{model.params.model_name}-{model.params.date_code} enabled")
+        else:
             logger.log(f"{model.company}-{model.params.model_name}-{model.params.date_code} is disabled, skipping ")
             continue
+
 
 
         company_class = MODEL_REGISTRY.get(model.company)
