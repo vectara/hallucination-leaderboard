@@ -8,7 +8,7 @@ import pandas as pd
 from datetime import datetime, timezone
 from src.data_struct.data_model import Judgement, Stats
 
-from src.scripts.get_judgements import METRICS_FILE_PREFIX
+from src.scripts.get_judgements import JUDGEMENT_FILE
 
 
 """
@@ -18,8 +18,7 @@ Functions:
     run(models)
     generate_and_save_results(df, results_json_path)
 """
-
-RESULTS_FILE_PREFIX = "stats"
+RESULTS_FILE = "stats.json"
 
 def run(models: list[AbstractLLM]):
     #TODO: Update Documentation
@@ -40,18 +39,17 @@ def run(models: list[AbstractLLM]):
 
         logger.log(f"Generating results for {model_name}")
 
-        judge_json_file = f"{METRICS_FILE_PREFIX}.jsonl"
-        judge_json_path = os.path.join(model_out_dir, judge_json_file)
+        judge_json_path = os.path.join(model_out_dir, JUDGEMENT_FILE)
 
         if json_exists(judge_json_path):
-            logger.log(f"{METRICS_FILE_PREFIX} JSONL found for {model_name}")
+            logger.log(f"{JUDGEMENT_FILE} found for {model_name}")
 
-            results_json_file = f"{RESULTS_FILE_PREFIX}.json"
+            results_json_file = f"{RESULTS_FILE}"
             results_json_path = os.path.join(model_out_dir, results_json_file)
             generate_and_save_results(judge_json_path, model_name, results_json_path)
         else:
             logger.log(
-                f"{METRICS_FILE_PREFIX} JSON not found for {model_name}, skipping model"
+                f"{JUDGEMENT_FILE} not found for {model_name}, skipping model"
             )
     logger.log("Finished generating and saving results for all models")
 
