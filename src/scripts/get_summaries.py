@@ -17,6 +17,9 @@ Functions:
     run(models)
     generate_and_save_summaries(model, article_df, json_path)
     create_summary_records(summaries, article_ids, model_name)
+
+Global Variables:
+    SUMMARY_FILE
 """
 
 SUMMARY_FILE = "summaries.jsonl"
