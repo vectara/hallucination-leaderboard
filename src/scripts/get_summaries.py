@@ -5,7 +5,6 @@ import os
 from tqdm import tqdm
 from src.utils.json_utils import save_to_jsonl, json_exists
 from datetime import datetime, timezone
-from src.metrics.HHEMMetrics import HHEMMetrics
 from src.data_struct.data_model import Summary, SourceArticle
 
 from src.LLMs.AbstractLLM import AbstractLLM
