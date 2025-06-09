@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 import os
 from tqdm import tqdm
 from src.utils.json_utils import save_to_jsonl, json_exists
-from src.metrics.HHEMMetrics import HHEMMetrics
+from src.metrics.metrics import is_valid_summary
 from src.data_struct.data_model import Judgement, Summary, SourceArticle
 
 from src.HHEM.HHEM_2_x import HHEM_2_3, HHEMOutput
@@ -186,11 +186,10 @@ def create_metric_records(
         list[dict]: hhem score records in JSON format
     """
     metric_records = []
-    metrics = HHEMMetrics()
     current_date = datetime.now(timezone.utc).date().isoformat()
     for a_id, summ, hhem_s, hhem_l in zip(article_ids, article_summaries, hhem_scores, hhem_labels):
         summary_length = len(summ.split())
-        valid_summary = metrics.is_valid_summary(summ)
+        valid_summary = is_valid_summary(summ)
         metric_record = Judgement(
             timestamp = current_date,
             article_id = a_id,

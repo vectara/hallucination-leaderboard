@@ -3,10 +3,12 @@ import os
 from tqdm import tqdm
 from src.LLMs.AbstractLLM import AbstractLLM
 from src.utils.json_utils import json_exists, save_bm_to_json
-from src.metrics.HHEMMetrics import HHEMMetrics
 import pandas as pd
 from datetime import datetime, timezone
 from src.data_struct.data_model import Judgement, Stats
+from src.metrics.stats import (
+    compute_hallucination_rate, compute_answer_rate, compute_avg_summary_length
+)
 
 from src.scripts.get_judgements import JUDGEMENT_FILE
 
@@ -66,17 +68,13 @@ def generate_and_save_results(judge_json_path: str, model_name: str, results_jso
         None
     """
     results = {}
-    #TODO: Stats Object instead
-    metrics = HHEMMetrics()
     current_date = datetime.now(timezone.utc).date().isoformat()
 
     metrics_df = pd.read_json(judge_json_path, lines=True)
 
-    hr = round(
-        metrics.compute_hallucination_rate(metrics_df)*100.0, 1
-    )
-    ar = round(metrics.compute_answer_rate(metrics_df)*100.0, 1)
-    asl = round(metrics.compute_avg_summary_length(metrics_df), 1)
+    hr = round(compute_hallucination_rate(metrics_df)*100.0, 1)
+    ar = round(compute_answer_rate(metrics_df)*100.0, 1)
+    asl = round(compute_avg_summary_length(metrics_df), 1)
 
 
 

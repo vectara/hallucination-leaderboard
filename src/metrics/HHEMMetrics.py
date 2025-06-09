@@ -4,6 +4,7 @@ from src.LLMs.AbstractLLM import (
 import pandas as pd
 from src.data_struct.data_model import Judgement
 
+# UNUSED FILE, migrated all use cases to functions
 class HHEMMetrics:
     """
     Specialized Metrics for HHEM output
