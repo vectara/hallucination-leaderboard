@@ -1,7 +1,9 @@
 import pandas as pd
 from src.data_struct.data_model import Judgement
 
-def compute_hallucination_rate(metrics_df: pd.DataFrame, threshold=0.5):
+def compute_hallucination_rate(
+        metrics_df: pd.DataFrame, threshold=0.5
+    ) -> float:
     """
     Computes hallucination rate with default threshold of 0.5
 
@@ -19,7 +21,9 @@ def compute_hallucination_rate(metrics_df: pd.DataFrame, threshold=0.5):
     hallucination_rate = 1.0 - fcr
     return hallucination_rate
 
-def compute_factual_consistancy_rate(metrics_df: pd.DataFrame, threshold=0.5):
+def compute_factual_consistancy_rate(
+        metrics_df: pd.DataFrame, threshold=0.5
+    ) -> float:
     """
     Computes factual consistancy rate with default threshold of 0.5
 
@@ -29,7 +33,6 @@ def compute_factual_consistancy_rate(metrics_df: pd.DataFrame, threshold=0.5):
 
     Returns:
         float: factual consistancy rate
-    
     """
 
     valid_summs_df = metrics_df[metrics_df[Judgement.Keys.VALID]]
@@ -41,10 +44,10 @@ def compute_factual_consistancy_rate(metrics_df: pd.DataFrame, threshold=0.5):
     factual_consistancy_rate = factual_count/total_count
     return factual_consistancy_rate
 
-def compute_answer_rate(metrics_df: pd.DataFrame):
+def compute_answer_rate(metrics_df: pd.DataFrame) -> float:
     """
-    Computes the the rate valid summaries. A valid summary is a summary of
-    reasonable length that attempts to summarize an article.
+    Computes the the rate of valid summaries. is_valid_summary in metrics.py
+    for definition of a valid summary.
 
     Args:
         metrics_df (pd.DataFrame): metrics dataframe
@@ -56,9 +59,9 @@ def compute_answer_rate(metrics_df: pd.DataFrame):
     answer_rate = metrics_df[Judgement.Keys.VALID].mean()
     return answer_rate
 
-def compute_avg_summary_length(metrics_df: pd.DataFrame):
+def compute_avg_summary_length(metrics_df: pd.DataFrame) -> float:
     """
-    Computes average summary length for all articles
+    Computes average summary length
 
     Args:
         metrics_df (pd.DataFrame): metrics dataframe
@@ -66,6 +69,7 @@ def compute_avg_summary_length(metrics_df: pd.DataFrame):
     Returns:
         float: Average summary length
     """
+
     valid_summs_df = metrics_df[metrics_df[Judgement.Keys.VALID]]
     avg_summary_length = valid_summs_df[Judgement.Keys.SUMMARY_WORDS].mean()
     return avg_summary_length

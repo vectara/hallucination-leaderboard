@@ -1,12 +1,13 @@
-import pandas as pd
 from src.LLMs.AbstractLLM import (
     MODEL_RETURNED_NON_STRING_TYPE_OUTPUT, MODEL_FAILED_TO_RETURN_OUTPUT
 )
 
 
-def is_valid_summary(summary: str):
+def is_valid_summary(summary: str) -> bool:
     """
-    Checks if summary is valid and returns True if it is else False
+    Checks if summary is valid and returns True if it is else False. A summary
+    is valid if it is longer than 4 words and the output is not equivalent to
+    specific error strings
 
     Args:
         summary (str): the summary
@@ -22,7 +23,7 @@ def is_valid_summary(summary: str):
     else:
         return False
 
-def has_error_output(summary: str):
+def has_error_output(summary: str) -> bool:
     """
     Detects if summary contains error output and returns True if so
 
