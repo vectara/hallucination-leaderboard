@@ -1,13 +1,22 @@
 from pydantic import BaseModel
 
 #TODO: Doc
-#TODO: Add a class for input data
 
 # The data model is redundant but hopefully it will make things in the future easier
 
 # All summaries evaluated together should have the same timestamp in `summaries.json` and `judgements.json`
 
 # A `summaries.json` file is a list of Summary objects
+class SourceArticle(BaseModel):
+    article_id: int
+    text: str
+    dataset: str
+
+    class Keys:
+        ARTICLE_ID = "article_id"
+        TEXT = "text"
+        DATASET = "dataset"
+
 class Summary(BaseModel):
     timestamp: str
     llm: str
