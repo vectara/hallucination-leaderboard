@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 #TODO: Doc
+#TODO: Add a class for input data
 
 # The data model is redundant but hopefully it will make things in the future easier
 

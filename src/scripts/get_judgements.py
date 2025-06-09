@@ -61,7 +61,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
             summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
             article_summaries_df = pd.merge(
                 article_df, summaries_df,
-                on='article_id', how='inner'
+                on='article_id', how='inner' #TODO: Remove article_id hardcode
             )
 
             judgements_jsonl_file = f"{METRICS_FILE_PREFIX}.jsonl"
