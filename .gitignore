@@ -9,6 +9,9 @@ TODO.md
 output
 *.json
 
+
+test_results/
+
 leaderboard_dataset_revised.csv
 leaderboard_dataset.csv
 temp.py
