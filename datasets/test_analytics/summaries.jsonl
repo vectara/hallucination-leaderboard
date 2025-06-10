@@ -1,5 +1,7 @@
-{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":1,"summary":"Summary1"}
-{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":2,"summary":"Summary2"}
-{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":3,"summary":"Summary3"}
-{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":4,"summary":"Summary4"}
-{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":5,"summary":"Summary5"}
+{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":1,"summary":"This is Summary 1, it is a good summary and has a high HHEM score."}
+{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":2,"summary":"This is Summary 2, it is a questionable summary but it's HHEM score is right at the threshold. Since threshold is >= 0.5 this will be judged as a factually consistant summary."}
+{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":3,"summary":"This is Summary 3, it is a bad summary. It's HHEM score is very low."}
+{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":4,"summary":"Bad Summary"}
+{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":5,"summary":"This is Summary 5, it is a good summary."}
+{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":6,"summary":"MODEL FAILED TO RETURN ANY OUTPUT"}
+{"timestamp":"2025-06-10","llm":"dummy-llm","article_id":7,"summary":"DID NOT RECIEVE A STRING TYPE FROM OUTPUT"}

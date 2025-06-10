@@ -1,5 +1,6 @@
 from src.logging.Logger import logger
 from src.tests.TestLLM import TestLLM
+from src.tests.TestAnalytics import TestAnalytics
 from dotenv import load_dotenv
 
 
@@ -36,25 +37,36 @@ def test_models():
     Returns:
         None
     """
-    logger.log("Testing models")
-    llm_tester = TestLLM()
+    tests = [TestAnalytics()]
+    for test in tests:
+        test.run_tests()
 
-    config = None
-    if json_exists("config_test.json"):
-        config = load_json("config_test.json")
-    else:
-        logger.log("config_test.json not found, exiting")
-        return
 
-    models = builds_models(config)
 
-    logger.log("Testing LLM functionality")
-    for model in models:
-        logger.log(f"Running tests on {model.get_model_name()}")
-        llm_tester.set_model(model)
-        llm_tester.run_tests()
-        logger.log(f"{model.get_model_name()} passed")
-    logger.log("Finished testing models")
+
+
+
+
+
+    # This code should be local to TestLLM()
+    # llm_tester = TestLLM()
+
+    # config = None
+    # if json_exists("config_test.json"):
+    #     config = load_json("config_test.json")
+    # else:
+    #     logger.log("config_test.json not found, exiting")
+    #     return
+
+    # models = builds_models(config)
+
+    # logger.log("Testing LLM functionality")
+    # for model in models:
+    #     logger.log(f"Running tests on {model.get_model_name()}")
+    #     llm_tester.set_model(model)
+    #     llm_tester.run_tests()
+    #     logger.log(f"{model.get_model_name()} passed")
+    # logger.log("Finished testing models")
 
 if __name__ == "__main__":
     load_dotenv()

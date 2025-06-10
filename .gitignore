@@ -9,6 +9,7 @@ TODO.md
 output/
 
 config.json
+config_test.json
 
 leaderboard_dataset_revised.csv
 leaderboard_dataset.csv
