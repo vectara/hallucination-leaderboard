@@ -39,10 +39,10 @@ def main(args: argparse.ArgumentParser):
 
     if args.process == "get_summ":
         article_df = pd.read_csv(data_path)
-        get_summaries.run(models, article_df, force=args.force)
+        get_summaries.run(models, article_df, ow=args.overwrite)
     elif args.process == "get_judge":
         article_df = pd.read_csv(data_path)
-        get_judgements.run(models, article_df, force=args.force)
+        get_judgements.run(models, article_df, ow=args.overwrite)
     elif args.process == "combine_hhem":
         print("Combine hhem is removed for now since outdated")
         pass
@@ -51,12 +51,12 @@ def main(args: argparse.ArgumentParser):
         get_results.run(models)
     elif args.process == "get_summ_judge":
         article_df = pd.read_csv(data_path)
-        get_summaries.run(models, article_df, force=args.force)
-        get_judgements.run(models, article_df, force=args.force)
+        get_summaries.run(models, article_df, ow=args.overwrite)
+        get_judgements.run(models, article_df, ow=args.overwrite)
     elif args.process == "get_summ_judge_results":
         article_df = pd.read_csv(data_path)
-        get_summaries.run(models, article_df, force=args.force)
-        get_judgements.run(models, article_df, force=args.force)
+        get_summaries.run(models, article_df, ow=args.overwrite)
+        get_judgements.run(models, article_df, ow=args.overwrite)
         get_results.run(models)
     else:
         print("No program type was specified, exiting program. Run program with --help flag for info")
@@ -100,11 +100,11 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--force",
+        "--overwrite",
         action="store_true",
         help=(
-            "Forces get_summary and/or get_hhem process to regenerate all JSON "
-            "files even if they exist"
+            "Forces get_summ and/or get_judge process to overwrite jsonl if "
+            "it exists"
         )
     )
 

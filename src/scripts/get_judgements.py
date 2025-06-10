@@ -36,7 +36,7 @@ Global Variables
 
 JUDGEMENT_FILE = "judgements.jsonl"
 
-def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
+def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow: bool):
     """
     For the given model lists, checks if they have valid summaries.jsonl then 
     calcs metrics for each summary, builds summary objects, then saves them to jsonl
@@ -49,9 +49,9 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
         None
     """
     logger.log(f"Starting to generate {JUDGEMENT_FILE} scores")
-    if force:
+    if ow:
         logger.log(
-            f"Force flag enabled. Overwriting previous {JUDGEMENT_FILE} data"
+            f"Overwrite flag enabled. Overwriting previous {JUDGEMENT_FILE} data"
         )
 
     hhem_model = HHEM_2_3()
@@ -82,7 +82,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
                 article_summary_df,
                 judgements_jsonl_path,
                 model_name,
-                force
+                ow
             )
         else:
             logger.log(
@@ -97,7 +97,7 @@ def run_metric_save_flow(
         article_summary_df: pd.DataFrame,
         judge_jsonl_path: str,
         model_name: str,
-        force: bool
+        ow: bool
     ):
     """
     Controls logic flow for calculating and saving metrics, only produces 
@@ -112,17 +112,17 @@ def run_metric_save_flow(
         force (bool): flag that forces file to be overwritten even if it exists
     """
 
-    if json_exists(judge_jsonl_path) and not force:
+    if json_exists(judge_jsonl_path) and not ow:
         print((
             f"WARNING: {JUDGEMENT_FILE} file already exists, "
             "if you generated new "
             "summaries you will not have metrics that reflect these "
-            "summaries. Recall with --force to overwrite old data"
+            "summaries. Recall with --overwrite to overwrite old data"
             )
         )
         logger.log(f"{JUDGEMENT_FILE} file exists for {model_name}, skipping")
     else:
-        if not force:
+        if not ow:
             logger.log(f"{JUDGEMENT_FILE} file does not exist, generating...")
         else:
             logger.log(f"Overwriting previous {JUDGEMENT_FILE}...")

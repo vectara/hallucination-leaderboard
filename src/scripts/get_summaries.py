@@ -1,6 +1,5 @@
 from src.logging.Logger import logger
 import pandas as pd
-import inspect
 import os
 from tqdm import tqdm
 from src.utils.json_utils import save_to_jsonl, json_exists
@@ -24,7 +23,7 @@ Global Variables:
 
 SUMMARY_FILE = "summaries.jsonl"
 
-def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
+def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow=False):
     """
     Generates summaries for a given model if the corresponding JSON file does 
     not exist, force flag will overwrite existing JSON file
@@ -39,9 +38,9 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
     """
 
     logger.log(f"Starting to generate {SUMMARY_FILE}")
-    if force:
+    if ow:
         logger.log(
-            f"Force flag enabled. Overwriting previous {SUMMARY_FILE} data"
+            f"Overwrite flag enabled. Overwriting previous {SUMMARY_FILE} data"
         )
 
     for model in tqdm(models, desc="Model Loop"):
@@ -53,11 +52,11 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force=False):
         jsonl_file = f"{SUMMARY_FILE}"
         summaries_jsonl_path = os.path.join(model_out_dir, jsonl_file)
 
-        if json_exists(summaries_jsonl_path) and not force:
+        if json_exists(summaries_jsonl_path) and not ow:
             logger.log(f"{SUMMARY_FILE} file exists for {model_name}, skipping")
             continue
         else:
-            if not force:
+            if not ow:
                 logger.log(f"{SUMMARY_FILE} file does not exist, generating...")
             generate_and_save_summaries(model, article_df, summaries_jsonl_path)
             logger.log(f"Finished generating and saving for {model_name}")
