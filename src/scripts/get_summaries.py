@@ -89,12 +89,12 @@ def generate_and_save_summaries(
     summaries = []
     with model as m: 
         summaries = m.summarize_articles(article_texts)
-    summary_records = create_summary_records(
+    summary_records = build_summary_records(
         summaries, article_ids, model.get_model_name()
     )
     save_to_jsonl(jsonl_path, summary_records)
 
-def create_summary_records(
+def build_summary_records(
         summaries: list[str],
         article_ids: list[int],
         model_name: str
