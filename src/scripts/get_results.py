@@ -15,18 +15,17 @@ from src.scripts.get_judgements import JUDGEMENT_FILE
 
 
 """
-Computes and saves results for list of all models
+Computes and saves statistics for all given models
 
 Functions:
     run(models)
-    generate_and_save_results(df, results_json_path)
+    generate_and_save_results(model_name, judge_jsonl_path, results_json_path)
 """
 RESULTS_FILE = "stats.json"
 
 def run(models: list[AbstractLLM]):
-    #TODO: Update Documentation
     """
-    For all models setup the necessary data needed to compute and save results
+    Verifies judgement file exists then computes and saves final results
 
     Args:
         models (list[AbstractLLM]): list of llms
@@ -42,36 +41,40 @@ def run(models: list[AbstractLLM]):
 
         logger.log(f"Generating results for {model_name}")
 
-        judge_json_path = os.path.join(model_out_dir, JUDGEMENT_FILE)
+        judge_jsonl_path = os.path.join(model_out_dir, JUDGEMENT_FILE)
 
-        if json_exists(judge_json_path):
+        if json_exists(judge_jsonl_path):
             logger.log(f"{JUDGEMENT_FILE} found for {model_name}")
 
             results_json_file = f"{RESULTS_FILE}"
             results_json_path = os.path.join(model_out_dir, results_json_file)
-            generate_and_save_results(judge_json_path, model_name, results_json_path)
+            generate_and_save_results(
+                model_name, judge_jsonl_path, results_json_path
+            )
         else:
             logger.log(
                 f"{JUDGEMENT_FILE} not found for {model_name}, skipping model"
             )
     logger.log("Finished generating and saving results for all models")
 
-def generate_and_save_results(judge_json_path: str, model_name: str, results_json_path: str):
-    #TODO: Update Documentation
+def generate_and_save_results(
+        model_name: str, judge_jsonl_path: str, results_json_path: str
+    ):
     """
-    Loads metrics, computes all stats, formats them, and saves them to disk as JSON file
+    Loads metrics, computes all stats, formats them, and saves as json file
 
     Args:
-        hhem_json_path (str): path to metrics JSON
         model_name (str): name of model
-        results_json_path (str): path to new JSON file
+        judge_jsonl_path (str): path to metrics jsonl
+        results_json_path (str): path to new json file
+
     Returns:
         None
     """
     results = {}
     current_date = datetime.now(timezone.utc).date().isoformat()
 
-    metrics_df = pd.read_json(judge_json_path, lines=True)
+    metrics_df = pd.read_json(judge_jsonl_path, lines=True)
 
     hr = round(compute_hallucination_rate(metrics_df)*100.0, 1)
     ar = round(compute_answer_rate(metrics_df)*100.0, 1)
