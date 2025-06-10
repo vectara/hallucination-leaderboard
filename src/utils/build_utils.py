@@ -1,7 +1,7 @@
 from src.logging.Logger import logger
 from src.LLMs.model_registry import MODEL_REGISTRY
 from src.LLMs.AbstractLLM import AbstractLLM
-from src.data_struct.config_model import ModelConfig, DUMMY_CONFIG
+from src.data_struct.config_model import ModelConfig
 from pydantic import BaseModel, ValidationError
 
 def builds_models(config: list[ModelConfig]) -> list[AbstractLLM]:

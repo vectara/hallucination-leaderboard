@@ -5,7 +5,7 @@ from src.LLMs.AbstractLLM import AbstractLLM
 from src.utils.json_utils import json_exists, save_bm_to_json
 import pandas as pd
 from datetime import datetime, timezone
-from src.data_struct.data_model import Judgement, Stats
+from src.data_struct.data_model import Stats
 from src.metrics.stats import (
     compute_hallucination_rate, compute_answer_rate, compute_avg_summary_length
 )

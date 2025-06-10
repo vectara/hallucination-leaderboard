@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 
 from src.utils.json_utils import json_exists, load_json
 from src.utils.build_utils import builds_models
-import src.LLMs
 """
 Runs program critical tests for functionality 
 
