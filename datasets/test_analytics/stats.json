@@ -1,0 +1,8 @@
+{
+    "timestamp": "2025-06-10",
+    "llm": "dummy-llm",
+    "hallucination_rate": 75.0,
+    "confidence_interval": -1.0,
+    "answer_rate": 80.0,
+    "avg_summary_length": 250.0
+}

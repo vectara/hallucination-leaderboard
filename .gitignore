@@ -6,11 +6,9 @@ __pycache__/
 log.txt
 TODO.md
 
-output
-*.json
+output/
 
-
-test_analytics/
+config.json
 
 leaderboard_dataset_revised.csv
 leaderboard_dataset.csv

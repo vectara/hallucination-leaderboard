@@ -1,0 +1,5 @@
+{"timestamp":"2025-06-10","article_id":1,"hhem_version":"HHEM-2.3","hhem_score":0.9,"valid":true,"summary_words":100}
+{"timestamp":"2025-06-10","article_id":2,"hhem_version":"HHEM-2.3","hhem_score":0.5,"valid":true,"summary_words":200}
+{"timestamp":"2025-06-10","article_id":3,"hhem_version":"HHEM-2.3","hhem_score":0.3,"valid":true,"summary_words":300}
+{"timestamp":"2025-06-10","article_id":4,"hhem_version":"HHEM-2.3","hhem_score":0.98,"valid":false,"summary_words":400}
+{"timestamp":"2025-06-10","article_id":5,"hhem_version":"HHEM-2.3","hhem_score":0.7,"valid":true,"summary_words":400}
