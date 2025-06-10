@@ -138,9 +138,8 @@ def calc_and_save_metrics(
         article_summary_df: pd.DataFrame,
         judge_jsonl_path: str
     ):
-    #TODO: Refactor this function and build metric records
     """
-    Calculates the HHEM score, builds metric records, then saves
+    Calculates all metrics, build metric objects, then saves
 
     Args:
         hhem_model (HHEM_2_3): HHEM model
