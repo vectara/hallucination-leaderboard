@@ -7,7 +7,8 @@ import pandas as pd
 from datetime import datetime, timezone
 from src.data_struct.data_model import Stats
 from src.analytics.stats import (
-    compute_hallucination_rate, compute_answer_rate, compute_avg_summary_length
+    compute_hallucination_rate, compute_answer_rate,
+    compute_avg_summary_length, compute_confidence_interval
 )
 
 from src.scripts.get_judgements import JUDGEMENT_FILE
@@ -75,6 +76,7 @@ def generate_and_save_results(judge_json_path: str, model_name: str, results_jso
     hr = round(compute_hallucination_rate(metrics_df)*100.0, 1)
     ar = round(compute_answer_rate(metrics_df)*100.0, 1)
     asl = round(compute_avg_summary_length(metrics_df), 1)
+    ci = round(compute_confidence_interval(metrics_df)*100.0, 1)
 
 
 
@@ -82,6 +84,7 @@ def generate_and_save_results(judge_json_path: str, model_name: str, results_jso
         timestamp=current_date,
         llm=model_name,
         hallucination_rate=hr,
+        confidence_interval=ci,
         answer_rate=ar,
         avg_summary_length=asl
     )

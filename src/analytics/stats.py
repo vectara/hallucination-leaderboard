@@ -44,6 +44,9 @@ def compute_factual_consistancy_rate(
     factual_consistancy_rate = factual_count/total_count
     return factual_consistancy_rate
 
+def compute_confidence_interval(metrics_df: pd.DataFrame) -> float:
+    return -0.01
+
 def compute_answer_rate(metrics_df: pd.DataFrame) -> float:
     """
     Computes the the rate of valid summaries. is_valid_summary in metrics.py

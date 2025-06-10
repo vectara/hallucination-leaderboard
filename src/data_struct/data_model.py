@@ -71,6 +71,7 @@ class Stats(BaseModel):
     timestamp: str
     llm: str
     hallucination_rate: float
+    confidence_interval: float
     answer_rate: float
     avg_summary_length: float
 
@@ -78,6 +79,7 @@ class Stats(BaseModel):
         TIMESTAMP = "timestamp"
         LLM = "llm"
         HALLUCINATION_RATE = "hallucination_rate"
+        CONFIDENCE_INTERVAL = "confidence_interval"
         ANSWER_RATE = "answer_rate"
         AVG_SUMMARY_LENGTH = "avg_summary_length"
 

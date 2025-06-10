@@ -10,7 +10,7 @@ output
 *.json
 
 
-test_results/
+test_analytics/
 
 leaderboard_dataset_revised.csv
 leaderboard_dataset.csv
