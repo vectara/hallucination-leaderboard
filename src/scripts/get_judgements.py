@@ -18,23 +18,30 @@ from src.scripts.get_summaries import SUMMARY_FILE
 
 #TODO: Documentation Update
 """
-Gets the metrics for all LLMs that have an existing summary JSONL file
+For all LLMs in the input list, check if they have a summary file. If it has a 
+summary file then it will produce a variety of metrics per summary. Most notably
+it produces the HHEM score metric
 
 Functions:
-    run(models)
-    generate_and_save_hhem_scores(hhem_model, df, hhem_json_path)
-    create_hhem_records(article_ids, hhem_scores, hhem_labels)
+    run(models, article_df, force)
+    run_metrics_save_flow(
+        hhem_model, article_summary_df, judge_jsonl_path, model_name, force
+    )
+    calc_and_save_metrics(hhem_model, article_summary_df, judge_jsonl_path)
+    build_metric_records(
+        article_ids, article_summaries, hhem_scores, hhem_version
+    )
+
+Global Variables
+    JUDGEMENT_FILE
 """
 
-# METRICS_FILE_PREFIX = "judgements"
-# OUTPUT_FILE_TYPE = "jsonl"
 JUDGEMENT_FILE = "judgements.jsonl"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
-    #TODO: Documentation Update, style
     """
-    Generates and saves HHEM scores for a given model only if it has its 
-    respective summaries_model.json file
+    For the given model lists, checks if they have valid summaries.jsonl then 
+    calcs metrics for each summary, builds summary objects, then saves them to jsonl
 
     Args:
         models (list[AbstractLLM]): list of LLMs
@@ -63,7 +70,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
         if json_exists(summaries_jsonl_path):
             logger.log(f"{SUMMARY_FILE} found for {model_name}")
             summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
-            article_summaries_df = pd.merge(
+            article_summary_df = pd.merge(
                 article_df, summaries_df,
                 on=Summary.Keys.ARTICLE_ID, how='inner'
             )
@@ -72,9 +79,9 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
             judgements_jsonl_path = os.path.join(
                 model_out_dir, judgements_jsonl_file
             )
-            run_generation_save_flow(
+            run_metric_save_flow(
                 hhem_model,
-                article_summaries_df,
+                article_summary_df,
                 judgements_jsonl_path,
                 model_name,
                 force
@@ -87,29 +94,30 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, force: bool):
         f"Finished generating and saving {JUDGEMENT_FILE} for all models"
     )
 
-def run_generation_save_flow(
+def run_metric_save_flow(
         hhem_model: HHEM_2_3,
-        df: pd.DataFrame,
+        article_summary_df: pd.DataFrame,
         judge_jsonl_path: str,
         model_name: str,
         force: bool
     ):
-    #TODO: Documentation Update
     """
-    Controls logic flow for generating and saving HHEM scores depending on
-    force tag and whether JSON files exist
+    Controls logic flow for calculating and saving metrics, only produces 
+    metrics if a judgments.jsonl file dos not exists unless force flag enabled.
 
     Args:
         hhem_model (HHEM_2_3): hhem model
-        df (pd.DataFrame): data containing source articles and summaries aligned
-        hhem_json_path (str): path for new or possibly existing JSON file
+        article_summary_df (pd.DataFrame): data containing source articles and 
+            summaries aligned
+        judge_jsonl_path (str): path for new or possibly existing jsonl file
         model_name (str): name of model that generated the summaries
         force (bool): flag that forces file to be overwritten even if it exists
     """
 
     if json_exists(judge_jsonl_path) and not force:
         print((
-            f"WARNING: {JUDGEMENT_FILE} file already exists, if you generated new "
+            f"WARNING: {JUDGEMENT_FILE} file already exists, "
+            "if you generated new "
             "summaries you will not have metrics that reflect these "
             "summaries. Recall with --force to overwrite old data"
             )
@@ -120,31 +128,33 @@ def run_generation_save_flow(
             logger.log(f"{JUDGEMENT_FILE} file does not exist, generating...")
         else:
             logger.log(f"Overwriting previous {JUDGEMENT_FILE}...")
-        generate_and_save_metrics(
-            hhem_model, df, judge_jsonl_path
+        calc_and_save_metrics(
+            hhem_model, article_summary_df, judge_jsonl_path
         )
         logger.log(f"Finished generating and saving {JUDGEMENT_FILE}")
         logger.log("Moving on to next model")
 
 
-def generate_and_save_metrics(
-        hhem_model: HHEM_2_3, df: pd.DataFrame, judge_jsonl_path: str
+def calc_and_save_metrics(
+        hhem_model: HHEM_2_3,
+        article_summary_df: pd.DataFrame,
+        judge_jsonl_path: str
     ):
-    #TODO: Documentation Update
+    #TODO: Refactor this function and build metric records
     """
-    For a given models output, request the HHEM model to predict the scores and
-    save them in a JSON file
+    Calculates the HHEM score, builds metric records, then saves
 
     Args:
         hhem_model (HHEM_2_3): HHEM model
-        df (DataFrame): contains article and summaries merged on article_id
-        judge_jsonl_path (str): path to new JSON file
+        article_summary_df (DataFrame): contains article and summaries merged 
+            on article_id
+        judge_jsonl_path (str): path to new jsonl file
     Returns:
         None
     """
-    article_texts = df[SourceArticle.Keys.TEXT].tolist()
-    article_summaries = df[Summary.Keys.SUMMARY].tolist()
-    article_ids = df[Summary.Keys.ARTICLE_ID].tolist()
+    article_texts = article_summary_df[SourceArticle.Keys.TEXT].tolist()
+    article_summaries = article_summary_df[Summary.Keys.SUMMARY].tolist()
+    article_ids = article_summary_df[Summary.Keys.ARTICLE_ID].tolist()
 
     hhem_scores = []
     hhem_labels = []
@@ -153,41 +163,30 @@ def generate_and_save_metrics(
         hhem_out = hhem_model.predict(*input)
         hhem_scores.append(hhem_out.score)
         hhem_labels.append(hhem_out.label)
-    metric_records = create_metric_records(
-        article_ids, article_summaries, hhem_scores, hhem_labels, hhem_model.__str__()
+    metric_records = build_metric_records(
+        article_ids, article_summaries, hhem_scores, hhem_model.__str__()
     )
     save_to_jsonl(judge_jsonl_path, metric_records)
 
-def create_metric_records(
+def build_metric_records(
         article_ids: list[int], article_summaries: list[str],
-        hhem_scores: list[float], hhem_labels: list[Literal[0,1]],
-        hhem_version: str
-    ):
-    #TODO: Update Documetation
+        hhem_scores: list[float], hhem_version: str
+    ) -> list[Judgement]:
+    #TODO: Refactor this faction and calc and save metrics
     """
-    Creates the HHEM score records for a given article_id
-
-    Current JSON format, *Format may not align with code in future, check code*
-    {
-        'article_id': int
-        'hhem_score': float
-        'hhem_label': Literal[0,1]
-        'summary_length': int
-        'valid_summary': bool
-    }
+    For each entry calculates some extra metrics then builds a Judgement object.
 
     Args:
         article_ids (list[int]):
         article_summaries (list[str])
         hhem_scores (list[float]):
-        hhem_labels (list[Literal[0,1]]):
         hhem_model_name (str):
     Returns:
-        list[dict]: hhem score records in JSON format
+        list[Judgement]: list of Judgement objects
     """
     metric_records = []
     current_date = datetime.now(timezone.utc).date().isoformat()
-    for a_id, summ, hhem_s, hhem_l in zip(article_ids, article_summaries, hhem_scores, hhem_labels):
+    for a_id, summ, hhem_s in zip(article_ids, article_summaries, hhem_scores):
         summary_length = len(summ.split())
         valid_summary = is_valid_summary(summ)
         metric_record = Judgement(
