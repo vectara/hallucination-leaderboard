@@ -178,50 +178,5 @@ def calc_and_save_metrics(
 
     save_to_jsonl(judge_jsonl_path, metric_records)
 
-    # hhem_scores = []
-    # hhem_labels = []
-    # for premise, hypothesis in tqdm(zip(article_texts, article_summaries), total=len(article_texts), desc="HHEM Loop"):
-    #     input = (premise, hypothesis)
-    #     hhem_out = hhem_model.predict(*input)
-    #     hhem_scores.append(hhem_out.score)
-    #     hhem_labels.append(hhem_out.label)
-    # metric_records = build_metric_records(
-    #     article_ids, article_summaries, hhem_scores, hhem_model.__str__()
-    # )
-
-# UNUSED FUNCTION ATM
-def build_metric_records(
-        article_ids: list[int], article_summaries: list[str],
-        hhem_scores: list[float], hhem_version: str
-    ) -> list[Judgement]:
-    #TODO: Refactor this faction and calc and save metrics
-    """
-    For each entry calculates some extra metrics then builds a Judgement object.
-
-    Args:
-        article_ids (list[int]):
-        article_summaries (list[str])
-        hhem_scores (list[float]):
-        hhem_model_name (str):
-    Returns:
-        list[Judgement]: list of Judgement objects
-    """
-    metric_records = []
-    current_date = datetime.now(timezone.utc).date().isoformat()
-    for a_id, summ, hhem_s in zip(article_ids, article_summaries, hhem_scores):
-        summary_length = len(summ.split())
-        valid_summary = is_valid_summary(summ)
-        metric_record = Judgement(
-            timestamp = current_date,
-            article_id = a_id,
-            hhem_version = hhem_version,
-            hhem_score = hhem_s,
-            valid=valid_summary,
-            summary_words=summary_length
-        )
-        metric_records.append(metric_record)
-
-    return metric_records
-
 if __name__ == "__main__":
     pass
