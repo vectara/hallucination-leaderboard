@@ -39,7 +39,7 @@ def builds_models(config: list[ModelConfig]) -> list[AbstractLLM]:
 
     return models
 
-def convert_raw_config(raw_model_configs):
+def process_raw_config(raw_model_configs):
     #TODO: Doc
     model_configs = []
     for i, raw_model_config in enumerate(raw_model_configs):

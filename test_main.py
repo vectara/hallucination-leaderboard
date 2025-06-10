@@ -1,11 +1,8 @@
 from src.logging.Logger import logger
+from src.tests.AbstractTest import AbstractTest
 from src.tests.TestLLM import TestLLM
 from src.tests.TestAnalytics import TestAnalytics
 from dotenv import load_dotenv
-
-
-from src.utils.json_utils import json_exists, load_json
-from src.utils.build_utils import builds_models
 """
 Runs program critical tests for functionality 
 
@@ -24,10 +21,11 @@ def run_tests():
         None
     """
     logger.log("Running Tests...")
-    test_models()
+    tests = [TestAnalytics(), TestLLM()]
+    test_models(tests)
     logger.log("Tests Completed")
 
-def test_models():
+def test_models(tests: list[AbstractTest]):
     """
     Tests model objects for critical functionality. New objects need to be added
     here as they are added to the program.
@@ -37,36 +35,10 @@ def test_models():
     Returns:
         None
     """
-    tests = [TestAnalytics()]
     for test in tests:
+        logger.log(f"Running {test.__str__()}")
         test.run_tests()
-
-
-
-
-
-
-
-
-    # This code should be local to TestLLM()
-    # llm_tester = TestLLM()
-
-    # config = None
-    # if json_exists("config_test.json"):
-    #     config = load_json("config_test.json")
-    # else:
-    #     logger.log("config_test.json not found, exiting")
-    #     return
-
-    # models = builds_models(config)
-
-    # logger.log("Testing LLM functionality")
-    # for model in models:
-    #     logger.log(f"Running tests on {model.get_model_name()}")
-    #     llm_tester.set_model(model)
-    #     llm_tester.run_tests()
-    #     logger.log(f"{model.get_model_name()} passed")
-    # logger.log("Finished testing models")
+        logger.log(f"Finished Running {test.__str__()}")
 
 if __name__ == "__main__":
     load_dotenv()

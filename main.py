@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import pandas as pd
 import argparse
 from src.utils.json_utils import load_json, json_exists
-from src.utils.build_utils import builds_models, convert_raw_config
+from src.utils.build_utils import builds_models, process_raw_config
 from src.config import TEST_DATA_PATH, LB_DATA_PATH
 
 
@@ -30,7 +30,7 @@ def main(args: argparse.ArgumentParser):
     valid_model_configs = None
     if json_exists("config.json"):
         raw_model_configs = load_json("config.json")
-        valid_model_configs = convert_raw_config(raw_model_configs)
+        valid_model_configs = process_raw_config(raw_model_configs)
     else:
         logger.log("No Config file was found, exiting")
         return

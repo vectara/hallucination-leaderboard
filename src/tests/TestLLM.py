@@ -1,5 +1,9 @@
 from src.tests.AbstractTest import AbstractTest
 from src.LLMs.AbstractLLM import AbstractLLM
+from src.config import TEST_DATA_PATH
+from src.utils.json_utils import load_json, json_exists
+from src.utils.build_utils import builds_models, process_raw_config
+from src.logging.Logger import logger
 import os
 import csv
 
@@ -19,13 +23,16 @@ class TestLLM(AbstractTest):
     """
     def __init__(self):
         super().__init__()
-        data_path = os.getenv("TEST_DATA")
         self.sample_article = None
-        with open(data_path) as csvfile:
+        with open(TEST_DATA_PATH) as csvfile:
             reader = csv.DictReader(csvfile)
             first_row = next(reader)
             self.sample_article = first_row["text"]
         self.model = None
+        self.config_path = "test_config.json"
+
+    def __str__(self):
+        return "TestLLM"
 
     def run_tests(self):
         """
@@ -38,7 +45,24 @@ class TestLLM(AbstractTest):
         Returns:
             None
         """
-        self.test_summarize(self.sample_article)
+        valid_config = None
+        if json_exists(self.config_path):
+            raw_config = load_json(self.config_path)
+            valid_config = process_raw_config(raw_config)
+        else:
+            logger.log(f"{self.config_path} not found, exiting")
+            print(f"WARNING: {self.config_path} not found, cannot perform LLM tests without it.")
+            return
+
+        models = builds_models(valid_config)
+
+        logger.log("Testing LLM functionality")
+        for model in models:
+            logger.log(f"Running tests on {model.get_model_name()}")
+            self.set_model(model)
+            self.test_summarize(self.sample_article)
+            logger.log(f"{model.get_model_name()} passed")
+        logger.log("Finished testing models")
 
     def test_summarize(self, test_article: str):
         """
@@ -50,7 +74,8 @@ class TestLLM(AbstractTest):
         Returns:
             None
         """
-        msg = self.model.summarize(test_article)
+        with self.model as m: 
+            msg = self.model.summarize(test_article)
         assert type(msg) == str
 
     def set_model(self, model: AbstractLLM):
@@ -64,4 +89,3 @@ class TestLLM(AbstractTest):
             None
         """
         self.model = model
-

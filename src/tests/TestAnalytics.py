@@ -14,8 +14,10 @@ class TestAnalytics(AbstractTest):
         self.summaries_df = pd.read_json(TEST_SUMMARIES_DATA, lines=True)
         self.metrics_df = pd.read_json(TEST_JUDGEMENTS_DATA, lines=True)
         self.stat_answers = Stats.model_validate(load_json(TEST_RESULTS_DATA))
-        
 
+    def __str__(self):
+        return "TestAnalytics"
+        
     def run_tests(self):
         self.test_valid_summary()
         self.test_hallucination_rate()
