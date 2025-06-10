@@ -13,7 +13,6 @@ from src.analytics.stats import (
 
 from src.scripts.get_judgements import JUDGEMENT_FILE
 
-
 """
 Computes and saves statistics for all given models
 
@@ -84,8 +83,6 @@ def generate_and_save_results(
     ar = round(compute_answer_rate(metrics_df)*100.0, 1)
     asl = round(compute_avg_summary_length(metrics_df), 1)
     ci = round(compute_confidence_interval(metrics_df)*100.0, 1)
-
-
 
     results = Stats(
         timestamp=current_date,
