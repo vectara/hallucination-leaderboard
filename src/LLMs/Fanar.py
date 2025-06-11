@@ -20,10 +20,13 @@ class Fanar(AbstractLLM):
             base_url="https://api.fanar.qa/v1",
             api_key=api_key
         )
+        self.model = f"{model_name}"
+        if date_code is not None and date_code != "":
+            self.model = f"{model_name}-{date_code}"
 
     def summarize(self, prepared_text: str) -> str:
         chat_package = self.client.chat.completions.create(
-            model=self.model_name,
+            model=self.model,
             temperature=self.temperature,
             messages=[{"role": "user", "content":prepared_text}]
         )
