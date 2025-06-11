@@ -28,7 +28,7 @@ class MistralAI(AbstractLLM):
             chat_package = self.client.chat.complete(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
-                max_tokens=self.max_tokens,
+                max_tokens=1024, #Mistral seems to like to use all tokens possible
                 temperature=self.temperature
             )
             raw_summary = chat_package.choices[0].message.content
