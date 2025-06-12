@@ -13,16 +13,14 @@ class Fanar(AbstractLLM):
         client (OpenAI): client associated with api calls
     """
 
-    def __init__(self, model_name, date_code=None):
+    def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="Fanar")
         api_key = os.getenv("FANAR_API_KEY")
         self.client = OpenAI(
             base_url="https://api.fanar.qa/v1",
             api_key=api_key
         )
-        self.model = f"{model_name}"
-        if date_code is not None and date_code != "":
-            self.model = f"{model_name}-{date_code}"
+        self.model = self.setup_model_identifier(model_name, date_code)
 
     def summarize(self, prepared_text: str) -> str:
         chat_package = self.client.chat.completions.create(

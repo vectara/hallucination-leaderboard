@@ -331,6 +331,14 @@ class AbstractLLM(ABC):
         """
         return self.model_output_dir
 
+    def setup_model_identifier(self, model_name: str, date_code: str) -> str:
+        #TODO: Doc
+        model = f"{model_name}"
+        if date_code != "":
+            model = f"{model_name}-{date_code}"
+        return model
+
+
 
     @abstractmethod
     def summarize(self, prepared_text: str) -> str:

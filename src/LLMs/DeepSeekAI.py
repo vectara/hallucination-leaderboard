@@ -14,11 +14,10 @@ class DeepSeekAI(AbstractLLM):
         min_throttle_time (int): minimum time require per request to avoid
             throttling with huggingface pro
     """
-    def __init__(self, model_name, date_code=None):
+    def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="deepseek-ai", min_throttle_time=4)
-        self.model= f"{self.company}/{self.model_name}"
-        if date_code is not None and date_code != "":
-            self.model = f"{self.company}/{model_name}-{date_code}"
+        company_model= f"{self.company}/{self.model_name}"
+        self.model = self.setup_model_identifier(company_model, date_code)
         self.client = InferenceClient(model=self.model)
 
     def summarize(self, prepared_text: str) -> str:
