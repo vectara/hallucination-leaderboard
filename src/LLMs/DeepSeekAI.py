@@ -28,8 +28,7 @@ class DeepSeekAI(AbstractLLM):
         if self.model in self.ds1:
             messages = [{"role": "user", "content":prepared_text}]
             client_package = self.client.chat_completion(messages, temperature=self.temperature)
-            raw_summary = client_package.choices[0].message.content
-            summary = self.remove_thinking_text(raw_summary)
+            summary = client_package.choices[0].message.content
         return summary
 
     def setup(self):

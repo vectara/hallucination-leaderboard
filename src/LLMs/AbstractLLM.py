@@ -223,7 +223,8 @@ class AbstractLLM(ABC):
         """
         summaries = []
         for article in tqdm(articles, desc="Article Loop"):
-            summary = self.try_to_summarize_one_article(article)
+            raw_summary = self.try_to_summarize_one_article(article)
+            summary = self.clean_raw_summary(raw_summary)
             summaries.append(summary)
         return summaries
 
@@ -240,7 +241,7 @@ class AbstractLLM(ABC):
             str: Summary of article or dummy string output
         
         """
-        llm_summary = None
+        llm_summary = EMPTY_SUMMARY
 
         try:
             llm_summary = self.summarize_one_article(article)
@@ -297,6 +298,11 @@ class AbstractLLM(ABC):
         """
         prepared_text = f"{self.prompt} '{article}'"
         return prepared_text
+
+    def clean_raw_summary(self, raw_summary):
+        #TODO: Doc
+        summary = self.remove_thinking_text(raw_summary)
+        return summary
 
     def get_model_name(self):
         """

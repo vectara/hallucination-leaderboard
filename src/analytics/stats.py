@@ -24,6 +24,7 @@ def compute_hallucination_rate(
 def compute_factual_consistancy_rate(
         metrics_df: pd.DataFrame, threshold=0.5
     ) -> float:
+    #TODO: Doc
     """
     Computes factual consistancy rate with default threshold of 0.5
 
@@ -51,6 +52,7 @@ def compute_confidence_interval(metrics_df: pd.DataFrame) -> float:
     return -0.01
 
 def compute_answer_rate(metrics_df: pd.DataFrame) -> float:
+    #TODO: Doc
     """
     Computes the the rate of valid summaries. is_valid_summary in metrics.py
     for definition of a valid summary.
@@ -67,6 +69,7 @@ def compute_answer_rate(metrics_df: pd.DataFrame) -> float:
     return answer_rate
 
 def compute_avg_summary_length(metrics_df: pd.DataFrame) -> float:
+    #TODO: Doc
     """
     Computes average summary length
 
