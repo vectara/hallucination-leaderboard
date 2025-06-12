@@ -36,7 +36,10 @@ def compute_factual_consistancy_rate(
     """
 
     valid_summs_df = metrics_df[metrics_df[Judgement.Keys.VALID]]
+    if valid_summs_df.empty:
+        return 0.0
     total_count = valid_summs_df.shape[0]
+
     factual_count = 0
     for score in valid_summs_df[Judgement.Keys.HHEM_SCORE].tolist():
         if score >= threshold:
@@ -58,7 +61,8 @@ def compute_answer_rate(metrics_df: pd.DataFrame) -> float:
     Returns:
         float: answer rate
     """
-
+    if metrics_df[Judgement.Keys.VALID].empty:
+        return 0.0
     answer_rate = metrics_df[Judgement.Keys.VALID].mean()
     return answer_rate
 
@@ -74,5 +78,7 @@ def compute_avg_summary_length(metrics_df: pd.DataFrame) -> float:
     """
 
     valid_summs_df = metrics_df[metrics_df[Judgement.Keys.VALID]]
+    if valid_summs_df.empty:
+        return 0.0
     avg_summary_length = valid_summs_df[Judgement.Keys.SUMMARY_WORDS].mean()
     return avg_summary_length
