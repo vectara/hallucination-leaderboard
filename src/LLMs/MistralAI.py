@@ -30,7 +30,7 @@ class MistralAI(AbstractLLM):
                 temperature=self.temperature
             )
             raw_summary = chat_package.choices[0].message.content
-            summary = re.sub(r"<think>.*?</think>\n*", "", raw_summary, flags=re.DOTALL)
+            summary = self.remove_thinking_text(raw_summary)
         return summary
 
     def setup(self):

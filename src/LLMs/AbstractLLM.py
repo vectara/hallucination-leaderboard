@@ -147,12 +147,14 @@ from tqdm import tqdm
 from src.config import OUTPUT_DIR
 import os
 import time
+import re
 
 MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
 MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
 
 
 class AbstractLLM(ABC):
+    #TODO: Update Doc
     """
     Abstract Class
 
@@ -338,7 +340,13 @@ class AbstractLLM(ABC):
             model = f"{model_name}-{date_code}"
         return model
 
-
+    def remove_thinking_text(self, raw_summary: str) -> str:
+        #TODO: Doc
+        summary = re.sub(
+            r'<think>.*?</think>\s*', '',
+            raw_summary, flags=re.DOTALL
+        )
+        return summary
 
     @abstractmethod
     def summarize(self, prepared_text: str) -> str:
