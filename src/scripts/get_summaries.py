@@ -90,6 +90,7 @@ def generate_and_save_summaries(
     article_texts = article_df[SourceArticle.Keys.TEXT].tolist()
     article_ids = article_df[SourceArticle.Keys.ARTICLE_ID].tolist()
 
+    logger.log("Appending to jsonl file")
     with model as m: 
         for article, a_id in tqdm(
             zip(article_texts, article_ids),

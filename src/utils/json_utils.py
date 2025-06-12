@@ -42,7 +42,6 @@ def append_record_to_jsonl(jsonl_path: str, record: BaseModel):
     # TODO: Documentation
     """
     """
-    logger.log("Appending to jsonl file")
     with open(jsonl_path, "a") as f:
         f.write(record.model_dump_json() + "\n")
 
