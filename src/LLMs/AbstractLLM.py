@@ -223,10 +223,15 @@ class AbstractLLM(ABC):
         """
         summaries = []
         for article in tqdm(articles, desc="Article Loop"):
-            raw_summary = self.try_to_summarize_one_article(article)
-            summary = self.clean_raw_summary(raw_summary)
+            summary = self.summarize_article(article)
             summaries.append(summary)
         return summaries
+
+    def summarize_article(self, article: str) -> str:
+        #TODO: Documentation
+        raw_summary = self.try_to_summarize_one_article(article)
+        summary = self.clean_raw_summary(raw_summary)
+        return summary
 
     def try_to_summarize_one_article(self, article: str) -> str:
         """

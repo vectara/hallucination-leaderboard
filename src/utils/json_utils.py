@@ -38,11 +38,13 @@ def save_to_jsonl(jsonl_path: str, records: list[BaseModel]):
     logger.log("JSONL file saved")
 
 
-def append_to_jsonl(json_path: str, records: list[dict]):
+def append_record_to_jsonl(jsonl_path: str, record: BaseModel):
     # TODO: Documentation
     """
     """
-    pass
+    logger.log("Appending to jsonl file")
+    with open(jsonl_path, "a") as f:
+        f.write(record.model_dump_json() + "\n")
 
 def save_bm_to_json(json_path: str, record: BaseModel):
     """

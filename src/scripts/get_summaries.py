@@ -2,7 +2,7 @@ from src.logging.Logger import logger
 import pandas as pd
 import os
 from tqdm import tqdm
-from src.utils.json_utils import save_to_jsonl, json_exists
+from src.utils.json_utils import save_to_jsonl, json_exists, append_record_to_jsonl
 from datetime import datetime, timezone
 from src.data_struct.data_model import Summary, SourceArticle
 
@@ -24,6 +24,7 @@ Global Variables:
 SUMMARY_FILE = "summaries.jsonl"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow=False):
+    #TODO: Doc
     """
     Generates summaries for a given model if the corresponding JSON file does 
     not exist, force flag will overwrite existing JSON file
@@ -40,7 +41,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow=False):
     logger.log(f"Starting to generate {SUMMARY_FILE}")
     if ow:
         logger.log(
-            f"Overwrite flag enabled. Overwriting previous {SUMMARY_FILE} data"
+            f"Overwrite flag enabled"
         )
 
     for model in tqdm(models, desc="Model Loop"):
@@ -52,20 +53,60 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow=False):
         jsonl_file = f"{SUMMARY_FILE}"
         summaries_jsonl_path = os.path.join(model_out_dir, jsonl_file)
 
-        if json_exists(summaries_jsonl_path) and not ow:
-            logger.log(f"{SUMMARY_FILE} file exists for {model_name}, skipping")
-            continue
+        if not json_exists(summaries_jsonl_path):
+            logger.log(f"{SUMMARY_FILE} file does not exist, generating...")
+            open(summaries_jsonl_path, 'w').close()
+        elif json_exists(summaries_jsonl_path) and ow:
+            logger.log(f"Overwriting previous data in {SUMMARY_FILE}")
+            open(summaries_jsonl_path, 'w').close()
         else:
-            if not ow:
-                logger.log(f"{SUMMARY_FILE} file does not exist, generating...")
-            generate_and_save_summaries(model, article_df, summaries_jsonl_path)
-            logger.log(f"Finished generating and saving for {model_name}")
+            logger.log(f"Adding additional data to {SUMMARY_FILE}")
+
+        generate_and_save_summaries(model, article_df, summaries_jsonl_path)
+        logger.log(f"Finished generating and saving for {model_name}")
         
         logger.log("Moving on to next model")
     
     logger.log(f"Finished generating and saving {SUMMARY_FILE} for all models")
 
 def generate_and_save_summaries(
+        model: AbstractLLM,
+        article_df: pd.DataFrame,
+        jsonl_path: str
+    ):
+    #TODO: Doc
+    """
+
+    Args:
+        model (AbstractLLM): LLM model
+        article_df (pd.DataFrame): Article data
+        json_path (str): path for the new jsonl file
+
+    Returns:
+        None
+    """
+
+    current_date = datetime.now(timezone.utc).date().isoformat()
+    article_texts = article_df[SourceArticle.Keys.TEXT].tolist()
+    article_ids = article_df[SourceArticle.Keys.ARTICLE_ID].tolist()
+
+    with model as m: 
+        for article, a_id in tqdm(
+            zip(article_texts, article_ids),
+            total=len(article_texts),
+            desc="Article Loop"
+        ):
+            summary = m.summarize_article(article)
+            record = Summary(
+                timestamp=current_date,
+                llm=model.get_model_name(),
+                article_id=a_id,
+                summary=summary
+            )
+            append_record_to_jsonl(jsonl_path, record)
+            
+# Unused Function
+def generate_then_save_summaries(
         model: AbstractLLM,
         article_df: pd.DataFrame,
         jsonl_path: str
@@ -93,6 +134,7 @@ def generate_and_save_summaries(
     )
     save_to_jsonl(jsonl_path, summary_records)
 
+# Unused Function
 def build_summary_records(
         summaries: list[str],
         article_ids: list[int],
