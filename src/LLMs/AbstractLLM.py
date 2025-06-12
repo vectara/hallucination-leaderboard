@@ -151,6 +151,7 @@ import re
 
 MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
 MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
+EMPTY_SUMMARY = "THIS SUMMARY IS EMPTY, THIS IS THE DEFAULT VALUE A SUMMARY VARIABLE GETS. A REAL SUMMARY WAS NOT ASSIGNED TO THIS VARIABLE."
 
 
 class AbstractLLM(ABC):
@@ -183,7 +184,7 @@ class AbstractLLM(ABC):
         get_model_out_dir(): get the output directory dedicated for this model
     """
     def __init__(self, model_name: str, company="NullCompany", min_throttle_time=0):
-        self.max_tokens = 4096
+        self.max_tokens = 1024
         self.temperature = 0.0
         self.min_throttle_time = min_throttle_time
         self.company = company

@@ -1,4 +1,4 @@
-from src.LLMs.AbstractLLM import AbstractLLM
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 from src.LLMs.model_registry import register_model
 from mistralai import Mistral
 import os
@@ -12,7 +12,8 @@ class MistralAI(AbstractLLM):
     Class for models from MistralAI
     
     """
-    m1 = ["magistral-medium"]
+    mist_local = []
+    mist1 = ["magistral-medium"]
 
     def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="mistralai")
@@ -21,12 +22,12 @@ class MistralAI(AbstractLLM):
         self.client = Mistral(api_key=api_key)
 
     def summarize(self, prepared_text: str) -> str:
-        summary = None
-        if self.model_name in self.m1:
+        summary = EMPTY_SUMMARY
+        if self.model_name in self.mist1:
             chat_package = self.client.chat.complete(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
-                max_tokens=1024, #Mistral seems to like to use all tokens possible
+                max_tokens=self.max_tokens,
                 temperature=self.temperature
             )
             raw_summary = chat_package.choices[0].message.content
@@ -34,7 +35,13 @@ class MistralAI(AbstractLLM):
         return summary
 
     def setup(self):
-        pass
+        if self.model_name in self.mist_local:
+            pass
+        else:
+            pass
 
     def teardown(self):
-        pass
+        if self.model_name in self.mist_local:
+            pass
+        else:
+            pass

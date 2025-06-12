@@ -1,7 +1,7 @@
 import os
 from google import genai
 from google.genai import types
-from src.LLMs.AbstractLLM import AbstractLLM
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 from src.LLMs.model_registry import register_model
 
 @register_model("google")
@@ -12,7 +12,8 @@ class Google(AbstractLLM):
 
     Attributes:
     """
-
+    g_local = []
+    g1 = ["gemini-2.5-pro-preview"] #low token size makes this model fail to work
 
 
     def __init__(self, model_name, date_code=""):
@@ -22,20 +23,27 @@ class Google(AbstractLLM):
         self.model = self.setup_model_identifier(model_name, date_code)
 
     def summarize(self, prepared_text: str) -> str:
-        summary = None
-        response = self.client.models.generate_content(
-            model = self.model,
-            contents=prepared_text,
-            config=types.GenerateContentConfig(
-                max_output_tokens = self.max_tokens,
-                temperature = self.temperature
+        summary = EMPTY_SUMMARY
+        if self.model_name in self.g1:
+            response = self.client.models.generate_content(
+                model = self.model,
+                contents=prepared_text,
+                config=types.GenerateContentConfig(
+                    max_output_tokens = 4096,
+                    temperature = self.temperature
+                )
             )
-        )
-        summary = response.text
+            summary = response.text
         return summary
 
     def setup(self):
-        pass
+        if self.model_name in self.g_local:
+            pass
+        else:
+            pass
 
     def teardown(self):
-        pass
+        if self.model_name in self.g_local:
+            pass
+        else:
+            pass

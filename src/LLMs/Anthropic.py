@@ -1,4 +1,4 @@
-from src.LLMs.AbstractLLM import AbstractLLM
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 import os
 import anthropic
 from src.LLMs.model_registry import register_model
@@ -16,8 +16,8 @@ class Anthropic(AbstractLLM):
         client (Client): client associated with api calls with anthropic
         model (str): anthropic style model name
     """
-
-    claude_4 = ["claude-4-opus", "claude-4-sonnet"]
+    anth_local = []
+    anth1 = ["claude-4-opus", "claude-4-sonnet"]
     def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="anthropic")
         api_key = os.getenv("ANTHROPIC_API_KEY")
@@ -25,8 +25,8 @@ class Anthropic(AbstractLLM):
         self.model = self.setup_model_identifier(model_name, date_code)
 
     def summarize(self, prepared_text: str) -> str:
-        summary = None
-        if self.model_name in self.claude_4:
+        summary = EMPTY_SUMMARY
+        if self.model_name in self.anth1:
             chat_package = self.client.messages.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
@@ -37,7 +37,13 @@ class Anthropic(AbstractLLM):
         return summary
 
     def setup(self):
-        pass
+        if self.model_name in self.anth_local:
+            pass
+        else:
+            pass
 
     def teardown(self):
-        pass
+        if self.model_name in self.anth_local:
+            pass
+        else:
+            pass

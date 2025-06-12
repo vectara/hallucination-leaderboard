@@ -1,5 +1,7 @@
 from src.LLMs.AbstractLLM import (
-    MODEL_RETURNED_NON_STRING_TYPE_OUTPUT, MODEL_FAILED_TO_RETURN_OUTPUT
+    MODEL_RETURNED_NON_STRING_TYPE_OUTPUT,
+    MODEL_FAILED_TO_RETURN_OUTPUT,
+    EMPTY_SUMMARY
 )
 
 
@@ -36,7 +38,8 @@ def has_error_output(summary: str) -> bool:
 
     if (
         summary == MODEL_FAILED_TO_RETURN_OUTPUT or
-        summary == MODEL_RETURNED_NON_STRING_TYPE_OUTPUT
+        summary == MODEL_RETURNED_NON_STRING_TYPE_OUTPUT or
+        summary == EMPTY_SUMMARY
     ):
         return True
     else:

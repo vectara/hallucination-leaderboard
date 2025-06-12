@@ -1,4 +1,4 @@
-from src.LLMs.AbstractLLM import AbstractLLM
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 import os
 from openai import OpenAI
 from src.LLMs.model_registry import register_model
@@ -17,6 +17,7 @@ class OpenAi(AbstractLLM):
         model (str): exact model name expected by OpenAI
     """
 
+    open_local = []
     open1 = ["gpt-4.1"]
     open2 = ["o3"] # o3 doesnt support temperature of 0.0
     open3 = ["o3-pro"] # o3-pro doesnt support chatting, also doesnt suppor temp
@@ -27,7 +28,7 @@ class OpenAi(AbstractLLM):
         self.client = OpenAI(api_key=api_key)
 
     def summarize(self, prepared_text: str) -> str:
-        summary = None
+        summary = EMPTY_SUMMARY
         if self.model_name in self.open1:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
@@ -54,7 +55,13 @@ class OpenAi(AbstractLLM):
         return summary
 
     def setup(self):
-        pass
+        if self.model_name in self.open_local:
+            pass
+        else:
+            pass
 
     def teardown(self):
-        pass
+        if self.model_name in self.open_local:
+            pass
+        else:
+            pass

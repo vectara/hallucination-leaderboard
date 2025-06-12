@@ -1,4 +1,4 @@
-from src.LLMs.AbstractLLM import AbstractLLM
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 from openai import OpenAI
 import os
 
@@ -12,6 +12,8 @@ class Fanar(AbstractLLM):
     Attributes:
         client (OpenAI): client associated with api calls
     """
+    fan_local = []
+    fan = ["Fanar"]
 
     def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="Fanar")
@@ -23,16 +25,24 @@ class Fanar(AbstractLLM):
         self.model = self.setup_model_identifier(model_name, date_code)
 
     def summarize(self, prepared_text: str) -> str:
-        chat_package = self.client.chat.completions.create(
-            model=self.model,
-            temperature=self.temperature,
-            messages=[{"role": "user", "content":prepared_text}]
-        )
-        summary = chat_package.choices[0].message.content
+        summary = EMPTY_SUMMARY
+        if self.model in self.fan:
+            chat_package = self.client.chat.completions.create(
+                model=self.model,
+                temperature=self.temperature,
+                messages=[{"role": "user", "content":prepared_text}]
+            )
+            summary = chat_package.choices[0].message.content
         return summary
 
     def setup(self):
-        pass
+        if self.model_name in self.fan_local:
+            pass
+        else:
+            pass
 
     def teardown(self):
-        pass
+        if self.model_name in self.fan_local:
+            pass
+        else:
+            pass
