@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime, timezone
 import os
 from tqdm import tqdm
-from src.utils.json_utils import save_to_jsonl, json_exists
+from src.utils.json_utils import json_exists, append_record_to_jsonl
 from src.analytics.metrics import is_valid_summary
 from src.data_struct.data_model import Judgement, Summary, SourceArticle
 
@@ -36,7 +36,8 @@ Global Variables
 
 JUDGEMENT_FILE = "judgements.jsonl"
 
-def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow: bool):
+def run(models: list[AbstractLLM], article_df: pd.DataFrame):
+    #TODO: Doc
     """
     For the given model lists, checks if they have valid summaries.jsonl then 
     calcs metrics for each summary, builds summary objects, then saves them to jsonl
@@ -49,10 +50,6 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow: bool):
         None
     """
     logger.log(f"Starting to generate {JUDGEMENT_FILE} scores")
-    if ow:
-        logger.log(
-            f"Overwrite flag enabled. Overwriting previous {JUDGEMENT_FILE} data"
-        )
 
     hhem_model = HHEM_2_3()
 
@@ -77,12 +74,10 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow: bool):
             judgements_jsonl_path = os.path.join(
                 model_out_dir, judgements_jsonl_file
             )
-            run_metric_save_flow(
-                hhem_model,
-                article_summary_df,
-                judgements_jsonl_path,
-                model_name,
-                ow
+            open(judgements_jsonl_path, 'w').close()
+
+            calc_and_save_metrics(
+                hhem_model, article_summary_df, judgements_jsonl_path
             )
         else:
             logger.log(
@@ -92,6 +87,48 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow: bool):
         f"Finished generating and saving {JUDGEMENT_FILE} for all models"
     )
 
+def calc_and_save_metrics(
+        hhem_model: HHEM_2_3,
+        article_summary_df: pd.DataFrame,
+        judge_jsonl_path: str
+    ):
+    """
+    Calculates all metrics, build metric objects, then saves
+
+    Args:
+        hhem_model (HHEM_2_3): HHEM model
+        article_summary_df (DataFrame): contains article and summaries merged 
+            on article_id
+        judge_jsonl_path (str): path to new jsonl file
+    Returns:
+        None
+    """
+    article_texts = article_summary_df[SourceArticle.Keys.TEXT].tolist()
+    article_summaries = article_summary_df[Summary.Keys.SUMMARY].tolist()
+    article_ids = article_summary_df[Summary.Keys.ARTICLE_ID].tolist()
+
+    current_date = datetime.now(timezone.utc).date().isoformat()
+
+    for premise, hypothesis, a_id in tqdm(
+        zip(article_texts, article_summaries, article_ids),
+        total=len(article_texts),
+        desc="HHEM Loop"
+    ):
+        input = (premise, hypothesis)
+        hhem_out = hhem_model.predict(*input)
+        summary_length = len(hypothesis.split())
+        valid_summary = is_valid_summary(hypothesis)
+        metric_record = Judgement(
+            timestamp = current_date,
+            article_id = a_id,
+            hhem_version = hhem_model.__str__(),
+            hhem_score = hhem_out.score,
+            valid=valid_summary,
+            summary_words=summary_length
+        )
+        append_record_to_jsonl(judge_jsonl_path, metric_record)
+
+# Unused Function
 def run_metric_save_flow(
         hhem_model: HHEM_2_3,
         article_summary_df: pd.DataFrame,
@@ -99,6 +136,7 @@ def run_metric_save_flow(
         model_name: str,
         ow: bool
     ):
+    #TODO: Doc
     """
     Controls logic flow for calculating and saving metrics, only produces 
     metrics if a judgments.jsonl file dos not exists unless force flag enabled.
@@ -131,51 +169,6 @@ def run_metric_save_flow(
         )
         logger.log(f"Finished generating and saving {JUDGEMENT_FILE}")
         logger.log("Moving on to next model")
-
-
-def calc_and_save_metrics(
-        hhem_model: HHEM_2_3,
-        article_summary_df: pd.DataFrame,
-        judge_jsonl_path: str
-    ):
-    """
-    Calculates all metrics, build metric objects, then saves
-
-    Args:
-        hhem_model (HHEM_2_3): HHEM model
-        article_summary_df (DataFrame): contains article and summaries merged 
-            on article_id
-        judge_jsonl_path (str): path to new jsonl file
-    Returns:
-        None
-    """
-    article_texts = article_summary_df[SourceArticle.Keys.TEXT].tolist()
-    article_summaries = article_summary_df[Summary.Keys.SUMMARY].tolist()
-    article_ids = article_summary_df[Summary.Keys.ARTICLE_ID].tolist()
-
-    current_date = datetime.now(timezone.utc).date().isoformat()
-    metric_records = []
-
-    for premise, hypothesis, a_id in tqdm(
-        zip(article_texts, article_summaries, article_ids),
-        total=len(article_texts),
-        desc="HHEM Loop"
-    ):
-        input = (premise, hypothesis)
-        hhem_out = hhem_model.predict(*input)
-        summary_length = len(hypothesis.split())
-        valid_summary = is_valid_summary(hypothesis)
-        metric_record = Judgement(
-            timestamp = current_date,
-            article_id = a_id,
-            hhem_version = hhem_model.__str__(),
-            hhem_score = hhem_out.score,
-            valid=valid_summary,
-            summary_words=summary_length
-        )
-        metric_records.append(metric_record)
-
-    save_to_jsonl(judge_jsonl_path, metric_records)
 
 if __name__ == "__main__":
     pass

@@ -152,6 +152,14 @@ import re
 MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
 MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
 EMPTY_SUMMARY = "THIS SUMMARY IS EMPTY, THIS IS THE DEFAULT VALUE A SUMMARY VARIABLE GETS. A REAL SUMMARY WAS NOT ASSIGNED TO THIS VARIABLE."
+INCOMPLETE_THINK_TAG = "FOUND <think> WITH NO CLOSING </think>"
+
+SUMMARY_ERRORS = [
+    MODEL_FAILED_TO_RETURN_OUTPUT,
+    MODEL_FAILED_TO_RETURN_OUTPUT,
+    EMPTY_SUMMARY,
+    INCOMPLETE_THINK_TAG
+]
 
 
 class AbstractLLM(ABC):
@@ -354,6 +362,10 @@ class AbstractLLM(ABC):
 
     def remove_thinking_text(self, raw_summary: str) -> str:
         #TODO: Doc
+        if '<think>' in raw_summary and '</think>' not in raw_summary:
+            logger.log(f"~WARNING~: <think> tag found with no </think>. This is indicative of an incomplete response from an LLM. Raw Summary: {raw_summary}")
+            return INCOMPLETE_THINK_TAG
+
         summary = re.sub(
             r'<think>.*?</think>\s*', '',
             raw_summary, flags=re.DOTALL

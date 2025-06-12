@@ -1,8 +1,4 @@
-from src.LLMs.AbstractLLM import (
-    MODEL_RETURNED_NON_STRING_TYPE_OUTPUT,
-    MODEL_FAILED_TO_RETURN_OUTPUT,
-    EMPTY_SUMMARY
-)
+from src.LLMs.AbstractLLM import SUMMARY_ERRORS
 
 
 def is_valid_summary(summary: str) -> bool:
@@ -36,11 +32,7 @@ def has_error_output(summary: str) -> bool:
         bool: True if summary is exact error output string
     """
 
-    if (
-        summary == MODEL_FAILED_TO_RETURN_OUTPUT or
-        summary == MODEL_RETURNED_NON_STRING_TYPE_OUTPUT or
-        summary == EMPTY_SUMMARY
-    ):
+    if summary in SUMMARY_ERRORS:
         return True
     else:
         return False
