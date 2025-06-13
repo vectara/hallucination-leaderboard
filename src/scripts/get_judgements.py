@@ -13,8 +13,6 @@ from src.HHEM.HHEM_2_x import HHEM_2_3, HHEMOutput
 from src.LLMs.AbstractLLM import AbstractLLM
 from src.scripts.get_summaries import SUMMARY_FILE
 
-
-#TODO: Documentation Update
 """
 For all LLMs in the input list, check if they have a summary file. If it has a 
 summary file then it will produce a variety of metrics per summary. Most notably
