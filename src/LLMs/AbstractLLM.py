@@ -1,4 +1,5 @@
 # TODO: Create children for all models on the HHEM LB
+# TODO: Above is being done as needed
 '''
 Model List
     - Anthropic 4
@@ -139,8 +140,6 @@ Model List
     - Google Gemma-1.1-2B-it
     - TII falcon-7B-instruct
 '''
-
-
 from abc import ABC, abstractmethod
 from src.logging.Logger import logger
 from tqdm import tqdm
@@ -150,8 +149,13 @@ import time
 import re
 
 MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
-MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
-EMPTY_SUMMARY = "THIS SUMMARY IS EMPTY, THIS IS THE DEFAULT VALUE A SUMMARY VARIABLE GETS. A REAL SUMMARY WAS NOT ASSIGNED TO THIS VARIABLE."
+MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = (
+    "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
+)
+EMPTY_SUMMARY = (
+    "THIS SUMMARY IS EMPTY, THIS IS THE DEFAULT VALUE A SUMMARY"
+    "VARIABLE GETS. A REAL SUMMARY WAS NOT ASSIGNED TO THIS VARIABLE."
+)
 INCOMPLETE_THINK_TAG = "FOUND <think> WITH NO CLOSING </think>"
 
 SUMMARY_ERRORS = [
@@ -161,9 +165,7 @@ SUMMARY_ERRORS = [
     INCOMPLETE_THINK_TAG
 ]
 
-
 class AbstractLLM(ABC):
-    #TODO: Update Doc
     """
     Abstract Class
 
@@ -173,31 +175,37 @@ class AbstractLLM(ABC):
         company (str): Company of model
         temperature (float): set to 0.0 to compare deterministic output
         max_tokens (int): number of tokens for models
-
+        min_throttle_time (float): minimum amount of time a request must run to
+            avoid throttling 
+        model_output_dir (str): path to output directory
 
     Methods:
-        summarize_articles(articles): Requests summary for a given
-            list of articles
+        summarize_articles(articles): Summarizes the list of articles
+        summarize_wait_and_clean(article): Summarizes article waits if needed 
+            and cleans it
         try_to_summarize_one_article(article): exception handler method
         summarize_one_article(article): Requests summary of input
             article from LLM
         prepare_article_for_llm(article): Injects prompt and slightly reformats
             article text
+        clean_raw_summary(raw_summary): cleans summary
+        remove_thinking_text(raw_summary): removes thinking output
+        get_model_identifier(model_name, date_code): get the model id expected
+            by the company
         get_model_name(): returns name of model
+        get_company(): get company of model
+        get_model_out_dir(): get the output directory dedicated for this model
         summarize(prepared_text): Requests LLM to summarize the given text
         setup(): setup model for runtime use
         teardown(): teardown model when no longer needed for runtime use
-        get_name(): get name of model
-        get_company(): get company of model
-        get_model_out_dir(): get the output directory dedicated for this model
     """
+
     def __init__(self, model_name: str, company="NullCompany", min_throttle_time=0):
         self.max_tokens = 1024
         self.temperature = 0.0
         self.min_throttle_time = min_throttle_time
         self.company = company
         self.model_name = model_name
-        '''Do we need a pad token at start?'''
         self.prompt = ("You are a chat bot answering questions using data."
             "You must stick to the answers provided solely by the text in the "
             "passage provided. You are asked the question 'Provide a concise "
@@ -206,9 +214,8 @@ class AbstractLLM(ABC):
         )
 
         output_dir = OUTPUT_DIR
-        model_output_dir = f"{output_dir}/{self.company}/{self.model_name}"
-        self.model_output_dir = model_output_dir
-        os.makedirs(model_output_dir, exist_ok=True)
+        self.model_output_dir = f"{output_dir}/{self.company}/{self.model_name}"
+        os.makedirs(self.model_output_dir, exist_ok=True)
 
     def __enter__(self):
         self.setup()
@@ -231,13 +238,30 @@ class AbstractLLM(ABC):
         """
         summaries = []
         for article in tqdm(articles, desc="Article Loop"):
-            summary = self.summarize_article(article)
+            summary = self.summarize_wait_and_clean(article)
             summaries.append(summary)
         return summaries
 
-    def summarize_article(self, article: str) -> str:
-        #TODO: Documentation
+    def summarize_wait_and_clean(self, article: str) -> str:
+        """
+        Given an article, requests a summary, halts until the minimum time for
+        a request is met then cleans the output such that it only contains the 
+        summary
+
+        Args:
+            article (str): Article text
+        
+        Returns:
+            str: Output from LLM that only contains summary
+        """
+
+        start_time = time.time()
         raw_summary = self.try_to_summarize_one_article(article)
+        elapsed_time = time.time() - start_time
+        remaining_time = self.min_throttle_time - elapsed_time
+        if remaining_time > 0:
+            time.sleep(remaining_time)
+
         summary = self.clean_raw_summary(raw_summary)
         return summary
 
@@ -274,12 +298,10 @@ class AbstractLLM(ABC):
             return MODEL_RETURNED_NON_STRING_TYPE_OUTPUT
         return llm_summary
 
-
     def summarize_one_article(self, article: str) -> str:
-        #TODO: Update Doc
         """
         Takes in a string representing a human written article, injects a prompt
-        at the start and feeds into the LLM to generate a summary.
+        and feeds into the LLM to generate a summary.
 
         Args:
             article (str): String that is a human written news article
@@ -290,12 +312,7 @@ class AbstractLLM(ABC):
         """
         prepared_llm_input = self.prepare_article_for_llm(article)
 
-        start_time = time.time()
         llm_summary = self.summarize(prepared_llm_input)
-        elapsed_time = time.time() - start_time
-        remaining_time = self.min_throttle_time - elapsed_time
-        if remaining_time > 0: # Delay only if execution speed would surpass throttle
-            time.sleep(remaining_time)
 
         return llm_summary
 
@@ -312,10 +329,61 @@ class AbstractLLM(ABC):
         prepared_text = f"{self.prompt} '{article}'"
         return prepared_text
 
-    def clean_raw_summary(self, raw_summary):
-        #TODO: Doc
+    def clean_raw_summary(self, raw_summary: str) -> str:
+        """
+        Cleans the output summary to only contains relevant summary data
+
+        Args:
+            raw_summary (str): raw_summary output by LLM
+
+        Returns:
+            str: string that only contains summary data
+        """
         summary = self.remove_thinking_text(raw_summary)
+        if summary in SUMMARY_ERRORS:
+            return summary
         return summary
+
+    def remove_thinking_text(self, raw_summary: str) -> str:
+        """
+        Removes any thinking tags and content in between them. If a summary does
+        not have a closing thinking tag it will be considered as an incomplete 
+        summary and return an error string instead.
+
+        Args:
+            raw_summary (str): raw summary from LLM
+
+        returns:
+            str: summary without thinking data or invalid summary text
+
+        """
+        if '<think>' in raw_summary and '</think>' not in raw_summary:
+            logger.log(f"~WARNING~: <think> tag found with no </think>. This is indicative of an incomplete response from an LLM. Raw Summary: {raw_summary}")
+            return INCOMPLETE_THINK_TAG
+
+        summary = re.sub(
+            r'<think>.*?</think>\s*', '',
+            raw_summary, flags=re.DOTALL
+        )
+        return summary
+
+    def get_model_identifier(self, model_name: str, date_code: str) -> str:
+        """
+        Combines model_name and its date_code if the date_code isn't an emtpy
+        string otherwise model_name
+
+        Args:
+            model_name (str): base model name
+            date_code (str): date code of model
+
+        Returns:
+            str: full model identifier
+        
+        """
+        model = f"{model_name}"
+        if date_code != "":
+            model = f"{model_name}-{date_code}"
+        return model
 
     def get_model_name(self):
         """
@@ -352,25 +420,6 @@ class AbstractLLM(ABC):
             str: Path to model output directory
         """
         return self.model_output_dir
-
-    def setup_model_identifier(self, model_name: str, date_code: str) -> str:
-        #TODO: Doc
-        model = f"{model_name}"
-        if date_code != "":
-            model = f"{model_name}-{date_code}"
-        return model
-
-    def remove_thinking_text(self, raw_summary: str) -> str:
-        #TODO: Doc
-        if '<think>' in raw_summary and '</think>' not in raw_summary:
-            logger.log(f"~WARNING~: <think> tag found with no </think>. This is indicative of an incomplete response from an LLM. Raw Summary: {raw_summary}")
-            return INCOMPLETE_THINK_TAG
-
-        summary = re.sub(
-            r'<think>.*?</think>\s*', '',
-            raw_summary, flags=re.DOTALL
-        )
-        return summary
 
     @abstractmethod
     def summarize(self, prepared_text: str) -> str:

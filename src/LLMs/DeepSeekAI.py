@@ -20,7 +20,7 @@ class DeepSeekAI(AbstractLLM):
     def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="deepseek-ai", min_throttle_time=4)
         company_model= f"{self.company}/{self.model_name}"
-        self.model = self.setup_model_identifier(company_model, date_code)
+        self.model = self.get_model_identifier(company_model, date_code)
         self.client = InferenceClient(model=self.model)
 
     def summarize(self, prepared_text: str) -> str:

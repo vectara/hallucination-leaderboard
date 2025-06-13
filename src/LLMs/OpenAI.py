@@ -24,7 +24,7 @@ class OpenAi(AbstractLLM):
     def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="openai")
         api_key = os.getenv("OPENAI_API_KEY")
-        self.model = self.setup_model_identifier(model_name, date_code)
+        self.model = self.get_model_identifier(model_name, date_code)
         self.client = OpenAI(api_key=api_key)
 
     def summarize(self, prepared_text: str) -> str:

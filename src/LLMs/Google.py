@@ -20,7 +20,7 @@ class Google(AbstractLLM):
         super().__init__(model_name=model_name, company="google", min_throttle_time=9)
         api_key = os.getenv("GEMINI_API_KEY")
         self.client = genai.Client(api_key=api_key)
-        self.model = self.setup_model_identifier(model_name, date_code)
+        self.model = self.get_model_identifier(model_name, date_code)
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY

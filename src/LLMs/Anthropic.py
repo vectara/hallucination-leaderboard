@@ -22,7 +22,7 @@ class Anthropic(AbstractLLM):
         super().__init__(model_name=model_name, company="anthropic")
         api_key = os.getenv("ANTHROPIC_API_KEY")
         self.client = anthropic.Client(api_key=api_key)
-        self.model = self.setup_model_identifier(model_name, date_code)
+        self.model = self.get_model_identifier(model_name, date_code)
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY

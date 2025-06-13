@@ -18,7 +18,7 @@ class MistralAI(AbstractLLM):
     def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="mistralai")
         api_key = os.getenv("MISTRALAI_API_KEY")
-        self.model = self.setup_model_identifier(model_name, date_code)
+        self.model = self.get_model_identifier(model_name, date_code)
         self.client = Mistral(api_key=api_key)
 
     def summarize(self, prepared_text: str) -> str:
