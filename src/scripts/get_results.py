@@ -16,12 +16,12 @@ from src.scripts.get_judgements import JUDGEMENT_FILE
 """
 Computes and saves statistics for all given models
 
+Global Variables:
+    RESULTS_FILE
+
 Functions:
     run(models)
     generate_and_save_results(model_name, judge_jsonl_path, results_json_path)
-
-Global Variables:
-    RESULTS_FILE
 """
 
 RESULTS_FILE = "stats.json"
