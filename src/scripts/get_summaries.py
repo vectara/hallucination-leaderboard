@@ -12,27 +12,25 @@ from src.LLMs.AbstractLLM import AbstractLLM
 Loops through all given LLMs and requests a summary for the give article
 dataframe. 
 
+Global Variables:
+    SUMMARY_FILE
+
 Functions:
     run(models)
     generate_and_save_summaries(model, article_df, json_path)
-    create_summary_records(summaries, article_ids, model_name)
-
-Global Variables:
-    SUMMARY_FILE
 """
 
 SUMMARY_FILE = "summaries.jsonl"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow=False):
-    #TODO: Doc
     """
-    Generates summaries for a given model if the corresponding JSON file does 
-    not exist, force flag will overwrite existing JSON file
+    Generates summaries for a given model if the corresponding jsonl file does 
+    not exist, overwrite flag will overwrite existing jsonl file
 
     Args:
         models (list[AbstractLLM]): list of LLMs
         article_df (pd.DataFrame): article dataset
-        force (bool): flag to specify if JSON should still be created if exists
+        ow (bool): flag to specify if JSON should still be created if exists
 
     Returns:
         None
@@ -74,13 +72,14 @@ def generate_and_save_summaries(
         article_df: pd.DataFrame,
         jsonl_path: str
     ):
-    #TODO: Doc
     """
+    Produces summaries for all articles and saves them to the given jsonl file.
+    Saving is performed incrementally.
 
     Args:
         model (AbstractLLM): LLM model
         article_df (pd.DataFrame): Article data
-        json_path (str): path for the new jsonl file
+        jsonl_path (str): path for the new jsonl file
 
     Returns:
         None
@@ -106,68 +105,5 @@ def generate_and_save_summaries(
             )
             append_record_to_jsonl(jsonl_path, record)
             
-# Unused Function
-def generate_then_save_summaries(
-        model: AbstractLLM,
-        article_df: pd.DataFrame,
-        jsonl_path: str
-    ):
-    """
-    Generates the summaries, reformats the data for a jsonl file, and saves the
-    record to a jsonl file.
-
-    Args:
-        model (AbstractLLM): LLM model
-        article_df (pd.DataFrame): Article data
-        json_path (str): path for the new jsonl file
-
-    Returns:
-        None
-    """
-
-    article_texts = article_df[SourceArticle.Keys.TEXT].tolist()
-    article_ids = article_df[SourceArticle.Keys.ARTICLE_ID].tolist()
-    summaries = []
-    with model as m: 
-        summaries = m.summarize_articles(article_texts)
-    summary_records = build_summary_records(
-        summaries, article_ids, model.get_model_name()
-    )
-    save_to_jsonl(jsonl_path, summary_records)
-
-# Unused Function
-def build_summary_records(
-        summaries: list[str],
-        article_ids: list[int],
-        model_name: str
-    ) -> list[Summary]:
-    """
-    Returns list of Summary objects filled with data from the summaries and
-    article_ids lists.
-
-    The summaries and article_ids are assumed to be in line by index
-
-    Args:
-        summaries (list[str]): List of summaries
-        article_ids (list[int]): id associated with an article
-        model_name (str): unique model identifier
-    
-    Returns:
-        (list[Summary]): list of Summary records
-    """
-    current_date = datetime.now(timezone.utc).date().isoformat()
-    model_summaries = []
-
-    for a_id, summ in zip(article_ids, summaries):
-        record = Summary(
-            timestamp=current_date,
-            llm=model_name,
-            article_id=a_id,
-            summary=summ
-        )
-        model_summaries.append(record)
-
-    return model_summaries
-
 if __name__ == "__main__":
     pass
