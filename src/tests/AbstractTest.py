@@ -16,4 +16,14 @@ class AbstractTest(ABC):
     
     @abstractmethod
     def run_tests(self):
+        """
+        Runs all tests
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+
         pass

@@ -1,6 +1,8 @@
 from src.tests.AbstractTest import AbstractTest
 import pandas as pd
-from src.config import TEST_JUDGEMENTS_DATA, TEST_RESULTS_DATA, TEST_SUMMARIES_DATA
+from src.config import (
+    TEST_JUDGEMENTS_DATA, TEST_RESULTS_DATA, TEST_SUMMARIES_DATA
+)
 from src.data_struct.data_model import Stats, Summary, Judgement
 from src.analytics.stats import (
     compute_confidence_interval, compute_hallucination_rate,
@@ -10,6 +12,21 @@ from src.analytics.metrics import is_valid_summary
 from src.utils.json_utils import load_json
 
 class TestAnalytics(AbstractTest):
+    """
+    Tests the function in metrics.py and stats.py
+
+    Attributes:
+        summaries_df (pd.DataFrame): Test summaries data
+        metrics_df (pd.DataFrame): Precalculated metrics for summaries data
+        stats_anwers (Stats): Precaculatd stats for summaries data
+    
+    Methods:
+        test_hallucination_rate()
+        test_answer_rate()
+        test_avg_summary_length()
+        test_confidence_interval()
+        test_valid_summary()
+    """
     def __init__(self):
         self.summaries_df = pd.read_json(TEST_SUMMARIES_DATA, lines=True)
         self.metrics_df = pd.read_json(TEST_JUDGEMENTS_DATA, lines=True)
@@ -26,27 +43,62 @@ class TestAnalytics(AbstractTest):
         self.test_avg_summary_length()
 
     def test_hallucination_rate(self):
-        #TODO: Doc
+        """
+        Test if compute_hallucination_rate returns the correct value
+
+        Args:
+            None
+        Returns:
+            None
+        """
         hr = round(compute_hallucination_rate(self.metrics_df)*100.0, 1)
         assert hr == self.stat_answers.hallucination_rate
 
     def test_answer_rate(self):
-        #TODO: Doc
+        """
+        Test if compute_answer_rate returns the correct value
+
+        Args:
+            None
+        Returns:
+            None
+        """
         ar = round(compute_answer_rate(self.metrics_df)*100.0, 1)
         assert ar == self.stat_answers.answer_rate
 
     def test_avg_summary_length(self):
-        #TODO: Doc
+        """
+        Test if compute_avg_summary_length returns the correct value
+
+        Args:
+            None
+        Returns:
+            None
+        """
         asl = round(compute_avg_summary_length(self.metrics_df), 1)
         assert asl == self.stat_answers.avg_summary_length
 
     def test_confidence_interval(self):
-        #TODO: Doc
+        """
+        Test if compute_confidence interval returns the correct value
+
+        Args:
+            None
+        Returns:
+            None
+        """
         ci = round(compute_confidence_interval(self.metrics_df)*100.0, 1)
         assert ci == self.stat_answers.confidence_interval
 
     def test_valid_summary(self):
-        #TODO: Doc
+        """
+        Test if is_valid_summary is working
+
+        Args:
+            None
+        Returns:
+            None
+        """
         article_summaries = self.summaries_df[Summary.Keys.SUMMARY].tolist()
         true_valid_summ = self.metrics_df[Judgement.Keys.VALID].tolist()
         valid_summ_check = []

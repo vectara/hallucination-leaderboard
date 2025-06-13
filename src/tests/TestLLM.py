@@ -4,22 +4,20 @@ from src.config import TEST_DATA_PATH
 from src.utils.json_utils import load_json, json_exists
 from src.utils.build_utils import builds_models, process_raw_config
 from src.logging.Logger import logger
-import os
 import csv
 
 class TestLLM(AbstractTest):
     """
-    Test critical functions that all LLMs must be able to do in order to recieve
-    HHEM results
+    Test that the given LLMs summarize method works
 
     Attributes:
         sample_article (str): Example article for testing
         model (AbstractLLM): model being tested
+        config_path (str): model setup config file
 
     Methods:
-        run_tests(): Runs all tests
-        test_summarize(test_article): test the summarize functionality of model
-        set_model(model): setter
+        test_summarize(test_article)
+        set_model(model)
     """
     def __init__(self):
         super().__init__()
@@ -51,7 +49,10 @@ class TestLLM(AbstractTest):
             valid_config = process_raw_config(raw_config)
         else:
             logger.log(f"{self.config_path} not found, exiting")
-            print(f"WARNING: {self.config_path} not found, cannot perform LLM tests without it.")
+            print(
+                f"WARNING: {self.config_path} not found, cannot perform LLM "
+                "tests without it."
+            )
             return
 
         models = builds_models(valid_config)
@@ -74,6 +75,7 @@ class TestLLM(AbstractTest):
         Returns:
             None
         """
+
         with self.model as m: 
             msg = self.model.summarize(test_article)
         assert type(msg) == str
