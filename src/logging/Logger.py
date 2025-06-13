@@ -2,7 +2,7 @@ from datetime import datetime
 
 class Logger:
     """
-    Basic Logger Class for debugging
+    Basic Logger Class
 
     Attributes:
         file_name (str): full file name
