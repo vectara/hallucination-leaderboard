@@ -10,7 +10,6 @@ Usage:
     Add @register_handle("company_name") to any new company model class
 """
 
-
 MODEL_REGISTRY = {}
 
 def register_model(company_name: str):

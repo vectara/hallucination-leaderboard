@@ -7,24 +7,36 @@ from src.LLMs.model_registry import register_model
 @register_model("google")
 class Google(AbstractLLM):
     """
+    Class for models from Google
 
     Class Attributes:
+        g_local (list[str]): models that run locally
+        g1 (list[str]): first list of models that follow the same summarize 
+            protocol
 
     Attributes:
-    """
-    g_local = []
-    g1 = ["gemini-2.5-pro-preview"] #low token size makes this model fail to work
+        client (str): client associated with api calls
+        model (str): google style model name
 
+    """
+
+    g_local = []
+
+    # gemini-2.5-pro-preview requieres large output token amount, set to 4096
+    g1 = ["gemini-2.5-pro-preview"]
 
     def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="google", min_throttle_time=9)
         api_key = os.getenv("GEMINI_API_KEY")
-        self.client = genai.Client(api_key=api_key)
         self.model = self.get_model_identifier(model_name, date_code)
+        if self.model_name not in self.g_local:
+            self.client = genai.Client(api_key=api_key)
+        else:
+            self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model_name in self.g1:
+        if self.model_name in self.g1 and self.client:
             response = self.client.models.generate_content(
                 model = self.model,
                 contents=prepared_text,
@@ -34,6 +46,8 @@ class Google(AbstractLLM):
                 )
             )
             summary = response.text
+        else:
+            raise ValueError(f"Unsupported model: {self.model_name}")
         return summary
 
     def setup(self):

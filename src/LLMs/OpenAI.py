@@ -9,18 +9,29 @@ class OpenAi(AbstractLLM):
     Class for models from OpenAI
 
     Class Attributes:
-        gpt_4: list of gpt_4 tier models that follow the same protocol
-            for getting a summary
+        open_local (list[str]): models that run locally
+        open1 (list[str]): first list of models that follow the same summarize
+            protocol
+        open2 (list[str]): 2nd list of models that follow the same summarize
+            protocol
+        open3 (list[str]): 3rd list of models that follow the same summarize
+            protocol
 
     Attributes:
         client (OpenAI): client associated with api calls
-        model (str): exact model name expected by OpenAI
+        model (str): OpenAI style model name
     """
 
     open_local = []
+
     open1 = ["gpt-4.1"]
-    open2 = ["o3"] # o3 doesnt support temperature of 0.0
-    open3 = ["o3-pro"] # o3-pro doesnt support chatting, also doesnt suppor temp
+
+    # o3 doesn't support adjusting the temperature
+    open2 = ["o3"]
+
+    # o3 doesn't support chatting protocol and doesn't support adjusting temperature
+    open3 = ["o3-pro"]
+
     def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="openai")
         api_key = os.getenv("OPENAI_API_KEY")
@@ -29,7 +40,7 @@ class OpenAi(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model_name in self.open1:
+        if self.model_name in self.open1 and self.client:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,
@@ -37,20 +48,22 @@ class OpenAi(AbstractLLM):
                 messages=[{"role": "user", "content":prepared_text}]
             )
             summary = chat_package.choices[0].message.content
-        elif self.model_name in self.open2:
+        elif self.model_name in self.open2 and self.client:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
                 max_completion_tokens=self.max_tokens
             )
             summary = chat_package.choices[0].message.content
-        elif self.model_name in self.open3:
+        elif self.model_name in self.open3 and self.client:
             chat_package = self.client.responses.create(
                 model=self.model,
                 input=prepared_text,
                 max_output_tokens=self.max_tokens
             )
             summary = chat_package.output_text
+        else:
+            raise ValueError(f"Unsupported model: {self.model_name}")
 
         return summary
 

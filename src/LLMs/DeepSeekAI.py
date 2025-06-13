@@ -9,26 +9,37 @@ class DeepSeekAI(AbstractLLM):
     """
     Class for models from DeepSeekAI
 
+    Class Attributes:
+        ds_local (list[str]): models that run locally
+        ds1 (list[str]): first list of models that follow similar summarize
+            protocol
+
     Attributes:
         client (InferenceClient): client associated with api calls
-        min_throttle_time (int): minimum time require per request to avoid
-            throttling with huggingface pro
+        self.model (str): DeepSeekAI style model name
     """
+
     ds_local = []
+
     ds1 = ["DeepSeek-R1"]
 
     def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="deepseek-ai", min_throttle_time=4)
         company_model= f"{self.company}/{self.model_name}"
         self.model = self.get_model_identifier(company_model, date_code)
-        self.client = InferenceClient(model=self.model)
+        if self.model_name not in self.ds_local:
+            self.client = InferenceClient(model=self.model)
+        else:
+            self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model in self.ds1:
+        if self.model in self.ds1 and self.client:
             messages = [{"role": "user", "content":prepared_text}]
             client_package = self.client.chat_completion(messages, temperature=self.temperature)
             summary = client_package.choices[0].message.content
+        else:
+            raise ValueError(f"Unsupported model: {self.model_name}")
         return summary
 
     def setup(self):
