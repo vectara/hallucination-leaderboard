@@ -181,7 +181,7 @@ class AbstractLLM(ABC):
 
     Methods:
         summarize_articles(articles): Summarizes the list of articles
-        summarize_wait_and_clean(article): Summarizes article waits if needed 
+        summarize_clean_wait(article): Summarizes article waits if needed 
             and cleans it
         try_to_summarize_one_article(article): exception handler method
         summarize_one_article(article): Requests summary of input
@@ -238,11 +238,11 @@ class AbstractLLM(ABC):
         """
         summaries = []
         for article in tqdm(articles, desc="Article Loop"):
-            summary = self.summarize_wait_and_clean(article)
+            summary = self.summarize_clean_wait(article)
             summaries.append(summary)
         return summaries
 
-    def summarize_wait_and_clean(self, article: str) -> str:
+    def summarize_clean_wait(self, article: str) -> str:
         """
         Given an article, requests a summary, halts until the minimum time for
         a request is met then cleans the output such that it only contains the 
@@ -257,12 +257,12 @@ class AbstractLLM(ABC):
 
         start_time = time.time()
         raw_summary = self.try_to_summarize_one_article(article)
+        summary = self.clean_raw_summary(raw_summary)
         elapsed_time = time.time() - start_time
         remaining_time = self.min_throttle_time - elapsed_time
         if remaining_time > 0:
             time.sleep(remaining_time)
 
-        summary = self.clean_raw_summary(raw_summary)
         return summary
 
     def try_to_summarize_one_article(self, article: str) -> str:

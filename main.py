@@ -60,8 +60,8 @@ def main(args: argparse.ArgumentParser):
         get_results.run(models)
     else:
         print(
-            "No program type was specified, exiting program. Run program with "
-            "--help flag for info"
+            "No process was specified, exiting program. Run program "
+            "with --help flag for info"
         )
 
 if __name__ == "__main__":
@@ -84,16 +84,18 @@ if __name__ == "__main__":
         nargs="?",
         help=(
             "Run a specific process.\n"
-            "   get_summ               - generates and stores summaries for "
-            "                            all models in a JSON file\n"
-            "   get_judge              - generates and stores metrics "
-            "                            corresponding llm summaries "
-            "                            models in a JSON file\n"
-            "   get_results            - computers final metrics for display "
-            "                            on LB\n"
+            "   get_summ               - generate and save summaries from\n"
+            "                            config enabled models in jsonl file.\n"
+            "                            It's best to avoid get_summ and run\n"
+            "                            get_summ_judge to ensure judgements\n"
+            "                            are synchronized\n"
+            "   get_judge              - compute and save metrics for the\n"
+            "                            generated summaries in jsonl file\n"
+            "   get_results            - compute and save aggregate stats\n"
+            "                            for the computed metrics in json file\n"
             "   get_summ_judge         - performs get_summ > get_judge\n"
             "   get_judge_results      - performs get_judge > get_results\n"
-            "   get_summ_judge_results - performs get_summ > get_judge > "
+            "   get_summ_judge_results - performs get_summ > get_judge >\n"
             "                            get_results\n"
         )
     )
@@ -102,7 +104,7 @@ if __name__ == "__main__":
         "--test",
         action="store_true",
         help=(
-            "Loads test data instead of Leaderboard Data"
+            "Loads test data instead of leaderboard data"
         )
     )
 

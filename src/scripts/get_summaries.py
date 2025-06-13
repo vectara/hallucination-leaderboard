@@ -96,7 +96,7 @@ def generate_and_save_summaries(
             total=len(article_texts),
             desc="Article Loop"
         ):
-            summary = m.summarize_article(article)
+            summary = m.summarize_clean_wait(article)
             record = Summary(
                 timestamp=current_date,
                 llm=model.get_model_name(),
