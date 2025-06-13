@@ -18,34 +18,27 @@ from src.scripts.get_summaries import SUMMARY_FILE
 """
 For all LLMs in the input list, check if they have a summary file. If it has a 
 summary file then it will produce a variety of metrics per summary. Most notably
-it produces the HHEM score metric
+it produces the HHEM score metric.
+
+Global Variables:
+    JUDGEMENT_FILE
 
 Functions:
-    run(models, article_df, force)
-    run_metrics_save_flow(
-        hhem_model, article_summary_df, judge_jsonl_path, model_name, force
-    )
+    run(models, article_df)
     calc_and_save_metrics(hhem_model, article_summary_df, judge_jsonl_path)
-    build_metric_records(
-        article_ids, article_summaries, hhem_scores, hhem_version
-    )
-
-Global Variables
-    JUDGEMENT_FILE
 """
 
 JUDGEMENT_FILE = "judgements.jsonl"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame):
-    #TODO: Doc
     """
     For the given model lists, checks if they have valid summaries.jsonl then 
-    calcs metrics for each summary, builds summary objects, then saves them to jsonl
+    calcs metrics for each summary, builds summary objects, then saves them
+    to jsonl
 
     Args:
         models (list[AbstractLLM]): list of LLMs
         article_df (pd.DataFrame): article dataset
-        force (bool): flag for forcing json to be overwritten if it exists
     Returns:
         None
     """
@@ -93,7 +86,9 @@ def calc_and_save_metrics(
         judge_jsonl_path: str
     ):
     """
-    Calculates all metrics, build metric objects, then saves
+    Produces metrics for Articles and Summaires aligned on article_id
+
+    Output is incrementally saved to the given jsonl file
 
     Args:
         hhem_model (HHEM_2_3): HHEM model
@@ -127,48 +122,6 @@ def calc_and_save_metrics(
             summary_words=summary_length
         )
         append_record_to_jsonl(judge_jsonl_path, metric_record)
-
-# Unused Function
-def run_metric_save_flow(
-        hhem_model: HHEM_2_3,
-        article_summary_df: pd.DataFrame,
-        judge_jsonl_path: str,
-        model_name: str,
-        ow: bool
-    ):
-    #TODO: Doc
-    """
-    Controls logic flow for calculating and saving metrics, only produces 
-    metrics if a judgments.jsonl file dos not exists unless force flag enabled.
-
-    Args:
-        hhem_model (HHEM_2_3): hhem model
-        article_summary_df (pd.DataFrame): data containing source articles and 
-            summaries aligned
-        judge_jsonl_path (str): path for new or possibly existing jsonl file
-        model_name (str): name of model that generated the summaries
-        force (bool): flag that forces file to be overwritten even if it exists
-    """
-
-    if json_exists(judge_jsonl_path) and not ow:
-        print((
-            f"WARNING: {JUDGEMENT_FILE} file already exists, "
-            "if you generated new "
-            "summaries you will not have metrics that reflect these "
-            "summaries. Recall with --overwrite to overwrite old data"
-            )
-        )
-        logger.log(f"{JUDGEMENT_FILE} file exists for {model_name}, skipping")
-    else:
-        if not ow:
-            logger.log(f"{JUDGEMENT_FILE} file does not exist, generating...")
-        else:
-            logger.log(f"Overwriting previous {JUDGEMENT_FILE}...")
-        calc_and_save_metrics(
-            hhem_model, article_summary_df, judge_jsonl_path
-        )
-        logger.log(f"Finished generating and saving {JUDGEMENT_FILE}")
-        logger.log("Moving on to next model")
 
 if __name__ == "__main__":
     pass
