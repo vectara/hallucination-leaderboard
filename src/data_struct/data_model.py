@@ -1,12 +1,5 @@
 from pydantic import BaseModel
 
-#TODO: Doc
-
-# The data model is redundant but hopefully it will make things in the future easier
-
-# All summaries evaluated together should have the same timestamp in `summaries.json` and `judgements.json`
-
-# A `summaries.json` file is a list of Summary objects
 class SourceArticle(BaseModel):
     """
     Representation of an Article record from LB dataset
@@ -47,9 +40,18 @@ class Summary(BaseModel):
         ARTICLE_ID = "article_id"
         SUMMARY = "summary"
 
-# A `judgements.json` file is a list of Judgement objects
 class Judgement(BaseModel):
-    #TODO: Docs when finalized
+    """
+    Representation of Judgements/Metrics for the Summary of an Article
+
+    Fields:
+        timestamp (str): date the metrics were performed
+        article_id (int): id of the article summarized
+        hhem_version (str): version of hhem applied for hhem score
+        hhem_score (float): Hughes Hallucination Evaluation Metric (HHEM)
+        valid (bool): Validity of the summary, defined in is_valid_summary
+        summary_words (int): word count of summary
+    """
     timestamp: str
     article_id: int
     hhem_version: str
@@ -65,9 +67,21 @@ class Judgement(BaseModel):
         VALID = "valid"
         SUMMARY_WORDS = "summary_words"
 
-# A `stats.json` file is a  Stats objects, aggregated from a list of Judgement objects
 class Stats(BaseModel):
-    #TODO: Docs when finalized
+    """
+    Representation of Stats for the Summaries of the Article Dataset. These are
+    aggregated Judgements/Metrics
+
+    Fields:
+        timestamp (str): date the stats were performed
+        llm (str): llm that performed the summarization
+        hallucination_rate (float): hallucination rate on all summaries
+        confidence_interval (float): variation in the hallucination rate
+        answer_rate (float): For all summaries what percentage of them were
+            valid
+        avg_summary_length (float): Average summary length for all valid
+            summaries
+    """
     timestamp: str
     llm: str
     hallucination_rate: float
