@@ -1,4 +1,6 @@
-class AbstractTest:
+from abc import ABC, abstractmethod
+
+class AbstractTest(ABC):
     """
     Abstract Class for testing code
 
@@ -11,6 +13,7 @@ class AbstractTest:
     """
     def __init__(self):
         pass
-
+    
+    @abstractmethod
     def run_tests(self):
         pass
