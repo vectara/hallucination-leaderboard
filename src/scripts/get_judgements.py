@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime, timezone
 import os
 from tqdm import tqdm
-from src.utils.json_utils import json_exists, append_record_to_jsonl
+from src.utils.json_utils import file_exists, append_record_to_jsonl
 from src.analytics.metrics import is_valid_summary
 from src.data_struct.data_model import Judgement, Summary, SourceArticle
 
@@ -53,7 +53,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame):
         summaries_jsonl_file = f"{SUMMARY_FILE}"
         summaries_jsonl_path = os.path.join(model_out_dir, summaries_jsonl_file)
 
-        if json_exists(summaries_jsonl_path):
+        if file_exists(summaries_jsonl_path):
             logger.log(f"{SUMMARY_FILE} found for {model_name}")
             summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
             article_summary_df = pd.merge(

@@ -2,7 +2,7 @@ from src.logging.Logger import logger
 import pandas as pd
 import os
 from tqdm import tqdm
-from src.utils.json_utils import save_to_jsonl, json_exists, append_record_to_jsonl
+from src.utils.json_utils import file_exists, append_record_to_jsonl
 from datetime import datetime, timezone
 from src.data_struct.data_model import Summary, SourceArticle
 
@@ -51,10 +51,10 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow=False):
         jsonl_file = f"{SUMMARY_FILE}"
         summaries_jsonl_path = os.path.join(model_out_dir, jsonl_file)
 
-        if not json_exists(summaries_jsonl_path):
+        if not file_exists(summaries_jsonl_path):
             logger.log(f"{SUMMARY_FILE} file does not exist, generating...")
             open(summaries_jsonl_path, 'w').close()
-        elif json_exists(summaries_jsonl_path) and ow:
+        elif file_exists(summaries_jsonl_path) and ow:
             logger.log(f"Overwriting previous data in {SUMMARY_FILE}")
             open(summaries_jsonl_path, 'w').close()
         else:

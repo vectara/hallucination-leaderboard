@@ -2,7 +2,7 @@ from src.logging.Logger import logger
 import os
 from tqdm import tqdm
 from src.LLMs.AbstractLLM import AbstractLLM
-from src.utils.json_utils import json_exists, save_bm_to_json
+from src.utils.json_utils import file_exists, save_to_json
 import pandas as pd
 from datetime import datetime, timezone
 from src.data_struct.data_model import Stats
@@ -46,7 +46,7 @@ def run(models: list[AbstractLLM]):
 
         judge_jsonl_path = os.path.join(model_out_dir, JUDGEMENT_FILE)
 
-        if json_exists(judge_jsonl_path):
+        if file_exists(judge_jsonl_path):
             logger.log(f"{JUDGEMENT_FILE} found for {model_name}")
 
             results_json_file = f"{RESULTS_FILE}"
@@ -93,4 +93,4 @@ def generate_and_save_results(
         avg_summary_length=asl
     )
 
-    save_bm_to_json(results_json_path, results)
+    save_to_json(results_json_path, results)
