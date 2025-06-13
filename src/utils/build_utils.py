@@ -4,6 +4,14 @@ from src.LLMs.AbstractLLM import AbstractLLM
 from src.data_struct.config_model import ModelConfig
 from pydantic import ValidationError
 
+"""
+Functions for building models from the config.json
+
+Functions:
+    buld_models(config)
+    process_raw_config(raw_model_configs)
+"""
+
 def builds_models(config: list[ModelConfig]) -> list[AbstractLLM]:
     """
     Builds the models given in the config list if it is registered

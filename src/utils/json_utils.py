@@ -2,12 +2,15 @@ import json
 import os
 from src.logging.Logger  import logger
 from pydantic import BaseModel
+from typing import Union, List, Any
 
 """
 Functions for handling JSON files
 
 Functions:
     load_json(json_path)
+    save_to_jsonl(jsonl_path, records)
+    append_record_to_jsonl(jsonl_path, record)
     save_to_json(json_path, records)
     json_exists(json_path)
 """
@@ -28,8 +31,12 @@ def load_json(json_path: str) -> list:
     return json_data
 
 def save_to_jsonl(jsonl_path: str, records: list[BaseModel]):
-    # TODO: Documentation
     """
+    Saves a list of BaseModel objects in JSONL format
+
+    Args: 
+        jsonl_path (str): path to file
+        records (list[BaseModel]): records to be saved
     """
     logger.log("Saving JSONL file")
     with open(jsonl_path, "w") as f:
@@ -37,31 +44,18 @@ def save_to_jsonl(jsonl_path: str, records: list[BaseModel]):
             f.write(record.model_dump_json() + "\n")
     logger.log("JSONL file saved")
 
-
 def append_record_to_jsonl(jsonl_path: str, record: BaseModel):
-    # TODO: Documentation
     """
+    Appends a record to a jsonl file
+
+    Args:
+        jsonl_path (str): path to file
+        record (BaseModel): record to be saved
     """
     with open(jsonl_path, "a") as f:
         f.write(record.model_dump_json() + "\n")
 
-def save_bm_to_json(json_path: str, record: BaseModel):
-    """
-    Saves BaseModel objects to JSON formatted data to disk at specified path
-
-    Args:
-        json_path (str): Path to the JSON file
-        records (list[BaseModel]): JSON formatted data
-
-    Returns:
-        None
-    """
-    bm_dict = record.model_dump()
-    with open(json_path, "w") as f:
-        json.dump(bm_dict, f, indent=4)
-
-
-def save_to_json(json_path: str, records: list[dict]):
+def save_to_json(json_path: str, data: Any):
     """
     Saves JSON formatted data to disk at specified path
 
@@ -73,16 +67,27 @@ def save_to_json(json_path: str, records: list[dict]):
         None
     """
     logger.log("Saving JSON file")
+    json_data = None
+    if isinstance(data, BaseModel):
+        json_data = data.model_dump()
+    elif isinstance(data, List):
+        json_data = [
+            item.model_dump() if isinstance(item, BaseModel) else item 
+            for item in data
+        ]
+    else:
+        raise TypeError("Data must be BaseModel or list of BaseModel or Dict")
+
     with open(json_path, "w") as f:
-        json.dump(records, f, indent=4)
+        json.dump(json_data, f, indent=4)
     logger.log("JSON file saved")
 
-def json_exists(json_path: str) -> bool:
+def file_exists(json_path: str) -> bool:
     """
-    Checks if JSON file exists, returns True if so else False
+    Checks if file exists, returns True if so else False
 
     Args:
-        full_path (str): Path to JSON file
+        full_path (str): Path to file
 
     Returns:
         (bool): State of file existing
