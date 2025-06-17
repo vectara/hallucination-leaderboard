@@ -20,7 +20,7 @@ class Anthropic(AbstractLLM):
 
     anth_local = []
 
-    anth1 = ["claude-4-opus", "claude-4-sonnet"]
+    anth1 = ["claude-opus-4", "claude-sonnet-4"]
 
     def __init__(self, model_name, date_code=""):
         super().__init__(model_name=model_name, company="anthropic")
