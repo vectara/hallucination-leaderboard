@@ -5,6 +5,7 @@ from tqdm import tqdm
 from src.utils.json_utils import file_exists, append_record_to_jsonl
 from datetime import datetime, timezone
 from src.data_struct.data_model import Summary, SourceArticle
+import hashlib
 
 from src.LLMs.AbstractLLM import AbstractLLM
 
@@ -97,13 +98,30 @@ def generate_and_save_summaries(
             desc="Article Loop"
         ):
             summary = m.summarize_clean_wait(article)
+            summary_uid = generate_summary_uid(
+                model.get_model_name(),
+                2222, #TODO: should be able to retrieve date_code
+                summary,
+                current_date
+            )
             record = Summary(
                 timestamp=current_date,
                 llm=model.get_model_name(),
                 article_id=a_id,
-                summary=summary
+                summary=summary,
+                summary_uid=summary_uid
             )
             append_record_to_jsonl(jsonl_path, record)
+
+
+def generate_summary_uid(model, date_code, summary_text, date):
+    #TODO: Docs
+    """
+    """
+    current_time = datetime.now().strftime("%H:%M:%S.%f")
+    combined_string = f"{model}|{date_code}|{summary_text.strip()}|{date}|{current_time}"
+    return hashlib.md5(combined_string.encode('utf-8')).hexdigest()
+
             
 if __name__ == "__main__":
     pass

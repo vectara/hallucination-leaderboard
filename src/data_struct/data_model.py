@@ -33,12 +33,14 @@ class Summary(BaseModel):
     llm: str
     article_id: int
     summary: str
+    summary_uid: str
 
     class Keys:
         TIMESTAMP = "timestamp"
         LLM = "llm"
         ARTICLE_ID = "article_id"
         SUMMARY = "summary"
+        SUMMARY_UID = "summary_uid"
 
 class Judgement(BaseModel):
     """
