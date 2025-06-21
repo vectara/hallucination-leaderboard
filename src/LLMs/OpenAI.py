@@ -32,8 +32,12 @@ class OpenAi(AbstractLLM):
     # o3 doesn't support chatting protocol and doesn't support adjusting temperature
     open3 = ["o3-pro"]
 
-    def __init__(self, model_name, date_code=""):
-        super().__init__(model_name=model_name, company="openai")
+    def __init__(self, model_name, date_code):
+        super().__init__(
+            model_name,
+            date_code,
+            company="openai"
+        )
         api_key = os.getenv("OPENAI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
         self.client = OpenAI(api_key=api_key)

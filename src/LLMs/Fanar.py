@@ -23,8 +23,12 @@ class Fanar(AbstractLLM):
 
     fan = ["Fanar"]
 
-    def __init__(self, model_name, date_code=""):
-        super().__init__(model_name=model_name, company="Fanar")
+    def __init__(self, model_name, date_code):
+        super().__init__(
+            model_name,
+            date_code,
+            company="Fanar"
+        )
         api_key = os.getenv("FANAR_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
         if self.model_name not in self.fan_local:

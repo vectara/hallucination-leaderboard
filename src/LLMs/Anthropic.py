@@ -22,8 +22,12 @@ class Anthropic(AbstractLLM):
 
     anth1 = ["claude-opus-4", "claude-sonnet-4"]
 
-    def __init__(self, model_name, date_code=""):
-        super().__init__(model_name=model_name, company="anthropic")
+    def __init__(self, model_name, date_code):
+        super().__init__(
+            model_name,
+            date_code,
+            company="anthropic"
+        )
         api_key = os.getenv("ANTHROPIC_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
         if self.model_name not in self.anth_local:

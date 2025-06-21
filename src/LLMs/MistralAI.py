@@ -24,8 +24,12 @@ class MistralAI(AbstractLLM):
 
     mist1 = ["magistral-medium"]
 
-    def __init__(self, model_name, date_code=""):
-        super().__init__(model_name=model_name, company="mistralai")
+    def __init__(self, model_name, date_code):
+        super().__init__(
+            model_name,
+            date_code,
+            company="mistralai"
+        )
         api_key = os.getenv("MISTRALAI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
         if self.model_name not in self.mist_local:

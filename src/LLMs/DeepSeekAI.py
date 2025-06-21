@@ -23,8 +23,13 @@ class DeepSeekAI(AbstractLLM):
 
     ds1 = ["DeepSeek-R1"]
 
-    def __init__(self, model_name, date_code=""):
-        super().__init__(model_name=model_name, company="deepseek-ai", min_throttle_time=4)
+    def __init__(self, model_name, date_code):
+        super().__init__(
+            model_name,
+            date_code,
+            company="deepseek-ai",
+            min_throttle_time=4
+        )
         company_model= f"{self.company}/{self.model_name}"
         self.model = self.get_model_identifier(company_model, date_code)
         if self.model_name not in self.ds_local:

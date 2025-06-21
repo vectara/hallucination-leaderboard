@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class SourceArticle(BaseModel):
     """
@@ -19,6 +20,7 @@ class SourceArticle(BaseModel):
         DATASET = "dataset"
 
 class Summary(BaseModel):
+    #TODO: Doc
     """
     Representation of a Summary of an Article
     
@@ -31,6 +33,7 @@ class Summary(BaseModel):
     """
     timestamp: str
     llm: str
+    date_code: str
     article_id: int
     summary: str
     summary_uid: str
@@ -38,6 +41,7 @@ class Summary(BaseModel):
     class Keys:
         TIMESTAMP = "timestamp"
         LLM = "llm"
+        DATE_CODE = "date_code"
         ARTICLE_ID = "article_id"
         SUMMARY = "summary"
         SUMMARY_UID = "summary_uid"

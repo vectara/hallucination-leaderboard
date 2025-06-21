@@ -25,8 +25,13 @@ class Google(AbstractLLM):
     # gemini-2.5-pro-preview requieres large output token amount, set to 4096
     g1 = ["gemini-2.5-pro-preview"]
 
-    def __init__(self, model_name, date_code=""):
-        super().__init__(model_name=model_name, company="google", min_throttle_time=9)
+    def __init__(self, model_name, date_code):
+        super().__init__(
+            model_name, 
+            date_code,
+            company="google",
+            min_throttle_time=9
+        )
         api_key = os.getenv("GEMINI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
         if self.model_name not in self.g_local:

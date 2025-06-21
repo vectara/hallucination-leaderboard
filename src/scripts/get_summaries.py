@@ -73,6 +73,7 @@ def generate_and_save_summaries(
         article_df: pd.DataFrame,
         jsonl_path: str
     ):
+    #TODO: Update doc
     """
     Produces summaries for all articles and saves them to the given jsonl file.
     Saving is performed incrementally.
@@ -100,13 +101,14 @@ def generate_and_save_summaries(
             summary = m.summarize_clean_wait(article)
             summary_uid = generate_summary_uid(
                 model.get_model_name(),
-                2222, #TODO: should be able to retrieve date_code
+                model.get_date_code(),
                 summary,
                 current_date
             )
             record = Summary(
                 timestamp=current_date,
                 llm=model.get_model_name(),
+                date_code=model.get_date_code(),
                 article_id=a_id,
                 summary=summary,
                 summary_uid=summary_uid

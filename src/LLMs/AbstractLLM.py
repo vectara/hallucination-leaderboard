@@ -200,9 +200,16 @@ class AbstractLLM(ABC):
         teardown(): teardown model when no longer needed for runtime use
     """
 
-    def __init__(self, model_name: str, company="NullCompany", min_throttle_time=0):
+    def __init__(
+            self,
+            model_name: str, 
+            date_code: str,
+            company="NullCompany",
+            min_throttle_time=0
+        ):
         self.max_tokens = 1024
         self.temperature = 0.0
+        self.date_code = date_code
         self.min_throttle_time = min_throttle_time
         self.company = company
         self.model_name = model_name
@@ -420,6 +427,12 @@ class AbstractLLM(ABC):
             str: Path to model output directory
         """
         return self.model_output_dir
+
+    def get_date_code(self):
+        #TODO: Doc
+        """
+        """
+        return self.date_code
 
     @abstractmethod
     def summarize(self, prepared_text: str) -> str:
