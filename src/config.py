@@ -25,7 +25,6 @@ CONFIG = {
     [
         {
             "company": "anthropic",
-            "enabled": False,
             "params": {
                 "model_name": "claude-opus-4",
                 "date_code": "20250514"
@@ -33,7 +32,6 @@ CONFIG = {
         },
         {
             "company": "anthropic",
-            "enabled": False,
             "params": {
                 "model_name": "claude-sonnet-4",
                 "date_code": "20250514"

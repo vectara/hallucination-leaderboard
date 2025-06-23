@@ -29,12 +29,10 @@ class ModelConfig(BaseModel):
         params (ModelParams): parameters for model initialization
     """
     company: str
-    enabled: bool
     params: ModelParams
 
     class Keys:
         COMPANY = "company"
-        ENABLED = "enabled"
         PARAMS = "params"
 
 class Config(BaseModel):
