@@ -7,7 +7,10 @@ import pandas as pd
 import argparse
 from src.utils.json_utils import load_json, file_exists
 from src.utils.build_utils import builds_models, process_raw_config
-from src.config import TEST_DATA_PATH, LB_DATA_PATH
+from src.config import (
+    TEST_DATA_PATH, LB_DATA_PATH, CONFIG, GET_SUMM, GET_JUDGE, GET_RESULTS
+)
+from src.data_struct.config_model import Config
 
 """
 Main Program File
@@ -31,15 +34,18 @@ def main(args: argparse.ArgumentParser):
     else:
         data_path = LB_DATA_PATH
 
-    valid_model_configs = None
-    if file_exists("config.json"):
-        raw_model_configs = load_json("config.json")
-        valid_model_configs = process_raw_config(raw_model_configs)
-    else:
-        logger.log("No Config file was found, exiting")
-        return
+    config = Config(**CONFIG)
 
-    models = builds_models(valid_model_configs)
+    # valid_model_configs = None
+    # if file_exists("config.json"):
+    #     raw_model_configs = load_json("config.json")
+    #     valid_model_configs = process_raw_config(raw_model_configs)
+    # else:
+    #     logger.log("No Config file was found, exiting")
+    #     return
+
+    # models = builds_models(valid_model_configs)
+    models = config.LLMs_to_eval
     article_df = pd.read_csv(data_path)
 
     if args.process == "get_summ":
@@ -60,11 +66,14 @@ def main(args: argparse.ArgumentParser):
         get_results.run(models)
     else:
         print(
-            "No process was specified, exiting program. Run program "
-            "with --help flag for info"
+            (
+                "No process was specified, running instructions specified in "
+                "config.py instead. Run program with --help flag for info"
+            )
         )
 
 if __name__ == "__main__":
+    #TODO: Rethink how to name pipelines
     load_dotenv()
     parser = argparse.ArgumentParser(
         description="HHEM Leaderboard Backend",
@@ -73,9 +82,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "process",
         choices=[
-            "get_summ",
-            "get_judge",
-            "get_results", 
+            GET_SUMM,
+            GET_JUDGE,
+            GET_RESULTS, 
             "get_summ_judge",
             "get_judge_results",
             "get_summ_judge_results",
@@ -84,14 +93,14 @@ if __name__ == "__main__":
         nargs="?",
         help=(
             "Run a specific process.\n"
-            "   get_summ               - generate and save summaries from\n"
+            f"   {GET_SUMM}              - generate and save summaries from\n"
             "                            config enabled models in jsonl file.\n"
             "                            It's best to avoid get_summ and run\n"
             "                            get_summ_judge to ensure judgements\n"
             "                            are synchronized\n"
-            "   get_judge              - compute and save metrics for the\n"
+            f"   {GET_JUDGE}              - compute and save metrics for the\n"
             "                            generated summaries in jsonl file\n"
-            "   get_results            - compute and save aggregate stats\n"
+            f"   {GET_RESULTS}            - compute and save aggregate stats\n"
             "                            for the computed metrics in json file\n"
             "   get_summ_judge         - performs get_summ > get_judge\n"
             "   get_judge_results      - performs get_judge > get_results\n"

@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from typing import List
+
 
 class ModelParams(BaseModel):
     """
@@ -34,6 +36,25 @@ class ModelConfig(BaseModel):
         COMPANY = "company"
         ENABLED = "enabled"
         PARAMS = "params"
+
+class Config(BaseModel):
+    #TODO: Doc
+    pipeline: List[str]
+    input_file: str
+    temperature: float
+    max_tokens: int
+    simulation_count: int
+    sample_count: int
+    LLMs_to_eval: List[ModelConfig]
+
+    class Keys:
+        PIPELINE = "pipeline"
+        INPUT_FILE = "input_file"
+        TEMPERATURE = "temperature"
+        MAX_TOKENS = "max_tokens"
+        SIMULATION_COUNT = "simulation_count"
+        SAMPLE_COUNT = "sample_count"
+        LLMS_TO_EVAL = "LLMs_to_eval"
 
 DUMMY_CONFIG = ModelConfig(
     company="INVALID",
