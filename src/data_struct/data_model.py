@@ -59,7 +59,7 @@ class Judgement(BaseModel):
         summary_words (int): word count of summary
     """
     timestamp: str
-    article_id: int
+    summary_uid: str
     hhem_version: str
     hhem_score: float
     valid: bool

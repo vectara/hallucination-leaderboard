@@ -98,12 +98,12 @@ def calc_and_save_metrics(
     """
     article_texts = article_summary_df[SourceArticle.Keys.TEXT].tolist()
     article_summaries = article_summary_df[Summary.Keys.SUMMARY].tolist()
-    article_ids = article_summary_df[Summary.Keys.ARTICLE_ID].tolist()
+    summary_uids = article_summary_df[Summary.Keys.SUMMARY_UID].tolist()
 
     current_date = datetime.now(timezone.utc).date().isoformat()
 
-    for premise, hypothesis, a_id in tqdm(
-        zip(article_texts, article_summaries, article_ids),
+    for premise, hypothesis, summary_uid in tqdm(
+        zip(article_texts, article_summaries, summary_uids),
         total=len(article_texts),
         desc="HHEM Loop"
     ):
@@ -113,7 +113,7 @@ def calc_and_save_metrics(
         valid_summary = is_valid_summary(hypothesis)
         metric_record = Judgement(
             timestamp = current_date,
-            article_id = a_id,
+            summary_uid = summary_uid,
             hhem_version = hhem_model.__str__(),
             hhem_score = hhem_out.score,
             valid=valid_summary,
