@@ -14,8 +14,8 @@ GET_RESULTS = "get_results"
 
 # Runtime config
 CONFIG = {
-    "pipeline": [GET_RESULTS],
-    "overwrite": False,
+    "pipeline": [GET_SUMM, GET_JUDGE, GET_RESULTS],
+    "overwrite": True,
     "input_file": TEST_DATA_PATH,
     "temperature": 0.0, 
     "max_tokens": 1024,
@@ -28,6 +28,12 @@ CONFIG = {
             "params": {
                 "model_name": "claude-opus-4",
                 "date_code": "20250514"
+            }
+        },
+        {
+            "company": "openai",
+            "params": {
+                "model_name": "gpt-4.1",
             }
         }
 #         {

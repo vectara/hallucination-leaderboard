@@ -209,7 +209,10 @@ class AbstractLLM(ABC):
         ):
         self.max_tokens = 1024
         self.temperature = 0.0
-        self.date_code = date_code
+        if date_code:
+            self.date_code = date_code
+        else:
+            self.date_code = ""
         self.min_throttle_time = min_throttle_time
         self.company = company
         self.model_name = model_name

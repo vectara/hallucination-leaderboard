@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 
 class ModelParams(BaseModel):
@@ -12,7 +12,7 @@ class ModelParams(BaseModel):
             ("")
     """
     model_name: str
-    date_code: str
+    date_code: str = ""
     class Keys:
         MODEL_NAME = "model_name"
         DATE_CODE = "date_code"
