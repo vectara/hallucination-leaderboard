@@ -5,8 +5,7 @@ from src.scripts import (
 from dotenv import load_dotenv
 import pandas as pd
 import argparse
-from src.utils.json_utils import load_json, file_exists
-from src.utils.build_utils import builds_models, process_raw_config
+from src.utils.build_utils import builds_models
 from src.config import (
     TEST_DATA_PATH, LB_DATA_PATH, CONFIG, GET_SUMM, GET_JUDGE, GET_RESULTS
 )
@@ -36,23 +35,14 @@ def main(args: argparse.ArgumentParser):
 
     config = Config(**CONFIG)
 
-    # valid_model_configs = None
-    # if file_exists("config.json"):
-    #     raw_model_configs = load_json("config.json")
-    #     valid_model_configs = process_raw_config(raw_model_configs)
-    # else:
-    #     logger.log("No Config file was found, exiting")
-    #     return
-
-    # models = builds_models(valid_model_configs)
-    models = config.LLMs_to_eval
+    models = builds_models(config.LLMs_to_eval)
     article_df = pd.read_csv(data_path)
 
-    if args.process == "get_summ":
+    if args.process == GET_SUMM:
         get_summaries.run(models, article_df, ow=args.overwrite)
-    elif args.process == "get_judge":
+    elif args.process == GET_JUDGE:
         get_judgements.run(models, article_df)
-    elif args.process == "get_results":
+    elif args.process == GET_RESULTS:
         get_results.run(models)
     elif args.process == "get_summ_judge":
         get_summaries.run(models, article_df, ow=args.overwrite)
@@ -71,6 +61,37 @@ def main(args: argparse.ArgumentParser):
                 "config.py instead. Run program with --help flag for info"
             )
         )
+        config_run(config)
+
+
+def config_run(config: Config):
+    models = builds_models(config.LLMs_to_eval)
+    article_df = pd.read_csv(config.input_file)
+    if config.overwrite:
+        confirmation = input((
+            "\nOverwrite is enabled in the given config. "
+            "Are you sure you want to overwrite? [y/N]"
+        ))
+        if confirmation.lower() not in ("y", "yes"):
+            print("Aborting Run")
+            exit(0)
+
+    if config.pipeline == [GET_SUMM]:
+        get_summaries.run(models, article_df, ow=config.overwrite)
+    elif config.pipeline == [GET_JUDGE]:
+        get_judgements.run(models, article_df)
+    elif config.pipeline == [GET_RESULTS]:
+        get_results.run(models)
+    elif config.pipeline == [GET_SUMM, GET_JUDGE]:
+        get_summaries.run(models, article_df, ow=config.overwrite)
+        get_judgements.run(models, article_df)
+    elif config.pipeline == [GET_JUDGE, GET_RESULTS]:
+        get_judgements.run(models, article_df)
+        get_results.run(models)
+    elif config.pipeline == [GET_SUMM, GET_JUDGE, GET_RESULTS]:
+        get_summaries.run(models, article_df, ow=config.overwrite)
+        get_judgements.run(models, article_df)
+        get_results.run(models)
 
 if __name__ == "__main__":
     #TODO: Rethink how to name pipelines

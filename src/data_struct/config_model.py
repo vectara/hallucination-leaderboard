@@ -38,6 +38,7 @@ class ModelConfig(BaseModel):
 class Config(BaseModel):
     #TODO: Doc
     pipeline: List[str]
+    overwrite: bool
     input_file: str
     temperature: float
     max_tokens: int
@@ -47,6 +48,7 @@ class Config(BaseModel):
 
     class Keys:
         PIPELINE = "pipeline"
+        OVERWRITE = "overwrite"
         INPUT_FILE = "input_file"
         TEMPERATURE = "temperature"
         MAX_TOKENS = "max_tokens"

@@ -1,7 +1,7 @@
 from src.logging.Logger import logger
 from src.LLMs.model_registry import MODEL_REGISTRY
 from src.LLMs.AbstractLLM import AbstractLLM
-from src.data_struct.config_model import ModelConfig
+from src.data_struct.config_model import ModelConfig, Config
 from pydantic import ValidationError
 
 """
@@ -11,6 +11,12 @@ Functions:
     buld_models(config)
     process_raw_config(raw_model_configs)
 """
+
+def build_config(config: dict) -> Config:
+    #TODO: Doc
+    """
+    """
+
 
 def builds_models(config: list[ModelConfig]) -> list[AbstractLLM]:
     """
@@ -25,28 +31,23 @@ def builds_models(config: list[ModelConfig]) -> list[AbstractLLM]:
 
     models = []
     for model in config:
-        if model.enabled:
-            logger.log(
-                f"{model.company}-{model.params.model_name}-"
-                f"{model.params.date_code} enabled")
-        else:
-            logger.log(
-                f"{model.company}-{model.params.model_name}-"
-                f"{model.params.date_code} is disabled"
-            )
-            continue
-
         company_class = MODEL_REGISTRY.get(model.company)
         if company_class == None:
             logger.log("No registered class for this company, skipping")
+            print(f"This {company_class} is not registered, can't build")
             continue
 
         try:
             models.append(company_class(**model.params.model_dump()))
         except Exception as e:
             logger.log(
-                f"Failed to instantiate {model.company}-"
-                f"{model.params.model_name}-{model.params.date_code} : {e}")
+                f"failed to instantiate {model.company}-"
+                f"{model.params.model_name}-{model.params.date_code} : {e}"
+            )
+            print(
+                f"failed to instantiate {model.company}-"
+                f"{model.params.model_name}-{model.params.date_code} : {e}"
+            )
     return models
 
 def process_raw_config(raw_model_configs: list[dict]) -> list[ModelConfig]:
