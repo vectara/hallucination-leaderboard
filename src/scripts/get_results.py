@@ -2,7 +2,7 @@ from src.logging.Logger import logger
 import os
 from tqdm import tqdm
 from src.LLMs.AbstractLLM import AbstractLLM
-from src.utils.json_utils import file_exists, save_to_json
+from src.utils.json_utils import file_exists, append_record_to_jsonl
 import pandas as pd
 from datetime import datetime, timezone
 from src.data_struct.data_model import Stats
@@ -24,7 +24,7 @@ Functions:
     generate_and_save_results(model_name, judge_jsonl_path, results_json_path)
 """
 
-RESULTS_FILE = "stats.json"
+RESULTS_FILE = "stats.jsonl"
 
 def run(models: list[AbstractLLM]):
     """
@@ -49,10 +49,11 @@ def run(models: list[AbstractLLM]):
         if file_exists(judge_jsonl_path):
             logger.log(f"{JUDGEMENT_FILE} found for {model_name}")
 
-            results_json_file = f"{RESULTS_FILE}"
-            results_json_path = os.path.join(model_out_dir, results_json_file)
+            results_jsonl_file = f"{RESULTS_FILE}"
+            results_jsonl_path = os.path.join(model_out_dir, results_jsonl_file)
+            open(results_jsonl_path, 'w').close()
             generate_and_save_results(
-                model_name, judge_jsonl_path, results_json_path
+                model_name, judge_jsonl_path, results_jsonl_path
             )
         else:
             logger.log(
@@ -61,8 +62,9 @@ def run(models: list[AbstractLLM]):
     logger.log("Finished generating and saving results for all models")
 
 def generate_and_save_results(
-        model_name: str, judge_jsonl_path: str, results_json_path: str
+        model_name: str, judge_jsonl_path: str, results_jsonl_path: str
     ):
+    #TODO: Update doc
     """
     Loads metrics, computes all stats, formats them, and saves as json file
 
@@ -76,21 +78,24 @@ def generate_and_save_results(
     """
     results = {}
     current_date = datetime.now(timezone.utc).date().isoformat()
-
     metrics_df = pd.read_json(judge_jsonl_path, lines=True)
+    grouped_metric_df = metrics_df.groupby(Stats.Keys.DATE_CODE)
 
-    hr = round(compute_hallucination_rate(metrics_df)*100.0, 1)
-    ar = round(compute_answer_rate(metrics_df)*100.0, 1)
-    asl = round(compute_avg_summary_length(metrics_df), 1)
-    ci = round(compute_confidence_interval(metrics_df)*100.0, 1)
+    for date_code, subset_df in tqdm(grouped_metric_df, total=len(grouped_metric_df), desc="Date Code Loop"):
 
-    results = Stats(
-        timestamp=current_date,
-        llm=model_name,
-        hallucination_rate=hr,
-        confidence_interval=ci,
-        answer_rate=ar,
-        avg_summary_length=asl
-    )
+        hr = round(compute_hallucination_rate(subset_df)*100.0, 1)
+        ar = round(compute_answer_rate(subset_df)*100.0, 1)
+        asl = round(compute_avg_summary_length(subset_df), 1)
+        ci = round(compute_confidence_interval(subset_df)*100.0, 1)
 
-    save_to_json(results_json_path, results)
+        result_record = Stats(
+            timestamp=current_date,
+            llm=model_name,
+            date_code=str(date_code),
+            hallucination_rate=hr,
+            confidence_interval=ci,
+            answer_rate=ar,
+            avg_summary_length=asl
+        )
+
+        append_record_to_jsonl(results_jsonl_path, result_record)

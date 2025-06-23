@@ -40,13 +40,14 @@ class Summary(BaseModel):
 
     class Keys:
         TIMESTAMP = "timestamp"
+        SUMMARY_UID = "summary_uid"
         LLM = "llm"
         DATE_CODE = "date_code"
         ARTICLE_ID = "article_id"
         SUMMARY = "summary"
-        SUMMARY_UID = "summary_uid"
 
 class Judgement(BaseModel):
+    #TODO: Doc update
     """
     Representation of Judgements/Metrics for the Summary of an Article
 
@@ -68,13 +69,15 @@ class Judgement(BaseModel):
 
     class Keys:
         TIMESTAMP = "timestamp"
-        ARTICLE_ID = "article_id"
+        SUMMARY_UID = "summary_uid"
+        DATE_CODE = "date_code"
         HHEM_VERSION = "hhem_version"
         HHEM_SCORE = "hhem_score"
         VALID = "valid"
         SUMMARY_WORDS = "summary_words"
 
 class Stats(BaseModel):
+    #TODO: Doc update
     """
     Representation of Stats for the Summaries of the Article Dataset. These are
     aggregated Judgements/Metrics
@@ -91,6 +94,7 @@ class Stats(BaseModel):
     """
     timestamp: str
     llm: str
+    date_code: str
     hallucination_rate: float
     confidence_interval: float
     answer_rate: float
@@ -99,6 +103,7 @@ class Stats(BaseModel):
     class Keys:
         TIMESTAMP = "timestamp"
         LLM = "llm"
+        DATE_CODE = "date_code"
         HALLUCINATION_RATE = "hallucination_rate"
         CONFIDENCE_INTERVAL = "confidence_interval"
         ANSWER_RATE = "answer_rate"
