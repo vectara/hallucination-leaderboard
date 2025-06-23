@@ -107,11 +107,11 @@ def generate_and_save_summaries(
             )
             record = Summary(
                 timestamp=current_date,
+                summary_uid=summary_uid,
                 llm=model.get_model_name(),
                 date_code=model.get_date_code(),
                 article_id=a_id,
-                summary=summary,
-                summary_uid=summary_uid
+                summary=summary
             )
             append_record_to_jsonl(jsonl_path, record)
 

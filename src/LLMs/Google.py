@@ -34,7 +34,7 @@ class Google(AbstractLLM):
         )
         api_key = os.getenv("GEMINI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name not in self.g_local:
+        if self.model_name not in self.local_model_category:
             self.client = genai.Client(api_key=api_key)
         else:
             self.client = None

@@ -32,11 +32,11 @@ class Summary(BaseModel):
         summary (str): llm generated summary of the text associated to article_id
     """
     timestamp: str
+    summary_uid: str
     llm: str
     date_code: str
     article_id: int
     summary: str
-    summary_uid: str
 
     class Keys:
         TIMESTAMP = "timestamp"
@@ -60,6 +60,7 @@ class Judgement(BaseModel):
     """
     timestamp: str
     summary_uid: str
+    date_code: str
     hhem_version: str
     hhem_score: float
     valid: bool
