@@ -18,9 +18,9 @@ class Anthropic(AbstractLLM):
         model (str): anthropic style model name
     """
 
-    anth_local = []
+    local_model_category = []
 
-    anth1 = ["claude-opus-4", "claude-sonnet-4"]
+    model_category1 = ["claude-opus-4", "claude-sonnet-4"]
 
     def __init__(self, model_name, date_code):
         super().__init__(
@@ -30,14 +30,14 @@ class Anthropic(AbstractLLM):
         )
         api_key = os.getenv("ANTHROPIC_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name not in self.anth_local:
+        if self.model_name not in self.local_model_category:
             self.client = anthropic.Client(api_key=api_key)
         else:
             self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model_name in self.anth1 and self.client:
+        if self.model_name in self.model_category1 and self.client:
             chat_package = self.client.messages.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
@@ -50,13 +50,13 @@ class Anthropic(AbstractLLM):
         return summary
 
     def setup(self):
-        if self.model_name in self.anth_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass
 
     def teardown(self):
-        if self.model_name in self.anth_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass

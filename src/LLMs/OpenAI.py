@@ -22,15 +22,15 @@ class OpenAi(AbstractLLM):
         model (str): OpenAI style model name
     """
 
-    open_local = []
+    local_model_category = []
 
-    open1 = ["gpt-4.1"]
+    model_category1 = ["gpt-4.1"]
 
     # o3 doesn't support adjusting the temperature
-    open2 = ["o3"]
+    model_category2 = ["o3"]
 
     # o3 doesn't support chatting protocol and doesn't support adjusting temperature
-    open3 = ["o3-pro"]
+    model_category3 = ["o3-pro"]
 
     def __init__(self, model_name, date_code):
         super().__init__(
@@ -40,11 +40,14 @@ class OpenAi(AbstractLLM):
         )
         api_key = os.getenv("OPENAI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        self.client = OpenAI(api_key=api_key)
+        if self.model_name not in self.local_model_category:
+            self.client = OpenAI(api_key=api_key)
+        else:
+            self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model_name in self.open1 and self.client:
+        if self.model_name in self.model_category1 and self.client:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,
@@ -52,14 +55,14 @@ class OpenAi(AbstractLLM):
                 messages=[{"role": "user", "content":prepared_text}]
             )
             summary = chat_package.choices[0].message.content
-        elif self.model_name in self.open2 and self.client:
+        elif self.model_name in self.model_category2 and self.client:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
                 max_completion_tokens=self.max_tokens
             )
             summary = chat_package.choices[0].message.content
-        elif self.model_name in self.open3 and self.client:
+        elif self.model_name in self.model_category3 and self.client:
             chat_package = self.client.responses.create(
                 model=self.model,
                 input=prepared_text,
@@ -72,13 +75,13 @@ class OpenAi(AbstractLLM):
         return summary
 
     def setup(self):
-        if self.model_name in self.open_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass
 
     def teardown(self):
-        if self.model_name in self.open_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass

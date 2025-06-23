@@ -19,9 +19,9 @@ class Fanar(AbstractLLM):
         model (str): Fanar style model name
     """
 
-    fan_local = []
+    local_model_category = []
 
-    fan = ["Fanar"]
+    model_category1 = ["Fanar"]
 
     def __init__(self, model_name, date_code):
         super().__init__(
@@ -41,7 +41,7 @@ class Fanar(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model in self.fan and self.client:
+        if self.model in self.model_category1 and self.client:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,
@@ -54,13 +54,13 @@ class Fanar(AbstractLLM):
         return summary
 
     def setup(self):
-        if self.model_name in self.fan_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass
 
     def teardown(self):
-        if self.model_name in self.fan_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass

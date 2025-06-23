@@ -20,9 +20,9 @@ class MistralAI(AbstractLLM):
         model (str): MistralAI Style model name
     """
 
-    mist_local = []
+    local_model_category = []
 
-    mist1 = ["magistral-medium"]
+    model_category1 = ["magistral-medium"]
 
     def __init__(self, model_name, date_code):
         super().__init__(
@@ -39,7 +39,7 @@ class MistralAI(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model_name in self.mist1 and self.client:
+        if self.model_name in self.model_category1 and self.client:
             chat_package = self.client.chat.complete(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
@@ -52,13 +52,13 @@ class MistralAI(AbstractLLM):
         return summary
 
     def setup(self):
-        if self.model_name in self.mist_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass
 
     def teardown(self):
-        if self.model_name in self.mist_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass

@@ -19,9 +19,9 @@ class DeepSeekAI(AbstractLLM):
         self.model (str): DeepSeekAI style model name
     """
 
-    ds_local = []
+    local_model_category = []
 
-    ds1 = ["DeepSeek-R1"]
+    model_category1 = ["DeepSeek-R1"]
 
     def __init__(self, model_name, date_code):
         super().__init__(
@@ -39,7 +39,7 @@ class DeepSeekAI(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model in self.ds1 and self.client:
+        if self.model in self.model_category1 and self.client:
             messages = [{"role": "user", "content":prepared_text}]
             client_package = self.client.chat_completion(messages, temperature=self.temperature)
             summary = client_package.choices[0].message.content
@@ -48,13 +48,13 @@ class DeepSeekAI(AbstractLLM):
         return summary
 
     def setup(self):
-        if self.model_name in self.ds_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass
 
     def teardown(self):
-        if self.model_name in self.ds_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass

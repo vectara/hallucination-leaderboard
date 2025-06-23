@@ -20,10 +20,10 @@ class Google(AbstractLLM):
 
     """
 
-    g_local = []
+    local_model_category = []
 
     # gemini-2.5-pro-preview requieres large output token amount, set to 4096
-    g1 = ["gemini-2.5-pro-preview"]
+    model_category1 = ["gemini-2.5-pro-preview"]
 
     def __init__(self, model_name, date_code):
         super().__init__(
@@ -41,7 +41,7 @@ class Google(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model_name in self.g1 and self.client:
+        if self.model_name in self.model_category1 and self.client:
             response = self.client.models.generate_content(
                 model = self.model,
                 contents=prepared_text,
@@ -56,13 +56,13 @@ class Google(AbstractLLM):
         return summary
 
     def setup(self):
-        if self.model_name in self.g_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass
 
     def teardown(self):
-        if self.model_name in self.g_local:
+        if self.model_name in self.local_model_category:
             pass
         else:
             pass
