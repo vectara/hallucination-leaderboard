@@ -46,31 +46,3 @@ CONFIG = {
     ]
 
 }
-
-# Testing Config for new Models
-TESTING_CONFIG = {
-    "pipeline": [],
-    "overwrite": False,
-    "input_file": TEST_DATA_PATH,
-    "temperature": 0.0, 
-    "max_tokens": 0,
-    "simulation_count": 0,
-    "sample_count": 0,
-    "LLMs_to_eval":
-    [
-        {
-            "company": "anthropic",
-            "params": {
-                "model_name": "claude-opus-4",
-                "date_code": "20250514"
-            }
-        },
-        {
-            "company": "openai",
-            "params": {
-                "model_name": "gpt-4.1",
-            }
-        }
-    ]
-
-}

@@ -1,7 +1,7 @@
 from src.tests.AbstractTest import AbstractTest
 from src.LLMs.AbstractLLM import AbstractLLM
 from src.data_struct.config_model import Config
-from src.config import TEST_DATA_PATH, TESTING_CONFIG
+from src.config import TEST_DATA_PATH, CONFIG
 from src.utils.json_utils import load_json, file_exists
 from src.utils.build_utils import builds_models, process_raw_config
 from src.logging.Logger import logger
@@ -43,7 +43,7 @@ class TestLLM(AbstractTest):
         Returns:
             None
         """
-        config = Config(**TESTING_CONFIG)
+        config = Config(**CONFIG)
         models = builds_models(config.LLMs_to_eval)
         logger.info("Testing LLM functionality")
         for model in models:
