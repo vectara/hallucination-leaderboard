@@ -52,8 +52,11 @@ class TestAnalytics(AbstractTest):
         Returns:
             None
         """
-        hr = round(compute_hallucination_rate(self.metrics_df)*100.0, 1)
-        assert hr == self.stat_answers[Stats.Keys.HALLUCINATION_RATE].iloc[0]
+        grouped_metric_df = self.metrics_df.groupby(Stats.Keys.DATE_CODE)
+
+        for date_code, subset_df in grouped_metric_df:
+            hr = round(compute_hallucination_rate(subset_df)*100.0, 1)
+            assert hr == self.stat_answers[self.stat_answers[Stats.Keys.DATE_CODE] == date_code][Stats.Keys.HALLUCINATION_RATE].values[0]
 
     def test_answer_rate(self):
         """
@@ -64,8 +67,11 @@ class TestAnalytics(AbstractTest):
         Returns:
             None
         """
-        ar = round(compute_answer_rate(self.metrics_df)*100.0, 1)
-        assert ar == self.stat_answers[Stats.Keys.ANSWER_RATE].iloc[0]
+        grouped_metric_df = self.metrics_df.groupby(Stats.Keys.DATE_CODE)
+
+        for date_code, subset_df in grouped_metric_df:
+            ar = round(compute_answer_rate(subset_df)*100.0, 1)
+            assert ar == self.stat_answers[self.stat_answers[Stats.Keys.DATE_CODE] == date_code][Stats.Keys.ANSWER_RATE].values[0]
 
     def test_avg_summary_length(self):
         """
@@ -76,8 +82,11 @@ class TestAnalytics(AbstractTest):
         Returns:
             None
         """
-        asl = round(compute_avg_summary_length(self.metrics_df), 1)
-        assert asl == self.stat_answers[Stats.Keys.AVG_SUMMARY_LENGTH].iloc[0]
+        grouped_metric_df = self.metrics_df.groupby(Stats.Keys.DATE_CODE)
+
+        for date_code, subset_df in grouped_metric_df:
+            asl = round(compute_avg_summary_length(subset_df), 1)
+            assert asl == self.stat_answers[self.stat_answers[Stats.Keys.DATE_CODE] == date_code][Stats.Keys.AVG_SUMMARY_LENGTH].values[0]
 
     def test_confidence_interval(self):
         """
@@ -88,8 +97,11 @@ class TestAnalytics(AbstractTest):
         Returns:
             None
         """
-        ci = round(compute_confidence_interval(self.metrics_df)*100.0, 1)
-        assert ci == self.stat_answers[Stats.Keys.CONFIDENCE_INTERVAL].iloc[0]
+        grouped_metric_df = self.metrics_df.groupby(Stats.Keys.DATE_CODE)
+
+        for date_code, subset_df in grouped_metric_df:
+            ci = round(compute_confidence_interval(subset_df)*100.0, 1)
+            assert ci == self.stat_answers[self.stat_answers[Stats.Keys.DATE_CODE] == date_code][Stats.Keys.CONFIDENCE_INTERVAL].values[0]
 
     def test_valid_summary(self):
         """
