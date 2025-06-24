@@ -1,7 +1,10 @@
-{"timestamp":"2025-06-10","article_id":1,"hhem_version":"HHEM-2.3","hhem_score":0.9,"valid":true,"summary_words":15}
-{"timestamp":"2025-06-10","article_id":2,"hhem_version":"HHEM-2.3","hhem_score":0.5,"valid":true,"summary_words":32}
-{"timestamp":"2025-06-10","article_id":3,"hhem_version":"HHEM-2.3","hhem_score":0.3,"valid":true,"summary_words":15}
-{"timestamp":"2025-06-10","article_id":4,"hhem_version":"HHEM-2.3","hhem_score":0.98,"valid":false,"summary_words":2}
-{"timestamp":"2025-06-10","article_id":5,"hhem_version":"HHEM-2.3","hhem_score":0.7,"valid":true,"summary_words":9}
-{"timestamp":"2025-06-10","article_id":6,"hhem_version":"HHEM-2.3","hhem_score":0.99,"valid":false,"summary_words":6}
-{"timestamp":"2025-06-10","article_id":7,"hhem_version":"HHEM-2.3","hhem_score":0.1,"valid":false,"summary_words":8}
+{"timestamp":"2025-06-10","article_id":1,"summary_uid":"uid0","date_code":"061024","hhem_version":"HHEM-2.3","hhem_score":0.9,"valid":true,"summary_words":15}
+{"timestamp":"2025-06-10","article_id":2,"summary_uid":"uid1","date_code":"061024","hhem_version":"HHEM-2.3","hhem_score":0.2,"valid":true,"summary_words":8}
+{"timestamp":"2025-06-10","article_id":3,"summary_uid":"uid2","date_code":"061024","hhem_version":"HHEM-2.3","hhem_score":0.4,"valid":false,"summary_words":6}
+{"timestamp":"2025-06-10","article_id":4,"summary_uid":"uid3","date_code":"061024","hhem_version":"HHEM-2.3","hhem_score":0.98,"valid":false,"summary_words":2}
+{"timestamp":"2025-06-10","article_id":5,"summary_uid":"uid4","date_code":"061024","hhem_version":"HHEM-2.3","hhem_score":0.7,"valid":true,"summary_words":9}
+{"timestamp":"2025-06-10","article_id":6,"summary_uid":"uid5","date_code":"061025","hhem_version":"HHEM-2.3","hhem_score":0.99,"valid":false,"summary_words":6}
+{"timestamp":"2025-06-10","article_id":7,"summary_uid":"uid6","date_code":"061025","hhem_version":"HHEM-2.3","hhem_score":0.1,"valid":false,"summary_words":8}
+{"timestamp":"2025-06-10","article_id":8,"summary_uid":"uid7","date_code":"061025","hhem_version":"HHEM-2.3","hhem_score":0.1,"valid":false,"summary_words":22}
+{"timestamp":"2025-06-10","article_id":9,"summary_uid":"uid8","date_code":"061025","hhem_version":"HHEM-2.3","hhem_score":0.5,"valid":true,"summary_words":32}
+{"timestamp":"2025-06-10","article_id":10,"summary_uid":"uid9","date_code":"061025","hhem_version":"HHEM-2.3","hhem_score":0.3,"valid":true,"summary_words":9}
