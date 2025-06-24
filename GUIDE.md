@@ -187,7 +187,7 @@ class CompanyName(AbstractLLM):
 Add your new model to the global CONFIG variable and run the test script to verify that the model does indeed return a string.
 
 ```bash
-python3 test_main.py
+python3 test_script.py
 ```
 
 ### New Model to Existing Company
@@ -255,5 +255,5 @@ class CompanyName(AbstractLLM):
 Same as before add your new model to the global CONFIG variable and run the test script to verify that the model does indeed return a string.
 
 ```bash
-python3 test_main.py
+python3 test_script.py
 ```
