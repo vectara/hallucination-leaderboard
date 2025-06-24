@@ -21,7 +21,7 @@ Global Variables:
 
 Functions:
     run(models)
-    generate_and_save_results(model_name, judge_jsonl_path, results_json_path)
+    generate_and_save_results(model_name, judge_jsonl_path, results_jsonl_path)
 """
 
 RESULTS_FILE = "stats.jsonl"
@@ -64,14 +64,15 @@ def run(models: list[AbstractLLM]):
 def generate_and_save_results(
         model_name: str, judge_jsonl_path: str, results_jsonl_path: str
     ):
-    #TODO: Update doc
     """
-    Loads metrics, computes all stats, formats them, and saves as json file
+    Loads metrics, computes all stats, formats them, and saves as jsonl file.
+    Date codes are grouped and then stats are performed on them seperately.
+    Each date code has its own entry in the output file.
 
     Args:
         model_name (str): name of model
         judge_jsonl_path (str): path to metrics jsonl
-        results_json_path (str): path to new json file
+        results_jsonl_path (str): path to new json file
 
     Returns:
         None

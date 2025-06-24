@@ -20,14 +20,16 @@ class SourceArticle(BaseModel):
         DATASET = "dataset"
 
 class Summary(BaseModel):
-    #TODO: Doc
     """
     Representation of a Summary of an Article
     
     Fields:
         timestamp (str): Date summary was produced
+        summary_uid (str): hash for this summary
         llm (str): unique llm identifier, matches the label the respective
             company gave it
+        date_code (str): date code of model
+        temperature (float): temperature of model
         article_id (int): unique id of article
         summary (str): llm generated summary of the text associated to article_id
     """
@@ -49,13 +51,13 @@ class Summary(BaseModel):
         SUMMARY = "summary"
 
 class Judgement(BaseModel):
-    #TODO: Doc update
     """
     Representation of Judgements/Metrics for the Summary of an Article
 
     Fields:
         timestamp (str): date the metrics were performed
-        article_id (int): id of the article summarized
+        summary_uid (str): hash for this summary
+        date_code (str): date code of model
         hhem_version (str): version of hhem applied for hhem score
         hhem_score (float): Hughes Hallucination Evaluation Metric (HHEM)
         valid (bool): Validity of the summary, defined in is_valid_summary
@@ -79,7 +81,6 @@ class Judgement(BaseModel):
         SUMMARY_WORDS = "summary_words"
 
 class Stats(BaseModel):
-    #TODO: Doc update
     """
     Representation of Stats for the Summaries of the Article Dataset. These are
     aggregated Judgements/Metrics
@@ -87,6 +88,7 @@ class Stats(BaseModel):
     Fields:
         timestamp (str): date the stats were performed
         llm (str): llm that performed the summarization
+        date_code (str): date code of model
         hallucination_rate (float): hallucination rate on all summaries
         confidence_interval (float): variation in the hallucination rate
         answer_rate (float): For all summaries what percentage of them were

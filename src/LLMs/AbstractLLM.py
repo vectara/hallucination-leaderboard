@@ -195,6 +195,9 @@ class AbstractLLM(ABC):
         get_model_name(): returns name of model
         get_company(): get company of model
         get_model_out_dir(): get the output directory dedicated for this model
+        get_date_code(): get date code
+        get_temperature(): get temperature
+        set_temperature(temp, reason): sets temperature
         summarize(prepared_text): Requests LLM to summarize the given text
         setup(): setup model for runtime use
         teardown(): teardown model when no longer needed for runtime use
@@ -432,21 +435,37 @@ class AbstractLLM(ABC):
         """
         return self.model_output_dir
 
-    def get_date_code(self):
-        #TODO: Doc
+    def get_date_code(self) -> str:
         """
+        Gets date code
+
+        Args:
+            None
+        
+        Returns:
+            str: date code
         """
         return self.date_code
 
-    def get_temperature(self):
-        #TODO: Doc
+    def get_temperature(self) -> float:
         """
+        Gets temperature
+
+        Args:
+            None
+
+        Returns
+            float: temperature
         """
         return self.temperature
 
-    def set_temperature(self, temp, reason="no reason given"):
-        #TODO: Doc
+    def set_temperature(self, temp: float, reason="no reason given"):
         """
+        Sets temperature, optionally can provide a reason.
+
+        Args:
+            temp (float): temperature
+            reason (str): reason for changing temp
         """
         logger.warning(
             f"Temperature for {self.model_name} was changed from "

@@ -12,12 +12,6 @@ Functions:
     process_raw_config(raw_model_configs)
 """
 
-def build_config(config: dict) -> Config:
-    #TODO: Doc
-    """
-    """
-
-
 def builds_models(config: list[ModelConfig]) -> list[AbstractLLM]:
     """
     Builds the models given in the config list if it is registered

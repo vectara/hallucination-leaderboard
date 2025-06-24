@@ -1,8 +1,16 @@
 import logging
 from datetime import datetime
 
-def setup_logger(log_name="log"):
-    #TODO: Doc
+def setup_logger(log_name="log") -> logging.Logger:
+    """
+    Sets up the logger and logs a message of when the logger was started
+
+    Args:
+        log_name (str): name of the file to store logs. Defaults to log.txt
+
+    Returns:
+        logging.Logger: the logger object
+    """
     logger = logging.getLogger(log_name)
     logger.setLevel(logging.INFO)
 
