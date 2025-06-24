@@ -40,7 +40,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame):
     Returns:
         None
     """
-    logger.log(f"Starting to generate {JUDGEMENT_FILE} scores")
+    logger.info(f"Starting to generate {JUDGEMENT_FILE} scores")
 
     hhem_model = HHEM_2_3()
 
@@ -48,13 +48,13 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame):
         model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
-        logger.log(f"Generating {JUDGEMENT_FILE} scores for {model_name}")
+        logger.info(f"Generating {JUDGEMENT_FILE} scores for {model_name}")
 
         summaries_jsonl_file = f"{SUMMARY_FILE}"
         summaries_jsonl_path = os.path.join(model_out_dir, summaries_jsonl_file)
 
         if file_exists(summaries_jsonl_path):
-            logger.log(f"{SUMMARY_FILE} found for {model_name}")
+            logger.info(f"{SUMMARY_FILE} found for {model_name}")
             summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
             article_summary_df = pd.merge(
                 article_df, summaries_df,
@@ -71,10 +71,10 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame):
                 hhem_model, article_summary_df, judgements_jsonl_path
             )
         else:
-            logger.log(
+            logger.warning(
                 f"{SUMMARY_FILE} not found for {model_name}, skipping model"
             )
-    logger.log(
+    logger.info(
         f"Finished generating and saving {JUDGEMENT_FILE} for all models"
     )
 

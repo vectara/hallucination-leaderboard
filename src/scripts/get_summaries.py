@@ -38,9 +38,9 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow=False):
         None
     """
 
-    logger.log(f"Starting to generate {SUMMARY_FILE}")
+    logger.info(f"Starting to generate {SUMMARY_FILE}")
     if ow:
-        logger.log(
+        logger.info(
             f"Overwrite flag enabled"
         )
 
@@ -48,26 +48,26 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow=False):
         model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
-        logger.log(f"Generating {SUMMARY_FILE} for {model_name}")
+        logger.info(f"Generating {SUMMARY_FILE} for {model_name}")
 
         jsonl_file = f"{SUMMARY_FILE}"
         summaries_jsonl_path = os.path.join(model_out_dir, jsonl_file)
 
         if not file_exists(summaries_jsonl_path):
-            logger.log(f"{SUMMARY_FILE} file does not exist, generating...")
+            logger.info(f"{SUMMARY_FILE} file does not exist, generating...")
             open(summaries_jsonl_path, 'w').close()
         elif file_exists(summaries_jsonl_path) and ow:
-            logger.log(f"Overwriting previous data in {SUMMARY_FILE}")
+            logger.info(f"Overwriting previous data in {SUMMARY_FILE}")
             open(summaries_jsonl_path, 'w').close()
         else:
-            logger.log(f"Adding additional data to {SUMMARY_FILE}")
+            logger.info(f"Adding additional data to {SUMMARY_FILE}")
 
         generate_and_save_summaries(model, article_df, summaries_jsonl_path)
-        logger.log(f"Finished generating and saving for {model_name}")
+        logger.info(f"Finished generating and saving for {model_name}")
         
-        logger.log("Moving on to next model")
+        logger.info("Moving on to next model")
     
-    logger.log(f"Finished generating and saving {SUMMARY_FILE} for all models")
+    logger.info(f"Finished generating and saving {SUMMARY_FILE} for all models")
 
 def generate_and_save_summaries(
         model: AbstractLLM,
@@ -92,7 +92,7 @@ def generate_and_save_summaries(
     article_texts = article_df[SourceArticle.Keys.TEXT].tolist()
     article_ids = article_df[SourceArticle.Keys.ARTICLE_ID].tolist()
 
-    logger.log("Appending to jsonl file")
+    logger.info("Appending to jsonl file")
     with model as m: 
         for article, a_id in tqdm(
             zip(article_texts, article_ids),

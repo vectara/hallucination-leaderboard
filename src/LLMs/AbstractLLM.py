@@ -294,15 +294,15 @@ class AbstractLLM(ABC):
         try:
             llm_summary = self.summarize_one_article(article)
         except Exception as e:
-            logger.log((
-                f"~WARNING~ Model call failed for {self.model_name}: {e} "
+            logger.warning((
+                f"Model call failed for {self.model_name}: {e} "
             ))
             return MODEL_FAILED_TO_RETURN_OUTPUT
 
         if not isinstance(llm_summary, str):
             bad_output = llm_summary
-            logger.log((
-                f"~WARNING~ {self.model_name} returned unexpected output. Expected a "
+            logger.warning((
+                f"{self.model_name} returned unexpected output. Expected a "
                 f"string but got {type(bad_output).__name__}. "
                 f"Replacing output."
             ))
@@ -369,7 +369,7 @@ class AbstractLLM(ABC):
 
         """
         if '<think>' in raw_summary and '</think>' not in raw_summary:
-            logger.log(f"~WARNING~: <think> tag found with no </think>. This is indicative of an incomplete response from an LLM. Raw Summary: {raw_summary}")
+            logger.warning(f"<think> tag found with no </think>. This is indicative of an incomplete response from an LLM. Raw Summary: {raw_summary}")
             return INCOMPLETE_THINK_TAG
 
         summary = re.sub(
@@ -448,7 +448,7 @@ class AbstractLLM(ABC):
         #TODO: Doc
         """
         """
-        logger.log(
+        logger.warning(
             f"Temperature for {self.model_name} was changed from "
             f"{self.temperature} to {temp} because: {reason}"
         )

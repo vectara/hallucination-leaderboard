@@ -68,10 +68,10 @@ def config_run(config: Config):
     models = builds_models(config.LLMs_to_eval)
     article_df = pd.read_csv(config.input_file)
     if config.overwrite:
-        confirmation = input((
+        confirmation = input(
             "\nOverwrite is enabled in the given config. "
-            "Are you sure you want to overwrite? [y/N]"
-        ))
+            "Are you sure you want to overwrite? [y/N]: "
+        )
         if confirmation.lower() not in ("y", "yes"):
             print("Aborting Run")
             exit(0)
@@ -147,6 +147,6 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    logger.log("Starting main program")
+    logger.info("Starting main program")
     main(args)
-    logger.log("Main program exiting.")
+    logger.info("Main program exiting.")

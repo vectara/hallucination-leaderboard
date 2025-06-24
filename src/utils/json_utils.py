@@ -38,11 +38,11 @@ def save_to_jsonl(jsonl_path: str, records: list[BaseModel]):
         jsonl_path (str): path to file
         records (list[BaseModel]): records to be saved
     """
-    logger.log("Saving JSONL file")
+    logger.info("Saving JSONL file")
     with open(jsonl_path, "w") as f:
         for record in records:
             f.write(record.model_dump_json() + "\n")
-    logger.log("JSONL file saved")
+    logger.info("JSONL file saved")
 
 def append_record_to_jsonl(jsonl_path: str, record: BaseModel):
     """
@@ -66,7 +66,7 @@ def save_to_json(json_path: str, data: Any):
     Returns:
         None
     """
-    logger.log("Saving JSON file")
+    logger.info("Saving JSON file")
     json_data = None
     if isinstance(data, BaseModel):
         json_data = data.model_dump()
@@ -80,7 +80,7 @@ def save_to_json(json_path: str, data: Any):
 
     with open(json_path, "w") as f:
         json.dump(json_data, f, indent=4)
-    logger.log("JSON file saved")
+    logger.info("JSON file saved")
 
 def file_exists(json_path: str) -> bool:
     """

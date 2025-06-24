@@ -1,7 +1,7 @@
 from src.tests.AbstractTest import AbstractTest
 from src.LLMs.AbstractLLM import AbstractLLM
 from src.config import TEST_DATA_PATH
-from src.utils.json_utils import load_json, json_exists
+from src.utils.json_utils import load_json, file_exists
 from src.utils.build_utils import builds_models, process_raw_config
 from src.logging.Logger import logger
 import csv
@@ -44,11 +44,11 @@ class TestLLM(AbstractTest):
             None
         """
         valid_config = None
-        if json_exists(self.config_path):
+        if file_exists(self.config_path):
             raw_config = load_json(self.config_path)
             valid_config = process_raw_config(raw_config)
         else:
-            logger.log(f"{self.config_path} not found, exiting")
+            logger.warning(f"{self.config_path} not found, exiting")
             print(
                 f"WARNING: {self.config_path} not found, cannot perform LLM "
                 "tests without it."
@@ -57,13 +57,13 @@ class TestLLM(AbstractTest):
 
         models = builds_models(valid_config)
 
-        logger.log("Testing LLM functionality")
+        logger.info("Testing LLM functionality")
         for model in models:
-            logger.log(f"Running tests on {model.get_model_name()}")
+            logger.info(f"Running tests on {model.get_model_name()}")
             self.set_model(model)
             self.test_summarize(self.sample_article)
-            logger.log(f"{model.get_model_name()} passed")
-        logger.log("Finished testing models")
+            logger.info(f"{model.get_model_name()} passed")
+        logger.info("Finished testing models")
 
     def test_summarize(self, test_article: str):
         """

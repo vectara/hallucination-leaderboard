@@ -24,7 +24,7 @@ def run(models: list[AbstractLLM]):
     Returns:
         None
     """
-    logger.log("Starting combine HHEM scores")
+    logger.info("Starting combine HHEM scores")
 
     combined_hhem_scores = {}
     out_dir = os.getenv("OUTPUT_DIR")
@@ -34,33 +34,33 @@ def run(models: list[AbstractLLM]):
         model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
-        logger.log(f"Gathering {model_name} HHEM data")
+        logger.info(f"Gathering {model_name} HHEM data")
 
         hhem_json_file = f"hhem_scores_{model_name}.json"
         hhem_json_path = os.path.join(model_out_dir, hhem_json_file)
 
         if json_exists(hhem_json_path):
 
-            logger.log(f"HHEM score JSON found for {model_name}")
+            logger.info(f"HHEM score JSON found for {model_name}")
 
             json_data = load_json(hhem_json_path)
             if model_name not in combined_hhem_scores:
                 combined_hhem_scores[model_name] = json_data
             else:
-                logger.log((
+                logger.warning((
                     f"{model_name} was found to already have an entry, "
                     "skipping. This message occured likely because this model"
                     "is being processed twice or has the same name as "
                     "another model."
                 ))
         else:
-            logger.log(
+            logger.info(
                 f"HHEM JSON score not found for {model_name}, skipping model"
             )
             continue
-    logger.log("Saving combined HHEM scores")
+    logger.info("Saving combined HHEM scores")
     save_to_json(combined_file_path, combined_hhem_scores)
-    logger.log("Finished combining and saving HHEM scores")
+    logger.info("Finished combining and saving HHEM scores")
 
 if __name__ == "__main__":
     pass

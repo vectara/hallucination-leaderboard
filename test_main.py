@@ -20,10 +20,10 @@ def run_tests():
     Returns:
         None
     """
-    logger.log("Running Tests...")
+    logger.info("Running Tests...")
     tests = [TestAnalytics(), TestLLM()]
     test_models(tests)
-    logger.log("Tests Completed")
+    logger.info("Tests Completed")
 
 def test_models(tests: list[AbstractTest]):
     """
@@ -36,9 +36,9 @@ def test_models(tests: list[AbstractTest]):
         None
     """
     for test in tests:
-        logger.log(f"Running {test.__str__()}")
+        logger.info(f"Running {test.__str__()}")
         test.run_tests()
-        logger.log(f"Finished Running {test.__str__()}")
+        logger.info(f"Finished Running {test.__str__()}")
 
 if __name__ == "__main__":
     load_dotenv()

@@ -33,14 +33,14 @@ def builds_models(config: list[ModelConfig]) -> list[AbstractLLM]:
     for model in config:
         company_class = MODEL_REGISTRY.get(model.company)
         if company_class == None:
-            logger.log("No registered class for this company, skipping")
+            logger.warning("No registered class for this company, skipping")
             print(f"This {company_class} is not registered, can't build")
             continue
 
         try:
             models.append(company_class(**model.params.model_dump()))
         except Exception as e:
-            logger.log(
+            logger.warning(
                 f"failed to instantiate {model.company}-"
                 f"{model.params.model_name}-{model.params.date_code} : {e}"
             )
@@ -67,7 +67,7 @@ def process_raw_config(raw_model_configs: list[dict]) -> list[ModelConfig]:
             model_config = ModelConfig(**raw_model_config)
             model_configs.append(model_config)
         except ValidationError as e:
-            logger.log(
+            logger.warning(
                 f"Config error at index {i} with error {e}, replacing with "
                 "dummy entry"
             )

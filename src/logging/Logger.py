@@ -1,34 +1,25 @@
+import logging
 from datetime import datetime
 
-class Logger:
-    """
-    Basic Logger Class
+def setup_logger(log_name="log"):
+    #TODO: Doc
+    logger = logging.getLogger(log_name)
+    logger.setLevel(logging.INFO)
 
-    Attributes:
-        file_name (str): full file name
+    if not logger.handlers:
+        file_handler = logging.FileHandler(f"{log_name}.txt")
+        formatter = logging.Formatter(
+            "%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S"
+        )
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
 
-    Methods:
-        log(msg): appends a log to the file
-    """
-    def __init__(self, log_name="log"):
-        self.file_name = log_name + ".txt"
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        with open(self.file_name, 'a') as f:
-            intro_msg = f"--- {log_name} started on {timestamp} ---\n"
-            f.write(intro_msg)
+        intro_msg = (
+            f"--- {log_name} started on "
+            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---"
+        )
+        logger.critical(intro_msg)
 
-    def log(self, msg: str):
-        """
-        Given a message, adds a timestamp to it and appends it to the file
+    return logger
 
-        Args:
-            msg(str): log message
-
-        Returns:
-            None
-        """
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        with open(self.file_name, 'a') as f:
-            f.write(f"{timestamp} - {msg}\n")
-
-logger = Logger()
+logger = setup_logger()

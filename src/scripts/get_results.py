@@ -36,18 +36,18 @@ def run(models: list[AbstractLLM]):
     Returns:
         None
     """
-    logger.log("Starting results computation")
+    logger.info("Starting results computation")
 
     for model in tqdm(models, desc="Model Loop"):
         model_name = model.get_model_name()
         model_out_dir = model.get_model_out_dir()
 
-        logger.log(f"Generating results for {model_name}")
+        logger.info(f"Generating results for {model_name}")
 
         judge_jsonl_path = os.path.join(model_out_dir, JUDGEMENT_FILE)
 
         if file_exists(judge_jsonl_path):
-            logger.log(f"{JUDGEMENT_FILE} found for {model_name}")
+            logger.info(f"{JUDGEMENT_FILE} found for {model_name}")
 
             results_jsonl_file = f"{RESULTS_FILE}"
             results_jsonl_path = os.path.join(model_out_dir, results_jsonl_file)
@@ -56,10 +56,10 @@ def run(models: list[AbstractLLM]):
                 model_name, judge_jsonl_path, results_jsonl_path
             )
         else:
-            logger.log(
+            logger.warning(
                 f"{JUDGEMENT_FILE} not found for {model_name}, skipping model"
             )
-    logger.log("Finished generating and saving results for all models")
+    logger.info("Finished generating and saving results for all models")
 
 def generate_and_save_results(
         model_name: str, judge_jsonl_path: str, results_jsonl_path: str
