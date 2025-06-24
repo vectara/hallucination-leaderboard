@@ -9,7 +9,7 @@ def setup_logger(log_name="log"):
     if not logger.handlers:
         file_handler = logging.FileHandler(f"{log_name}.txt")
         formatter = logging.Formatter(
-            "%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S"
+            "%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
         )
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)

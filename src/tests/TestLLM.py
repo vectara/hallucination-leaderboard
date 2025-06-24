@@ -1,6 +1,7 @@
 from src.tests.AbstractTest import AbstractTest
 from src.LLMs.AbstractLLM import AbstractLLM
-from src.config import TEST_DATA_PATH
+from src.data_struct.config_model import Config
+from src.config import TEST_DATA_PATH, TESTING_CONFIG
 from src.utils.json_utils import load_json, file_exists
 from src.utils.build_utils import builds_models, process_raw_config
 from src.logging.Logger import logger
@@ -27,7 +28,6 @@ class TestLLM(AbstractTest):
             first_row = next(reader)
             self.sample_article = first_row["text"]
         self.model = None
-        self.config_path = "test_config.json"
 
     def __str__(self):
         return "TestLLM"
@@ -43,20 +43,8 @@ class TestLLM(AbstractTest):
         Returns:
             None
         """
-        valid_config = None
-        if file_exists(self.config_path):
-            raw_config = load_json(self.config_path)
-            valid_config = process_raw_config(raw_config)
-        else:
-            logger.warning(f"{self.config_path} not found, exiting")
-            print(
-                f"WARNING: {self.config_path} not found, cannot perform LLM "
-                "tests without it."
-            )
-            return
-
-        models = builds_models(valid_config)
-
+        config = Config(**TESTING_CONFIG)
+        models = builds_models(config.LLMs_to_eval)
         logger.info("Testing LLM functionality")
         for model in models:
             logger.info(f"Running tests on {model.get_model_name()}")

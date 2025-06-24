@@ -4,11 +4,11 @@ TEST_DATA_PATH="datasets/test_articles.csv"
 LB_DATA_PATH="datasets/leaderboard_dataset_revised.csv"
 OUTPUT_DIR="output"
 TEST_JUDGEMENTS_DATA = "datasets/test_analytics/judgements.jsonl"
-TEST_RESULTS_DATA = "datasets/test_analytics/stats.json"
+TEST_RESULTS_DATA = "datasets/test_analytics/stats.jsonl"
 TEST_SUMMARIES_DATA = "datasets/test_analytics/summaries.jsonl"
 
 # Protocols
-GET_SUMM = "get_summary"
+GET_SUMM = "get_summaries"
 GET_JUDGE = "get_judgements"
 GET_RESULTS = "get_results"
 
@@ -43,6 +43,34 @@ CONFIG = {
 #                 "date_code": "20250514"
 #             }
 #         }
+    ]
+
+}
+
+# Testing Config for new Models
+TESTING_CONFIG = {
+    "pipeline": [],
+    "overwrite": False,
+    "input_file": TEST_DATA_PATH,
+    "temperature": 0.0, 
+    "max_tokens": 0,
+    "simulation_count": 0,
+    "sample_count": 0,
+    "LLMs_to_eval":
+    [
+        {
+            "company": "anthropic",
+            "params": {
+                "model_name": "claude-opus-4",
+                "date_code": "20250514"
+            }
+        },
+        {
+            "company": "openai",
+            "params": {
+                "model_name": "gpt-4.1",
+            }
+        }
     ]
 
 }
