@@ -23,15 +23,16 @@ class Fanar(AbstractLLM):
 
     model_category1 = ["Fanar"]
 
-    def __init__(self, model_name, date_code):
+    def __init__(self, model_name, date_code, temperature):
         super().__init__(
             model_name,
             date_code,
+            temperature=temperature,
             company="Fanar"
         )
         api_key = os.getenv("FANAR_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name not in self.fan_local:
+        if self.model_name not in self.local_model_category:
             self.client = OpenAI(
                 base_url="https://api.fanar.qa/v1",
                 api_key=api_key

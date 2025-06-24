@@ -3,6 +3,7 @@ from typing import List, Optional
 
 
 class ModelParams(BaseModel):
+    #TODO: Doc
     """
     Parameters necssary for setting up a company specific model
 
@@ -12,9 +13,11 @@ class ModelParams(BaseModel):
             ("")
     """
     model_name: str
+    temperature: float = 0.0
     date_code: str = ""
     class Keys:
         MODEL_NAME = "model_name"
+        TEMPERATURE = "temperature"
         DATE_CODE = "date_code"
 
 class ModelConfig(BaseModel):
@@ -45,6 +48,10 @@ class Config(BaseModel):
     simulation_count: int
     sample_count: int
     LLMs_to_eval: List[ModelConfig]
+
+    def model_post_init(self, __context):
+        for model_config in self.LLMs_to_eval:
+            model_config.params.temperature = self.temperature
 
     class Keys:
         PIPELINE = "pipeline"

@@ -24,15 +24,16 @@ class MistralAI(AbstractLLM):
 
     model_category1 = ["magistral-medium"]
 
-    def __init__(self, model_name, date_code):
+    def __init__(self, model_name, date_code, temperature):
         super().__init__(
             model_name,
             date_code,
+            temperature=temperature,
             company="mistralai"
         )
         api_key = os.getenv("MISTRALAI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name not in self.mist_local:
+        if self.model_name not in self.local_model_category:
             self.client = Mistral(api_key=api_key)
         else:
             self.client = None

@@ -24,6 +24,7 @@ Functions:
 SUMMARY_FILE = "summaries.jsonl"
 
 def run(models: list[AbstractLLM], article_df: pd.DataFrame, ow=False):
+    #TODO: Doc
     """
     Generates summaries for a given model if the corresponding jsonl file does 
     not exist, overwrite flag will overwrite existing jsonl file
@@ -110,6 +111,7 @@ def generate_and_save_summaries(
                 summary_uid=summary_uid,
                 llm=model.get_model_name(),
                 date_code=model.get_date_code(),
+                temperature=model.get_temperature(),
                 article_id=a_id,
                 summary=summary
             )

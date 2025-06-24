@@ -23,16 +23,17 @@ class DeepSeekAI(AbstractLLM):
 
     model_category1 = ["DeepSeek-R1"]
 
-    def __init__(self, model_name, date_code):
+    def __init__(self, model_name, date_code, temperature):
         super().__init__(
             model_name,
             date_code,
+            temperature=temperature,
             company="deepseek-ai",
             min_throttle_time=4
         )
         company_model= f"{self.company}/{self.model_name}"
         self.model = self.get_model_identifier(company_model, date_code)
-        if self.model_name not in self.ds_local:
+        if self.model_name not in self.local_model_category:
             self.client = InferenceClient(model=self.model)
         else:
             self.client = None

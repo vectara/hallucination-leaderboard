@@ -204,11 +204,12 @@ class AbstractLLM(ABC):
             self,
             model_name: str, 
             date_code: str,
+            temperature = 0.0,
             company="NullCompany",
             min_throttle_time=0
         ):
         self.max_tokens = 1024
-        self.temperature = 0.0
+        self.temperature = temperature
         if date_code:
             self.date_code = date_code
         else:
@@ -436,6 +437,26 @@ class AbstractLLM(ABC):
         """
         """
         return self.date_code
+
+    def get_temperature(self):
+        #TODO: Doc
+        """
+        """
+        return self.temperature
+
+    def set_temperature(self, temp, reason="no reason given"):
+        #TODO: Doc
+        """
+        """
+        logger.log(
+            f"Temperature for {self.model_name} was changed from "
+            f"{self.temperature} to {temp} because: {reason}"
+        )
+        print(
+            f"Temperature for {self.model_name} was changed from "
+            f"{self.temperature} to {temp} because: {reason}"
+        )
+        self.temperature = temp
 
     @abstractmethod
     def summarize(self, prepared_text: str) -> str:

@@ -35,6 +35,7 @@ class Summary(BaseModel):
     summary_uid: str
     llm: str
     date_code: str
+    temperature: float
     article_id: int
     summary: str
 
@@ -44,6 +45,7 @@ class Summary(BaseModel):
         LLM = "llm"
         DATE_CODE = "date_code"
         ARTICLE_ID = "article_id"
+        TEMPERATURE = "temperature"
         SUMMARY = "summary"
 
 class Judgement(BaseModel):

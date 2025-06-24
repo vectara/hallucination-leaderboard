@@ -22,10 +22,11 @@ class Anthropic(AbstractLLM):
 
     model_category1 = ["claude-opus-4", "claude-sonnet-4"]
 
-    def __init__(self, model_name, date_code):
+    def __init__(self, model_name, date_code, temperature):
         super().__init__(
             model_name,
             date_code,
+            temperature=temperature,
             company="anthropic"
         )
         api_key = os.getenv("ANTHROPIC_API_KEY")
