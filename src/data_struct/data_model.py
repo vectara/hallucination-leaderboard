@@ -31,6 +31,7 @@ class Summary(BaseModel):
         date_code (str): date code of model
         temperature (float): temperature of model
         max_tokens (int): max tokens allocated for model
+        thinking_tokens(int): number of allocated thinking tokens
         article_id (int): unique id of article
         summary (str): llm generated summary of the text associated to article_id
     """
@@ -40,6 +41,7 @@ class Summary(BaseModel):
     date_code: str
     temperature: float
     max_tokens: int
+    thinking_tokens: int
     article_id: int
     summary: str
 
@@ -48,9 +50,10 @@ class Summary(BaseModel):
         SUMMARY_UID = "summary_uid"
         LLM = "llm"
         DATE_CODE = "date_code"
-        ARTICLE_ID = "article_id"
         TEMPERATURE = "temperature"
         MAX_TOKENS = "max_tokens"
+        THINKING_TOKENS = "thinking_tokens"
+        ARTICLE_ID = "article_id"
         SUMMARY = "summary"
 
 class Judgement(BaseModel):

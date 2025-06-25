@@ -112,6 +112,7 @@ def generate_and_save_summaries(
                 date_code=model.get_date_code(),
                 temperature=model.get_temperature(),
                 max_tokens=model.get_max_tokens(),
+                thinking_tokens=model.get_thinking_tokens(),
                 article_id=a_id,
                 summary=summary
             )

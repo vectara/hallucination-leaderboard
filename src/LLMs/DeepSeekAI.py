@@ -23,14 +23,18 @@ class DeepSeekAI(AbstractLLM):
 
     model_category1 = ["DeepSeek-R1"]
 
-    def __init__(self, model_name, date_code, temperature, max_tokens):
+    def __init__(
+            self, model_name, date_code,
+            temperature, max_tokens, thinking_tokens, min_throttle_time
+        ):
         super().__init__(
             model_name,
             date_code,
             temperature=temperature,
             max_tokens=max_tokens,
-            company="deepseek-ai",
-            min_throttle_time=4
+            thinking_tokens=thinking_tokens,
+            min_throttle_time=min_throttle_time,
+            company="deepseek-ai"
         )
         company_model= f"{self.company}/{self.model_name}"
         self.model = self.get_model_identifier(company_model, date_code)

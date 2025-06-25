@@ -23,16 +23,21 @@ class Google(AbstractLLM):
     local_model_category = []
 
     # gemini-2.5-pro-preview requieres large output token amount, set to 4096
+    # 9 throttle time
     model_category1 = ["gemini-2.5-pro-preview"]
 
-    def __init__(self, model_name, date_code, temperature, max_tokens):
+    def __init__(
+            self, model_name, date_code,
+            temperature, max_tokens, thinking_tokens, min_throttle_time
+        ):
         super().__init__(
             model_name, 
             date_code,
             temperature=temperature,
             max_tokens=max_tokens,
-            company="google",
-            min_throttle_time=9
+            thinking_tokens=thinking_tokens,
+            min_throttle_time=min_throttle_time,
+            company="google"
         )
         api_key = os.getenv("GEMINI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)

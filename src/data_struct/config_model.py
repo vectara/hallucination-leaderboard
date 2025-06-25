@@ -12,17 +12,24 @@ class ModelParams(BaseModel):
         temperature (float): temperature hyperparm for model. Optional, 
             defaults to 0.0
         max_tokens (int): number of allowed output tokens
+        thinking_tokens (int): number of thinking tokens for reasoning models
+        min_throttle_time (float): time ine seconds required for each request
+            to avoid throttling
     """
     model_name: str
     date_code: str = ""
     temperature: float = 0.0
     max_tokens: int = 1024
+    thinking_tokens: int = 0
+    min_throttle_time: float = 0.0
 
     class Keys:
         MODEL_NAME = "model_name"
         DATE_CODE = "date_code"
         TEMPERATURE = "temperature"
         MAX_TOKENS = "max_tokens"
+        THINKING_TOKENS = "thinking_tokens"
+        MIN_THROTTLE_TIME = "min_throttle_time"
 
 class ModelConfig(BaseModel):
     """

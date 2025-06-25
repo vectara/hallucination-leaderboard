@@ -175,6 +175,7 @@ class AbstractLLM(ABC):
         company (str): Company of model
         temperature (float): set to 0.0 to compare deterministic output
         max_tokens (int): number of tokens for models
+        thinking_tokens (int): number of thinking tokens
         min_throttle_time (float): minimum amount of time a request must run to
             avoid throttling 
         model_output_dir (str): path to output directory
@@ -198,6 +199,7 @@ class AbstractLLM(ABC):
         get_date_code(): get date code
         get_temperature(): get temperature
         get_max_tokens(): get max tokens
+        get_thinking_tokens(): get thinking tokens
         set_temperature(temp, reason): sets temperature
         summarize(prepared_text): Requests LLM to summarize the given text
         setup(): setup model for runtime use
@@ -208,13 +210,15 @@ class AbstractLLM(ABC):
             self,
             model_name: str, 
             date_code: str,
-            temperature = 0.0,
-            max_tokens = 1024,
-            company="NullCompany",
-            min_throttle_time=0
+            temperature: float,
+            max_tokens: int,
+            thinking_tokens: int,
+            min_throttle_time: float,
+            company="NullCompany"
         ):
         self.max_tokens = max_tokens
         self.temperature = temperature
+        self.thinking_tokens = thinking_tokens
         if date_code:
             self.date_code = date_code
         else:
@@ -472,6 +476,18 @@ class AbstractLLM(ABC):
             int: max tokens
         """
         return self.max_tokens
+
+    def get_thinking_tokens(self) -> int:
+        """
+        Get thinking tokens
+
+        Args:
+            None
+        
+        Returns:
+            int: thinking tokens
+        """
+        return self.thinking_tokens
 
     def set_temperature(self, temp: float, reason="no reason given"):
         """
