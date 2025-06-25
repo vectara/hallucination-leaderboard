@@ -25,6 +25,8 @@ class Google(AbstractLLM):
     # gemini-2.5-pro-preview requieres large output token amount, set to 4096
     # 9 throttle time
     model_category1 = ["gemini-2.5-pro-preview"]
+    
+    model_category2 = ["gemini-2.5-pro"]
 
     def __init__(
             self, model_name, date_code,
@@ -56,6 +58,17 @@ class Google(AbstractLLM):
                     max_output_tokens = 4096,
                     temperature = self.temperature
                 )
+            )
+            summary = response.text
+        if self.model_name in self.model_category2 and self.client:
+            response = self.client.models.generate_content(
+                model=self.model,
+                contents=prepared_text,
+                config=types.GenerateContentConfig(
+                    temperature=self.temperature,
+                    max_output_tokens=self.max_tokens,
+                    thinking_config=types.ThinkingConfig(thinking_budget=self.thinking_tokens)
+                ),
             )
             summary = response.text
         else:

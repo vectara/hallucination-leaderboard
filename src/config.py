@@ -24,25 +24,35 @@ CONFIG = {
     "LLMs_to_eval":
     [
         {
-            "company": "anthropic",
+            "company": "google",
             "params": {
-                "model_name": "claude-opus-4",
-                "date_code": "20250514"
-            }
-        },
-        {
-            "company": "openai",
-            "params": {
-                "model_name": "gpt-4.1",
+                "model_name": "gemini-2.5-pro",
+                "thinking_tokens": 128
             }
         }
-#         {
-#             "company": "anthropic",
-#             "params": {
-#                 "model_name": "claude-sonnet-4",
-#                 "date_code": "20250514"
-#             }
-#         }
+        # ,
+        # {
+        #     "company": "anthropic",
+        #     "params": {
+        #         "model_name": "claude-opus-4",
+        #         "date_code": "20250514"
+        #     }
+        # }
+        # ,
+        # {
+        #     "company": "openai",
+        #     "params": {
+        #         "model_name": "gpt-4.1",
+        #     }
+        # }
+        #,
+        # {
+        #     "company": "anthropic",
+        #     "params": {
+        #         "model_name": "claude-sonnet-4",
+        #         "date_code": "20250514"
+        #     }
+        # }
     ]
 
 }
