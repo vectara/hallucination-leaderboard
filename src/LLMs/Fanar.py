@@ -24,17 +24,22 @@ class Fanar(AbstractLLM):
     model_category1 = ["Fanar"]
 
     def __init__(
-            self, model_name, date_code,
-            temperature, max_tokens, thinking_tokens, min_throttle_time
-        ):
+            self,
+            model_name: str,
+            date_code: str,
+            temperature: float,
+            max_tokens: int,
+            thinking_tokens: int,
+            min_throttle_time: float
+    ):
         super().__init__(
             model_name,
             date_code,
-            temperature=temperature,
-            max_tokens=max_tokens,
-            thinking_tokens=thinking_tokens,
-            min_throttle_time=min_throttle_time,
-            company="Fanar"
+            temperature,
+            max_tokens,
+            thinking_tokens,
+            min_throttle_time,
+            company="anthropic"
         )
         api_key = os.getenv("FANAR_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)

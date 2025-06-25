@@ -215,7 +215,7 @@ class AbstractLLM(ABC):
             thinking_tokens: int,
             min_throttle_time: float,
             company="NullCompany"
-        ):
+    ):
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.thinking_tokens = thinking_tokens

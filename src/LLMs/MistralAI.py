@@ -25,17 +25,22 @@ class MistralAI(AbstractLLM):
     model_category1 = ["magistral-medium"]
 
     def __init__(
-            self, model_name, date_code,
-            temperature, max_tokens, thinking_tokens, min_throttle_time
-        ):
+            self,
+            model_name: str,
+            date_code: str,
+            temperature: float,
+            max_tokens: int,
+            thinking_tokens: int,
+            min_throttle_time: float
+    ):
         super().__init__(
             model_name,
             date_code,
-            temperature=temperature,
-            max_tokens=max_tokens,
-            thinking_tokens=thinking_tokens,
-            min_throttle_time=min_throttle_time,
-            company="mistralai"
+            temperature,
+            max_tokens,
+            thinking_tokens,
+            min_throttle_time,
+            company="anthropic"
         )
         api_key = os.getenv("MISTRALAI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)

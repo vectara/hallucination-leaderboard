@@ -39,17 +39,25 @@ CONFIG = {
             # Company model is from
             "company": "anthropic",
             "params": {
-                # Comapny defined model name
+                # model_name: Company defined model name
                 "model_name": "claude-opus-4",
-                # Company defined date code
-                "date_code": "20250514"
+                # date_code: Optional, defaults to "". Company defined date code
+                "date_code": "20250514",
+                # temperature: Optional defaults to 0.0
+                "temperature": 0.0,
+                # max_tokens: Optional, defaults to 1024
+                "max_tokens": 1024,
+                # thinking_tokens: Optionals, defaults to 0. Should always be set to 0 but if a model has to have thinking tokens set it to the minimal number required
+                "thinking_tokens": 0,
+                # min_throttle_time: Optional, defaults to 0.0 seconds. This is the minimum amount of time the summary request process must take before it moves on to the next. If it finishes before that time the program will halt.
+                "min_throttle_time": 0.0
             }
-        },
+        }
+        ,
         {
             "company": "openai",
             "params": {
                 "model_name": "gpt-4.1",
-                # Date code is optional, no need to add if a model does not have a date code
             }
         }
     ]
@@ -124,9 +132,7 @@ output/
 
 # Adding New Models
 
-It's assumed the model you are adding is NOT operating in thinking mode. If there
-isn't a way to use the model without thinking the model will not be added to the
-Leaderboard.
+It's assumed the model you are adding is NOT operating in thinking mode. If there isn't a way to use the model without thinking the model set the think_tokens parameter to the minimum value.
 
 ### New Company
 
@@ -151,8 +157,24 @@ class CompanyName(AbstractLLM):
 
     model_category1 = ["model1"]
 
-    def __init__(self, model_name, date_code=""):
-        super().__init__(model_name=model_name, company="company_name")
+    def __init__(
+            self,
+            model_name: str,
+            date_code: str,
+            temperature: float,
+            max_tokens: int,
+            thinking_tokens: int,
+            min_throttle_time: float
+    ):
+        super().__init__(
+            model_name,
+            date_code,
+            temperature,
+            max_tokens,
+            thinking_tokens,
+            min_throttle_time,
+            company="company_name"
+        )
         api_key = os.getenv("API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
         if self.model_name not in self.local_model_category:
@@ -218,8 +240,24 @@ class CompanyName(AbstractLLM):
     model_category1 = ["model1", "new_model2"]
     model_category2 = ["new_model3"]
 
-    def __init__(self, model_name, date_code=""):
-        super().__init__(model_name=model_name, company="company_name")
+    def __init__(
+            self,
+            model_name: str,
+            date_code: str,
+            temperature: float,
+            max_tokens: int,
+            thinking_tokens: int,
+            min_throttle_time: float
+    ):
+        super().__init__(
+            model_name,
+            date_code,
+            temperature,
+            max_tokens,
+            thinking_tokens,
+            min_throttle_time,
+            company="company_name"
+        )
         api_key = os.getenv("API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
         if self.model_name not in self.local_model_category:
