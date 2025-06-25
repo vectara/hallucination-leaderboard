@@ -124,6 +124,10 @@ output/
 
 # Adding New Models
 
+It's assumed the model you are adding is NOT operating in thinking mode. If there
+isn't a way to use the model without thinking the model will not be added to the
+Leaderboard.
+
 ### New Company
 
 If the model you want to run does not have a company.py file for it a new file needs to be made. 

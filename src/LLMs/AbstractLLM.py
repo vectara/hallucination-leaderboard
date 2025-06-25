@@ -197,6 +197,7 @@ class AbstractLLM(ABC):
         get_model_out_dir(): get the output directory dedicated for this model
         get_date_code(): get date code
         get_temperature(): get temperature
+        get_max_tokens(): get max tokens
         set_temperature(temp, reason): sets temperature
         summarize(prepared_text): Requests LLM to summarize the given text
         setup(): setup model for runtime use
@@ -208,10 +209,11 @@ class AbstractLLM(ABC):
             model_name: str, 
             date_code: str,
             temperature = 0.0,
+            max_tokens = 1024,
             company="NullCompany",
             min_throttle_time=0
         ):
-        self.max_tokens = 1024
+        self.max_tokens = max_tokens
         self.temperature = temperature
         if date_code:
             self.date_code = date_code
@@ -458,6 +460,18 @@ class AbstractLLM(ABC):
             float: temperature
         """
         return self.temperature
+
+    def get_max_tokens(self) -> int:
+        """
+        Get max tokens
+
+        Args:
+            None
+
+        Returns:
+            int: max tokens
+        """
+        return self.max_tokens
 
     def set_temperature(self, temp: float, reason="no reason given"):
         """

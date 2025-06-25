@@ -25,11 +25,12 @@ class Google(AbstractLLM):
     # gemini-2.5-pro-preview requieres large output token amount, set to 4096
     model_category1 = ["gemini-2.5-pro-preview"]
 
-    def __init__(self, model_name, date_code, temperature):
+    def __init__(self, model_name, date_code, temperature, max_tokens):
         super().__init__(
             model_name, 
             date_code,
             temperature=temperature,
+            max_tokens=max_tokens,
             company="google",
             min_throttle_time=9
         )

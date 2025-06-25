@@ -8,17 +8,21 @@ class ModelParams(BaseModel):
 
     Fields:
         model_name (str): name of model given by company
+        date_code (str): date code of model. Optional, defaults to ""
         temperature (float): temperature hyperparm for model. Optional, 
             defaults to 0.0
-        date_code (str): date code of model. Optional, defaults to ""
+        max_tokens (int): number of allowed output tokens
     """
     model_name: str
-    temperature: float = 0.0
     date_code: str = ""
+    temperature: float = 0.0
+    max_tokens: int = 1024
+
     class Keys:
         MODEL_NAME = "model_name"
-        TEMPERATURE = "temperature"
         DATE_CODE = "date_code"
+        TEMPERATURE = "temperature"
+        MAX_TOKENS = "max_tokens"
 
 class ModelConfig(BaseModel):
     """
@@ -70,6 +74,7 @@ class Config(BaseModel):
     def model_post_init(self, __context):
         for model_config in self.LLMs_to_eval:
             model_config.params.temperature = self.temperature
+            model_config.params.max_tokens = self.max_tokens
 
     class Keys:
         PIPELINE = "pipeline"
