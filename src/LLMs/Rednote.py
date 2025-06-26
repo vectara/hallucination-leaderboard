@@ -75,13 +75,9 @@ class Rednote(AbstractLLM):
                 self.model, device_map="auto", torch_dtype=torch.bfloat16
             )
             pass
-        else:
-            pass
 
     def teardown(self):
         if self.valid_client_model():
             pass
         elif self.valid_local_model():
-            pass
-        else:
             pass

@@ -63,13 +63,9 @@ class MistralAI(AbstractLLM):
             self.client = Mistral(api_key=api_key)
         elif self.valid_local_model():
             pass
-        else:
-            pass
 
     def teardown(self):
         if self.valid_client_model():
             pass
         elif self.valid_local_model():
-            pass
-        else:
             pass
