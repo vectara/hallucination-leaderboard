@@ -55,7 +55,7 @@ class MistralAI(AbstractLLM):
             chat_package = self.client.chat.complete(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
-                max_tokens=4096,
+                max_tokens=self.max_tokens,
                 temperature=self.temperature
             )
             summary = chat_package.choices[0].message.content
