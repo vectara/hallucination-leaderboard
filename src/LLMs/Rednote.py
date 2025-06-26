@@ -45,12 +45,8 @@ class Rednote(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.valid_local_model(self.model_category1):
+        if self.local_model and self.model in self.model_category1:
             tokenizer = AutoTokenizer.from_pretrained(self.model)
-
-            model = AutoModelForCausalLM.from_pretrained(
-                self.model, device_map="auto", torch_dtype=torch.bfloat16
-            )
 
             input_tensor = tokenizer.apply_chat_template(
                 {"role": "user", "content": prepared_text},
@@ -58,8 +54,9 @@ class Rednote(AbstractLLM):
                 return_tensors="pt"
             )
 
-            outputs = model.generate(
-                input_tensor.to(model.device), max_new_tokens=self.max_tokens
+            outputs = self.local_model.generate(
+                input_tensor.to(self.local_model.device),
+                max_new_tokens=self.max_tokens
             )
 
             result = tokenizer.decode(
@@ -75,6 +72,9 @@ class Rednote(AbstractLLM):
         if self.valid_client_model():
             pass
         elif self.valid_local_model():
+            self.local_model = AutoModelForCausalLM.from_pretrained(
+                self.model, device_map="auto", torch_dtype=torch.bfloat16
+            )
             pass
         else:
             pass

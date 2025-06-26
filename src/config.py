@@ -23,28 +23,30 @@ CONFIG = {
     "sample_count": 2,
     "LLMs_to_eval":
     [
+        # {
+        #     "company": "rednote",
+        #     "params": {
+        #         "model_name": "gemini-2.5-pro",
+        #         "execution_mode": "client"
+        #     }
+        # }
+        # ,
         {
-            "company": "rednote",
+            "company": "anthropic",
             "params": {
-                "model_name": "gemini-2.5-pro",
-                "mode": "client"
+                "model_name": "claude-opus-4",
+                "execution_mode": "client",
+                "date_code": "20250514"
             }
         }
-        # ,
-        # {
-        #     "company": "anthropic",
-        #     "params": {
-        #         "model_name": "claude-opus-4",
-        #         "date_code": "20250514"
-        #     }
-        # }
-        # ,
-        # {
-        #     "company": "openai",
-        #     "params": {
-        #         "model_name": "gpt-4.1",
-        #     }
-        # }
+        ,
+        {
+            "company": "openai",
+            "params": {
+                "model_name": "gpt-4.1",
+                "execution_mode": "client",
+            }
+        }
         #,
         # {
         #     "company": "anthropic",

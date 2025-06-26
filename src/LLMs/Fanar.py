@@ -43,7 +43,7 @@ class Fanar(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.valid_client_model(self.model_category1):
+        if self.client and self.model in self.model_category1:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,

@@ -48,7 +48,7 @@ class Google(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.valid_client_model(self.model_category1):
+        if self.client and self.model in self.model_category1:
             response = self.client.models.generate_content(
                 model = self.model,
                 contents=prepared_text,
@@ -58,7 +58,7 @@ class Google(AbstractLLM):
                 )
             )
             summary = response.text
-        elif self.valid_client_model(self.model_category2):
+        elif self.client and self.model in self.model_category2:
             response = self.client.models.generate_content(
                 model=self.model,
                 contents=prepared_text,
