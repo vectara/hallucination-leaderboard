@@ -10,6 +10,7 @@ from src.config import (
     TEST_DATA_PATH, LB_DATA_PATH, CONFIG, GET_SUMM, GET_JUDGE, GET_RESULTS
 )
 from src.data_struct.config_model import Config
+from src.LLMs.AbstractLLM import AbstractLLM
 
 """
 Main Program File
@@ -61,11 +62,10 @@ def main(args: argparse.ArgumentParser):
                 "config.py instead. Run program with --help flag for info"
             )
         )
-        config_run(config)
+        config_run(config, models)
 
 
-def config_run(config: Config):
-    models = builds_models(config.LLMs_to_eval)
+def config_run(config: Config, models: list[AbstractLLM]):
     article_df = pd.read_csv(config.input_file)
     if config.overwrite:
         confirmation = input(

@@ -14,7 +14,7 @@ GET_RESULTS = "get_results"
 
 # Runtime config
 CONFIG = {
-    "pipeline": [GET_SUMM, GET_JUDGE, GET_RESULTS],
+    "pipeline": [GET_SUMM],
     "overwrite": True,
     "input_file": TEST_DATA_PATH,
     "temperature": 0.0, 

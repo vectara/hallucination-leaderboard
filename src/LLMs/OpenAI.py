@@ -45,10 +45,12 @@ class OpenAi(AbstractLLM):
             company=COMPANY
         )
         self.model = self.get_model_identifier(model_name, date_code)
+        print(f"1: {self.model}")
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
         if self.client and self.model in self.model_category1:
+            print(self.model)
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,
@@ -57,13 +59,15 @@ class OpenAi(AbstractLLM):
             )
             summary = chat_package.choices[0].message.content
         elif self.client and self.model in self.model_category2:
+            print(self.model)
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
                 max_completion_tokens=self.max_tokens
             )
             summary = chat_package.choices[0].message.content
-        elif self.valid_client_model(self.model_category3):
+        elif self.client and self.model in self.model_category3:
+            print(self.model)
             chat_package = self.client.responses.create(
                 model=self.model,
                 input=prepared_text,
@@ -72,7 +76,6 @@ class OpenAi(AbstractLLM):
             summary = chat_package.output_text
         else:
             raise ValueError(f"Unsupported model: {self.model_name}")
-
         return summary
 
     def setup(self):
