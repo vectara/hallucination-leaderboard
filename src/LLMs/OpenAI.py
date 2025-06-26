@@ -42,7 +42,7 @@ class OpenAi(AbstractLLM):
             min_throttle_time,
             company=COMPANY
         )
-        api_key = os.getenv("OPENAI_API_KEY")
+        api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
         if self.model_name in self.client_model:
             self.client = OpenAI(api_key=api_key)

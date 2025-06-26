@@ -37,7 +37,7 @@ class MistralAI(AbstractLLM):
             min_throttle_time,
             company=COMPANY
         )
-        api_key = os.getenv("MISTRALAI_API_KEY")
+        api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
         if self.model_name in self.client_model:
             self.client = Mistral(api_key=api_key)

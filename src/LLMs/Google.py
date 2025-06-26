@@ -42,6 +42,7 @@ class Google(AbstractLLM):
             min_throttle_time,
             company=COMPANY
         )
+        api_key = os.getenv(f"{COMPANY.upper()}_GEMINI_API_KEY")
         api_key = os.getenv("GEMINI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
         if self.model_name in self.client_model:
