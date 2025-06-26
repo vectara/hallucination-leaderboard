@@ -49,7 +49,7 @@ CONFIG = {
                 "max_tokens": 1024,
                 # thinking_tokens: Optionals, defaults to 0. Should always be set to 0 but if a model has to have thinking tokens set it to the minimal number required
                 "thinking_tokens": 0,
-                # min_throttle_time: Optional, defaults to 0.0 seconds. This is the minimum amount of time the summary request process must take before it moves on to the next. If it finishes before that time the program will halt.
+                # min_throttle_time: Optional, defaults to 0.0 seconds. This is the minimum amount of time the summary request process must take before it moves on to the next. If it finishes before that time the program will halt until the required time has passed.
                 "min_throttle_time": 0.0
             }
         }
