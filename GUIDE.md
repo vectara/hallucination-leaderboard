@@ -143,7 +143,8 @@ from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 from src.LLMs.model_registry import register_model
 import os
 
-@register_model("company_name")
+COMPANY = "company_name"
+@register_model(COMPANY)
 class CompanyName(AbstractLLM):
     """
     Class for models from company_name
@@ -173,7 +174,7 @@ class CompanyName(AbstractLLM):
             max_tokens,
             thinking_tokens,
             min_throttle_time,
-            company="company_name"
+            company=COMPANY
         )
         api_key = os.getenv("API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
@@ -225,7 +226,8 @@ from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 from src.LLMs.model_registry import register_model
 import os
 
-@register_model("company_name")
+COMPANY = "company_name"
+@register_model(COMPANY)
 class CompanyName(AbstractLLM):
     """
     Class for models from company_name
@@ -256,7 +258,7 @@ class CompanyName(AbstractLLM):
             max_tokens,
             thinking_tokens,
             min_throttle_time,
-            company="company_name"
+            company=COMPANY
         )
         api_key = os.getenv("API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
