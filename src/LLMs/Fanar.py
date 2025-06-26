@@ -39,7 +39,7 @@ class Fanar(AbstractLLM):
         )
         api_key = os.getenv("FANAR_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name not in self.local_model_category:
+        if self.model_name in self.client_model:
             self.client = OpenAI(
                 base_url="https://api.fanar.qa/v1",
                 api_key=api_key
@@ -49,7 +49,7 @@ class Fanar(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model in self.model_category1 and self.client:
+        if self.valid_client_model(self.model, self.model_category1):
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,

@@ -39,14 +39,14 @@ class MistralAI(AbstractLLM):
         )
         api_key = os.getenv("MISTRALAI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name not in self.local_model_category:
+        if self.model_name in self.client_model:
             self.client = Mistral(api_key=api_key)
         else:
             self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model_name in self.model_category1 and self.client:
+        if self.valid_client_model(self.model, self.model_category1):
             chat_package = self.client.chat.complete(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],

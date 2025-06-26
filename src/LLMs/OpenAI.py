@@ -44,14 +44,14 @@ class OpenAi(AbstractLLM):
         )
         api_key = os.getenv("OPENAI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name not in self.local_model_category:
+        if self.model_name in self.client_model:
             self.client = OpenAI(api_key=api_key)
         else:
             self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model_name in self.model_category1 and self.client:
+        if self.valid_client_model(self.model, self.model_category1):
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,
@@ -59,14 +59,14 @@ class OpenAi(AbstractLLM):
                 messages=[{"role": "user", "content":prepared_text}]
             )
             summary = chat_package.choices[0].message.content
-        elif self.model_name in self.model_category2 and self.client:
+        elif self.valid_client_model(self.model, self.model_category2):
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
                 max_completion_tokens=self.max_tokens
             )
             summary = chat_package.choices[0].message.content
-        elif self.model_name in self.model_category3 and self.client:
+        elif self.valid_client_model(self.model, self.model_category3):
             chat_package = self.client.responses.create(
                 model=self.model,
                 input=prepared_text,

@@ -170,7 +170,8 @@ class AbstractLLM(ABC):
     Abstract Class
 
     Class Attributes:
-        local_model_category (list[str]): models that run locally
+        local_model (list[str]): models that run locally
+        client_model (list[str]): models that use an api
         model_category1 (list[str]): first list of models that follow a similar
             summarize protocol
         model_category2 (list[str]): 2nd list of models that follow a similar
@@ -213,7 +214,8 @@ class AbstractLLM(ABC):
         teardown(): teardown model when no longer needed for runtime use
     """
 
-    local_model_category = []
+    local_model = []
+    client_model = []
     model_category1 = []
     model_category2 = []
     model_category3 = []
@@ -400,6 +402,24 @@ class AbstractLLM(ABC):
             raw_summary, flags=re.DOTALL
         )
         return summary
+
+    def valid_client_model(self, model: str, model_category: list[str]):
+        #TODO: Doc
+        """
+        """
+        if model in self.client_model and model in model_category:
+            return True
+        else:
+            return False
+
+    def valid_local_model(self, model: str, model_category: list[str]):
+        #TODO: Doc
+        """
+        """
+        if model in self.local_model and model in model_category:
+            return True
+        else:
+            return False
 
     def get_model_identifier(self, model_name: str, date_code: str) -> str:
         """

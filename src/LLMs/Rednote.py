@@ -16,7 +16,8 @@ class Rednote(AbstractLLM):
         model (str): rednote style model name
     """
 
-    local_model_category = []
+    local_model = ["rednote-hilab/dots.llm1.inst"]
+    client_model = []
 
     model_category1 = ["rednote-hilab/dots.llm1.inst"]
 
@@ -40,14 +41,14 @@ class Rednote(AbstractLLM):
         )
         api_key = os.getenv("REDNOTE_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name not in self.local_model_category:
-            self.client = anthropic.Client(api_key=api_key)
+        if self.model_name in self.client_model:
+            self.client = None
         else:
             self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model_name in self.model_category1 and self.client:
+        if self.valid_local_model(self.model, self.model_category1):
             tokenizer = AutoTokenizer.from_pretrained(self.model)
 
             model = AutoModelForCausalLM.from_pretrained(
@@ -73,13 +74,13 @@ class Rednote(AbstractLLM):
         return summary
 
     def setup(self):
-        if self.model_name in self.local_model_category:
+        if self.model_name in self.local_model:
             pass
         else:
             pass
 
     def teardown(self):
-        if self.model_name in self.local_model_category:
+        if self.model_name in self.local_model:
             pass
         else:
             pass

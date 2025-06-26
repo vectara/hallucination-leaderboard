@@ -15,7 +15,8 @@ class DeepSeekAI(AbstractLLM):
         self.model (str): DeepSeekAI style model name
     """
 
-    local_model_category = []
+    local_model = []
+    client_model = ["DeepSeek-R1"]
 
     model_category1 = ["DeepSeek-R1"]
 
@@ -39,14 +40,14 @@ class DeepSeekAI(AbstractLLM):
         )
         company_model= f"{self.company}/{self.model_name}"
         self.model = self.get_model_identifier(company_model, date_code)
-        if self.model_name not in self.local_model_category:
+        if self.model_name in self.client_model:
             self.client = InferenceClient(model=self.model)
         else:
             self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model in self.model_category1 and self.client:
+        if self.valid_client_model(self.model, self.model_category1):
             messages = [{"role": "user", "content":prepared_text}]
             client_package = self.client.chat_completion(messages, temperature=self.temperature)
             summary = client_package.choices[0].message.content

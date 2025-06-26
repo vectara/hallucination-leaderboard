@@ -44,14 +44,14 @@ class Google(AbstractLLM):
         )
         api_key = os.getenv("GEMINI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name not in self.local_model_category:
+        if self.model_name in self.client_model:
             self.client = genai.Client(api_key=api_key)
         else:
             self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.model_name in self.model_category1 and self.client:
+        if self.valid_client_model(self.model, self.model_category1):
             response = self.client.models.generate_content(
                 model = self.model,
                 contents=prepared_text,
@@ -61,7 +61,7 @@ class Google(AbstractLLM):
                 )
             )
             summary = response.text
-        if self.model_name in self.model_category2 and self.client:
+        elif self.valid_client_model(self.model, self.model_category2):
             response = self.client.models.generate_content(
                 model=self.model,
                 contents=prepared_text,
