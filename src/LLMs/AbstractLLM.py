@@ -147,6 +147,7 @@ from src.config import OUTPUT_DIR
 import os
 import time
 import re
+from src.data_struct.config_model import ExecutionMode
 
 MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
 MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = (
@@ -182,6 +183,8 @@ class AbstractLLM(ABC):
         model (str): full model name expected by company, can be idnetical to 
             model_name
         client (~Client): client object
+        execution_mode (str): specifies mode of execution. Can only be "local"
+            or "client"
         prompt (str): Summary prompt
         company (str): Company of model
         temperature (float): set to 0.0 to compare deterministic output
@@ -217,8 +220,8 @@ class AbstractLLM(ABC):
         teardown(): teardown model when no longer needed for runtime use
     """
 
-    local_model = []
-    client_model = []
+    local_models = []
+    client_models = []
     model_category1 = []
     model_category2 = []
     model_category3 = []
@@ -228,6 +231,7 @@ class AbstractLLM(ABC):
     def __init__(
             self,
             model_name: str, 
+            execution_mode: str,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -242,8 +246,11 @@ class AbstractLLM(ABC):
         self.min_throttle_time = min_throttle_time
         self.company = company
         self.model_name = model_name
+        self.execution_mode = execution_mode
         self.model = None
         self.client = None
+        self.local_model = None
+        self.execution_mode = None
         self.prompt = ("You are a chat bot answering questions using data."
             "You must stick to the answers provided solely by the text in the "
             "passage provided. You are asked the question 'Provide a concise "
@@ -405,27 +412,25 @@ class AbstractLLM(ABC):
         )
         return summary
 
-    def valid_client_model(self, model_category: list[str]):
+    def valid_client_model(self):
         #TODO: Doc
         """
         """
         if (
-            self.model in self.client_model and 
-            self.model in model_category and 
-            self.client
+            self.model in self.client_models and 
+            self.execution_mode == ExecutionMode.CLIENT.value
         ):
             return True
         else:
             return False
 
-    def valid_local_model(self, model_category: list[str]):
+    def valid_local_model(self):
         #TODO: Doc
         """
         """
         if (
-            self.model in self.local_model and
-            self.model in model_category and
-            not self.client
+            self.model in self.local_models and
+            self.execution_mode == ExecutionMode.LOCAL.value
         ):
             return True
         else:

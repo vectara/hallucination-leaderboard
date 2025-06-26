@@ -24,10 +24,10 @@ CONFIG = {
     "LLMs_to_eval":
     [
         {
-            "company": "google",
+            "company": "rednote",
             "params": {
                 "model_name": "gemini-2.5-pro",
-                "thinking_tokens": 128
+                "mode": "client"
             }
         }
         # ,

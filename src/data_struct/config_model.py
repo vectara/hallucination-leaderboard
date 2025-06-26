@@ -1,6 +1,10 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Literal
+from enum import Enum
 
+class ExecutionMode(str, Enum):
+    CLIENT = "client"
+    LOCAL = "local"
 
 class ModelParams(BaseModel):
     """
@@ -8,6 +12,7 @@ class ModelParams(BaseModel):
 
     Fields:
         model_name (str): name of model given by company
+        execution_mode (str): method of execution. Only accepts client or local
         date_code (str): date code of model. Optional, defaults to ""
         temperature (float): temperature hyperparm for model. Optional, 
             defaults to 0.0
@@ -16,7 +21,9 @@ class ModelParams(BaseModel):
         min_throttle_time (float): time ine seconds required for each request
             to avoid throttling
     """
+
     model_name: str
+    execution_mode: ExecutionMode
     date_code: str = ""
     temperature: float = 0.0
     max_tokens: int = 1024
@@ -25,6 +32,7 @@ class ModelParams(BaseModel):
 
     class Keys:
         MODEL_NAME = "model_name"
+        EXECUTION_MODE = "execution_mode"
         DATE_CODE = "date_code"
         TEMPERATURE = "temperature"
         MAX_TOKENS = "max_tokens"
@@ -92,12 +100,3 @@ class Config(BaseModel):
         SIMULATION_COUNT = "simulation_count"
         SAMPLE_COUNT = "sample_count"
         LLMS_TO_EVAL = "LLMs_to_eval"
-
-DUMMY_CONFIG = ModelConfig(
-    company="INVALID",
-    enabled=False,
-    params=ModelParams(
-        model_name="INVALID",
-        date_code="INVALID"
-    )
-)

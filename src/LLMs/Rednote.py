@@ -24,6 +24,7 @@ class Rednote(AbstractLLM):
     def __init__(
             self,
             model_name: str,
+            execution_mode: str,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -32,6 +33,7 @@ class Rednote(AbstractLLM):
     ):
         super().__init__(
             model_name,
+            execution_mode,
             date_code,
             temperature,
             max_tokens,
@@ -39,10 +41,7 @@ class Rednote(AbstractLLM):
             min_throttle_time,
             company=COMPANY
         )
-        api_key = os.getenv("REDNOTE_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name in self.client_model:
-            self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
@@ -60,7 +59,7 @@ class Rednote(AbstractLLM):
             )
 
             outputs = model.generate(
-                input_tensor.to(model.device), max_new_tokens=200
+                input_tensor.to(model.device), max_new_tokens=self.max_tokens
             )
 
             result = tokenizer.decode(
@@ -73,13 +72,17 @@ class Rednote(AbstractLLM):
         return summary
 
     def setup(self):
-        if self.model_name in self.local_model:
+        if self.valid_client_model():
+            pass
+        elif self.valid_local_model():
             pass
         else:
             pass
 
     def teardown(self):
-        if self.model_name in self.local_model:
+        if self.valid_client_model():
+            pass
+        elif self.valid_local_model():
             pass
         else:
             pass

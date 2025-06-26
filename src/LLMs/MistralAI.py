@@ -22,6 +22,7 @@ class MistralAI(AbstractLLM):
     def __init__(
             self,
             model_name: str,
+            execution_mode: str,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -30,6 +31,7 @@ class MistralAI(AbstractLLM):
     ):
         super().__init__(
             model_name,
+            execution_mode,
             date_code,
             temperature,
             max_tokens,
@@ -37,10 +39,7 @@ class MistralAI(AbstractLLM):
             min_throttle_time,
             company=COMPANY
         )
-        api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
-        if self.model_name in self.client_model:
-            self.client = Mistral(api_key=api_key)
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
@@ -57,13 +56,18 @@ class MistralAI(AbstractLLM):
         return summary
 
     def setup(self):
-        if self.model_name in self.local_model_category:
+        if self.valid_client_model():
+            api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+            self.client = Mistral(api_key=api_key)
+        elif self.valid_local_model():
             pass
         else:
             pass
 
     def teardown(self):
-        if self.model_name in self.local_model_category:
+        if self.valid_client_model():
+            pass
+        elif self.valid_local_model():
             pass
         else:
             pass

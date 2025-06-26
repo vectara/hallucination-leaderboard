@@ -23,6 +23,7 @@ class DeepSeekAI(AbstractLLM):
     def __init__(
             self,
             model_name: str,
+            execution_mode: str,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -31,6 +32,7 @@ class DeepSeekAI(AbstractLLM):
     ):
         super().__init__(
             model_name,
+            execution_mode,
             date_code,
             temperature,
             max_tokens,
@@ -40,8 +42,6 @@ class DeepSeekAI(AbstractLLM):
         )
         company_model= f"{self.company}/{self.model_name}"
         self.model = self.get_model_identifier(company_model, date_code)
-        if self.model_name in self.client_model:
-            self.client = InferenceClient(model=self.model)
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
@@ -54,13 +54,17 @@ class DeepSeekAI(AbstractLLM):
         return summary
 
     def setup(self):
-        if self.model_name in self.local_model_category:
+        if self.valid_client_model():
+            self.client = InferenceClient(model=self.model)
+        elif self.valid_local_model():
             pass
         else:
             pass
 
     def teardown(self):
-        if self.model_name in self.local_model_category:
+        if self.valid_client_model():
+            pass
+        elif self.valid_local_model():
             pass
         else:
             pass
