@@ -4,7 +4,8 @@ import re
 
 from src.LLMs.model_registry import register_model
 
-@register_model("deepseek-ai")
+COMPANY = "deepseek-ai"
+@register_model(COMPANY)
 class DeepSeekAI(AbstractLLM):
     """
     Class for models from DeepSeekAI
@@ -39,7 +40,7 @@ class DeepSeekAI(AbstractLLM):
             max_tokens,
             thinking_tokens,
             min_throttle_time,
-            company="anthropic"
+            company=COMPANY
         )
         company_model= f"{self.company}/{self.model_name}"
         self.model = self.get_model_identifier(company_model, date_code)

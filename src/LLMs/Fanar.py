@@ -4,7 +4,8 @@ import os
 
 from src.LLMs.model_registry import register_model
 
-@register_model("fanar")
+COMPANY = "fanar"
+@register_model(COMPANY)
 class Fanar(AbstractLLM):
     """
     Class for models from Fanar
@@ -39,7 +40,7 @@ class Fanar(AbstractLLM):
             max_tokens,
             thinking_tokens,
             min_throttle_time,
-            company="anthropic"
+            company="fanar"
         )
         api_key = os.getenv("FANAR_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)

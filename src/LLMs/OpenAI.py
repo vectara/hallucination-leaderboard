@@ -3,7 +3,8 @@ import os
 from openai import OpenAI
 from src.LLMs.model_registry import register_model
 
-@register_model("openai")
+COMPANY ="openai"
+@register_model(COMPANY)
 class OpenAi(AbstractLLM):
     """
     Class for models from OpenAI
@@ -48,7 +49,7 @@ class OpenAi(AbstractLLM):
             max_tokens,
             thinking_tokens,
             min_throttle_time,
-            company="anthropic"
+            company=COMPANY
         )
         api_key = os.getenv("OPENAI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)

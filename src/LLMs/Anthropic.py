@@ -3,7 +3,8 @@ import os
 import anthropic
 from src.LLMs.model_registry import register_model
 
-@register_model("anthropic")
+COMPANY = "anthropic"
+@register_model(COMPANY)
 class Anthropic(AbstractLLM):
     """
     Class for models from Anthropic
@@ -38,7 +39,7 @@ class Anthropic(AbstractLLM):
             max_tokens,
             thinking_tokens,
             min_throttle_time,
-            company="anthropic"
+            company=COMPANY
         )
         api_key = os.getenv("ANTHROPIC_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)

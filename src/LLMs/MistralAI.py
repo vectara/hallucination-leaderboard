@@ -4,8 +4,8 @@ from mistralai import Mistral
 import os
 import re
 
-
-@register_model("mistralai")
+COMPANY = "mistralai"
+@register_model(COMPANY)
 class MistralAI(AbstractLLM):
     """
     Class for models from MistralAI
@@ -22,7 +22,7 @@ class MistralAI(AbstractLLM):
 
     local_model_category = []
 
-    model_category1 = ["magistral-medium"]
+    model_category1 = ["magistral-medium"] # Doesn't look like magistral can disable thinking
 
     def __init__(
             self,
@@ -40,7 +40,7 @@ class MistralAI(AbstractLLM):
             max_tokens,
             thinking_tokens,
             min_throttle_time,
-            company="anthropic"
+            company=COMPANY
         )
         api_key = os.getenv("MISTRALAI_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)
