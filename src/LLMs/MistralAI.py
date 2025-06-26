@@ -10,11 +10,6 @@ class MistralAI(AbstractLLM):
     """
     Class for models from MistralAI
 
-    Class Attributes:
-        mist_local (list[str]): models that run locally
-        mist1 (list[str]) first list of models that follow the same summarize
-            prototocol
-
     Attributes:
         client (str): client associated with api calls
         model (str): MistralAI Style model name

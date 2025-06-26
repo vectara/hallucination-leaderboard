@@ -169,6 +169,13 @@ class AbstractLLM(ABC):
     """
     Abstract Class
 
+    Class Attributes:
+        local_model_category (list[str]): models that run locally
+        model_category1 (list[str]): first list of models that follow a similar
+            summarize protocol
+        model_category2 (list[str]): 2nd list of models that follow a similar
+            summarize protocol
+
     Attributes:
         model_name (str): Name of the model
         prompt (str): Summary prompt
@@ -205,6 +212,13 @@ class AbstractLLM(ABC):
         setup(): setup model for runtime use
         teardown(): teardown model when no longer needed for runtime use
     """
+
+    local_model_category = []
+    model_category1 = []
+    model_category2 = []
+    model_category3 = []
+    model_category4 = []
+    model_category5 = []
 
     def __init__(
             self,

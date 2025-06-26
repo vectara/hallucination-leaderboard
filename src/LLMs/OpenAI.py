@@ -9,15 +9,6 @@ class OpenAi(AbstractLLM):
     """
     Class for models from OpenAI
 
-    Class Attributes:
-        open_local (list[str]): models that run locally
-        open1 (list[str]): first list of models that follow the same summarize
-            protocol
-        open2 (list[str]): 2nd list of models that follow the same summarize
-            protocol
-        open3 (list[str]): 3rd list of models that follow the same summarize
-            protocol
-
     Attributes:
         client (OpenAI): client associated with api calls
         model (str): OpenAI style model name

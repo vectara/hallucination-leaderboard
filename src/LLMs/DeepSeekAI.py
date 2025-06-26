@@ -10,11 +10,6 @@ class DeepSeekAI(AbstractLLM):
     """
     Class for models from DeepSeekAI
 
-    Class Attributes:
-        ds_local (list[str]): models that run locally
-        ds1 (list[str]): first list of models that follow similar summarize
-            protocol
-
     Attributes:
         client (InferenceClient): client associated with api calls
         self.model (str): DeepSeekAI style model name

@@ -10,11 +10,6 @@ class Fanar(AbstractLLM):
     """
     Class for models from Fanar
 
-    Class Attributes:
-        fan_local (list[str]): list of local models
-        fan1 (list[str]): first list of models that follow similar summarize
-            protocol
-
     Attributes:
         client (OpenAI): client associated with api calls
         model (str): Fanar style model name
@@ -40,7 +35,7 @@ class Fanar(AbstractLLM):
             max_tokens,
             thinking_tokens,
             min_throttle_time,
-            company="fanar"
+            company=COMPANY
         )
         api_key = os.getenv("FANAR_API_KEY")
         self.model = self.get_model_identifier(model_name, date_code)

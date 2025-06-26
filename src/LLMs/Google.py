@@ -10,11 +10,6 @@ class Google(AbstractLLM):
     """
     Class for models from Google
 
-    Class Attributes:
-        g_local (list[str]): models that run locally
-        g1 (list[str]): first list of models that follow the same summarize 
-            protocol
-
     Attributes:
         client (str): client associated with api calls
         model (str): google style model name

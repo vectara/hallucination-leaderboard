@@ -9,11 +9,6 @@ class Anthropic(AbstractLLM):
     """
     Class for models from Anthropic
 
-    Class Attributes:
-        anth_local (list[str]): models that run locally
-        anth1 (list[str]): first list of models that follow a similar summarize
-            protocol
-
     Attributes:
         client (Client): client associated with api calls with anthropic
         model (str): anthropic style model name
