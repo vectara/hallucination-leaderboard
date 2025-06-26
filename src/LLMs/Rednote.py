@@ -61,6 +61,7 @@ class Rednote(AbstractLLM):
             result = tokenizer.decode(
                 outputs[0][input_tensor.shape[1]:], skip_special_tokens=True
             )
+            print(result)
 
             summary = result
         else:
