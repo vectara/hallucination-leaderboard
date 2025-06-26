@@ -49,7 +49,7 @@ class OpenAi(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.valid_client_model(self.model, self.model_category1):
+        if self.valid_client_model(self.model_category1):
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,
@@ -57,14 +57,14 @@ class OpenAi(AbstractLLM):
                 messages=[{"role": "user", "content":prepared_text}]
             )
             summary = chat_package.choices[0].message.content
-        elif self.valid_client_model(self.model, self.model_category2):
+        elif self.valid_client_model(self.model_category2):
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
                 max_completion_tokens=self.max_tokens
             )
             summary = chat_package.choices[0].message.content
-        elif self.valid_client_model(self.model, self.model_category3):
+        elif self.valid_client_model(self.model_category3):
             chat_package = self.client.responses.create(
                 model=self.model,
                 input=prepared_text,

@@ -45,7 +45,7 @@ class DeepSeekAI(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.valid_client_model(self.model, self.model_category1):
+        if self.valid_client_model(self.model_category1):
             messages = [{"role": "user", "content":prepared_text}]
             client_package = self.client.chat_completion(messages, temperature=self.temperature)
             summary = client_package.choices[0].message.content

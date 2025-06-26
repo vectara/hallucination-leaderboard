@@ -46,19 +46,19 @@ class Rednote(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.valid_local_model(self.model, self.model_category1):
+        if self.valid_local_model(self.model_category1):
             tokenizer = AutoTokenizer.from_pretrained(self.model)
 
             model = AutoModelForCausalLM.from_pretrained(
                 self.model, device_map="auto", torch_dtype=torch.bfloat16
             )
 
-            messages = [
-            {"role": "user", "content": prepared_text}
-            ]
             input_tensor = tokenizer.apply_chat_template(
-                messages, add_generation_prompt=True, return_tensors="pt"
+                {"role": "user", "content": prepared_text},
+                add_generation_prompt=True,
+                return_tensors="pt"
             )
+
             outputs = model.generate(
                 input_tensor.to(model.device), max_new_tokens=200
             )
@@ -66,6 +66,7 @@ class Rednote(AbstractLLM):
             result = tokenizer.decode(
                 outputs[0][input_tensor.shape[1]:], skip_special_tokens=True
             )
+
             summary = result
         else:
             raise ValueError(f"Unsupported model: {self.model_name}")

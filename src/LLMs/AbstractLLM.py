@@ -405,20 +405,28 @@ class AbstractLLM(ABC):
         )
         return summary
 
-    def valid_client_model(self, model: str, model_category: list[str]):
+    def valid_client_model(self, model_category: list[str]):
         #TODO: Doc
         """
         """
-        if model in self.client_model and model in model_category:
+        if (
+            self.model in self.client_model and 
+            self.model in model_category and 
+            self.client
+        ):
             return True
         else:
             return False
 
-    def valid_local_model(self, model: str, model_category: list[str]):
+    def valid_local_model(self, model_category: list[str]):
         #TODO: Doc
         """
         """
-        if model in self.local_model and model in model_category:
+        if (
+            self.model in self.local_model and
+            self.model in model_category and
+            not self.client
+        ):
             return True
         else:
             return False

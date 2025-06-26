@@ -44,7 +44,7 @@ class Anthropic(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.valid_client_model(self.model, self.model_category1):
+        if self.valid_client_model(self.model_category1):
             chat_package = self.client.messages.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
