@@ -42,8 +42,6 @@ class DeepSeekAI(AbstractLLM):
         self.model = self.get_model_identifier(company_model, date_code)
         if self.model_name in self.client_model:
             self.client = InferenceClient(model=self.model)
-        else:
-            self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY

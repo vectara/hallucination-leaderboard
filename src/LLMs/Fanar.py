@@ -44,8 +44,6 @@ class Fanar(AbstractLLM):
                 base_url="https://api.fanar.qa/v1",
                 api_key=api_key
             )
-        else:
-            self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY

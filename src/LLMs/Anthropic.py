@@ -41,8 +41,6 @@ class Anthropic(AbstractLLM):
         self.model = self.get_model_identifier(model_name, date_code)
         if self.model_name in self.client_model:
             self.client = anthropic.Client(api_key=api_key)
-        else:
-            self.client = None
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY

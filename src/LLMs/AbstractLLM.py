@@ -179,6 +179,9 @@ class AbstractLLM(ABC):
 
     Attributes:
         model_name (str): Name of the model
+        model (str): full model name expected by company, can be idnetical to 
+            model_name
+        client (~Client): client object
         prompt (str): Summary prompt
         company (str): Company of model
         temperature (float): set to 0.0 to compare deterministic output
@@ -239,6 +242,8 @@ class AbstractLLM(ABC):
         self.min_throttle_time = min_throttle_time
         self.company = company
         self.model_name = model_name
+        self.model = None
+        self.client = None
         self.prompt = ("You are a chat bot answering questions using data."
             "You must stick to the answers provided solely by the text in the "
             "passage provided. You are asked the question 'Provide a concise "
