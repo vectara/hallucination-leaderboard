@@ -1,3 +1,4 @@
+from src.data_struct.config_model import ExecutionMode
 
 # Files
 TEST_DATA_PATH="datasets/test_articles.csv"
@@ -23,35 +24,36 @@ CONFIG = {
     "sample_count": 2,
     "LLMs_to_eval":
     [
+        {
+            "company": "rednote",
+            "params": {
+                "model_name": "rednote-hilab/dots.llm1.inst",
+                "execution_mode": ExecutionMode.LOCAL
+            }
+        }
+        # ,
         # {
-        #     "company": "rednote",
+        #     "company": "anthropic",
         #     "params": {
-        #         "model_name": "gemini-2.5-pro",
-        #         "execution_mode": "client"
+        #         "model_name": "claude-opus-4",
+        #         "execution_mode": ExecutionMode.CLIENT,
+        #         "date_code": "20250514"
         #     }
         # }
         # ,
-        {
-            "company": "anthropic",
-            "params": {
-                "model_name": "claude-opus-4",
-                "execution_mode": "client",
-                "date_code": "20250514"
-            }
-        }
-        ,
-        {
-            "company": "openai",
-            "params": {
-                "model_name": "gpt-4.1",
-                "execution_mode": "client",
-            }
-        }
+        # {
+        #     "company": "openai",
+        #     "params": {
+        #         "model_name": "gpt-4.1",
+        #         "execution_mode": ExecutionMode.CLIENT,
+        #     }
+        # }
         #,
         # {
         #     "company": "anthropic",
         #     "params": {
         #         "model_name": "claude-sonnet-4",
+        #         "execution_mode": ExecutionMode.CLIENT,
         #         "date_code": "20250514"
         #     }
         # }
