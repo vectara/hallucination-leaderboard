@@ -3,6 +3,7 @@ from google import genai
 from google.genai import types
 from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 from src.LLMs.model_registry import register_model
+from src.data_struct.config_model import ExecutionMode
 
 COMPANY = "google"
 @register_model(COMPANY)
@@ -16,7 +17,8 @@ class Google(AbstractLLM):
 
     """
 
-    local_model_category = []
+    local_models = []
+    client_models = ["gemini-2.5-pro-preview", "gemini-2.5-pro"]
 
     # gemini-2.5-pro-preview requieres large output token amount, set to 4096
     # 9 throttle time
@@ -27,7 +29,7 @@ class Google(AbstractLLM):
     def __init__(
             self,
             model_name: str,
-            execution_mode: str,
+            execution_mode: ExecutionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -48,7 +50,7 @@ class Google(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client and self.model in self.model_category1:
+        if self.client and self.model_name in self.model_category1:
             response = self.client.models.generate_content(
                 model = self.model,
                 contents=prepared_text,
@@ -58,7 +60,7 @@ class Google(AbstractLLM):
                 )
             )
             summary = response.text
-        elif self.client and self.model in self.model_category2:
+        elif self.client and self.model_name in self.model_category2:
             response = self.client.models.generate_content(
                 model=self.model,
                 contents=prepared_text,

@@ -2,6 +2,7 @@ from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 import os
 from openai import OpenAI
 from src.LLMs.model_registry import register_model
+from src.data_struct.config_model import ExecutionMode
 
 COMPANY ="openai"
 @register_model(COMPANY)
@@ -14,7 +15,8 @@ class OpenAi(AbstractLLM):
         model (str): OpenAI style model name
     """
 
-    local_model_category = []
+    local_models = []
+    client_models = ["gpt-4.1", "o3", "o3-pro"]
 
     model_category1 = ["gpt-4.1"]
 
@@ -27,7 +29,7 @@ class OpenAi(AbstractLLM):
     def __init__(
             self,
             model_name: str,
-            execution_mode: str,
+            execution_mode: ExecutionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -45,12 +47,10 @@ class OpenAi(AbstractLLM):
             company=COMPANY
         )
         self.model = self.get_model_identifier(model_name, date_code)
-        print(f"1: {self.model}")
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client and self.model in self.model_category1:
-            print(self.model)
+        if self.client and self.model_name in self.model_category1:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,
@@ -58,16 +58,14 @@ class OpenAi(AbstractLLM):
                 messages=[{"role": "user", "content":prepared_text}]
             )
             summary = chat_package.choices[0].message.content
-        elif self.client and self.model in self.model_category2:
-            print(self.model)
+        elif self.client and self.model_name in self.model_category2:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
                 max_completion_tokens=self.max_tokens
             )
             summary = chat_package.choices[0].message.content
-        elif self.client and self.model in self.model_category3:
-            print(self.model)
+        elif self.client and self.model_name in self.model_category3:
             chat_package = self.client.responses.create(
                 model=self.model,
                 input=prepared_text,

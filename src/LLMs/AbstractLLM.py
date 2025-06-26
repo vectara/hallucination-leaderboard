@@ -231,7 +231,7 @@ class AbstractLLM(ABC):
     def __init__(
             self,
             model_name: str, 
-            execution_mode: str,
+            execution_mode: ExecutionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -250,7 +250,6 @@ class AbstractLLM(ABC):
         self.model = None
         self.client = None
         self.local_model = None
-        self.execution_mode = None
         self.prompt = ("You are a chat bot answering questions using data."
             "You must stick to the answers provided solely by the text in the "
             "passage provided. You are asked the question 'Provide a concise "
@@ -417,8 +416,8 @@ class AbstractLLM(ABC):
         """
         """
         if (
-            self.model in self.client_models and 
-            self.execution_mode == ExecutionMode.CLIENT.value
+            self.model_name in self.client_models and 
+            self.execution_mode == ExecutionMode.CLIENT
         ):
             return True
         else:
@@ -429,8 +428,8 @@ class AbstractLLM(ABC):
         """
         """
         if (
-            self.model in self.local_models and
-            self.execution_mode == ExecutionMode.LOCAL.value
+            self.model_name in self.local_models and
+            self.execution_mode == ExecutionMode.LOCAL
         ):
             return True
         else:

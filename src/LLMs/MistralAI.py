@@ -3,6 +3,7 @@ from src.LLMs.model_registry import register_model
 from mistralai import Mistral
 import os
 import re
+from src.data_struct.config_model import ExecutionMode
 
 COMPANY = "mistralai"
 @register_model(COMPANY)
@@ -15,14 +16,15 @@ class MistralAI(AbstractLLM):
         model (str): MistralAI Style model name
     """
 
-    local_model_category = []
+    local_models = []
+    client_models = ["magistral-medium"]
 
     model_category1 = ["magistral-medium"] # Doesn't look like magistral can disable thinking
 
     def __init__(
             self,
             model_name: str,
-            execution_mode: str,
+            execution_mode: ExecutionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -43,7 +45,7 @@ class MistralAI(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client and self.model in self.model_category1:
+        if self.client and self.model_name in self.model_category1:
             chat_package = self.client.chat.complete(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],

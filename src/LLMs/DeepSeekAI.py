@@ -3,6 +3,7 @@ from huggingface_hub import InferenceClient
 import re
 
 from src.LLMs.model_registry import register_model
+from src.data_struct.config_model import ExecutionMode
 
 COMPANY = "deepseek-ai"
 @register_model(COMPANY)
@@ -15,15 +16,15 @@ class DeepSeekAI(AbstractLLM):
         self.model (str): DeepSeekAI style model name
     """
 
-    local_model = []
-    client_model = ["DeepSeek-R1"]
+    local_models = []
+    client_models = ["DeepSeek-R1"]
 
     model_category1 = ["DeepSeek-R1"]
 
     def __init__(
             self,
             model_name: str,
-            execution_mode: str,
+            execution_mode: ExecutionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -45,7 +46,7 @@ class DeepSeekAI(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client and self.model in self.model_category1:
+        if self.client and self.model_name in self.model_category1:
             messages = [{"role": "user", "content":prepared_text}]
             client_package = self.client.chat_completion(messages, temperature=self.temperature)
             summary = client_package.choices[0].message.content

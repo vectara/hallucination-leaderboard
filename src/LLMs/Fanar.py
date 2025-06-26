@@ -1,6 +1,7 @@
 from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 from openai import OpenAI
 import os
+from src.data_struct.config_model import ExecutionMode
 
 from src.LLMs.model_registry import register_model
 
@@ -15,14 +16,15 @@ class Fanar(AbstractLLM):
         model (str): Fanar style model name
     """
 
-    local_model_category = []
+    local_models = []
+    client_models = ["Fanar"]
 
     model_category1 = ["Fanar"]
 
     def __init__(
             self,
             model_name: str,
-            execution_mode: str,
+            execution_mode: ExecutionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -43,7 +45,7 @@ class Fanar(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client and self.model in self.model_category1:
+        if self.client and self.model_name in self.model_category1:
             chat_package = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,

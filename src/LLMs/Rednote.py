@@ -1,7 +1,6 @@
 from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
-import os
-import anthropic
 from src.LLMs.model_registry import register_model
+from src.data_struct.config_model import ExecutionMode
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 
@@ -16,15 +15,15 @@ class Rednote(AbstractLLM):
         model (str): rednote style model name
     """
 
-    local_model = ["rednote-hilab/dots.llm1.inst"]
-    client_model = []
+    local_models = ["rednote-hilab/dots.llm1.inst"]
+    client_models = []
 
     model_category1 = ["rednote-hilab/dots.llm1.inst"]
 
     def __init__(
             self,
             model_name: str,
-            execution_mode: str,
+            execution_mode: ExecutionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -45,7 +44,7 @@ class Rednote(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.local_model and self.model in self.model_category1:
+        if self.local_model and self.model_name in self.model_category1:
             tokenizer = AutoTokenizer.from_pretrained(self.model)
 
             input_tensor = tokenizer.apply_chat_template(

@@ -2,6 +2,7 @@ from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 import os
 import anthropic
 from src.LLMs.model_registry import register_model
+from src.data_struct.config_model import ExecutionMode
 
 COMPANY = "anthropic"
 @register_model(COMPANY)
@@ -22,7 +23,7 @@ class Anthropic(AbstractLLM):
     def __init__(
             self,
             model_name: str,
-            execution_mode: str,
+            execution_mode: ExecutionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -43,7 +44,7 @@ class Anthropic(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client and self.model in self.model_category1:
+        if self.client and self.model_name in self.model_category1:
             chat_package = self.client.messages.create(
                 model=self.model,
                 messages=[{"role": "user", "content":prepared_text}],
