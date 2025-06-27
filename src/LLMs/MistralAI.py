@@ -78,6 +78,6 @@ class MistralAI(AbstractLLM):
 
     def teardown(self):
         if self.client_is_defined():
-            pass
+            self.close_client()
         elif self.local_model_is_defined():
             self.default_local_model_teardown()

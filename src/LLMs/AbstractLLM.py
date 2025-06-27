@@ -620,3 +620,15 @@ class AbstractLLM(ABC):
             None
         """
         return None
+
+    @abstractmethod
+    def close_client(self):
+        """
+        Close client
+
+        Args:
+            None
+        Returns:
+            None
+        """
+        return None
