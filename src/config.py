@@ -15,7 +15,7 @@ GET_RESULTS = "get_results"
 
 # Runtime config
 CONFIG = {
-    "pipeline": [GET_SUMM, GET_JUDGE, GET_RESULTS],
+    "pipeline": [GET_SUMM],
     "overwrite": True,
     "input_file": TEST_DATA_PATH,
     "temperature": 0.0, 
@@ -27,7 +27,7 @@ CONFIG = {
         {
             "company": "rednote",
             "params": {
-                "model_name": "rednote-hilab/dots.llm1.inst",
+                "model_name": "rednote-hilab/dots.llm1.base",
                 "execution_mode": ExecutionMode.LOCAL
             }
         }
