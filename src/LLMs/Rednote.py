@@ -104,9 +104,8 @@ class Rednote(AbstractLLM):
         elif self.valid_local_model():
             self.local_model = AutoModelForCausalLM.from_pretrained(
                 self.model,
-                device_map="auto",
                 torch_dtype=torch.bfloat16 
-            )
+            ).to(self.device)
 
     def teardown(self):
         if self.client_is_defined():
