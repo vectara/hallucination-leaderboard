@@ -148,6 +148,7 @@ import os
 import time
 import re
 from src.data_struct.config_model import ExecutionMode
+import torch
 
 MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
 MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = (
@@ -247,6 +248,7 @@ class AbstractLLM(ABC):
         self.company = company
         self.model_name = model_name
         self.execution_mode = execution_mode
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = None
         self.client = None
         self.local_model = None
@@ -423,6 +425,15 @@ class AbstractLLM(ABC):
         else:
             return False
 
+    def client_is_defined(self):
+        #TODO: Doc
+        """
+        """
+        if self.client is not None:
+            return True
+        else:
+            return False
+
     def valid_local_model(self):
         #TODO: Doc
         """
@@ -434,6 +445,24 @@ class AbstractLLM(ABC):
             return True
         else:
             return False
+
+    def local_model_is_defined(self):
+        #TODO: Doc
+        """
+        """
+        if self.local_model is not None:
+            return True
+        else:
+            return False
+
+    def default_local_model_teardown(self):
+        #TODO: Doc
+        """
+        """
+        self.local_model.to("cpu")
+        del self.local_model
+        torch.cuda.empty_cache()
+        self.local_model = None
 
     def get_model_identifier(self, model_name: str, date_code: str) -> str:
         """

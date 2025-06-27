@@ -3,6 +3,11 @@ from src.LLMs.model_registry import register_model
 from src.data_struct.config_model import ExecutionMode
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
+from src.exceptions import (
+    ClientOrLocalNotInitializedError,
+    ClientModelProtocolBranchNotFound,
+    LocalModelProtocolBranchNotFound
+)
 
 COMPANY = "rednote"
 @register_model(COMPANY)
@@ -45,9 +50,12 @@ class Rednote(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client:
-            pass
-        elif self.local_model:
+        if self.client_is_defined():
+            if False:
+                pass
+            else:
+                raise ClientModelProtocolBranchNotFound(self.model_name)
+        elif self.local_model_is_defined():
             if self.model_name in self.model_category1:
                 tokenizer = AutoTokenizer.from_pretrained(self.model)
 
@@ -84,8 +92,10 @@ class Rednote(AbstractLLM):
                     skip_special_tokens=True
                 )
                 summary = result
+            else:
+                raise LocalModelProtocolBranchNotFound(self.model_name)
         else:
-            raise ValueError(f"Unsupported model: {self.model_name}")
+            raise ClientOrLocalNotInitializedError(self.model_name)
         return summary
 
     def setup(self):
@@ -99,7 +109,7 @@ class Rednote(AbstractLLM):
             )
 
     def teardown(self):
-        if self.client:
+        if self.client_is_defined():
             self.client = None
-        elif self.local_model:
-            self.local_model = None
+        elif self.local_model_is_defined():
+            self.default_local_model_teardown()

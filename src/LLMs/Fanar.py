@@ -4,6 +4,11 @@ import os
 from src.data_struct.config_model import ExecutionMode
 
 from src.LLMs.model_registry import register_model
+from src.exceptions import (
+    ClientOrLocalNotInitializedError,
+    ClientModelProtocolBranchNotFound,
+    LocalModelProtocolBranchNotFound
+)
 
 COMPANY = "fanar"
 @register_model(COMPANY)
@@ -45,16 +50,23 @@ class Fanar(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client and self.model_name in self.model_category1:
-            chat_package = self.client.chat.completions.create(
-                model=self.model,
-                temperature=self.temperature,
-                messages=[{"role": "user", "content":prepared_text}]
-            )
-            summary = chat_package.choices[0].message.content
+        if self.client_is_defined():
+            if self.model_name in self.model_category1:
+                chat_package = self.client.chat.completions.create(
+                    model=self.model,
+                    temperature=self.temperature,
+                    messages=[{"role": "user", "content":prepared_text}]
+                )
+                summary = chat_package.choices[0].message.content
+            else:
+                raise ClientModelProtocolBranchNotFound(self.model_name)
+        elif self.local_model_is_defined():
+            if False:
+                pass
+            else:
+                raise LocalModelProtocolBranchNotFound(self.model_name)
         else:
-            raise ValueError(f"Unsupported model: {self.model_name}")
-
+            raise ClientOrLocalNotInitializedError(self.model_name)
         return summary
 
     def setup(self):
@@ -68,7 +80,7 @@ class Fanar(AbstractLLM):
             pass
 
     def teardown(self):
-        if self.valid_client_model():
-            pass
-        elif self.valid_local_model():
-            pass
+        if self.client_is_defined():
+            self.client = None
+        elif self.local_model_is_defined():
+            self.default_local_model_teardown()

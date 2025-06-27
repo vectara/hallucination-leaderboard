@@ -3,6 +3,11 @@ import os
 from openai import OpenAI
 from src.LLMs.model_registry import register_model
 from src.data_struct.config_model import ExecutionMode
+from src.exceptions import (
+    ClientOrLocalNotInitializedError,
+    ClientModelProtocolBranchNotFound,
+    LocalModelProtocolBranchNotFound
+)
 
 COMPANY ="openai"
 @register_model(COMPANY)
@@ -50,30 +55,38 @@ class OpenAi(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client and self.model_name in self.model_category1:
-            chat_package = self.client.chat.completions.create(
-                model=self.model,
-                temperature=self.temperature,
-                max_tokens=self.max_tokens,
-                messages=[{"role": "user", "content":prepared_text}]
-            )
-            summary = chat_package.choices[0].message.content
-        elif self.client and self.model_name in self.model_category2:
-            chat_package = self.client.chat.completions.create(
-                model=self.model,
-                messages=[{"role": "user", "content":prepared_text}],
-                max_completion_tokens=self.max_tokens
-            )
-            summary = chat_package.choices[0].message.content
-        elif self.client and self.model_name in self.model_category3:
-            chat_package = self.client.responses.create(
-                model=self.model,
-                input=prepared_text,
-                max_output_tokens=self.max_tokens
-            )
-            summary = chat_package.output_text
+        if self.client_is_defined():
+            if self.model_name in self.model_category1:
+                chat_package = self.client.chat.completions.create(
+                    model=self.model,
+                    temperature=self.temperature,
+                    max_tokens=self.max_tokens,
+                    messages=[{"role": "user", "content":prepared_text}]
+                )
+                summary = chat_package.choices[0].message.content
+            elif self.model_name in self.model_category2:
+                chat_package = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[{"role": "user", "content":prepared_text}],
+                    max_completion_tokens=self.max_tokens
+                )
+                summary = chat_package.choices[0].message.content
+            elif self.model_name in self.model_category3:
+                chat_package = self.client.responses.create(
+                    model=self.model,
+                    input=prepared_text,
+                    max_output_tokens=self.max_tokens
+                )
+                summary = chat_package.output_text
+            else:
+                raise ClientModelProtocolBranchNotFound(self.model_name) 
+        elif self.local_model_is_defined():
+            if False:
+                pass
+            else:
+                raise LocalModelProtocolBranchNotFound(self.model_name)
         else:
-            raise ValueError(f"Unsupported model: {self.model_name}")
+            raise ClientOrLocalNotInitializedError(self.model_name)
         return summary
 
     def setup(self):
@@ -84,7 +97,7 @@ class OpenAi(AbstractLLM):
             pass
 
     def teardown(self):
-        if self.valid_client_model():
-            pass
-        elif self.valid_local_model():
-            pass
+        if self.client_is_defined():
+            self.client = None
+        elif self.local_model_is_defined():
+            self.default_local_model_teardown()

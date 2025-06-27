@@ -4,6 +4,11 @@ from google.genai import types
 from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 from src.LLMs.model_registry import register_model
 from src.data_struct.config_model import ExecutionMode
+from src.exceptions import (
+    ClientOrLocalNotInitializedError,
+    ClientModelProtocolBranchNotFound,
+    LocalModelProtocolBranchNotFound
+)
 
 COMPANY = "google"
 @register_model(COMPANY)
@@ -50,29 +55,37 @@ class Google(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client and self.model_name in self.model_category1:
-            response = self.client.models.generate_content(
-                model = self.model,
-                contents=prepared_text,
-                config=types.GenerateContentConfig(
-                    max_output_tokens = 4096,
-                    temperature = self.temperature
+        if self.client_is_defined():
+            if self.model_name in self.model_category1:
+                response = self.client.models.generate_content(
+                    model = self.model,
+                    contents=prepared_text,
+                    config=types.GenerateContentConfig(
+                        max_output_tokens = 4096,
+                        temperature = self.temperature
+                    )
                 )
-            )
-            summary = response.text
-        elif self.client and self.model_name in self.model_category2:
-            response = self.client.models.generate_content(
-                model=self.model,
-                contents=prepared_text,
-                config=types.GenerateContentConfig(
-                    temperature=self.temperature,
-                    max_output_tokens=self.max_tokens,
-                    thinking_config=types.ThinkingConfig(thinking_budget=self.thinking_tokens)
-                ),
-            )
-            summary = response.text
+                summary = response.text
+            elif self.model_name in self.model_category2:
+                response = self.client.models.generate_content(
+                    model=self.model,
+                    contents=prepared_text,
+                    config=types.GenerateContentConfig(
+                        temperature=self.temperature,
+                        max_output_tokens=self.max_tokens,
+                        thinking_config=types.ThinkingConfig(thinking_budget=self.thinking_tokens)
+                    ),
+                )
+                summary = response.text
+            else:
+                raise ClientModelProtocolBranchNotFound(self.model_name)
+        elif self.local_model_is_defined():
+            if False:
+                pass
+            else:
+                raise LocalModelProtocolBranchNotFound(self.model_name)
         else:
-            raise ValueError(f"Unsupported model: {self.model_name}")
+            raise ClientOrLocalNotInitializedError(self.model_name)
         return summary
 
     def setup(self):
@@ -83,7 +96,7 @@ class Google(AbstractLLM):
             pass
 
     def teardown(self):
-        if self.valid_client_model():
-            pass
-        elif self.valid_local_model():
-            pass
+        if self.client_is_defined():
+            self.client = None
+        elif self.local_model_is_defined():
+            self.default_local_model_teardown()
