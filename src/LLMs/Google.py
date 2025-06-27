@@ -100,3 +100,6 @@ class Google(AbstractLLM):
             self.close_client()
         elif self.local_model_is_defined():
             self.default_local_model_teardown()
+
+    def close_client(self):
+        pass
