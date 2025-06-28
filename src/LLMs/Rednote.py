@@ -2,7 +2,7 @@ from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 from src.LLMs.model_registry import register_model
 from src.data_struct.config_model import ExecutionMode
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from src.exceptions import (
     ClientOrLocalNotInitializedError,
     ClientModelProtocolBranchNotFound,
@@ -102,9 +102,15 @@ class Rednote(AbstractLLM):
         if self.valid_client_model():
             pass
         elif self.valid_local_model():
+            bnb_config = BitsAndBytesConfig(
+                load_in_8bit=True,
+                llm_int8_has_fp16_weight=True
+            )
             self.local_model = AutoModelForCausalLM.from_pretrained(
                 self.model,
-                torch_dtype=torch.bfloat16 
+                device_map="auto",
+            #     torch_dtype=torch.bfloat16 ,
+                quantization_config=bnb_config
             ).to(self.device)
 
     def teardown(self):
