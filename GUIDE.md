@@ -191,13 +191,13 @@ class Company(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
         if self.client_is_defined():
-            if self.model_name in self.model_category1:
+            if self.model_name in self.model_category1: # Set if False: if only using local
                 # ADD NEW CODE HERE
                 summary = # SUMMARY AS TYPE STRING FROM MODEL
             else:
                 raise ClientModelProtocolBranchNotFound(self.model_name)
         elif self.local_model_is_defined():
-            if self.model_name in self.model_category2:
+            if self.model_name in self.model_category2: # Set if False: if only using client
                 # ADD NEW CODE HERE
                 summary = # SUMMARY AS TYPE STRING FROM MODEL
             else:
