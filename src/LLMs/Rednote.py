@@ -103,12 +103,10 @@ class Rednote(AbstractLLM):
             pass
         elif self.valid_local_model():
             bnb_config = BitsAndBytesConfig(
-                load_in_8bit=True,
-                llm_int8_has_fp16_weight=True
+                load_in_4bit=True,
             )
             self.local_model = AutoModelForCausalLM.from_pretrained(
                 self.model,
-                device_map="auto",
             #     torch_dtype=torch.bfloat16 ,
                 quantization_config=bnb_config
             ).to(self.device)
