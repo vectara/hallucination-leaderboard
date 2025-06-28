@@ -140,107 +140,31 @@ If the model you want to run does not have a company.py file for it a new file n
 
 ```py
 from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
-from src.LLMs.model_registry import register_model
 import os
+from src.LLMs.model_registry import register_model
 from src.data_struct.config_model import ExecutionMode
+from src.exceptions import (
+    ClientOrLocalNotInitializedError,
+    ClientModelProtocolBranchNotFound,
+    LocalModelProtocolBranchNotFound
+)
+
+# ADD IMPORTS IF NEEDED
 
 COMPANY = "company_name"
 @register_model(COMPANY)
-class CompanyName(AbstractLLM):
+class Company(AbstractLLM):
     """
     Class for models from company_name
 
     Attributes:
     """
 
-    local_models = ["local_model"]
-    client_models = ["api_model"]
+    client_models = ["api_model_name"]
+    local_models = ["local_model_name"]
 
-    model_category1 = ["api_model"]
-    model_category2 = ["local_model"]
-
-    def __init__(
-            self,
-            model_name: str,
-            exeuction_mode: ExecutionMode,
-            date_code: str,
-            temperature: float,
-            max_tokens: int,
-            thinking_tokens: int,
-            min_throttle_time: float
-    ):
-        super().__init__(
-            model_name,
-            execution_mode
-            date_code,
-            temperature,
-            max_tokens,
-            thinking_tokens,
-            min_throttle_time,
-            company=COMPANY
-        )
-        self.model = self.get_model_identifier(model_name, date_code)
-
-    def summarize(self, prepared_text: str) -> str:
-        summary = EMPTY_SUMMARY
-        if self.client and self.model_name in self.model_category1:
-            # Protocol to run API models in model_category1
-            # NEW CODE HERE
-        elif self.local_model and self.model_name in self.model_category2:
-            # Protocol to run local models in model_category2
-            # NEW CODE HERE
-        else:
-            raise ValueError(f"Unsupported model: {self.model_name}")
-        return summary
-
-    def setup(self):
-        if self.valid_client_model():
-            # How to set up client
-            api_key = os.getenv("API_KEY")
-            self.client = # NEW CODE HERE
-        elif self.valid_local_model():
-            # How to set up model
-            self.local_model = # NEW CODE HERE
-
-    def teardown(self):
-        if self.valid_client_model():
-            # How to teardown client if needed
-            # NEW CODE HERE
-        elif self.valid_local_model():
-            # How to teardown local model if needed
-            # NEW CODE HERE
-```
-Add your new model to the global CONFIG variable and run the test script to verify that the model does indeed return a string.
-
-```bash
-python3 test_script.py
-```
-
-### New Model to Existing Company
-
-If the company.py file already exists you need to add code with the correct protocol for the model. If the protocol matches the protocol for another model, add it to the same list as the matching model. If it doesn't exist create a new list with the new model and then define its protocol under a new conditional branch in summarize.
-
-```python
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
-import os
-from src.LLMs.model_registry import register_model
-from src.data_struct.config_model import ExecutionMode
-
-COMPANY = "company_name"
-@register_model(COMPANY)
-class CompanyName(AbstractLLM):
-    """
-    Class for models from company_name
-
-    Attributes:
-    """
-
-    local_models = ["local_model"]
-    client_models = ["api_model", "new_api_model2", "new_api_model3"]
-
-    model_category1 = ["api_model", "new_api_model2"]
-    model_category2 = ["local_model"]
-    model_category3 = ["new_api_model3"]
+    model_category1 = ["api_model_name"]
+    model_category2 = ["local_model_name"]
 
     def __init__(
             self,
@@ -266,35 +190,130 @@ class CompanyName(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         summary = EMPTY_SUMMARY
-        if self.client and self.model_name in self.model_category1:
-            # Protocol to run API models in model_category1
-            # Same as previous
-        elif self.client and self.model_name in self.model_category3:
-            # Protocol to run API models in model_category3
-            # NEW CODE HERE
-        elif self.local_model and self.model_name in self.model_category2:
-            # Protocol to run local models in model_category2
-            # Same as previous
+        if self.client_is_defined():
+            if self.model_name in self.model_category1:
+                # ADD NEW CODE HERE
+                summary = # SUMMARY AS TYPE STRING FROM MODEL
+            else:
+                raise ClientModelProtocolBranchNotFound(self.model_name)
+        elif self.local_model_is_defined():
+            if self.model_name in self.model_category2:
+                # ADD NEW CODE HERE
+                summary = # SUMMARY AS TYPE STRING FROM MODEL
+            else:
+                raise LocalModelProtocolBranchNotFound(self.model_name)
         else:
-            raise ValueError(f"Unsupported model: {self.model_name}")
+            raise ClientOrLocalNotInitializedError(self.model_name)
         return summary
 
     def setup(self):
         if self.valid_client_model():
-            # How to set up client
-            api_key = os.getenv("API_KEY")
-            self.client = # Same as previous
+            api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+            self.client = # ADD NEW CODE HERE
         elif self.valid_local_model():
-            # How to set up model
-            self.local_model = # Same as previous
+            self.local_model = # ADD NEW CODE HERE
 
     def teardown(self):
+        if self.client_is_defined():
+            self.close_client() # close_client() is an abstract method if no need to close just define as do nothing method
+        elif self.local_model_is_defined():
+            self.default_local_model_teardown()
+
+```
+Add your new model to the global CONFIG variable and run the test script to verify that the model does indeed return a string.
+
+```bash
+python3 test_script.py
+```
+
+### New Model to Existing Company
+
+If the company.py file already exists you need to add code with the correct protocol for the model. If the protocol matches the protocol for another model, add it to the same list as the matching model. If it doesn't exist create a new list with the new model and then define its protocol under a new conditional branch in summarize.
+
+```python
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
+import os
+from src.LLMs.model_registry import register_model
+from src.data_struct.config_model import ExecutionMode
+from src.exceptions import (
+    ClientOrLocalNotInitializedError,
+    ClientModelProtocolBranchNotFound,
+    LocalModelProtocolBranchNotFound
+)
+
+# ADD IMPORTS IF NEEDED
+
+COMPANY = "company_name"
+@register_model(COMPANY)
+class Company(AbstractLLM):
+    """
+    Class for models from company_name
+
+    Attributes:
+    """
+
+    client_models = ["api_model_name", "new_api_model_name2", "new_api_model_name3"]
+    local_models = ["local_model_name"]
+
+    model_category1 = ["api_model_name", "new_api_model_name2"]
+    model_category2 = ["local_model_name"]
+    model_category3 = ["new_api_model_name3"]
+
+    def __init__(
+            self,
+            model_name: str,
+            execution_mode: ExecutionMode,
+            date_code: str,
+            temperature: float,
+            max_tokens: int,
+            thinking_tokens: int,
+            min_throttle_time: float
+    ):
+        super().__init__(
+            model_name,
+            execution_mode,
+            date_code,
+            temperature,
+            max_tokens,
+            thinking_tokens,
+            min_throttle_time,
+            company=COMPANY
+        )
+        self.model = self.get_model_identifier(model_name, date_code)
+
+    def summarize(self, prepared_text: str) -> str:
+        summary = EMPTY_SUMMARY
+        if self.client_is_defined():
+            if self.model_name in self.model_category1:
+                # Protocol to run models in category 1
+                summary = # SUMMARY AS TYPE STRING FROM MODEL
+            elif self.model_name in self.model_category3:
+                # ADD NEW CODE HERE
+                summary = # SUMMARY AS TYPE STRING FROM MODEL
+            else:
+                raise ClientModelProtocolBranchNotFound(self.model_name)
+        elif self.local_model_is_defined():
+            if self.model_name in self.model_category2:
+                # Protocol to run models in category 2
+                summary = # SUMMARY AS TYPE STRING FROM MODEL
+            else:
+                raise LocalModelProtocolBranchNotFound(self.model_name)
+        else:
+            raise ClientOrLocalNotInitializedError(self.model_name)
+        return summary
+
+    def setup(self):
         if self.valid_client_model():
-            # How to teardown client if needed
-            # Same as previous
+            api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+            self.client = # Client
         elif self.valid_local_model():
-            # How to teardown local model if needed
-            # Same as previous
+            self.local_model = # Local Model
+
+    def teardown(self):
+        if self.client_is_defined():
+            self.close_client()
+        elif self.local_model_is_defined():
+            self.default_local_model_teardown()
 ```
 
 Same as before add your new model to the global CONFIG variable and run the test script to verify that the model does indeed return a string.
