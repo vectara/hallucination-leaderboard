@@ -1,6 +1,6 @@
 from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 from src.LLMs.model_registry import register_model
-from src.data_struct.config_model import ExecutionMode
+from src.data_struct.config_model import ExecutionMode, InteractionMode
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from src.exceptions import (
@@ -30,6 +30,7 @@ class Rednote(AbstractLLM):
             self,
             model_name: str,
             execution_mode: ExecutionMode,
+            interaction_mode: InteractionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -39,6 +40,7 @@ class Rednote(AbstractLLM):
         super().__init__(
             model_name,
             execution_mode,
+            interaction_mode,
             date_code,
             temperature,
             max_tokens,

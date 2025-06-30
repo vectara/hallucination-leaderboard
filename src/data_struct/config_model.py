@@ -6,6 +6,10 @@ class ExecutionMode(str, Enum):
     CLIENT = "client"
     LOCAL = "local"
 
+class InteractionMode(str, Enum):
+    CHAT = "chat"
+    COMPLETION = "completion"
+
 class ModelParams(BaseModel):
     """
     Parameters necessary for setting up a company specific model
@@ -24,6 +28,7 @@ class ModelParams(BaseModel):
 
     model_name: str
     execution_mode: ExecutionMode
+    interaction_mode: InteractionMode
     date_code: str = ""
     temperature: Optional[float] = None
     max_tokens: Optional[int] = None

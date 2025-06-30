@@ -39,6 +39,7 @@ class Summary(BaseModel):
     summary_uid: str
     llm: str
     date_code: str
+    interaction_mode: str
     temperature: float
     max_tokens: int
     thinking_tokens: int

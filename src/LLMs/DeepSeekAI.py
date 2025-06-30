@@ -3,7 +3,7 @@ from huggingface_hub import InferenceClient
 import re
 
 from src.LLMs.model_registry import register_model
-from src.data_struct.config_model import ExecutionMode
+from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,
     ClientModelProtocolBranchNotFound,
@@ -30,6 +30,7 @@ class DeepSeekAI(AbstractLLM):
             self,
             model_name: str,
             execution_mode: ExecutionMode,
+            interaction_mode: InteractionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -39,6 +40,7 @@ class DeepSeekAI(AbstractLLM):
         super().__init__(
             model_name,
             execution_mode,
+            interaction_mode,
             date_code,
             temperature,
             max_tokens,

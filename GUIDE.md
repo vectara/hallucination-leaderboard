@@ -45,6 +45,8 @@ CONFIG = {
                 "model_name": "claude-opus-4",
                 # date_code: Optional, defaults to "". Company defined date code
                 "date_code": "20250514",
+                # interaction_mode: doesn't directly change functionality but desired for record keeping. Can be only InteractionMode.CHAT or InteractionMode.Completion use the correspoding one depending on how you use the LLM
+                "interaction_mode": InteractionMode.CHAT
                 # temperature: Optional defaults to global config value.
                 "temperature": 0.0,
                 # max_tokens: Optional, defaults to global config value
@@ -144,7 +146,7 @@ If the model you want to run does not have a company.py file for it a new file n
 from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 import os
 from src.LLMs.model_registry import register_model
-from src.data_struct.config_model import ExecutionMode
+from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,
     ClientModelProtocolBranchNotFound,
@@ -172,6 +174,7 @@ class Company(AbstractLLM):
             self,
             model_name: str,
             execution_mode: ExecutionMode,
+            interaction_mode: InteractionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -181,6 +184,7 @@ class Company(AbstractLLM):
         super().__init__(
             model_name,
             execution_mode,
+            interaction_mode,
             date_code,
             temperature,
             max_tokens,
@@ -236,7 +240,7 @@ If the company.py file already exists you need to add code with the correct prot
 from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
 import os
 from src.LLMs.model_registry import register_model
-from src.data_struct.config_model import ExecutionMode
+from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,
     ClientModelProtocolBranchNotFound,
@@ -265,6 +269,7 @@ class Company(AbstractLLM):
             self,
             model_name: str,
             execution_mode: ExecutionMode,
+            interaction_mode: InteractionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -274,6 +279,7 @@ class Company(AbstractLLM):
         super().__init__(
             model_name,
             execution_mode,
+            interaction_mode,
             date_code,
             temperature,
             max_tokens,

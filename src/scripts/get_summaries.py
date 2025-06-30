@@ -110,6 +110,7 @@ def generate_and_save_summaries(
                 summary_uid=summary_uid,
                 llm=model.get_model_name(),
                 date_code=model.get_date_code(),
+                interaction_mode=model.get_interaction_mode(),
                 temperature=model.get_temperature(),
                 max_tokens=model.get_max_tokens(),
                 thinking_tokens=model.get_thinking_tokens(),

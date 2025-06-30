@@ -60,7 +60,6 @@ def main(args: argparse.ArgumentParser):
             "No process was specified, running instructions specified in "
             "config.py instead. Run program with --help flag for info"
         )
-        print(models[0].get_temperature())
         config_run(config, models)
 
 

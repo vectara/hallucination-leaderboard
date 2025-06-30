@@ -1,4 +1,4 @@
-from src.data_struct.config_model import ExecutionMode
+from src.data_struct.config_model import ExecutionMode, InteractionMode
 
 # Files
 TEST_DATA_PATH="datasets/test_articles.csv"
@@ -15,7 +15,7 @@ GET_RESULTS = "get_results"
 
 # Runtime config
 CONFIG = {
-    "pipeline": [GET_SUMM],
+    "pipeline": [GET_SUMM, GET_JUDGE, GET_RESULTS],
     "overwrite": True,
     "input_file": TEST_DATA_PATH,
     "temperature": 0.0, 
@@ -24,23 +24,25 @@ CONFIG = {
     "sample_count": 2,
     "LLMs_to_eval":
     [
-        {
-            "company": "rednote",
-            "params": {
-                "model_name": "rednote-hilab/dots.llm1.base",
-                "execution_mode": ExecutionMode.LOCAL,
-                "temperature": 0.001 # Doesn't accept 0.0
-            }
-        }
-        # ,
         # {
-        #     "company": "anthropic",
+        #     "company": "rednote",
         #     "params": {
-        #         "model_name": "claude-opus-4",
-        #         "execution_mode": ExecutionMode.CLIENT,
-        #         "date_code": "20250514"
+        #         "model_name": "rednote-hilab/dots.llm1.base",
+        #         "execution_mode": ExecutionMode.LOCAL,
+        #         "interaction_mode": InteractionMode.COMPLETION,
+        #         "temperature": 0.001 # Doesn't accept 0.0
         #     }
         # }
+        # ,
+        {
+            "company": "anthropic",
+            "params": {
+                "model_name": "claude-opus-4",
+                "execution_mode": ExecutionMode.CLIENT,
+                "interaction_mode": InteractionMode.CHAT,
+                "date_code": "20250514"
+            }
+        }
         # ,
         # {
         #     "company": "openai",

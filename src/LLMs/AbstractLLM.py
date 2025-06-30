@@ -147,7 +147,7 @@ from src.config import OUTPUT_DIR
 import os
 import time
 import re
-from src.data_struct.config_model import ExecutionMode
+from src.data_struct.config_model import ExecutionMode, InteractionMode
 import torch
 
 MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
@@ -213,6 +213,7 @@ class AbstractLLM(ABC):
         default_local_model_teardown(): clears gpu memory
         get_model_identifier(model_name, date_code): get the model id expected
             by the company
+        get_interaction_mode(): returns interaction mode value
         get_model_name(): returns name of model
         get_company(): get company of model
         get_model_out_dir(): get the output directory dedicated for this model
@@ -238,6 +239,7 @@ class AbstractLLM(ABC):
             self,
             model_name: str, 
             execution_mode: ExecutionMode,
+            interaction_mode: InteractionMode,
             date_code: str,
             temperature: float,
             max_tokens: int,
@@ -253,6 +255,7 @@ class AbstractLLM(ABC):
         self.company = company
         self.model_name = model_name
         self.execution_mode = execution_mode
+        self.interaction_mode = interaction_mode
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = None
         self.client = None
@@ -418,7 +421,7 @@ class AbstractLLM(ABC):
         )
         return summary
 
-    def valid_client_model(self):
+    def valid_client_model(self) -> bool:
         """
         If model_name is in client_models list and the model was passed with 
         execution mode set to client returns True
@@ -436,7 +439,7 @@ class AbstractLLM(ABC):
         else:
             return False
 
-    def client_is_defined(self):
+    def client_is_defined(self) -> bool:
         """
         Returns true if self.client is not None
 
@@ -450,7 +453,7 @@ class AbstractLLM(ABC):
         else:
             return False
 
-    def valid_local_model(self):
+    def valid_local_model(self) -> bool:
         """
         If model_name is in local_models list and the model was passed with 
         execution mode set to local_model returns True
@@ -468,7 +471,7 @@ class AbstractLLM(ABC):
         else:
             return False
 
-    def local_model_is_defined(self):
+    def local_model_is_defined(self) -> bool:
         """
         Returns true if self.local_model is not None
 
@@ -514,6 +517,17 @@ class AbstractLLM(ABC):
         if date_code != "":
             model = f"{model_name}-{date_code}"
         return model
+
+    def get_interaction_mode(self) -> str:
+        """
+        Gets interaction mode
+
+        Args:
+            None
+        Returns:
+            str: Interaction mode value
+        """
+        return self.interaction_mode.value
 
     def get_model_name(self):
         """
