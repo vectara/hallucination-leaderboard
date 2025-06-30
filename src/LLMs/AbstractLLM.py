@@ -206,6 +206,11 @@ class AbstractLLM(ABC):
             article text
         clean_raw_summary(raw_summary): cleans summary
         remove_thinking_text(raw_summary): removes thinking output
+        valid_client_model(): returns true if model os a client model
+        client_is_defined(): returns true if client is not None
+        valid_local_model(): returns true if model is a local model
+        local_model_is_defined(): returns true if local model is not None
+        default_local_model_teardown(): clears gpu memory
         get_model_identifier(model_name, date_code): get the model id expected
             by the company
         get_model_name(): returns name of model
@@ -414,8 +419,14 @@ class AbstractLLM(ABC):
         return summary
 
     def valid_client_model(self):
-        #TODO: Doc
         """
+        If model_name is in client_models list and the model was passed with 
+        execution mode set to client returns True
+
+        Args:
+            None
+        Returns:
+            bool: True if a proper client model
         """
         if (
             self.model_name in self.client_models and 
@@ -426,8 +437,13 @@ class AbstractLLM(ABC):
             return False
 
     def client_is_defined(self):
-        #TODO: Doc
         """
+        Returns true if self.client is not None
+
+        Args:
+            None
+        Returns:
+            bool: True if self.client is not None
         """
         if self.client is not None:
             return True
@@ -435,8 +451,14 @@ class AbstractLLM(ABC):
             return False
 
     def valid_local_model(self):
-        #TODO: Doc
         """
+        If model_name is in local_models list and the model was passed with 
+        execution mode set to local_model returns True
+
+        Args:
+            None
+        Returns:
+            bool: True if a proper client model
         """
         if (
             self.model_name in self.local_models and
@@ -447,8 +469,13 @@ class AbstractLLM(ABC):
             return False
 
     def local_model_is_defined(self):
-        #TODO: Doc
         """
+        Returns true if self.local_model is not None
+
+        Args:
+            None
+        Returns:
+            bool: True if self.local_model is not None
         """
         if self.local_model is not None:
             return True
@@ -456,8 +483,14 @@ class AbstractLLM(ABC):
             return False
 
     def default_local_model_teardown(self):
-        #TODO: Doc
         """
+        Standard protcol for tearing down a torch based model, Sets 
+        self.local_model to None when done
+
+        Args:
+            None
+        Returns:
+            None
         """
         self.local_model.to("cpu")
         del self.local_model
