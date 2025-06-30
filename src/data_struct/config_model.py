@@ -25,8 +25,8 @@ class ModelParams(BaseModel):
     model_name: str
     execution_mode: ExecutionMode
     date_code: str = ""
-    temperature: float = 0.0
-    max_tokens: int = 1024
+    temperature: Optional[float] = None
+    max_tokens: Optional[int] = None
     thinking_tokens: int = 0
     min_throttle_time: float = 0.0
 
@@ -80,16 +80,18 @@ class Config(BaseModel):
     pipeline: List[str]
     overwrite: bool
     input_file: str
-    temperature: float
-    max_tokens: int
+    temperature: float # Default 0.0
+    max_tokens: int # Default 1024
     simulation_count: int
     sample_count: int
     LLMs_to_eval: List[ModelConfig]
 
     def model_post_init(self, __context):
         for model_config in self.LLMs_to_eval:
-            model_config.params.temperature = self.temperature
-            model_config.params.max_tokens = self.max_tokens
+            if model_config.params.temperature is None:
+                model_config.params.temperature = self.temperature
+            if model_config.params.max_tokens is None:
+                model_config.params.max_tokens = self.max_tokens
 
     class Keys:
         PIPELINE = "pipeline"

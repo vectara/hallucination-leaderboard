@@ -28,7 +28,8 @@ CONFIG = {
             "company": "rednote",
             "params": {
                 "model_name": "rednote-hilab/dots.llm1.base",
-                "execution_mode": ExecutionMode.LOCAL
+                "execution_mode": ExecutionMode.LOCAL,
+                "temperature": 0.001 # Doesn't accept 0.0
             }
         }
         # ,

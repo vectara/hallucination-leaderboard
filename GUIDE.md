@@ -12,6 +12,8 @@ src/
 
 #### File
 
+Temperature and max_tokens should stay the default of 0.0 and 1024. If a model for whatever reason cannot use the defaults then define the individual model temperature and max_token fields to be as close as possible. If a model does not allow you to adjust it then record the value the company uses for the model.
+
 ```python
 # ... Other Config
 
@@ -43,9 +45,9 @@ CONFIG = {
                 "model_name": "claude-opus-4",
                 # date_code: Optional, defaults to "". Company defined date code
                 "date_code": "20250514",
-                # temperature: Optional defaults to 0.0
+                # temperature: Optional defaults to global config value.
                 "temperature": 0.0,
-                # max_tokens: Optional, defaults to 1024
+                # max_tokens: Optional, defaults to global config value
                 "max_tokens": 1024,
                 # thinking_tokens: Optionals, defaults to 0. Should always be set to 0 but if a model has to have thinking tokens set it to the minimal number required
                 "thinking_tokens": 0,
