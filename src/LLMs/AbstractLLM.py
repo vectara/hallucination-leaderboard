@@ -147,7 +147,9 @@ from src.constants import OUTPUT_DIR
 import os
 import time
 import re
-from src.data_struct.config_model import ExecutionMode, InteractionMode
+from src.data_struct.config_model import (
+    ExecutionMode, InteractionMode, ModelConfig
+)
 import torch
 
 MODEL_REGISTRY = {}
@@ -169,20 +171,6 @@ SUMMARY_ERRORS = [
     INCOMPLETE_THINK_TAG
 ]
 
-def register_model(company_name: str):
-    """
-    Decorater to auto-register a class under a give name
-
-    Args:
-        company_name: they key the class is registered under
-
-    Returns:
-        AbstractLLM: class associated with company_name
-    """
-    def decorator(company_class: AbstractLLM):
-        MODEL_REGISTRY[company_name] = company_class
-        return company_class
-    return decorator
 
 class AbstractLLM(ABC):
     """
@@ -696,3 +684,50 @@ class AbstractLLM(ABC):
             None
         """
         return None
+
+def register_model(company_name: str):
+    """
+    Decorater to auto-register a class under a give name
+
+    Args:
+        company_name: they key the class is registered under
+
+    Returns:
+        AbstractLLM: class associated with company_name
+    """
+    def decorator(company_class: AbstractLLM):
+        MODEL_REGISTRY[company_name] = company_class
+        return company_class
+    return decorator
+
+def build_models(llm_configs: list[ModelConfig]) -> list[AbstractLLM]:
+    """
+    Builds the models given in the config list if it is registered
+
+    Args:
+        config (list[dict]): list of dictionaries for model object init
+
+    Returns:
+        list[AbstractLLM]: list of models
+    """
+
+    models = []
+    for model in llm_configs:
+        company_class = MODEL_REGISTRY.get(model.company)
+        if company_class == None:
+            logger.warning("No registered class for this company, skipping")
+            print(f"This {company_class} is not registered, can't build")
+            continue
+
+        try:
+            models.append(company_class(**model.params.model_dump()))
+        except Exception as e:
+            logger.warning(
+                f"failed to instantiate {model.company}-"
+                f"{model.params.model_name}-{model.params.date_code} : {e}"
+            )
+            print(
+                f"failed to instantiate {model.company}-"
+                f"{model.params.model_name}-{model.params.date_code} : {e}"
+            )
+    return models

@@ -3,7 +3,7 @@ from src.LLMs.AbstractLLM import AbstractLLM
 from src.data_struct.config_model import Config
 from src.constants import TEST_DATA_PATH
 from src.config import CONFIG
-from src.utils.build_utils import builds_models
+from src.LLMs.AbstractLLM import build_models
 from src.Logger import logger
 import csv
 
@@ -44,7 +44,7 @@ class TestLLM(AbstractTest):
             None
         """
         config = Config(**CONFIG)
-        models = builds_models(config.LLMs_to_eval)
+        models = build_models(config.LLMs_to_eval)
         logger.info("Testing LLM functionality")
         for model in models:
             logger.info(f"Running tests on {model.get_model_name()}")

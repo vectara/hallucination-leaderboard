@@ -9,8 +9,8 @@ from src.constants import (
     TEST_DATA_PATH, LB_DATA_PATH, GET_SUMM, GET_JUDGE, GET_RESULTS
 )
 from src.config import CONFIG   
-from src.data_struct.config_model import Config, ModelConfig
-from src.LLMs.AbstractLLM import AbstractLLM, MODEL_REGISTRY
+from src.data_struct.config_model import Config
+from src.LLMs.AbstractLLM import AbstractLLM, build_models
 
 """
 Main Program File
@@ -92,37 +92,6 @@ def config_run(config: Config, models: list[AbstractLLM]):
         get_judgements.run(models, article_df)
         get_results.run(models)
 
-def build_models(llm_configs: list[ModelConfig]) -> list[AbstractLLM]:
-    """
-    Builds the models given in the config list if it is registered
-
-    Args:
-        config (list[dict]): list of dictionaries for model object init
-
-    Returns:
-        list[AbstractLLM]: list of models
-    """
-
-    models = []
-    for model in llm_configs:
-        company_class = MODEL_REGISTRY.get(model.company)
-        if company_class == None:
-            logger.warning("No registered class for this company, skipping")
-            print(f"This {company_class} is not registered, can't build")
-            continue
-
-        try:
-            models.append(company_class(**model.params.model_dump()))
-        except Exception as e:
-            logger.warning(
-                f"failed to instantiate {model.company}-"
-                f"{model.params.model_name}-{model.params.date_code} : {e}"
-            )
-            print(
-                f"failed to instantiate {model.company}-"
-                f"{model.params.model_name}-{model.params.date_code} : {e}"
-            )
-    return models
 
 if __name__ == "__main__":
     #TODO: Rethink how to name pipelines
