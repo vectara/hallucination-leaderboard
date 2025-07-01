@@ -82,17 +82,17 @@ def save_to_json(json_path: str, data: Any):
         json.dump(json_data, f, indent=4)
     logger.info("JSON file saved")
 
-def file_exists(json_path: str) -> bool:
+def file_exists(file_path: str) -> bool:
     """
     Checks if file exists, returns True if so else False
 
     Args:
-        full_path (str): Path to file
+        file_path (str): Path to file
 
     Returns:
         (bool): State of file existing
     """
-    if os.path.isfile(json_path):
+    if os.path.isfile(file_path):
         return True
     else:
         return False
