@@ -5,19 +5,20 @@ from src.scripts import (
 from dotenv import load_dotenv
 import pandas as pd
 import argparse
-from src.utils.build_utils import builds_models
 from src.constants import (
     TEST_DATA_PATH, LB_DATA_PATH, GET_SUMM, GET_JUDGE, GET_RESULTS
 )
 from src.config import CONFIG   
-from src.data_struct.config_model import Config
+from src.data_struct.config_model import Config, ModelConfig
 from src.LLMs.AbstractLLM import AbstractLLM
+from src.LLMs.model_registry import MODEL_REGISTRY
 
 """
 Main Program File
 
 Functions:
     main(args)
+    build_models(llm_configs)
 """
 
 def main(args: argparse.ArgumentParser):
@@ -37,7 +38,7 @@ def main(args: argparse.ArgumentParser):
 
     config = Config(**CONFIG)
 
-    models = builds_models(config.LLMs_to_eval)
+    models = build_models(config.LLMs_to_eval)
     article_df = pd.read_csv(data_path)
 
     if args.process == GET_SUMM:
@@ -91,6 +92,38 @@ def config_run(config: Config, models: list[AbstractLLM]):
         get_summaries.run(models, article_df, ow=config.overwrite)
         get_judgements.run(models, article_df)
         get_results.run(models)
+
+def build_models(llm_configs: list[ModelConfig]) -> list[AbstractLLM]:
+    """
+    Builds the models given in the config list if it is registered
+
+    Args:
+        config (list[dict]): list of dictionaries for model object init
+
+    Returns:
+        list[AbstractLLM]: list of models
+    """
+
+    models = []
+    for model in llm_configs:
+        company_class = MODEL_REGISTRY.get(model.company)
+        if company_class == None:
+            logger.warning("No registered class for this company, skipping")
+            print(f"This {company_class} is not registered, can't build")
+            continue
+
+        try:
+            models.append(company_class(**model.params.model_dump()))
+        except Exception as e:
+            logger.warning(
+                f"failed to instantiate {model.company}-"
+                f"{model.params.model_name}-{model.params.date_code} : {e}"
+            )
+            print(
+                f"failed to instantiate {model.company}-"
+                f"{model.params.model_name}-{model.params.date_code} : {e}"
+            )
+    return models
 
 if __name__ == "__main__":
     #TODO: Rethink how to name pipelines
