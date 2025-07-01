@@ -2,7 +2,7 @@ from src.Logger import logger
 import pandas as pd
 import os
 from tqdm import tqdm
-from src.utils.json_utils import file_exists, append_record_to_jsonl
+from src.json_utils import file_exists, append_record_to_jsonl
 from datetime import datetime, timezone
 from src.data_struct.data_model import Summary, SourceArticle
 import hashlib

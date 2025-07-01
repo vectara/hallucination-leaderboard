@@ -10,7 +10,7 @@ from src.analytics.stats import (
     compute_answer_rate, compute_avg_summary_length
 )
 from src.analytics.metrics import is_valid_summary
-from src.utils.json_utils import load_json
+from src.json_utils import load_json
 
 class TestAnalytics(AbstractTest):
     """

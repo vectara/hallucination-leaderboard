@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime, timezone
 import os
 from tqdm import tqdm
-from src.utils.json_utils import file_exists, append_record_to_jsonl
+from src.json_utils import file_exists, append_record_to_jsonl
 from src.analytics.metrics import is_valid_summary
 from src.data_struct.data_model import Judgement, Summary, SourceArticle
 

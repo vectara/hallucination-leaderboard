@@ -2,7 +2,7 @@ from src.Logger import logger
 import os
 from tqdm import tqdm
 from src.LLMs.AbstractLLM import AbstractLLM
-from src.utils.json_utils import file_exists, append_record_to_jsonl
+from src.json_utils import file_exists, append_record_to_jsonl
 import pandas as pd
 from datetime import datetime, timezone
 from src.data_struct.data_model import Stats
