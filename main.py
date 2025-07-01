@@ -7,8 +7,9 @@ import pandas as pd
 import argparse
 from src.utils.build_utils import builds_models
 from src.constants import (
-    TEST_DATA_PATH, LB_DATA_PATH, CONFIG, GET_SUMM, GET_JUDGE, GET_RESULTS
+    TEST_DATA_PATH, LB_DATA_PATH, GET_SUMM, GET_JUDGE, GET_RESULTS
 )
+from src.config import CONFIG   
 from src.data_struct.config_model import Config
 from src.LLMs.AbstractLLM import AbstractLLM
 
