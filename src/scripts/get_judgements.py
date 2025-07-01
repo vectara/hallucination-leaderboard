@@ -8,7 +8,7 @@ from src.json_utils import file_exists, append_record_to_jsonl
 from src.analytics.metrics import is_valid_summary
 from src.data_struct.data_model import Judgement, Summary, SourceArticle
 
-from src.HHEM.HHEM_2_x import HHEM_2_3, HHEMOutput
+from src.HHEM_2_x import HHEM_2_3
 
 from src.LLMs.AbstractLLM import AbstractLLM
 from src.scripts.get_summaries import SUMMARY_FILE
