@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import pandas as pd
 import argparse
 from src.utils.build_utils import builds_models
-from src.config import (
+from src.constants import (
     TEST_DATA_PATH, LB_DATA_PATH, CONFIG, GET_SUMM, GET_JUDGE, GET_RESULTS
 )
 from src.data_struct.config_model import Config

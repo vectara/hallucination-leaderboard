@@ -72,8 +72,8 @@ class Config(BaseModel):
             sequence of the list
         overwrite (Bool): if true overwrites the summary file before adding new
             data
-        input_file (str): path to file that contains a dataset of articles that
-            will be summarized by the LLMs
+        source_article_path (str): path to file that contains a dataset of 
+        articles that will be summarized by the LLMs
         temperature (float): hyperparameter that is given to all LLMs
         max_tokens (int): hyperparamter that is given to all LLMs
         simulation_count (int): number of times a summary will be generated for
@@ -84,7 +84,7 @@ class Config(BaseModel):
     """
     pipeline: List[str]
     overwrite: bool
-    input_file: str
+    source_article_path: str
     temperature: float # Default 0.0
     max_tokens: int # Default 1024
     simulation_count: int
@@ -101,7 +101,7 @@ class Config(BaseModel):
     class Keys:
         PIPELINE = "pipeline"
         OVERWRITE = "overwrite"
-        INPUT_FILE = "input_file"
+        SOURCE_ARTICLE_PATH = "source_article_path"
         TEMPERATURE = "temperature"
         MAX_TOKENS = "max_tokens"
         SIMULATION_COUNT = "simulation_count"

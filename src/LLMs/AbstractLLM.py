@@ -143,7 +143,7 @@ Model List
 from abc import ABC, abstractmethod
 from src.logging.Logger import logger
 from tqdm import tqdm
-from src.config import OUTPUT_DIR
+from src.constants import OUTPUT_DIR
 import os
 import time
 import re

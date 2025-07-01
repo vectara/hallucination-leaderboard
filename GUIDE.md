@@ -15,17 +15,21 @@ src/
 Temperature and max_tokens should stay the default of 0.0 and 1024. If a model for whatever reason cannot use the defaults then define the individual model temperature and max_token fields to be as close as possible. If a model does not allow you to adjust it then record the value the company uses for the model.
 
 ```python
-# ... Other Config
+from src.data_struct.config_model import ExecutionMode, InteractionMode
+from src.constants import (
+    GET_SUMM, GET_JUDGE, GET_RESULTS,
+    TEST_DATA_PATH, LB_DATA_PATH
+)
 
 # Runtime config
 # ADJUST THIS GLOBAL VARIABLE
 CONFIG = {
     # Defines protocols to perform, done in seqence. Not all sequences are valid
     "pipeline": [GET_SUMM, GET_JUDGE, GET_RESULTS],
-    # Specifies if summary jsonl should be overwritten before appending new data. Judgemennts and results are always overwritten before appending
+    # Specifies if summary jsonl should be overwritten. Judgemennts and results are always overwritten
     "overwrite": True,
     # Specifies the article dataset to generate summaries for
-    "input_file": DATA_PATH,
+    "input_file": LB_DATA_PATH,
     # Sets the temperature for all models to this value if it can be set
     "temperature": 0.0, 
     # Sets the max_tokens for all models to this value if it can be set
@@ -47,6 +51,8 @@ CONFIG = {
                 "date_code": "20250514",
                 # interaction_mode: doesn't directly change functionality but desired for record keeping. Can be only InteractionMode.CHAT or InteractionMode.Completion use the correspoding one depending on how you use the LLM
                 "interaction_mode": InteractionMode.CHAT
+                # execution_mode: specifies if this model is expected to run using an API or locally. Can be only ExecutionMode.CLIENT or ExecutionMode.LOCAL
+                "execution_mode": ExecutionMode.CLIENT
                 # temperature: Optional defaults to global config value.
                 "temperature": 0.0,
                 # max_tokens: Optional, defaults to global config value
@@ -66,8 +72,6 @@ CONFIG = {
         }
     ]
 }
-
-# ... Other Config
 ```
 
 ### Program

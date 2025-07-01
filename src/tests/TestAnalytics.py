@@ -1,6 +1,6 @@
 from src.tests.AbstractTest import AbstractTest
 import pandas as pd
-from src.config import (
+from src.constants import (
     TEST_JUDGEMENTS_DATA, TEST_RESULTS_DATA, TEST_SUMMARIES_DATA
 )
 from src.LLMs.AbstractLLM import MODEL_RETURNED_NON_STRING_TYPE_OUTPUT, SUMMARY_ERRORS
