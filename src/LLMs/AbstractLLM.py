@@ -150,6 +150,8 @@ import re
 from src.data_struct.config_model import ExecutionMode, InteractionMode
 import torch
 
+MODEL_REGISTRY = {}
+
 MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
 MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = (
     "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
@@ -166,6 +168,21 @@ SUMMARY_ERRORS = [
     EMPTY_SUMMARY,
     INCOMPLETE_THINK_TAG
 ]
+
+def register_model(company_name: str):
+    """
+    Decorater to auto-register a class under a give name
+
+    Args:
+        company_name: they key the class is registered under
+
+    Returns:
+        AbstractLLM: class associated with company_name
+    """
+    def decorator(company_class: AbstractLLM):
+        MODEL_REGISTRY[company_name] = company_class
+        return company_class
+    return decorator
 
 class AbstractLLM(ABC):
     """

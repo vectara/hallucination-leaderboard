@@ -10,8 +10,7 @@ from src.constants import (
 )
 from src.config import CONFIG   
 from src.data_struct.config_model import Config, ModelConfig
-from src.LLMs.AbstractLLM import AbstractLLM
-from src.LLMs.model_registry import MODEL_REGISTRY
+from src.LLMs.AbstractLLM import AbstractLLM, MODEL_REGISTRY
 
 """
 Main Program File

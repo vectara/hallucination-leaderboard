@@ -1,5 +1,4 @@
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
-from src.LLMs.model_registry import register_model
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
 from src.data_struct.config_model import ExecutionMode, InteractionMode
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig

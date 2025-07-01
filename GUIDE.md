@@ -147,9 +147,8 @@ It's assumed the model you are adding is NOT operating in thinking mode. If ther
 If the model you want to run does not have a company.py file for it a new file needs to be made. 
 
 ```py
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
 import os
-from src.LLMs.model_registry import register_model
 from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,
@@ -241,9 +240,8 @@ python3 test_script.py
 If the company.py file already exists you need to add code with the correct protocol for the model. If the protocol matches the protocol for another model, add it to the same list as the matching model. If it doesn't exist create a new list with the new model and then define its protocol under a new conditional branch in summarize.
 
 ```python
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
 import os
-from src.LLMs.model_registry import register_model
 from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,

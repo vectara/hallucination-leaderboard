@@ -1,7 +1,6 @@
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
 import os
 from openai import OpenAI
-from src.LLMs.model_registry import register_model
 from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,

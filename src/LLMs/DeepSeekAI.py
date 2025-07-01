@@ -1,8 +1,5 @@
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
 from huggingface_hub import InferenceClient
-import re
-
-from src.LLMs.model_registry import register_model
 from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,
