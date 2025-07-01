@@ -1,4 +1,4 @@
-from src.logging.Logger import logger
+from src.Logger import logger
 from tqdm import tqdm
 import pandas as pd
 from datetime import datetime, timezone

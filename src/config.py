@@ -4,7 +4,6 @@ from src.constants import (
     TEST_DATA_PATH, LB_DATA_PATH
 )
 
-
 # Runtime config
 CONFIG = {
     "pipeline": [GET_SUMM, GET_JUDGE, GET_RESULTS],

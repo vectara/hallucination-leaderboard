@@ -5,7 +5,7 @@ from src.constants import TEST_DATA_PATH
 from src.config import Config
 from src.utils.json_utils import load_json, file_exists
 from src.utils.build_utils import builds_models, process_raw_config
-from src.logging.Logger import logger
+from src.Logger import logger
 import csv
 
 class TestLLM(AbstractTest):

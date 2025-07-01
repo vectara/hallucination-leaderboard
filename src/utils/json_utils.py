@@ -1,6 +1,6 @@
 import json
 import os
-from src.logging.Logger  import logger
+from src.Logger  import logger
 from pydantic import BaseModel
 from typing import Union, List, Any
 

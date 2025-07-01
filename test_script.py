@@ -1,4 +1,4 @@
-from src.logging.Logger import logger
+from src.Logger import logger
 from src.tests.AbstractTest import AbstractTest
 from src.tests.TestLLM import TestLLM
 from src.tests.TestAnalytics import TestAnalytics

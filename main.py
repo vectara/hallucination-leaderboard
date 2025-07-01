@@ -1,4 +1,4 @@
-from src.logging.Logger import logger
+from src.Logger import logger
 from src.scripts import (
     get_summaries, get_judgements, get_results
 )

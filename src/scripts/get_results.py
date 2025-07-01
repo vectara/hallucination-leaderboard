@@ -1,4 +1,4 @@
-from src.logging.Logger import logger
+from src.Logger import logger
 import os
 from tqdm import tqdm
 from src.LLMs.AbstractLLM import AbstractLLM

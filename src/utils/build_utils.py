@@ -1,4 +1,4 @@
-from src.logging.Logger import logger
+from src.Logger import logger
 from src.LLMs.model_registry import MODEL_REGISTRY
 from src.LLMs.AbstractLLM import AbstractLLM
 from src.data_struct.config_model import ModelConfig, Config

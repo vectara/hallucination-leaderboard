@@ -141,7 +141,7 @@ Model List
     - TII falcon-7B-instruct
 '''
 from abc import ABC, abstractmethod
-from src.logging.Logger import logger
+from src.Logger import logger
 from tqdm import tqdm
 from src.constants import OUTPUT_DIR
 import os
