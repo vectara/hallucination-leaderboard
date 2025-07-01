@@ -20,8 +20,8 @@ CONFIG = {
     "input_file": TEST_DATA_PATH,
     "temperature": 0.0, 
     "max_tokens": 1024,
-    "simulation_count": 5,
-    "sample_count": 2,
+    "simulation_count": 1, # NO EFFECT ON PROGRAM ATM
+    "sample_count": 1, # NO EFFECT ON PROGRAM ATM
     "LLMs_to_eval":
     [
         # {

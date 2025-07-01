@@ -30,10 +30,10 @@ CONFIG = {
     "temperature": 0.0, 
     # Sets the max_tokens for all models to this value if it can be set
     "max_tokens": 1024,
-    # Necssary for confidence intervals. Specifies how many times to repeat the summary generation process for all articles
-    "simulation_count": 5,
-    # Necessary for confidence intervals. Samples a subset of the summaries for all simulations. Should be strictly less than simulation count
-    "sample_count": 2,
+    # NO EFFECT ON PROGRAM ATM. Necessary for confidence intervals. Specifies how many times to repeat the summary generation process for all articles.
+    "simulation_count": 1,
+    # NO EFFECT ON PROGRAM ATM. Necessary for confidence intervals. Samples a subset of the summaries for all simulations. Should be strictly less than simulation count
+    "sample_count": 1,
     # List LLMs to evaluate
     "LLMs_to_eval":
     [
