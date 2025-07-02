@@ -140,37 +140,57 @@ Model List
     - Google Gemma-1.1-2B-it
     - TII falcon-7B-instruct
 '''
-from abc import ABC, abstractmethod
-from src.Logger import logger
-from tqdm import tqdm
-from src.constants import OUTPUT_DIR
 import os
 import time
 import re
+from typing import List
+
+from enum import Enum
+from abc import ABC, abstractmethod
+from tqdm import tqdm
+import torch
+
+from src.constants import OUTPUT_DIR
 from src.data_struct.config_model import (
     ExecutionMode, InteractionMode, ModelConfig
 )
-import torch
+from src.Logger import logger
+from src.config import SummaryError
 
 MODEL_REGISTRY = {}
 
-MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
-MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = (
-    "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
-)
-EMPTY_SUMMARY = (
-    "THIS SUMMARY IS EMPTY, THIS IS THE DEFAULT VALUE A SUMMARY "
-    "VARIABLE GETS. A REAL SUMMARY WAS NOT ASSIGNED TO THIS VARIABLE."
-)
-INCOMPLETE_THINK_TAG = "FOUND <think> WITH NO CLOSING </think>"
+# Definitions below moved to config.py -- Forrest, 2025-07-02
+# MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
+# MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = (
+#     "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
+# )
+# EMPTY_SUMMARY = (
+#     "THIS SUMMARY IS EMPTY, THIS IS THE DEFAULT VALUE A SUMMARY "
+#     "VARIABLE GETS. A REAL SUMMARY WAS NOT ASSIGNED TO THIS VARIABLE."
+# )
+# INCOMPLETE_THINK_TAG = "FOUND <think> WITH NO CLOSING </think>"
 
-SUMMARY_ERRORS = [
-    MODEL_FAILED_TO_RETURN_OUTPUT,
-    MODEL_RETURNED_NON_STRING_TYPE_OUTPUT,
-    EMPTY_SUMMARY,
-    INCOMPLETE_THINK_TAG
-]
+# SUMMARY_ERRORS = [
+#     MODEL_FAILED_TO_RETURN_OUTPUT,
+#     MODEL_RETURNED_NON_STRING_TYPE_OUTPUT,
+#     EMPTY_SUMMARY,
+#     INCOMPLETE_THINK_TAG
+# ]
 
+class SummaryError(str, Enum):
+    MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
+    MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = (
+        "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
+    )
+    EMPTY_SUMMARY = (
+        "THIS SUMMARY IS EMPTY, THIS IS THE DEFAULT VALUE A SUMMARY "
+        "VARIABLE GETS. A REAL SUMMARY WAS NOT ASSIGNED TO THIS VARIABLE."
+    )
+    INCOMPLETE_THINK_TAG = "FOUND <think> WITH NO CLOSING </think>"
+
+class ModelInstantiationError(str, Enum):
+    MODEL_NOT_SUPPORTED = "Model {model_name} by company {company} is not yet supported for {execution_mode} execution."
+    MISSING_SETUP = "Be sure to have a `setup` and a `teardown` method in the model class {class_name}. See `__enter__` and `__exit__` methods of `AbstractLLM` for more information."
 
 class AbstractLLM(ABC):
     """
@@ -250,7 +270,8 @@ class AbstractLLM(ABC):
             max_tokens: int,
             thinking_tokens: int,
             min_throttle_time: float,
-            company="NullCompany"
+            output_dir: str = OUTPUT_DIR,
+            company="NullCompany", 
     ):
         self.max_tokens = max_tokens
         self.temperature = temperature
@@ -263,8 +284,9 @@ class AbstractLLM(ABC):
         self.interaction_mode = interaction_mode
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = None
-        self.client = None
-        self.local_model = None
+        # self.client = None
+        self.execution_mode = execution_mode
+        # self.local_model = None
         self.prompt = ("You are a chat bot answering questions using data."
             "You must stick to the answers provided solely by the text in the "
             "passage provided. You are asked the question 'Provide a concise "
@@ -272,7 +294,6 @@ class AbstractLLM(ABC):
             "information described.'"
         )
 
-        output_dir = OUTPUT_DIR
         self.model_output_dir = f"{output_dir}/{self.company}/{self.model_name}"
         os.makedirs(self.model_output_dir, exist_ok=True)
 
@@ -315,8 +336,13 @@ class AbstractLLM(ABC):
         """
 
         start_time = time.time()
-        raw_summary = self.try_to_summarize_one_article(article)
-        summary = self.clean_raw_summary(raw_summary)
+
+        # # Block commented out by Forrest, 2025-07-02
+        # raw_summary = self.try_to_summarize_one_article(article)
+        # summary = self.clean_raw_summary(raw_summary)
+        # summary = self.remove_thinking_text(raw_summary)
+        summary = self.try_to_summarize_one_article(article)
+
         elapsed_time = time.time() - start_time
         remaining_time = self.min_throttle_time - elapsed_time
         if remaining_time > 0:
@@ -337,15 +363,19 @@ class AbstractLLM(ABC):
             str: Summary of article or dummy string output
         
         """
-        llm_summary = EMPTY_SUMMARY
+        # llm_summary = self.summary_error.EMPTY_SUMMARY
+        # This line not needed. -- Forrest, 2025-07-02
+
+        prepared_llm_input = self.prepare_article_for_llm(article)
 
         try:
-            llm_summary = self.summarize_one_article(article)
+            # llm_summary = self.summarize_one_article(article)
+            llm_summary = self.summarize(prepared_llm_input)
         except Exception as e:
             logger.warning((
                 f"Model call failed for {self.model_name}: {e} "
             ))
-            return MODEL_FAILED_TO_RETURN_OUTPUT
+            return self.summary_error.MODEL_FAILED_TO_RETURN_OUTPUT
 
         if not isinstance(llm_summary, str):
             bad_output = llm_summary
@@ -354,26 +384,28 @@ class AbstractLLM(ABC):
                 f"string but got {type(bad_output).__name__}. "
                 f"Replacing output."
             ))
-            return MODEL_RETURNED_NON_STRING_TYPE_OUTPUT
-        return llm_summary
-
-    def summarize_one_article(self, article: str) -> str:
-        """
-        Takes in a string representing a human written article, injects a prompt
-        and feeds into the LLM to generate a summary.
-
-        Args:
-            article (str): String that is a human written news article
+            return self.summary_error.MODEL_RETURNED_NON_STRING_TYPE_OUTPUT
         
-        Returns:
-            str: A summary of the article generated by the LLM
-
-        """
-        prepared_llm_input = self.prepare_article_for_llm(article)
-
-        llm_summary = self.summarize(prepared_llm_input)
+        llm_summary = self.remove_thinking_text(llm_summary)
 
         return llm_summary
+
+    # def summarize_one_article(self, article: str) -> str:
+    #     """
+    #     Takes in a string representing a human written article, injects a prompt
+    #     and feeds into the LLM to generate a summary.
+
+    #     Args:
+    #         article (str): String that is a human written news article
+        
+    #     Returns:
+    #         str: A summary of the article generated by the LLM
+
+    #     """
+    #     prepared_llm_input = self.prepare_article_for_llm(article)
+    #     llm_summary = self.summarize(prepared_llm_input)
+
+    #     return llm_summary
 
     def prepare_article_for_llm(self, article: str) -> str:
         """
@@ -388,20 +420,20 @@ class AbstractLLM(ABC):
         prepared_text = f"{self.prompt} '{article}'"
         return prepared_text
 
-    def clean_raw_summary(self, raw_summary: str) -> str:
-        """
-        Cleans the output summary to only contains relevant summary data
+    # def clean_raw_summary(self, raw_summary: str) -> str:
+    #     """
+    #     Cleans the output summary to only contains relevant summary data
 
-        Args:
-            raw_summary (str): raw_summary output by LLM
+    #     Args:
+    #         raw_summary (str): raw_summary output by LLM
 
-        Returns:
-            str: string that only contains summary data
-        """
-        summary = self.remove_thinking_text(raw_summary)
-        if summary in SUMMARY_ERRORS:
-            return summary
-        return summary
+    #     Returns:
+    #         str: string that only contains summary data
+    #     """
+    #     summary = self.remove_thinking_text(raw_summary)
+    #     if summary in SUMMARY_ERRORS:
+    #         return summary
+    #     return summary
 
     def remove_thinking_text(self, raw_summary: str) -> str:
         """
@@ -418,7 +450,7 @@ class AbstractLLM(ABC):
         """
         if '<think>' in raw_summary and '</think>' not in raw_summary:
             logger.warning(f"<think> tag found with no </think>. This is indicative of an incomplete response from an LLM. Raw Summary: {raw_summary}")
-            return INCOMPLETE_THINK_TAG
+            return self.summary_error.INCOMPLETE_THINK_TAG
 
         summary = re.sub(
             r'<think>.*?</think>\s*', '',
@@ -426,37 +458,41 @@ class AbstractLLM(ABC):
         )
         return summary
 
-    def valid_client_model(self) -> bool:
-        """
-        If model_name is in client_models list and the model was passed with 
-        execution mode set to client returns True
+    # Commented out by Forrest, 2025-07-02
+    # Due to too fine grained 
+    # def valid_client_model(self) -> bool:
+    #     """
+    #     If model_name is in client_models list and the model was passed with 
+    #     execution mode set to client returns True
 
-        Args:
-            None
-        Returns:
-            bool: True if a proper client model
-        """
-        if (
-            self.model_name in self.client_models and 
-            self.execution_mode == ExecutionMode.CLIENT
-        ):
-            return True
-        else:
-            return False
+    #     Args:
+    #         None
+    #     Returns:
+    #         bool: True if a proper client model
+    #     """
+    #     if (
+    #         self.model_name in self.client_models and 
+    #         self.execution_mode == ExecutionMode.CLIENT
+    #     ):
+    #         return True
+    #     else:
+    #         return False
 
-    def client_is_defined(self) -> bool:
-        """
-        Returns true if self.client is not None
+    # Commented out by Forrest, 2025-07-02
+    # Due to too fine grained 
+    # def client_is_defined(self) -> bool:
+    #     """
+    #     Returns true if self.client is not None
 
-        Args:
-            None
-        Returns:
-            bool: True if self.client is not None
-        """
-        if self.client is not None:
-            return True
-        else:
-            return False
+    #     Args:
+    #         None
+    #     Returns:
+    #         bool: True if self.client is not None
+    #     """
+    #     if self.client is not None:
+    #         return True
+    #     else:
+    #         return False
 
     def valid_local_model(self) -> bool:
         """
@@ -475,20 +511,22 @@ class AbstractLLM(ABC):
             return True
         else:
             return False
+        
+    # Commented out by Forrest, 2025-07-02
+    # Due to too fine grained 
+    # def local_model_is_defined(self) -> bool:
+    #     """
+    #     Returns true if self.local_model is not None
 
-    def local_model_is_defined(self) -> bool:
-        """
-        Returns true if self.local_model is not None
-
-        Args:
-            None
-        Returns:
-            bool: True if self.local_model is not None
-        """
-        if self.local_model is not None:
-            return True
-        else:
-            return False
+    #     Args:
+    #         None
+    #     Returns:
+    #         bool: True if self.local_model is not None
+    #     """
+    #     if self.local_model is not None:
+    #         return True
+    #     else:
+    #         return False
 
     def default_local_model_teardown(self):
         """
@@ -684,35 +722,3 @@ class AbstractLLM(ABC):
             None
         """
         return None
-
-def build_models(llm_configs: list[ModelConfig]) -> list[AbstractLLM]:
-    """
-    Builds the models given in the config list if it is registered
-
-    Args:
-        config (list[dict]): list of dictionaries for model object init
-
-    Returns:
-        list[AbstractLLM]: list of models
-    """
-
-    models = []
-    for model in llm_configs:
-        company_class = MODEL_REGISTRY.get(model.company)
-        if company_class == None:
-            logger.warning("No registered class for this company, skipping")
-            print(f"This {company_class} is not registered, can't build")
-            continue
-
-        try:
-            models.append(company_class(**model.params.model_dump()))
-        except Exception as e:
-            logger.warning(
-                f"failed to instantiate {model.company}-"
-                f"{model.params.model_name}-{model.params.date_code} : {e}"
-            )
-            print(
-                f"failed to instantiate {model.company}-"
-                f"{model.params.model_name}-{model.params.date_code} : {e}"
-            )
-    return models

@@ -1,7 +1,9 @@
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
-from src.data_struct.config_model import ExecutionMode, InteractionMode
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
+
+from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,
     ClientModelProtocolBranchNotFound,

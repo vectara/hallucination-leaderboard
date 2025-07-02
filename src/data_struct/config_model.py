@@ -3,8 +3,8 @@ from typing import List, Optional
 from enum import Enum
 
 class ExecutionMode(str, Enum):
-    CLIENT = "client"
-    LOCAL = "local"
+    CLIENT = "client" # use web api
+    LOCAL = "local" # use local GPU
 
 class InteractionMode(str, Enum):
     CHAT = "chat"

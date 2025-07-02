@@ -1,16 +1,19 @@
-from src.Logger import logger
-from src.scripts import (
-    get_summaries, get_judgements, get_results
-)
+from typing import List
+
 from dotenv import load_dotenv
 import pandas as pd
 import argparse
+
 from src.constants import (
     TEST_DATA_PATH, LB_DATA_PATH, GET_SUMM, GET_JUDGE, GET_RESULTS
 )
 from src.config import CONFIG   
-from src.data_struct.config_model import Config
-from src.LLMs.AbstractLLM import AbstractLLM, build_models
+from src.data_struct.config_model import Config, ModelConfig
+from src.LLMs import AbstractLLM, MODEL_REGISTRY
+from src.Logger import logger
+from src.scripts import (
+    get_summaries, get_judgements, get_results
+)
 
 """
 Main Program File
@@ -19,6 +22,38 @@ Functions:
     main(args)
     build_models(llm_configs)
 """
+
+def instantiate_models(llm_configs: List[ModelConfig]) -> List[AbstractLLM]:
+    """
+    Instantiates a list of models given a config list
+
+    Args:
+        config (List[ModelConfig]): list of ModelConfig objects
+
+    Returns:
+        List[AbstractLLM]: list of models
+    """
+
+    models = []
+    for model in llm_configs:
+        company_class = MODEL_REGISTRY.get(model.company)
+        if company_class == None:
+            logger.warning("No registered class for this company, skipping")
+            print(f"This {company_class} is not registered, can't build")
+            continue
+
+        try:
+            models.append(company_class(**model.params.model_dump()))
+        except Exception as e:
+            logger.warning(
+                f"failed to instantiate {model.company}-"
+                f"{model.params.model_name}-{model.params.date_code} : {e}"
+            )
+            print(
+                f"failed to instantiate {model.company}-"
+                f"{model.params.model_name}-{model.params.date_code} : {e}"
+            )
+    return models
 
 def main(args: argparse.ArgumentParser):
     """
@@ -37,7 +72,7 @@ def main(args: argparse.ArgumentParser):
 
     config = Config(**CONFIG)
 
-    models = build_models(config.LLMs_to_eval)
+    models = instantiate_models(config.LLMs_to_eval)
     article_df = pd.read_csv(data_path)
 
     if args.process == GET_SUMM:

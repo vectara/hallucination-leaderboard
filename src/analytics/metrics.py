@@ -1,4 +1,4 @@
-from src.LLMs.AbstractLLM import SUMMARY_ERRORS
+from src.LLMs.AbstractLLM import SummaryError
 
 
 def is_valid_summary(summary: str) -> bool:
@@ -14,25 +14,26 @@ def is_valid_summary(summary: str) -> bool:
         bool: True if valid summary else False
     """
 
-    if has_error_output(summary):
+    # if has_error_output(summary):
+    if summary in SummaryError:
         return False
     elif len(summary.split()) >= 5:
         return True
     else:
         return False
 
-def has_error_output(summary: str) -> bool:
-    """
-    Detects if summary contains error output and returns True if so
+# def has_error_output(summary: str) -> bool:
+#     """
+#     Detects if summary contains error output and returns True if so
 
-    Args:
-        summary (str): the summary
+#     Args:
+#         summary (str): the summary
 
-    Returns:
-        bool: True if summary is exact error output string
-    """
+#     Returns:
+#         bool: True if summary is exact error output string
+#     """
 
-    if summary in SUMMARY_ERRORS:
-        return True
-    else:
-        return False
+#     if summary in SUMMARY_ERRORS:
+#         return True
+#     else:
+#         return False
