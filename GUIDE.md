@@ -49,9 +49,14 @@ CONFIG = {
                 "model_name": "claude-opus-4",
                 # date_code: Optional, defaults to "". Company defined date code
                 "date_code": "20250514",
-                # interaction_mode: doesn't directly change functionality but desired for record keeping. Can be only InteractionMode.CHAT or InteractionMode.Completion use the correspoding one depending on how you use the LLM
+                # interaction_mode: doesn't directly change functionality, but is useful for record keeping, as it can influence output behavior.
+                # Must be either InteractionMode.CHAT or InteractionMode.COMPLETION
+                # InteractionMode.CHAT indicates that the model is responding to the summarization request in a chat-based format
+                # InteractionMode.COMPLETION indicates that the model is completing the summarization request as a single prompt completion
                 "interaction_mode": InteractionMode.CHAT
-                # execution_mode: specifies if this model is expected to run using an API or locally. Can be only ExecutionMode.CLIENT or ExecutionMode.LOCAL
+                # execution_mode: indicates if this model is expected to run using an API or locally. Can be only ExecutionMode.CLIENT or ExecutionMode.LOCAL
+                # ExecutionMode.CLIENT indicates an API is being used for summary request
+                # ExectionMode.LOCAL indicates the model is being hosted and ran on the same machine as the program
                 "execution_mode": ExecutionMode.CLIENT
                 # temperature: Optional defaults to global config value.
                 "temperature": 0.0,
