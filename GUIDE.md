@@ -147,7 +147,7 @@ It's assumed the model you are adding is NOT operating in thinking mode. If ther
 If the model you want to run does not have a company.py file for it a new file needs to be made. 
 
 ```py
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
 import os
 from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
@@ -159,7 +159,6 @@ from src.exceptions import (
 # ADD IMPORTS IF NEEDED
 
 COMPANY = "company_name"
-@register_model(COMPANY)
 class Company(AbstractLLM):
     """
     Class for models from company_name
@@ -228,6 +227,8 @@ class Company(AbstractLLM):
         elif self.local_model_is_defined():
             self.default_local_model_teardown()
 
+MODEL_REGISTRY[COMPANY] = Company
+
 ```
 Add your new model to the global CONFIG variable and run the test script to verify that the model does indeed return a string.
 
@@ -240,7 +241,7 @@ python3 test_script.py
 If the company.py file already exists you need to add code with the correct protocol for the model. If the protocol matches the protocol for another model, add it to the same list as the matching model. If it doesn't exist create a new list with the new model and then define its protocol under a new conditional branch in summarize.
 
 ```python
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
 import os
 from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
@@ -252,7 +253,6 @@ from src.exceptions import (
 # ADD IMPORTS IF NEEDED
 
 COMPANY = "company_name"
-@register_model(COMPANY)
 class Company(AbstractLLM):
     """
     Class for models from company_name
@@ -324,6 +324,9 @@ class Company(AbstractLLM):
             self.close_client()
         elif self.local_model_is_defined():
             self.default_local_model_teardown()
+
+MODEL_REGISTRY[COMPANY] = Company
+
 ```
 
 Same as before add your new model to the global CONFIG variable and run the test script to verify that the model does indeed return a string.
