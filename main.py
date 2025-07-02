@@ -65,7 +65,7 @@ def main(args: argparse.ArgumentParser):
 
 
 def config_run(config: Config, models: list[AbstractLLM]):
-    article_df = pd.read_csv(config.input_file)
+    article_df = pd.read_csv(config.source_article_path)
     if config.overwrite:
         confirmation = input(
             "\nOverwrite is enabled in the given config. "

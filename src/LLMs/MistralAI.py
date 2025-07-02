@@ -20,9 +20,9 @@ class MistralAI(AbstractLLM):
     """
 
     local_models = []
-    client_models = ["magistral-medium"]
+    client_models = ["magistral-medium", "mistral-small"]
 
-    model_category1 = ["magistral-medium"] # Doesn't look like magistral can disable thinking
+    model_category1 = ["magistral-medium", "mistral-small"] # Doesn't look like magistral can disable thinking
 
     def __init__(
             self,

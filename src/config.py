@@ -26,14 +26,24 @@ CONFIG = {
         # }
         # ,
         {
-            "company": "anthropic",
+            "company": "mistralai",
             "params": {
-                "model_name": "claude-opus-4",
+                "model_name": "mistral-small",
                 "execution_mode": ExecutionMode.CLIENT,
                 "interaction_mode": InteractionMode.CHAT,
-                "date_code": "20250514"
+                "date_code": "2506"
             }
         }
+        # ,
+        # {
+        #     "company": "anthropic",
+        #     "params": {
+        #         "model_name": "claude-opus-4",
+        #         "execution_mode": ExecutionMode.CLIENT,
+        #         "interaction_mode": InteractionMode.CHAT,
+        #         "date_code": "20250514"
+        #     }
+        # }
         # ,
         # {
         #     "company": "openai",
