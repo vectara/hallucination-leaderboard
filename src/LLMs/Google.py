@@ -1,7 +1,7 @@
 import os
 from google import genai
 from google.genai import types
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
 from src.data_struct.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,
@@ -10,7 +10,6 @@ from src.exceptions import (
 )
 
 COMPANY = "google"
-@register_model(COMPANY)
 class Google(AbstractLLM):
     """
     Class for models from Google
@@ -104,3 +103,5 @@ class Google(AbstractLLM):
 
     def close_client(self):
         pass
+
+MODEL_REGISTRY[COMPANY] = Google

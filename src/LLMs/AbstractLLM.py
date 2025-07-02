@@ -685,21 +685,6 @@ class AbstractLLM(ABC):
         """
         return None
 
-def register_model(company_name: str):
-    """
-    Decorater to auto-register a class under a give name
-
-    Args:
-        company_name: they key the class is registered under
-
-    Returns:
-        AbstractLLM: class associated with company_name
-    """
-    def decorator(company_class: AbstractLLM):
-        MODEL_REGISTRY[company_name] = company_class
-        return company_class
-    return decorator
-
 def build_models(llm_configs: list[ModelConfig]) -> list[AbstractLLM]:
     """
     Builds the models given in the config list if it is registered

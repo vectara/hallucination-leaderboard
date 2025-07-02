@@ -1,4 +1,4 @@
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
 import os
 import anthropic
 from src.data_struct.config_model import ExecutionMode, InteractionMode
@@ -9,7 +9,6 @@ from src.exceptions import (
 )
 
 COMPANY = "anthropic"
-@register_model(COMPANY)
 class Anthropic(AbstractLLM):
     """
     Class for models from Anthropic
@@ -85,3 +84,5 @@ class Anthropic(AbstractLLM):
 
     def close_client(self):
         pass
+
+MODEL_REGISTRY[COMPANY] = Anthropic

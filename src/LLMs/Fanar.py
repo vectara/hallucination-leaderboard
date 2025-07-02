@@ -1,4 +1,4 @@
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
 from openai import OpenAI
 import os
 from src.data_struct.config_model import ExecutionMode, InteractionMode
@@ -9,7 +9,6 @@ from src.exceptions import (
 )
 
 COMPANY = "fanar"
-@register_model(COMPANY)
 class Fanar(AbstractLLM):
     """
     Class for models from Fanar
@@ -87,3 +86,5 @@ class Fanar(AbstractLLM):
 
     def close_client(self):
         pass
+
+MODEL_REGISTRY[COMPANY] = Fanar

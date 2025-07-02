@@ -1,4 +1,4 @@
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
 import os
 from openai import OpenAI
 from src.data_struct.config_model import ExecutionMode, InteractionMode
@@ -9,7 +9,6 @@ from src.exceptions import (
 )
 
 COMPANY ="openai"
-@register_model(COMPANY)
 class OpenAi(AbstractLLM):
     """
     Class for models from OpenAI
@@ -105,3 +104,5 @@ class OpenAi(AbstractLLM):
 
     def close_client(self):
         pass
+
+MODEL_REGISTRY[COMPANY] = OpenAi

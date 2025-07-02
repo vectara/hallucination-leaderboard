@@ -1,4 +1,4 @@
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
 from src.data_struct.config_model import ExecutionMode, InteractionMode
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
@@ -9,7 +9,6 @@ from src.exceptions import (
 )
 
 COMPANY = "rednote"
-@register_model(COMPANY)
 class Rednote(AbstractLLM):
     """
     Class for models from rednote
@@ -120,3 +119,5 @@ class Rednote(AbstractLLM):
 
     def close_client(self):
         pass
+
+MODEL_REGISTRY[COMPANY] = Rednote

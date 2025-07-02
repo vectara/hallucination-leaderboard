@@ -1,4 +1,4 @@
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, register_model
+from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
 from mistralai import Mistral
 import os
 from src.data_struct.config_model import ExecutionMode, InteractionMode
@@ -9,7 +9,6 @@ from src.exceptions import (
 )
 
 COMPANY = "mistralai"
-@register_model(COMPANY)
 class MistralAI(AbstractLLM):
     """
     Class for models from MistralAI
@@ -85,3 +84,5 @@ class MistralAI(AbstractLLM):
 
     def close_client(self):
         pass
+
+MODEL_REGISTRY[COMPANY] = MistralAI
