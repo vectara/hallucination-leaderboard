@@ -339,3 +339,88 @@ Same as before add your new model to the global CONFIG variable and run the test
 ```bash
 python3 test_script.py
 ```
+
+# Output Data Structures
+
+The main program pipeline generates three jsonl output files.
+
+### Summaries
+
+Summaries is the first step. It contains the summary and relevant metadata related to the production of the summary. These records are contained in summaries.jsonl
+
+```python
+{
+    # Date the summary request was made
+    "timestamp":"2025-07-02",
+    # Unique id for the summary
+    "summary_uid":"dae8975fcbcf7959fb371b39d3875d38",
+    # Model name as defined by company
+    "llm":"example_model_name",
+    # Date code of the model
+    "date_code":"example_date_code",
+    # Mode the summary was requested
+    "interaction_mode":"chat",
+    # Temperature hyperparameter should always be 0 or close to it
+    "temperature":0.0,
+    # Max tokens hyperparameter, should always be 1024
+    "max_tokens":1024,
+    # Thinking tokens, should always be 0 or as close to 0 as possible
+    "thinking_tokens":0,
+    # Id of the source article
+    "article_id":1,
+    # The summary generated
+    "summary":"**Concise Summary:**\n\nVectara is a Retrieval Augmented Generation as-a-Service (RAGaaS) platform that enhances applications with advanced generative AI capabilities. Unlike traditional keyword-based searches, Vectara uses context-aware hybrid search, zero-shot models, and conversational search to deliver precise, fact-based responses. It avoids AI hallucinations by grounding answers in uploaded data, ensuring accuracy and trust. Vectara prioritizes data security, never training on customer data, and aims to power applications with contextually accurate AI-driven insights."
+}
+
+# Additional records below...
+```
+
+### Judgements
+
+Judgements is the second step. It contains metrics performed on each summary. These records are contained in judgements.jsonl.
+
+```python
+{
+    # Date the judgments were created
+    "timestamp":"2025-07-02",
+    # Unique id for the summary
+    "summary_uid":"dae8975fcbcf7959fb371b39d3875d38",
+    # Date code of the model
+    "date_code":"example_date_code",
+    # Version of HHEM used
+    "hhem_version":"HHEM-2.3",
+    # Score of summary from HHEM, above 0.5 indicates a factually consistant summary
+    "hhem_score":0.9995935559272766,
+    # If the summary was valid. See valid is_valid_summary for definition of a valid summary
+    "valid":true,
+    # Number of words in the summary
+    "summary_words":71
+}
+
+# Additional records below...
+```
+
+### Stats
+
+Stats is the final step, it is judgement metric aggregation grouped by date code. These records are contained in the stats.jsonl file.
+
+```python
+{
+    # Date the stats were performed
+    "timestamp":"2025-07-02",
+    # Model name as defined by company
+    "llm":"example_model_name",
+    # Date code of the model
+    "date_code":"example_date_code",
+    # Overall hallucination rate of all summaries for model-date_code
+    "hallucination_rate":0.0,
+    # Confidence Interval of the hallucination rate for model-date_code
+    "confidence_interval":0.2,
+    # Answer rate represents the valid summary rate, 100% indicates that all summaries were valid for model-date_code
+    "answer_rate":100.0,
+    # Average length of summary for model-date_code
+    "avg_summary_length":71
+}
+
+# Additional records below...
+```
