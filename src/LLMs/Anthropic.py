@@ -4,8 +4,8 @@
 import os
 import anthropic
 
-from AbstractLLM import AbstractLLM, SummaryError, ModelInstantiationError
-from src.data_struct.config_model import ExecutionMode, InteractionMode
+from .AbstractLLM import AbstractLLM, BasicLLMConfig
+from .. data_model import Summary, ModelInstantiationError
 
 # Forrest, 2025-07-02
 # from src.exceptions import (
@@ -15,6 +15,13 @@ from src.data_struct.config_model import ExecutionMode, InteractionMode
 #     )
 
 COMPANY = "anthropic"
+
+class AnthropicConfig(BasicLLMConfig):
+    pass 
+
+class AnthropicSummary(Summary):
+    pass
+
 class Anthropic(AbstractLLM):
     """
     Class for models from Anthropic
@@ -60,7 +67,6 @@ class Anthropic(AbstractLLM):
             min_throttle_time,
             company=COMPANY
         )
-        self.model = self.get_model_identifier(model_name, date_code)
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
@@ -100,7 +106,11 @@ class Anthropic(AbstractLLM):
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                 self.client = anthropic.Client(api_key=api_key)
             else:
-                raise ModelInstantiationError.MODEL_NOT_SUPPORTED(self.model_name, self.company, self.execution_mode)
+                raise ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
+                    model_name=self.model_name,
+                    company=self.company,
+                    execution_mode=self.execution_mode
+                )
         elif self.execution_mode == ExecutionMode.LOCAL:
             pass
 

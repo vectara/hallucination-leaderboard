@@ -5,8 +5,8 @@ from src.LLMs.AbstractLLM import AbstractLLM
 from src.json_utils import file_exists, append_record_to_jsonl
 import pandas as pd
 from datetime import datetime, timezone
-from src.data_struct.data_model import Stats
-from src.analytics.stats import (
+from src.data_model import Stats
+from src.analytics import (
     compute_hallucination_rate, compute_answer_rate,
     compute_avg_summary_length, compute_confidence_interval
 )

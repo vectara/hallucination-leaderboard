@@ -1,5 +1,4 @@
-# TODO: Create children for all models on the HHEM LB
-# TODO: Above is being done as needed
+# TODO: Create children for all models on the HHEM LB shown below
 '''
 Model List
     - Anthropic 4
@@ -143,26 +142,21 @@ Model List
 import os
 import time
 import re
-from typing import List
+from typing import List, Literal
 
 from enum import Enum
 from abc import ABC, abstractmethod
+from pydantic import BaseModel
 from tqdm import tqdm
 import torch
 
-from src.constants import OUTPUT_DIR
-from src.data_struct.config_model import (
-    ExecutionMode, InteractionMode, ModelConfig
-)
-from src.Logger import logger
-from src.config import SummaryError
+from .. data_model import ModelInstantiationError
+from .. Logger import logger
 
-MODEL_REGISTRY = {}
-
-# Definitions below moved to config.py -- Forrest, 2025-07-02
+# Definitions below moved to constants.py -- Forrest, 2025-07-02
 # MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
 # MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = (
-#     "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
+#     "DID NOT RECEIVE A STRING TYPE FROM OUTPUT"
 # )
 # EMPTY_SUMMARY = (
 #     "THIS SUMMARY IS EMPTY, THIS IS THE DEFAULT VALUE A SUMMARY "
@@ -177,128 +171,65 @@ MODEL_REGISTRY = {}
 #     INCOMPLETE_THINK_TAG
 # ]
 
-class SummaryError(str, Enum):
-    MODEL_FAILED_TO_RETURN_OUTPUT = "MODEL FAILED TO RETURN ANY OUTPUT"
-    MODEL_RETURNED_NON_STRING_TYPE_OUTPUT = (
-        "DID NOT RECIEVE A STRING TYPE FROM OUTPUT"
-    )
-    EMPTY_SUMMARY = (
-        "THIS SUMMARY IS EMPTY, THIS IS THE DEFAULT VALUE A SUMMARY "
-        "VARIABLE GETS. A REAL SUMMARY WAS NOT ASSIGNED TO THIS VARIABLE."
-    )
-    INCOMPLETE_THINK_TAG = "FOUND <think> WITH NO CLOSING </think>"
+default_prompt = """
+You are a chat bot answering questions using data.
+You must stick to the answers provided solely by the text in the 
+passage provided. You are asked the question 'Provide a concise 
+summary of the following passage, covering the core pieces of 
+information described.'
+    
+{{article}}
+"""
 
-class ModelInstantiationError(str, Enum):
-    MODEL_NOT_SUPPORTED = "Model {model_name} by company {company} is not yet supported for {execution_mode} execution."
-    MISSING_SETUP = "Be sure to have a `setup` and a `teardown` method in the model class {class_name}. See `__enter__` and `__exit__` methods of `AbstractLLM` for more information."
+class BasicLLMConfig(BaseModel):
+    """
+    Configuration of an LLM for summarization.
+    """
+    company: str
+    model_name: str
+    date_code: str | None = None  # some models have date codes, some don't. 
+    prompt:str = default_prompt
+
+    temperature: float | None = 0.0
+    max_tokens: int | None = 4096
+    min_throttle_time: float = 0.1  # number of seconds to wait before sending another request. Useful for web API calling that may have rate limits.
+
+    thinking_tokens: int | None = None  # only applicable to models that support thinking.
+    execution_mode: Literal["cpu", "gpu", "api"] | None = None # Call the LLM locally on GPU, on CPU), or through web API. Some models are only supported through api, such as Anthropic, OpenAI, or Gemini.
+    # interaction_mode: Literal["chat", "completion"] | None = None # When making a request, use the chat mode/endpoint or the completion mode/endpoint. Not applicable to all models. Almost all modern models do not distinguish between the two. 
+
+    output_dir: str = "output" # TODO: To be read from top level config instead of make it per LLM.     
+
+    # class Config:
+    #     extra = "allow"
 
 class AbstractLLM(ABC):
     """
-    Abstract Class
-
-    Class Attributes:
-        local_model (list[str]): models that run locally
-        client_model (list[str]): models that use an api
-        model_category1 (list[str]): first list of models that follow a similar
-            summarize protocol
-        model_category2 (list[str]): 2nd list of models that follow a similar
-            summarize protocol
-
-    Attributes:
-        model_name (str): Name of the model
-        model (str): full model name expected by company, can be idnetical to 
-            model_name
-        client (~Client): client object
-        execution_mode (str): specifies mode of execution. Can only be "local"
-            or "client"
-        prompt (str): Summary prompt
-        company (str): Company of model
-        temperature (float): set to 0.0 to compare deterministic output
-        max_tokens (int): number of tokens for models
-        thinking_tokens (int): number of thinking tokens
-        min_throttle_time (float): minimum amount of time a request must run to
-            avoid throttling 
-        model_output_dir (str): path to output directory
-
-    Methods:
-        summarize_articles(articles): Summarizes the list of articles
-        summarize_clean_wait(article): Summarizes article waits if needed 
-            and cleans it
-        try_to_summarize_one_article(article): exception handler method
-        summarize_one_article(article): Requests summary of input
-            article from LLM
-        prepare_article_for_llm(article): Injects prompt and slightly reformats
-            article text
-        clean_raw_summary(raw_summary): cleans summary
-        remove_thinking_text(raw_summary): removes thinking output
-        valid_client_model(): returns true if model os a client model
-        client_is_defined(): returns true if client is not None
-        valid_local_model(): returns true if model is a local model
-        local_model_is_defined(): returns true if local model is not None
-        default_local_model_teardown(): clears gpu memory
-        get_model_identifier(model_name, date_code): get the model id expected
-            by the company
-        get_interaction_mode(): returns interaction mode value
-        get_model_name(): returns name of model
-        get_company(): get company of model
-        get_model_out_dir(): get the output directory dedicated for this model
-        get_date_code(): get date code
-        get_temperature(): get temperature
-        get_max_tokens(): get max tokens
-        get_thinking_tokens(): get thinking tokens
-        set_temperature(temp, reason): sets temperature
-        summarize(prepared_text): Requests LLM to summarize the given text
-        setup(): setup model for runtime use
-        teardown(): teardown model when no longer needed for runtime use
+    Abstract Class for an LLM.
     """
-
-    local_models = []
-    client_models = []
-    model_category1 = []
-    model_category2 = []
-    model_category3 = []
-    model_category4 = []
-    model_category5 = []
 
     def __init__(
             self,
-            model_name: str, 
-            execution_mode: ExecutionMode,
-            interaction_mode: InteractionMode,
-            date_code: str,
-            temperature: float,
-            max_tokens: int,
-            thinking_tokens: int,
-            min_throttle_time: float,
-            output_dir: str = OUTPUT_DIR,
-            company="NullCompany", 
+            llm_config: BasicLLMConfig
     ):
-        self.max_tokens = max_tokens
-        self.temperature = temperature
-        self.thinking_tokens = thinking_tokens
-        self.date_code = date_code
-        self.min_throttle_time = min_throttle_time
-        self.company = company
-        self.model_name = model_name
-        self.execution_mode = execution_mode
-        self.interaction_mode = interaction_mode
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model = None
-        # self.client = None
-        self.execution_mode = execution_mode
-        # self.local_model = None
-        self.prompt = ("You are a chat bot answering questions using data."
-            "You must stick to the answers provided solely by the text in the "
-            "passage provided. You are asked the question 'Provide a concise "
-            "summary of the following passage, covering the core pieces of "
-            "information described.'"
-        )
+        
+        # Expose all config keys and values as attributes on self
+        config_dict = llm_config.model_dump()
+        for key, value in config_dict.items():
+            setattr(self, key, value)
+        
+        # Create output directory
+        full_output_dir = f"{llm_config.output_dir}/{llm_config.company}/{llm_config.model_name}"
+        os.makedirs(full_output_dir, exist_ok=True)
+        self.model_output_dir = full_output_dir
 
-        self.model_output_dir = f"{output_dir}/{self.company}/{self.model_name}"
-        os.makedirs(self.model_output_dir, exist_ok=True)
+        if llm_config.date_code not in [None, "", " "]:
+            self.model_fullname = f"{llm_config.model_name}-{llm_config.date_code}"
+        else:
+            self.model_fullname = llm_config.model_name
 
     def __enter__(self):
-        self.setup()
+        self.setup() # TODO: Try to skip the setup() and teardown() 
         return self
 
     def __exit__(self, exc_type, exc_val, exc_t):
@@ -366,7 +297,9 @@ class AbstractLLM(ABC):
         # llm_summary = self.summary_error.EMPTY_SUMMARY
         # This line not needed. -- Forrest, 2025-07-02
 
-        prepared_llm_input = self.prepare_article_for_llm(article)
+        # prepared_llm_input = self.prepare_article_for_llm(article)
+
+        prepared_llm_input = self.prompt.format(article=article)
 
         try:
             # llm_summary = self.summarize_one_article(article)
@@ -407,18 +340,18 @@ class AbstractLLM(ABC):
 
     #     return llm_summary
 
-    def prepare_article_for_llm(self, article: str) -> str:
-        """
-        Combines prompt and article for input into an LLM
+    # def prepare_article_for_llm(self, article: str) -> str:
+    #     """
+    #     Combines prompt and article for input into an LLM
 
-        Args:
-            text (str): Content text for LLM
+    #     Args:
+    #         text (str): Content text for LLM
 
-        Returns:
-            str: Prompt + content text
-        """
-        prepared_text = f"{self.prompt} '{article}'"
-        return prepared_text
+    #     Returns:
+    #         str: Prompt + content text
+    #     """
+    #     prepared_text = f"{self.prompt} '{article}'"
+    #     return prepared_text
 
     # def clean_raw_summary(self, raw_summary: str) -> str:
     #     """
@@ -440,6 +373,8 @@ class AbstractLLM(ABC):
         Removes any thinking tags and content in between them. If a summary does
         not have a closing thinking tag it will be considered as an incomplete 
         summary and return an error string instead.
+
+        TODO: Note that different LLMs may use different tags for thinking. Shall we move to child classes?
 
         Args:
             raw_summary (str): raw summary from LLM
@@ -494,23 +429,24 @@ class AbstractLLM(ABC):
     #     else:
     #         return False
 
-    def valid_local_model(self) -> bool:
-        """
-        If model_name is in local_models list and the model was passed with 
-        execution mode set to local_model returns True
+    # Commented out by Forrest, 2025-07-02
+    # def valid_local_model(self) -> bool:
+    #     """
+    #     If model_name is in local_models list and the model was passed with 
+    #     execution mode set to local_model returns True
 
-        Args:
-            None
-        Returns:
-            bool: True if a proper client model
-        """
-        if (
-            self.model_name in self.local_models and
-            self.execution_mode == ExecutionMode.LOCAL
-        ):
-            return True
-        else:
-            return False
+    #     Args:
+    #         None
+    #     Returns:
+    #         bool: True if a proper client model
+    #     """
+    #     if (
+    #         self.model_name in self.local_models and
+    #         self.execution_mode == ExecutionMode.LOCAL
+    #     ):
+    #         return True
+    #     else:
+    #         return False
         
     # Commented out by Forrest, 2025-07-02
     # Due to too fine grained 
@@ -543,136 +479,42 @@ class AbstractLLM(ABC):
         torch.cuda.empty_cache()
         self.local_model = None
 
-    def get_model_identifier(self, model_name: str, date_code: str) -> str:
-        """
-        Combines model_name and its date_code if the date_code isn't an emtpy
-        string otherwise model_name
+    # def get_model_identifier(self, model_name: str, date_code: str) -> str:
+    #     """
+    #     Combines model_name and its date_code if the date_code isn't an emtpy
+    #     string otherwise model_name
 
-        Args:
-            model_name (str): base model name
-            date_code (str): date code of model
+    #     Args:
+    #         model_name (str): base model name
+    #         date_code (str): date code of model
 
-        Returns:
-            str: full model identifier
+    #     Returns:
+    #         str: full model identifier
         
-        """
-        model = f"{model_name}"
-        if date_code != "":
-            model = f"{model_name}-{date_code}"
-        return model
+    #     """
+    #     model = f"{model_name}"
+    #     if date_code != "":
+    #         model = f"{model_name}-{date_code}"
+    #     return model
 
-    def get_interaction_mode(self) -> str:
-        """
-        Gets interaction mode
+    # Commented out due to never called and redundant to config files. -- Forrest, 2025-07-02
+    # def set_temperature(self, temp: float, reason="no reason given"):
+    #     """
+    #     Sets temperature, optionally can provide a reason.
 
-        Args:
-            None
-        Returns:
-            str: Interaction mode value
-        """
-        return self.interaction_mode.value
-
-    def get_model_name(self):
-        """
-        Returns name of model
-
-        Args:
-            None
-
-        Returns:
-            str: Name of model
-        """
-        return self.model_name
-
-    def get_company(self):
-        """
-        Returns company name of model
-
-        Args:
-            None
-
-        Returns:
-            str: Company name of model
-        """
-        return self.company
-
-    def get_model_out_dir(self):
-        """
-        Returns path to model output directory
-
-        Args:
-            None
-
-        Returns:
-            str: Path to model output directory
-        """
-        return self.model_output_dir
-
-    def get_date_code(self) -> str:
-        """
-        Gets date code
-
-        Args:
-            None
-        
-        Returns:
-            str: date code
-        """
-        return self.date_code
-
-    def get_temperature(self) -> float:
-        """
-        Gets temperature
-
-        Args:
-            None
-
-        Returns
-            float: temperature
-        """
-        return self.temperature
-
-    def get_max_tokens(self) -> int:
-        """
-        Get max tokens
-
-        Args:
-            None
-
-        Returns:
-            int: max tokens
-        """
-        return self.max_tokens
-
-    def get_thinking_tokens(self) -> int:
-        """
-        Get thinking tokens
-
-        Args:
-            None
-        
-        Returns:
-            int: thinking tokens
-        """
-        return self.thinking_tokens
-
-    def set_temperature(self, temp: float, reason="no reason given"):
-        """
-        Sets temperature, optionally can provide a reason.
-
-        Args:
-            temp (float): temperature
-            reason (str): reason for changing temp
-        """
-        logger.warning(
-            f"Temperature for {self.model_name} was changed from "
-            f"{self.temperature} to {temp} because: {reason}"
-        )
-        print(
-            f"Temperature for {self.model_name} was changed from "
-            f"{self.temperature} to {temp} because: {reason}"
-        )
-        self.temperature = temp
+    #     Args:
+    #         temp (float): temperature
+    #         reason (str): reason for changing temp
+    #     """
+    #     logger.warning(
+    #         f"Temperature for {self.model_name} was changed from "
+    #         f"{self.temperature} to {temp} because: {reason}"
+    #     )
+    #     print(
+    #         f"Temperature for {self.model_name} was changed from "
+    #         f"{self.temperature} to {temp} because: {reason}"
+    #     )
+    #     self.temperature = temp
 
     @abstractmethod
     def summarize(self, prepared_text: str) -> str:

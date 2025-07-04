@@ -165,6 +165,77 @@ Last updated on April 29th, 2025
 |Google Gemma-1.1-2B-it|27.8 %|72.2 %|100.0 %|66.8|
 |TII falcon-7B-instruct|29.9 %|70.1 %|90.0 %|75.5|
 
+## Installation and Usage
+
+### As a Python Package
+
+This codebase can now be used as a Python package for integrating LLM hallucination evaluation into your own projects.
+
+#### Quick Installation
+
+```bash
+# Install in development mode
+python install.py
+
+# Or install directly with pip
+pip install -e .
+```
+
+#### Basic Usage
+
+```python
+from src import (
+    Config, ModelConfig, ModelParams, ExecutionMode, InteractionMode,
+    AbstractLLM, build_models, get_summaries, get_judgements, get_results
+)
+
+# Create model configuration
+model_params = ModelParams(
+    model_name="gpt-4",
+    execution_mode=ExecutionMode.CLIENT,
+    interaction_mode=InteractionMode.CHAT,
+    date_code="2024",
+    temperature=0.0,
+    max_tokens=1024,
+    thinking_tokens=0,
+    min_throttle_time=0.0
+)
+
+model_config = ModelConfig(
+    company="openai",
+    params=model_params
+)
+
+# Build models
+models = build_models([model_config])
+
+# Run the full pipeline
+get_summaries(models, article_df, ow=True)
+get_judgements(models, article_df)
+get_results(models)
+```
+
+#### Command Line Usage
+
+```bash
+# Install the package first
+pip install -e .
+
+# Use the command line interface
+hhem-leaderboard get_summ_judge_results --test --overwrite
+
+# Or run directly
+python -m src.main get_summ_judge_results --test --overwrite
+```
+
+#### Example Script
+
+Run `python example_usage.py` to see a complete example of how to use the package.
+
+### As a Standalone Application
+
+For traditional usage as a standalone application, see the sections below.
+
 ## Model
 This leaderboard uses HHEM-2.1, Vectara's commercial hallucination evaluation model, to compute the LLM rankings. You can find an open-source variant of that model, HHEM-2.1-Open on [Hugging Face](https://huggingface.co/vectara/hallucination_evaluation_model) and [Kaggle](https://www.kaggle.com/models/vectara/hallucination_evaluation_model).
 
@@ -347,16 +418,16 @@ For an in-depth understanding of each model's version and lifecycle, especially 
 * **Answer** Absolutely as by definition such a model would have no hallucinations and provide a faithful summary. We do not claim to be evaluating summarization quality, that is a separate and **orthogonal** task, and should be evaluated independently. We are **not** evaluating the quality of the summaries, only the **factual consistency** of them, as we point out in the [blog post](https://vectara.com/cut-the-bull-detecting-hallucinations-in-large-language-models/).
 
 * **Qu.** This seems a very hackable metric, as you could just copy the original text as the summary
-* **Answer.** That's true but we are not evaluating arbitrary models on this approach, e.g. like in a Kaggle competition. Any model that does so would perform poorly at any other task you care about. So I would consider this as quality metric that you'd run alongside whatever other evaluations you have for your model, such as summarization quality, question answering accuracy, etc. But we do not recommend using this as a standalone metric. None of the models chosen were trained on our model's output. That may happen in future but as we plan to update the model and also the source documents so this is a living leaderboard, that will be an unlikely occurrence. That is however also an issue with any LLM benchmark. We should also point out this builds on a large body of work on factual consistency where many other academics invented and refined this protocol. See our references to the SummaC and True papers in this [blog post](https://vectara.com/blog/cut-the-bull-detecting-hallucinations-in-large-language-models/), as well as this excellent compilation of resources - https://github.com/EdinburghNLP/awesome-hallucination-detection to read more.
+* **Answer** That's true but we are not evaluating arbitrary models on this approach, e.g. like in a Kaggle competition. Any model that does so would perform poorly at any other task you care about. So I would consider this as quality metric that you'd run alongside whatever other evaluations you have for your model, such as summarization quality, question answering accuracy, etc. But we do not recommend using this as a standalone metric. None of the models chosen were trained on our model's output. That may happen in future but as we plan to update the model and also the source documents so this is a living leaderboard, that will be an unlikely occurrence. That is however also an issue with any LLM benchmark. We should also point out this builds on a large body of work on factual consistency where many other academics invented and refined this protocol. See our references to the SummaC and True papers in this [blog post](https://vectara.com/blog/cut-the-bull-detecting-hallucinations-in-large-language-models/), as well as this excellent compilation of resources - https://github.com/EdinburghNLP/awesome-hallucination-detection to read more.
 
 * **Qu.** This does not definitively measure all the ways a model can hallucinate
-* **Answer.** Agreed. We do not claim to have solved the problem of hallucination detection, and plan to expand and enhance this process further. But we do believe it is a move in the right direction, and provides a much needed starting point that everyone can build on top of.
+* **Answer** Agreed. We do not claim to have solved the problem of hallucination detection, and plan to expand and enhance this process further. But we do believe it is a move in the right direction, and provides a much needed starting point that everyone can build on top of.
 
 * **Qu.** Some models could hallucinate only while summarizing. Couldn't you just provide it a list of well known facts and check how well it can recall them?
-* **Answer.** That would be a poor test in my opinion. For one thing, unless you trained the model you don't know the data it was trained on, so you can't be sure the model is grounding its response in real data it has seen on or whether it is guessing. Additionally, there is no clear definition of 'well known', and these types of data are typically easy for most models to accurately recall. Most hallucinations, in my admittedly subjective experience, come from the model fetching information that is very rarely known or discussed, or facts for which the model has seen conflicting information. Without knowing the source data the model was trained on, again it's impossible to validate these sort of hallucinations as you won't know which data fits this criterion. I also think its unlikely the model would only hallucinate while summarizing. We are asking the model to take information and transform it in a way that is still faithful to the source. This is analogous to a lot of generative tasks aside from summarization (e.g. write an email covering these points...), and if the model deviates from the prompt then that is a failure to follow instructions, indicating the model would struggle on other instruction following tasks also.
+* **Answer** That would be a poor test in my opinion. For one thing, unless you trained the model you don't know the data it was trained on, so you can't be sure the model is grounding its response in real data it has seen on or whether it is guessing. Additionally, there is no clear definition of 'well known', and these types of data are typically easy for most models to accurately recall. Most hallucinations, in my admittedly subjective experience, come from the model fetching information that is very rarely known or discussed, or facts for which the model has seen conflicting information. Without knowing the source data the model was trained on, again it's impossible to validate these sort of hallucinations as you won't know which data fits this criterion. I also think its unlikely the model would only hallucinate while summarizing. We are asking the model to take information and transform it in a way that is still faithful to the source. This is analogous to a lot of generative tasks aside from summarization (e.g. write an email covering these points...), and if the model deviates from the prompt then that is a failure to follow instructions, indicating the model would struggle on other instruction following tasks also.
 
 * **Qu.** This is a good start but far from definitive
-* **Answer.** I totally agree. There's a lot more that needs to be done, and the problem is far from solved. But a 'good start' means that hopefully progress will start to be made in this area, and by open sourcing the model, we hope to involve the community into taking this to the next level.
+* **Answer** I totally agree. There's a lot more that needs to be done, and the problem is far from solved. But a 'good start' means that hopefully progress will start to be made in this area, and by open sourcing the model, we hope to involve the community into taking this to the next level.
 
 ## Coming Soon
 * We will also be adding a leaderboard on citation accuracy. As a builder of RAG systems, we have noticed that LLMs tend to mis-attribute sources sometimes when answering a question based on supplied search results. We'd like to be able to measure this so we can help mitigate it within our platform.

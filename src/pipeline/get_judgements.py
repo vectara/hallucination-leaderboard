@@ -5,8 +5,8 @@ from datetime import datetime, timezone
 import os
 from tqdm import tqdm
 from src.json_utils import file_exists, append_record_to_jsonl
-from src.analytics.metrics import is_valid_summary
-from src.data_struct.data_model import Judgement, Summary, SourceArticle
+from src.analytics import is_valid_summary
+from src.data_model import Judgement, Summary, SourceArticle
 
 from src.HHEM_2_x import HHEM_2_3
 

@@ -1,15 +1,11 @@
-from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
+from src.LLMs.AbstractLLM import AbstractLLM, MODEL_REGISTRY
+from src.LLMs.AbstractLLM import SummaryError, ModelInstantiationError
 import os
 from openai import OpenAI
-from src.data_struct.config_model import ExecutionMode, InteractionMode
-from src.exceptions import (
-    ClientOrLocalNotInitializedError,
-    ClientModelProtocolBranchNotFound,
-    LocalModelProtocolBranchNotFound
-)
+from src.config_model import ExecutionMode, InteractionMode
 
 COMPANY ="openai"
-class OpenAi(AbstractLLM):
+class OpenAI(AbstractLLM):
     """
     Class for models from OpenAI
 
@@ -54,7 +50,7 @@ class OpenAi(AbstractLLM):
         self.model = self.get_model_identifier(model_name, date_code)
 
     def summarize(self, prepared_text: str) -> str:
-        summary = EMPTY_SUMMARY
+        summary = SummaryError.EMPTY_SUMMARY
         if self.client_is_defined():
             if self.model_name in self.model_category1:
                 chat_package = self.client.chat.completions.create(
@@ -79,14 +75,11 @@ class OpenAi(AbstractLLM):
                 )
                 summary = chat_package.output_text
             else:
-                raise ClientModelProtocolBranchNotFound(self.model_name) 
+                raise ModelInstantiationError.NOT_REGISTERED(self.model_name, self.company, self.execution_mode)
         elif self.local_model_is_defined():
-            if False:
-                pass
-            else:
-                raise LocalModelProtocolBranchNotFound(self.model_name)
+            pass
         else:
-            raise ClientOrLocalNotInitializedError(self.model_name)
+            raise ModelInstantiationError.MISSING_SETUP(self.__class__.__name__)
         return summary
 
     def setup(self):
@@ -105,4 +98,4 @@ class OpenAi(AbstractLLM):
     def close_client(self):
         pass
 
-MODEL_REGISTRY[COMPANY] = OpenAi
+MODEL_REGISTRY[COMPANY] = OpenAI

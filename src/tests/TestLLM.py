@@ -1,11 +1,13 @@
-from src.tests.AbstractTest import AbstractTest
-from src.LLMs.AbstractLLM import AbstractLLM
-from src.data_struct.config_model import Config
-from src.constants import TEST_DATA_PATH
-from src.config import CONFIG
-from src.LLMs.AbstractLLM import build_models
-from src.Logger import logger
+from . AbstractTest import AbstractTest
+from ..LLMs.AbstractLLM import AbstractLLM
+from .. data_model import EvalConfig
+from ..config import CONFIG
+from ..LLMs.AbstractLLM import build_models
+from ..Logger import logger
 import csv
+
+# Test data file path
+TEST_DATA_PATH = "datasets/test_data.csv"
 
 class TestLLM(AbstractTest):
     """
@@ -43,7 +45,7 @@ class TestLLM(AbstractTest):
         Returns:
             None
         """
-        config = Config(**CONFIG)
+        config = EvalConfig(**CONFIG)
         models = build_models(config.LLMs_to_eval)
         logger.info("Testing LLM functionality")
         for model in models:

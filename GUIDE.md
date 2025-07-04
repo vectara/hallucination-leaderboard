@@ -15,7 +15,7 @@ src/
 Temperature and max_tokens should stay the default of 0.0 and 1024. If a model for whatever reason cannot use the defaults then define the individual model temperature and max_token fields to be as close as possible. If a model does not allow you to adjust it then record the value the company uses for the model.
 
 ```python
-from src.data_struct.config_model import ExecutionMode, InteractionMode
+from src.config_model import ExecutionMode, InteractionMode
 from src.constants import (
     GET_SUMM, GET_JUDGE, GET_RESULTS,
     TEST_DATA_PATH, LB_DATA_PATH
@@ -154,7 +154,7 @@ If the model you want to run does not have a company.py file for it a new file n
 ```py
 from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
 import os
-from src.data_struct.config_model import ExecutionMode, InteractionMode
+from src.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,
     ClientModelProtocolBranchNotFound,
@@ -248,7 +248,7 @@ If the company.py file already exists you need to add code with the correct prot
 ```python
 from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
 import os
-from src.data_struct.config_model import ExecutionMode, InteractionMode
+from src.config_model import ExecutionMode, InteractionMode
 from src.exceptions import (
     ClientOrLocalNotInitializedError,
     ClientModelProtocolBranchNotFound,

@@ -1,16 +1,18 @@
-from src.tests.AbstractTest import AbstractTest
+from . AbstractTest import AbstractTest
 import pandas as pd
-from src.constants import (
-    TEST_JUDGEMENTS_DATA, TEST_RESULTS_DATA, TEST_SUMMARIES_DATA
-)
-from src.LLMs.AbstractLLM import MODEL_RETURNED_NON_STRING_TYPE_OUTPUT, SUMMARY_ERRORS
-from src.data_struct.data_model import Stats, Summary, Judgement
-from src.analytics.stats import (
+
+from .. LLMs.AbstractLLM import SummaryError
+from .. data_model import Stats, Summary, Judgement
+from .. analytics import (
     compute_confidence_interval, compute_hallucination_rate,
-    compute_answer_rate, compute_avg_summary_length
+    compute_answer_rate, compute_avg_summary_length, is_valid_summary
 )
-from src.analytics.metrics import is_valid_summary
-from src.json_utils import load_json
+from .. json_utils import load_json
+
+# Test data file paths
+TEST_JUDGEMENTS_DATA = "datasets/test_judgements_data.jsonl"
+TEST_RESULTS_DATA = "datasets/test_results_data.json"
+TEST_SUMMARIES_DATA = "datasets/test_summaries_data.jsonl"
 
 class TestAnalytics(AbstractTest):
     """
