@@ -6,8 +6,6 @@ __pycache__/
 log.txt
 TODO.md
 
-output/
-
 config.json
 test_config.json
 
