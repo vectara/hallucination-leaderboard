@@ -1,8 +1,10 @@
 import json
 import os
-from . Logger  import logger
-from pydantic import BaseModel
 from typing import Union, List, Any
+
+from pydantic import BaseModel
+
+from . Logger  import logger
 
 """
 Functions for handling JSON files

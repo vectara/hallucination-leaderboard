@@ -1,5 +1,11 @@
 # Running the Program
 
+DO NOT PUSH judgements.jsonl to the repo. It will allow people to chat on the leaderboard.
+
+TODO: 
+1. Allow interrupting the program and resume from the same point.
+2. Supporting selecting to run HHEM on CPU. 
+
 ### Configuration
 Before running the program you need to define CONFIG in config.py to include the settings and models you want.
 

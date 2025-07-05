@@ -1,4 +1,5 @@
 import pandas as pd
+
 from . data_model import Judgement, SummaryError
 
 def is_valid_summary(summary: str) -> bool:
@@ -14,8 +15,10 @@ def is_valid_summary(summary: str) -> bool:
         bool: True if valid summary else False
     """
 
-    # if has_error_output(summary):
-    if summary in SummaryError:
+    # Get all SummaryError values
+    error_values = [error.value for error in SummaryError]
+    
+    if summary in error_values:
         return False
     elif len(summary.split()) < 5:
         return False

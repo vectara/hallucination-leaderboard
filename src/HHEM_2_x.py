@@ -1,7 +1,7 @@
 from typing import List, Literal
-from pydantic import BaseModel
-import torch
 
+import torch
+from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from transformers import pipeline
 
@@ -36,7 +36,7 @@ class HHEM_2_1_open():
 
         return HHEMOutput(score=simple_scores[0], label=preds[0])
 
-class HHEM_2_3(): 
+class HHEM_2_3():
     def __init__(self):
         self.PROMPT_TEMPLATE = "Determine if the hypothesis is true given the premise?\n\nPremise: {text1}\n\nHypothesis: {text2}"
 

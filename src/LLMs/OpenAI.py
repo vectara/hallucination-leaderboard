@@ -1,12 +1,11 @@
 import os
 from typing import Literal
 
+from openai import OpenAI
+
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary
 from .. data_model import ModelInstantiationError, SummaryError
-
-# Import the Python package for the specific provider.
-from openai import OpenAI
 
 COMPANY = "openai"
 

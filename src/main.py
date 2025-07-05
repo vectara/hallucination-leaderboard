@@ -1,24 +1,22 @@
+import argparse
 from typing import List
 
-from dotenv import load_dotenv
 import pandas as pd
-import argparse
+from dotenv import load_dotenv
 
 from . data_model import EvalConfig, ModelInstantiationError, SourceArticle
 from . LLMs import AbstractLLM, MODEL_REGISTRY
 from . Logger import logger
 from . pipeline import (
-    get_summaries
+    get_summaries, get_judgements
     # get_summaries, get_judgements, get_results
 )
 
 def main(eval_config: EvalConfig):
-    """
-    Main function for program
 
-    Args:
-        args (argparse.ArgumentParser): console arguments
-    """
+    SUMMARY_FILE = "summaries.jsonl"
+    JUDGEMENT_FILE = "judgements.jsonl"
+    RESULTS_FILE = "stats.jsonl"
 
     article_df = pd.read_csv(eval_config.source_article_path)
     
@@ -32,12 +30,13 @@ def main(eval_config: EvalConfig):
         raise ValueError(f"Data validation failed: {e}")
 
     if "summarize" in eval_config.pipeline:
-        get_summaries(eval_config, article_df)
+        get_summaries(eval_config, article_df, SUMMARY_FILE)
 
-    # TODO: Add judge and reduce pipelines
-    # if "judge" in eval_config.pipeline:
-    #     get_judgements.run(models, article_df)
+    if "judge" in eval_config.pipeline:
+        get_judgements(eval_config, article_df, SUMMARY_FILE, JUDGEMENT_FILE)
 
+
+    # TODO: Add reduce to pipeline
     # if "reduce" in eval_config.pipeline:
     #     get_results.run(models)
 
@@ -104,23 +103,20 @@ def cli_main():
     from . config import eval_configs
 
     parser.add_argument(
-        "--config_key",
-        choices=[c["eval_name"] for c in eval_configs],
-        help="Which evaluation to run. For test, select 'test'.",
+        "--eval_name",
+        choices=list(eval_configs.keys()),
+        help="Which evaluation to run. Pick evaluation name from config.py. For test, select 'test'.",
         default="test"
     )
 
     args = parser.parse_args()
-    config_key = args.config_key
+    eval_name = args.eval_name
+    logger.info(f"Running evaluation {eval_name}")
 
-    # scan eval_configs for the config with the given key
-    qualifying_configs = [c for c in eval_configs if c["eval_name"] == config_key]
-    if len(qualifying_configs) == 0:
-        raise ValueError(f"Evaluation config with key {config_key} not found")
-    elif len(qualifying_configs) > 1:
-        raise ValueError(f"Multiple evaluation configs with key {config_key} found. Please check config.py. ")
-    
-    config = EvalConfig(**qualifying_configs[0])
+    config: dict = eval_configs[eval_name]
+    config["eval_name"] = eval_name
+
+    config = EvalConfig(**config)
 
     main(config)
 

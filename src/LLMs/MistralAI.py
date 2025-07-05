@@ -1,81 +1,87 @@
-from . AbstractLLM import AbstractLLM, MODEL_REGISTRY
-from mistralai import Mistral
 import os
-from .. config_model import ExecutionMode, InteractionMode
-from . AbstractLLM import SummaryError, ModelInstantiationError
+from typing import Literal
+
+from mistralai import Mistral
+
+from . AbstractLLM import AbstractLLM
+from .. data_model import BasicLLMConfig, BasicSummary
+from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "mistralai"
-class MistralAI(AbstractLLM):
+
+class MistralAIConfig(BasicLLMConfig):
+    """Extended config for MistralAI-specific properties"""
+    company: Literal["mistralai"] = "mistralai"
+    model_name: Literal["magistral-medium", "mistral-small"] # Only model names manually added to this list are supported.
+    execution_mode: Literal["api"] = "api" # MistralAI models can only be run via web api.
+    date_code: str # You must specify a date code for MistralAI models.
+
+class MistralAISummary(BasicSummary):
+    pass # Nothing additional to the BasicSummary class.
+
+class MistralAILLM(AbstractLLM):
     """
     Class for models from MistralAI
 
     Attributes:
-        client (str): client associated with api calls
-        model (str): MistralAI Style model name
+        client (Mistral): client associated with api calls
+        model_name (str): MistralAI style model name
     """
 
-    local_models = []
-    client_models = ["magistral-medium", "mistral-small"]
+    # In which way to run the model via web api. Empty dict means not supported for web api execution.
+    client_mode_group = {
+        "magistral-medium": 1, # Doesn't look like magistral can disable thinking
+        "mistral-small": 1
+    }
 
-    model_category1 = ["magistral-medium", "mistral-small"] # Doesn't look like magistral can disable thinking
+    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
+    local_mode_group = {} # Empty for MistralAI models because they cannot be run locally.
 
-    def __init__(
-            self,
-            model_name: str,
-            execution_mode: ExecutionMode,
-            interaction_mode: InteractionMode,
-            date_code: str,
-            temperature: float,
-            max_tokens: int,
-            thinking_tokens: int,
-            min_throttle_time: float
-    ):
-        super().__init__(
-            model_name,
-            execution_mode,
-            interaction_mode,
-            date_code,
-            temperature,
-            max_tokens,
-            thinking_tokens,
-            min_throttle_time,
-            company=COMPANY
-        )
-        self.model = self.get_model_identifier(model_name, date_code)
+    def __init__(self, config: MistralAIConfig):
+        # Ensure that the parameters passed into the constructor are of the type MistralAIConfig.
+        
+        # Call parent constructor to inherit all parent properties
+        super().__init__(config)
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
-        if self.client_is_defined():
-            if self.model_name in self.model_category1:
-                chat_package = self.client.chat.complete(
-                    model=self.model,
-                    messages=[{"role": "user", "content":prepared_text}],
-                    max_tokens=self.max_tokens,
-                    temperature=self.temperature
-                )
-                summary = chat_package.choices[0].message.content
-            else:
-                raise ModelInstantiationError.NOT_REGISTERED(self.model_name, self.company, self.execution_mode)
-        elif self.local_model_is_defined():
-            pass
+        if self.client:
+            match self.client_mode_group[self.model_name]:
+                case 1: # Standard chat completion
+                    chat_package = self.client.chat.complete(
+                        model=self.model_fullname,
+                        messages=[{"role": "user", "content":prepared_text}],
+                        max_tokens=self.max_tokens,
+                        temperature=self.temperature
+                    )
+                    summary = chat_package.choices[0].message.content
+        elif self.local_model:
+            pass # MistralAI models cannot be run locally.
         else:
-            raise ModelInstantiationError.MISSING_SETUP(self.__class__.__name__)
+            raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
 
     def setup(self):
-        if self.valid_client_model():
-            api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-            self.client = Mistral(api_key=api_key)
-        elif self.valid_local_model():
-            pass
+        if self.execution_mode == "api":
+            if self.model_name in self.client_mode_group:
+                api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                assert api_key is not None, f"MistralAI API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                self.client = Mistral(api_key=api_key)
+            else:
+                raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
+                    model_name=self.model_name,
+                    company=self.company,
+                    execution_mode=self.execution_mode
+                ))
+        elif self.execution_mode == "local":
+            pass # MistralAI models cannot be run locally.
 
     def teardown(self):
-        if self.client_is_defined():
+        if self.client:
             self.close_client()
-        elif self.local_model_is_defined():
-            self.default_local_model_teardown()
+        elif self.local_model:
+            # self.default_local_model_teardown()
+            pass # MistralAI models cannot be run locally.
 
     def close_client(self):
         pass
-
-MODEL_REGISTRY[COMPANY] = MistralAI

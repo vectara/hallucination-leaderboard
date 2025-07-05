@@ -8,7 +8,7 @@ This package contains the main pipeline scripts for:
 """
 
 from . get_summaries import run as get_summaries
-# from . get_judgements import run as get_judgements
+from . get_judgements import run as get_judgements
 # from . get_results import run as get_results
 
 # Expose the modules themselves for nested imports

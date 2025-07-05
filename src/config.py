@@ -1,15 +1,18 @@
 from datetime import datetime
+from typing import Dict
+
+from . data_model import EvalConfig
 
 # Evaluation configs 
 # This is a series of evaluation configurations. 
 # Please only append so we can always know how previous evaluations were done.
 # To select between configs, use the --config_key flag in `main.py`
-eval_configs = [
-    {
-        "eval_name": "test",
+eval_configs: Dict[str, EvalConfig] = {
+    "test": {
+        "eval_date":datetime.now().strftime('%Y-%m-%d'), #today
         "hhem_version": "2.3",
         # "pipeline": ["summarize", "judge", "reduce"],
-        "pipeline": ["summarize"],
+        "pipeline": ["summarize", "judge"],
         "overwrite_summaries": True,
         "source_article_path": "datasets/test_articles.csv",
         "temperature": 1.0, 
@@ -31,8 +34,8 @@ eval_configs = [
             # }
         ]
     },
-    {
-        "eval_name": "2025-07-03",
+    "eval_for_new_models": {
+        "eval_date": "2025-07-03",
         "hhem_version": "2.3",
         "pipeline": ["summarize", "judge", "reduce"],
         "overwrite_summaries": True,
@@ -75,6 +78,6 @@ eval_configs = [
             # }
         ]
     }
-]
+}
 
-today = datetime.now().strftime('%Y%m%d')
+# today = datetime.now().strftime('%Y%m%d')

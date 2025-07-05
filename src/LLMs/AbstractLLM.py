@@ -140,15 +140,15 @@ Model List
     - TII falcon-7B-instruct
 '''
 import os
-import time
 import re
+import time
+from abc import ABC, abstractmethod
+from enum import Enum
 from typing import List, Literal, Any
 
-from enum import Enum
-from abc import ABC, abstractmethod
+import torch
 from pydantic import BaseModel
 from tqdm import tqdm
-import torch
 
 from .. data_model import ModelInstantiationError, BasicLLMConfig, SummaryError
 from .. Logger import logger

@@ -25,7 +25,8 @@ class Judgement(BaseModel):
     Representation of Judgements/Metrics for the Summary of an Article
 
     Fields:
-        timestamp (str): date the metrics were performed
+        eval_name (str): name of the evaluation
+        eval_date (str): date of the evaluation
         summary_uid (str): hash for this summary
         date_code (str): date code of model
         hhem_version (str): version of hhem applied for hhem score
@@ -33,18 +34,18 @@ class Judgement(BaseModel):
         valid (bool): Validity of the summary, defined in is_valid_summary
         summary_words (int): word count of summary
     """
-    timestamp: str
+    eval_name: str
+    eval_date: str
     summary_uid: str
-    date_code: str
     hhem_version: str
     hhem_score: float
-    valid: bool
+    is_valid: bool
     summary_words: int
 
     class Keys:
-        TIMESTAMP = "timestamp"
+        EVAL_NAME = "eval_name"
+        EVAL_DATE = "eval_date"
         SUMMARY_UID = "summary_uid"
-        DATE_CODE = "date_code"
         HHEM_VERSION = "hhem_version"
         HHEM_SCORE = "hhem_score"
         VALID = "valid"
@@ -145,7 +146,8 @@ class BasicSummary(BaseModel):
     Representation of a Summary of an Article
     
     Fields:
-        eval_name (str): The name used to identify the evaluation (set in config.py as eval_name). Can be a time stamp.
+        eval_name (str): The name used to identify the evaluation (set in config.py as eval_name).
+        eval_date (str): date of the evaluation
         summary_uid (str): hash for this summary
         company (str): company that produced the model
         model_name (str): name of the LLM used as summarizer
@@ -157,6 +159,7 @@ class BasicSummary(BaseModel):
         summary (str): llm generated summary of the text associated to article_id
     """
     eval_name: str
+    eval_date: str
     article_id: int
     summary_uid: str
     summary: str
@@ -189,7 +192,8 @@ class EvalConfig(BaseModel):
     the date of the evaluation, the LLMs to evaluate and their hyperparameters.
 
     Fields:
-        eval_name (str): The name used to identify the evaluation. Default is today's date if not set in config.py.
+        eval_name (str): The name used to identify the evaluation (keys in `eval_configs` in `config.py`).
+        eval_date (str): The date of the evaluation
         hhem_version: (str): Version of HHEM to use
         pipeline (List[Literal["summarize", "judge", "reduce"]]): Steps to execute in the evaluation pipeline. Run sequentially. Meanings of the steps are as follows:
             - summarize: Generate summaries of the articles
@@ -205,7 +209,8 @@ class EvalConfig(BaseModel):
             representations
     """
 
-    eval_name: str = datetime.now().strftime('%Y%m%d')
+    eval_name: str
+    eval_date: str
     hhem_version: str
     pipeline: List[Literal["summarize", "judge", "reduce"]]
     overwrite_summaries: bool # 

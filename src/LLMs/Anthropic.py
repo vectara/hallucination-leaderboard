@@ -1,12 +1,11 @@
 import os
 from typing import Literal
 
+import anthropic
+
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary
 from .. data_model import ModelInstantiationError, SummaryError
-
-# Import the Python package for the specific provider.
-import anthropic
 
 COMPANY = "anthropic"
 

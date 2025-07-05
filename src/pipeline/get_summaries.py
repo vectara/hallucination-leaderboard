@@ -1,8 +1,8 @@
-import os
-from typing import List, Literal, Tuple, Any
-import json
-from datetime import datetime, timezone
 import hashlib
+import json
+import os
+from datetime import datetime, timezone
+from typing import List, Literal, Tuple, Any
 
 import pandas as pd
 from tqdm import tqdm
@@ -25,8 +25,6 @@ Functions:
     generate_and_save_summaries(model, article_df, json_path)
     generate_summary_uid(model_name, date_code, summary_text, date)
 """
-
-SUMMARY_FILE = "summaries.jsonl"
 
 def instantiate_llm(llm_config: BasicLLMConfig) -> Tuple[AbstractLLM, type, type]: # TODO: how to type the classes? 
     try:
@@ -55,37 +53,24 @@ def instantiate_llm(llm_config: BasicLLMConfig) -> Tuple[AbstractLLM, type, type
         logger.error(f"Failed to instantiate model {llm_config.company}/{llm_config.model_name}: {e}")
         raise
 
-def run(eval_config: EvalConfig, article_df: pd.DataFrame):
+def run(eval_config: EvalConfig, article_df: pd.DataFrame, summary_file: str):
     """
     Generates summaries for a given model and then save to a jsonl file, overwrite flag will overwrite existing jsonl file
     """
-    logger.info(f"Starting to generate {SUMMARY_FILE}")
-    # if eval_config.overwrite_summaries:
-    #     logger.info(
-    #         f"Overwrite flag enabled"
-    #     )
+    logger.info(f"Starting to generate {summary_file}")
 
     for llm_config in tqdm(eval_config.LLM_Configs, desc="LLM Loop"):        
-        # For parameters that are not in llm_config, use the values in eval_config
-        update_data = {}
-        
+
+        # For parameters that are not in llm_config or are None, use the Non-None values in eval_config
+        update_data = {}        
         for key, value in eval_config.model_dump().items():
             if key not in llm_config.model_dump():
                 update_data[key] = value
-                # logger.info(f"For parameter {key}, using LLM-agnostic value {value}")
             elif key in llm_config.model_dump():
                 if value is not None and llm_config.model_dump()[key] is None:
                     update_data[key] = value
-                    # logger.info(f"For parameter {key}, using LLM-agnostic value {value}")
-            #     else:
-            #         logger.info(f"For parameter {key}, using LLM-specific value {value}")
-            # else:
-            #     logger.info(f"For parameter {key}, using LLM-specific value {value}")
-        
         if update_data:
             llm_config = llm_config.model_copy(update=update_data)
-
-        # logger.info(f"LLM config after merging: {json.dumps(llm_config.model_dump(exclude_none=True), indent=2)}")
 
         # Instantiate the LLM
         llm, LLM_CONFIG_CLASS, LLM_SUMMARY_CLASS = instantiate_llm(llm_config)
@@ -96,19 +81,19 @@ def run(eval_config: EvalConfig, article_df: pd.DataFrame):
         llm_name = llm_config.model_name
         llm_out_dir = llm.model_output_dir
 
-        logger.info(f"Generating {SUMMARY_FILE} for {llm_name}")
+        logger.info(f"Generating {summary_file} for {llm_name}")
 
-        jsonl_file = f"{SUMMARY_FILE}"
+        jsonl_file = f"{summary_file}"
         summaries_jsonl_path = os.path.join(llm_out_dir, jsonl_file)
 
         if not os.path.isfile(summaries_jsonl_path):
-            logger.info(f"{SUMMARY_FILE} file does not exist, creating...")
+            logger.info(f"{summary_file} file does not exist, creating...")
             open(summaries_jsonl_path, 'w').close()
         elif os.path.isfile(summaries_jsonl_path) and eval_config.overwrite_summaries:
-            logger.info(f"Overwriting previous data in {SUMMARY_FILE}")
+            logger.info(f"Overwriting previous data in {summary_file}")
             open(summaries_jsonl_path, 'w').close()
         else:
-            logger.info(f"Adding additional data to {SUMMARY_FILE}")
+            logger.info(f"Adding additional data to {summary_file}")
 
         generate_and_save_summaries(
             llm, 
@@ -210,6 +195,7 @@ def generate_and_save_summaries(
                 'summary_uid': summary_uid,
                 'summary': summary,
                 'eval_name': eval_config.eval_name,
+                'eval_date': eval_config.eval_date,
                 **llm_config.model_dump()
             }
             

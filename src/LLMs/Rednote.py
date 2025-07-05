@@ -1,118 +1,119 @@
+import os
 import torch
+from typing import Literal
+
+from . AbstractLLM import AbstractLLM
+from .. data_model import BasicLLMConfig, BasicSummary
+from .. data_model import ModelInstantiationError, SummaryError
+
+# Import the Python package for the specific provider.
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
-from . AbstractLLM import AbstractLLM, MODEL_REGISTRY
-from . AbstractLLM import SummaryError, ModelInstantiationError
-
-from .. config_model import ExecutionMode, InteractionMode
-
 COMPANY = "rednote"
-class Rednote(AbstractLLM):
+
+class RednoteConfig(BasicLLMConfig):
+    """Extended config for Rednote-specific properties"""
+    company: Literal["rednote"] = "rednote"
+    model_name: Literal["rednote-hilab/dots.llm1.inst", "rednote-hilab/dots.llm1.base"] # Only model names manually added to this list are supported.
+    execution_mode: Literal["gpu", "cpu"] = "gpu" # Rednote models can only be run locally.
+    date_code: str # You must specify a date code for Rednote models.
+
+class RednoteSummary(BasicSummary):
+    pass # Nothing additional to the BasicSummary class.
+
+class RednoteLLM(AbstractLLM):
     """
-    Class for models from rednote
+    Class for models from Rednote
 
     Attributes:
-        client (Client): client associated with api calls with anthropic
-        model (str): rednote style model name
+        local_model (AutoModelForCausalLM): local model for inference
+        model_name (str): Rednote style model name
     """
 
-    local_models = ["rednote-hilab/dots.llm1.inst", "rednote-hilab/dots.llm1.base"]
-    client_models = []
+    # In which way to run the model via web api. Empty dict means not supported for web api execution.
+    client_mode_group = {} # Empty for Rednote models because they cannot be run via web api.
 
-    model_category1 = ["rednote-hilab/dots.llm1.inst"]
-    model_category2 = ["rednote-hilab/dots.llm1.base"]
+    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
+    local_mode_group = {
+        "rednote-hilab/dots.llm1.inst": 1, # Uses chat template
+        "rednote-hilab/dots.llm1.base": 2 # Uses direct text input
+    }
 
-    def __init__(
-            self,
-            model_name: str,
-            execution_mode: ExecutionMode,
-            interaction_mode: InteractionMode,
-            date_code: str,
-            temperature: float,
-            max_tokens: int,
-            thinking_tokens: int,
-            min_throttle_time: float
-    ):
-        super().__init__(
-            model_name,
-            execution_mode,
-            interaction_mode,
-            date_code,
-            temperature,
-            max_tokens,
-            thinking_tokens,
-            min_throttle_time,
-            company=COMPANY
-        )
-        self.model = self.get_model_identifier(model_name, date_code)
+    def __init__(self, config: RednoteConfig):
+        # Ensure that the parameters passed into the constructor are of the type RednoteConfig.
+        
+        # Call parent constructor to inherit all parent properties
+        super().__init__(config)
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
-        if self.client_is_defined():
-            pass
-        elif self.local_model_is_defined():
-            if self.model_name in self.model_category1:
-                tokenizer = AutoTokenizer.from_pretrained(self.model)
+        if self.client:
+            pass # Rednote models cannot be run via web api.
+        elif self.local_model:
+            match self.local_mode_group[self.model_name]:
+                case 1: # Uses chat template
+                    tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
-                input_tensor = tokenizer.apply_chat_template(
-                    {"role": "user", "content": prepared_text},
-                    add_generation_prompt=True,
-                    return_tensors="pt"
-                )
+                    input_tensor = tokenizer.apply_chat_template(
+                        {"role": "user", "content": prepared_text},
+                        add_generation_prompt=True,
+                        return_tensors="pt"
+                    )
 
-                outputs = self.local_model.generate(
-                    input_tensor.to(self.local_model.device),
-                    max_new_tokens=self.max_tokens
-                )
+                    outputs = self.local_model.generate(
+                        input_tensor.to(self.local_model.device),
+                        max_new_tokens=self.max_tokens
+                    )
 
-                result = tokenizer.decode(
-                    outputs[0][input_tensor.shape[1]:],
-                    skip_special_tokens=True
-                )
+                    result = tokenizer.decode(
+                        outputs[0][input_tensor.shape[1]:],
+                        skip_special_tokens=True
+                    )
 
-                summary = result
-            elif self.model_name in self.model_category2:
-                tokenizer = AutoTokenizer.from_pretrained(self.model)
+                    summary = result
+                case 2: # Uses direct text input
+                    tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
-
-                inputs = tokenizer(prepared_text, return_tensors="pt")
-                outputs = self.local_model.generate(
-                    **inputs.to(self.local_model.device),
-                    max_new_tokens=self.max_tokens,
-                    temperature=self.temperature,
-                    do_sample=True
-                )
-                result = tokenizer.decode(
-                    outputs[0],
-                    skip_special_tokens=True
-                )
-                summary = result
-            else:
-                raise ModelInstantiationError.NOT_REGISTERED(self.model_name, self.company, self.execution_mode)
+                    inputs = tokenizer(prepared_text, return_tensors="pt")
+                    outputs = self.local_model.generate(
+                        **inputs.to(self.local_model.device),
+                        max_new_tokens=self.max_tokens,
+                        temperature=self.temperature,
+                        do_sample=True
+                    )
+                    result = tokenizer.decode(
+                        outputs[0],
+                        skip_special_tokens=True
+                    )
+                    summary = result
         else:
-            raise ModelInstantiationError.MISSING_SETUP(self.__class__.__name__)
+            raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
 
     def setup(self):
-        if self.valid_client_model():
-            pass
-        elif self.valid_local_model():
-            bnb_config = BitsAndBytesConfig(
-                load_in_4bit=True,
-            )
-            self.local_model = AutoModelForCausalLM.from_pretrained(
-                self.model,
-            #     torch_dtype=torch.bfloat16 ,
-                quantization_config=bnb_config
-            ).to(self.device)
+        if self.execution_mode == "api":
+            pass # Rednote models cannot be run via web api.
+        elif self.execution_mode in ["gpu", "cpu"]:
+            if self.model_name in self.local_mode_group:
+                bnb_config = BitsAndBytesConfig(
+                    load_in_4bit=True,
+                )
+                self.local_model = AutoModelForCausalLM.from_pretrained(
+                    self.model_fullname,
+                    quantization_config=bnb_config
+                ).to(self.device)
+            else:
+                raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
+                    model_name=self.model_name,
+                    company=self.company,
+                    execution_mode=self.execution_mode
+                ))
 
     def teardown(self):
-        if self.client_is_defined():
+        if self.client:
             self.close_client()
-        elif self.local_model_is_defined():
+        elif self.local_model:
             self.default_local_model_teardown()
 
     def close_client(self):
         pass
-
-MODEL_REGISTRY[COMPANY] = Rednote
