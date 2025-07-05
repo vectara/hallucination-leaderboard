@@ -1,17 +1,17 @@
-from src.Logger import logger
+from .. Logger import logger
 import os
 from tqdm import tqdm
-from src.LLMs.AbstractLLM import AbstractLLM
-from src.json_utils import file_exists, append_record_to_jsonl
+from .. LLMs.AbstractLLM import AbstractLLM
+from .. json_utils import append_record_to_jsonl
 import pandas as pd
 from datetime import datetime, timezone
-from src.data_model import Stats
-from src.analytics import (
+from .. data_model import Stats
+from .. analytics import (
     compute_hallucination_rate, compute_answer_rate,
     compute_avg_summary_length, compute_confidence_interval
 )
 
-from src.scripts.get_judgements import JUDGEMENT_FILE
+from .. scripts.get_judgements import JUDGEMENT_FILE
 
 """
 Computes and saves statistics for all given models
@@ -46,7 +46,7 @@ def run(models: list[AbstractLLM]):
 
         judge_jsonl_path = os.path.join(model_out_dir, JUDGEMENT_FILE)
 
-        if file_exists(judge_jsonl_path):
+        if os.path.isfile(judge_jsonl_path):
             logger.info(f"{JUDGEMENT_FILE} found for {model_name}")
 
             results_jsonl_file = f"{RESULTS_FILE}"

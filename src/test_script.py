@@ -1,7 +1,7 @@
-from src.Logger import logger
-from src.tests.AbstractTest import AbstractTest
-from src.tests.TestLLM import TestLLM
-from src.tests.TestAnalytics import TestAnalytics
+from . Logger import logger
+from . tests.AbstractTest import AbstractTest
+from . tests.TestLLM import TestLLM
+from . tests.TestAnalytics import TestAnalytics
 from dotenv import load_dotenv
 """
 Runs program critical tests for functionality 

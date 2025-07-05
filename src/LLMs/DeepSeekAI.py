@@ -1,7 +1,7 @@
-from src.LLMs.AbstractLLM import AbstractLLM, MODEL_REGISTRY
+from . AbstractLLM import AbstractLLM, MODEL_REGISTRY
 from huggingface_hub import InferenceClient
-from src.config_model import ExecutionMode, InteractionMode
-from src.LLMs.AbstractLLM import SummaryError, ModelInstantiationError
+from .. config_model import ExecutionMode, InteractionMode
+from . AbstractLLM import SummaryError, ModelInstantiationError
 
 COMPANY = "deepseek-ai"
 class DeepSeekAI(AbstractLLM):

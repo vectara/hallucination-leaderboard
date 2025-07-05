@@ -4,43 +4,13 @@ from dotenv import load_dotenv
 import pandas as pd
 import argparse
 
-# from .constants import (
-#     TEST_DATA_PATH, LB_DATA_PATH, GET_SUMM, GET_JUDGE, GET_RESULTS
-# )
-
-
 from . data_model import EvalConfig, ModelInstantiationError, SourceArticle
-from . LLMs import AbstractLLM, MODEL_REGISTRY, LLMConfig
+from . LLMs import AbstractLLM, MODEL_REGISTRY
 from . Logger import logger
 from . pipeline import (
-    get_summaries, get_judgements, get_results
+    get_summaries
+    # get_summaries, get_judgements, get_results
 )
-
-def build_models(llm_configs: List[LLMConfig]) -> List['AbstractLLM']:
-    """
-    Build LLM instances from configurations.
-    
-    Args:
-        llm_configs: List of model configurations
-        
-    Returns:
-        List of instantiated LLM objects
-    """
-    models = []
-    for config in llm_configs:
-        try:
-            model_class = MODEL_REGISTRY.get(config.params.model_name)
-            if model_class is None:
-                raise ModelInstantiationError.NOT_REGISTERED.format(
-                    model_name=config.params.model_name,
-                    company=config.company,
-                )
-            model = model_class(**config.model_dump())
-            models.append(model)
-        except Exception as e:
-            logger.error(f"Failed to instantiate model {config.company}/{config.params.model_name}: {e}")
-            raise
-    return models
 
 def main(eval_config: EvalConfig):
     """
@@ -62,13 +32,14 @@ def main(eval_config: EvalConfig):
         raise ValueError(f"Data validation failed: {e}")
 
     if "summarize" in eval_config.pipeline:
-        get_summaries.run(eval_config.LLM_Configs, article_df, ow=eval_config.overwrite_summaries)
+        get_summaries(eval_config, article_df)
 
-    if "judge" in eval_config.pipeline:
-        get_judgements.run(models, article_df)
+    # TODO: Add judge and reduce pipelines
+    # if "judge" in eval_config.pipeline:
+    #     get_judgements.run(models, article_df)
 
-    if "reduce" in eval_config.pipeline:
-        get_results.run(models)
+    # if "reduce" in eval_config.pipeline:
+    #     get_results.run(models)
 
     # if args.process == GET_SUMM:
     #     get_summaries.run(models, article_df, ow=args.overwrite)
@@ -122,7 +93,7 @@ def main(eval_config: EvalConfig):
 #         get_judgements.run(models, article_df)
 #         get_results.run(models)
 
-if __name__ == "__main__":
+def cli_main():
     load_dotenv()
     parser = argparse.ArgumentParser(
         description="HHEM Leaderboard Backend",
@@ -130,20 +101,31 @@ if __name__ == "__main__":
     )
 
     # Load config.py
-    from .config import eval_configs
+    from . config import eval_configs
 
     parser.add_argument(
         "--config_key",
-        choices=eval_configs.keys(),
-        help="Which evaluation to run. For test, select 'test'."
+        choices=[c["eval_name"] for c in eval_configs],
+        help="Which evaluation to run. For test, select 'test'.",
+        default="test"
     )
 
     args = parser.parse_args()
     config_key = args.config_key
-    config: str = eval_configs[config_key]
-    config: Config = Config(**config)
+
+    # scan eval_configs for the config with the given key
+    qualifying_configs = [c for c in eval_configs if c["eval_name"] == config_key]
+    if len(qualifying_configs) == 0:
+        raise ValueError(f"Evaluation config with key {config_key} not found")
+    elif len(qualifying_configs) > 1:
+        raise ValueError(f"Multiple evaluation configs with key {config_key} found. Please check config.py. ")
+    
+    config = EvalConfig(**qualifying_configs[0])
 
     main(config)
+
+if __name__ == "__main__":
+    cli_main()
 
 
 # Disabled because we use config file to specify the pipeline. -- Forrest, 2025-07-03

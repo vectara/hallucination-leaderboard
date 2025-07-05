@@ -1,8 +1,8 @@
-from src.LLMs.AbstractLLM import AbstractLLM, MODEL_REGISTRY
+from . AbstractLLM import AbstractLLM, MODEL_REGISTRY
 from mistralai import Mistral
 import os
-from src.config_model import ExecutionMode, InteractionMode
-from src.LLMs.AbstractLLM import SummaryError, ModelInstantiationError
+from .. config_model import ExecutionMode, InteractionMode
+from . AbstractLLM import SummaryError, ModelInstantiationError
 
 COMPANY = "mistralai"
 class MistralAI(AbstractLLM):

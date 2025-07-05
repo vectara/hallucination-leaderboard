@@ -1,39 +1,31 @@
-# from src.LLMs.AbstractLLM import AbstractLLM, EMPTY_SUMMARY, MODEL_REGISTRY
-
-
 import os
+from typing import Literal
+
+from . AbstractLLM import AbstractLLM
+from .. data_model import BasicLLMConfig, BasicSummary
+from .. data_model import ModelInstantiationError, SummaryError
+
+# Import the Python package for the specific provider.
 import anthropic
-
-from .AbstractLLM import AbstractLLM, BasicLLMConfig
-from .. data_model import Summary, ModelInstantiationError
-
-# Forrest, 2025-07-02
-# from src.exceptions import (
-#         ClientOrLocalNotInitializedError,
-#         ClientModelProtocolBranchNotFound,
-#         LocalModelProtocolBranchNotFound
-#     )
 
 COMPANY = "anthropic"
 
 class AnthropicConfig(BasicLLMConfig):
-    pass 
+    """Extended config for Anthropic-specific properties"""
+    company: Literal["anthropic"] = "anthropic"
+    model_name: Literal["claude-opus-4", "claude-sonnet-4"] # Only model names manually added to this list are supported.
+    execution_mode: Literal["api"] = "api" # Anthropic models can only be run via web api.
+    date_code: str # You must specify a date code for anthropic models.
+    class Config:
+        extra = "ignore"
 
-class AnthropicSummary(Summary):
-    pass
+class AnthropicSummary(BasicSummary):
+    pass # Nothing additional to the BasicSummary class.
 
-class Anthropic(AbstractLLM):
+class AnthropicLLM(AbstractLLM):
     """
     Class for models from Anthropic
-
-    Attributes:
-        client (Client): client associated with api calls with anthropic
-        model (str): anthropic style model name
     """
-
-    # local_models = []
-    # client_models = ["claude-opus-4", "claude-sonnet-4"]
-    # model_category1 = ["claude-opus-4", "claude-sonnet-4"]
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
@@ -42,48 +34,31 @@ class Anthropic(AbstractLLM):
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
-    local_mode_group = {   
-    }
+    local_mode_group = {} # Empty for Anthropic models because they cannot be run locally.
 
-    def __init__(
-            self,
-            model_name: str,
-            execution_mode: ExecutionMode,
-            interaction_mode: InteractionMode,
-            date_code: str,
-            temperature: float,
-            max_tokens: int,
-            thinking_tokens: int,
-            min_throttle_time: float
-    ):
-        super().__init__(
-            model_name,
-            execution_mode,
-            interaction_mode,
-            date_code,
-            temperature,
-            max_tokens,
-            thinking_tokens,
-            min_throttle_time,
-            company=COMPANY
-        )
+    def __init__(self, config: AnthropicConfig):
+        # Ensure that the parameters passed into the constructor are of the type AnthropicConfig.
+        
+        # Call parent constructor to inherit all parent properties
+        super().__init__(config)
 
     def summarize(self, prepared_text: str) -> str:
+        # print("Prompt: ", prepared_text)
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match self.client_mode_group[self.model_name]:
                 case 1:
                     chat_package = self.client.messages.create(
-                        model=self.model,
+                        model=self.model_fullname,
                         messages=[{"role": "user", "content":prepared_text}],
                         max_tokens=self.max_tokens,
                         temperature=self.temperature
-                    )   
+                    )
                     summary = chat_package.content[0].text
         elif self.local_model: 
-            pass
+            pass # Anthropic models cannot be run locally.
         else:
-            raise ModelInstantiationError.MISSING_SETUP(self.__class__.__name__)
+            raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         # elif self.local_model_is_defined():
         #     if False:
         #         pass
@@ -101,26 +76,26 @@ class Anthropic(AbstractLLM):
     #         pass
 
     def setup(self):
-        if self.execution_mode == ExecutionMode.CLIENT:
+        if self.execution_mode == "api":
             if self.model_name in self.client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-                self.client = anthropic.Client(api_key=api_key)
+                assert api_key is not None, f"Anthropic API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                self.client = anthropic.Anthropic(api_key=api_key)
             else:
-                raise ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
+                raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,
                     company=self.company,
                     execution_mode=self.execution_mode
-                )
-        elif self.execution_mode == ExecutionMode.LOCAL:
-            pass
+                ))
+        elif self.execution_mode == "local":
+            pass # Anthropic models cannot be run locally.
 
     def teardown(self):
-        if self.client_is_defined():
+        if self.client:
             self.close_client()
-        elif self.local_model_is_defined():
-            self.default_local_model_teardown()
+        elif self.local_model:
+            # self.default_local_model_teardown()
+            pass # Anthropic models cannot be run locally.
 
     def close_client(self):
         pass
-
-# MODEL_REGISTRY[COMPANY] = Anthropic

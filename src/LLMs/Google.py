@@ -1,9 +1,9 @@
 import os
 from google import genai
 from google.genai import types
-from src.LLMs.AbstractLLM import AbstractLLM, MODEL_REGISTRY
-from src.config_model import ExecutionMode, InteractionMode
-from src.LLMs.AbstractLLM import SummaryError, ModelInstantiationError
+from . AbstractLLM import AbstractLLM, MODEL_REGISTRY
+from .. config_model import ExecutionMode, InteractionMode
+from . AbstractLLM import SummaryError, ModelInstantiationError
 
 COMPANY = "google"
 class Google(AbstractLLM):

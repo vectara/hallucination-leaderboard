@@ -17,10 +17,10 @@ def is_valid_summary(summary: str) -> bool:
     # if has_error_output(summary):
     if summary in SummaryError:
         return False
-    elif len(summary.split()) >= 5:
-        return True
-    else:
+    elif len(summary.split()) < 5:
         return False
+    else:
+        return True
 
 # def has_error_output(summary: str) -> bool:
 #     """

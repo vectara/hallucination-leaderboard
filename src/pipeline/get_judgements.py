@@ -1,17 +1,17 @@
-from src.Logger import logger
+from .. Logger import logger
 from tqdm import tqdm
 import pandas as pd
 from datetime import datetime, timezone
 import os
 from tqdm import tqdm
-from src.json_utils import file_exists, append_record_to_jsonl
-from src.analytics import is_valid_summary
-from src.data_model import Judgement, Summary, SourceArticle
+from .. json_utils import append_record_to_jsonl
+from .. analytics import is_valid_summary
+from .. data_model import Judgement, Summary, SourceArticle
 
-from src.HHEM_2_x import HHEM_2_3
+from .. HHEM_2_x import HHEM_2_3
 
-from src.LLMs.AbstractLLM import AbstractLLM
-from src.scripts.get_summaries import SUMMARY_FILE
+from .. LLMs.AbstractLLM import AbstractLLM
+from .. scripts.get_summaries import SUMMARY_FILE
 
 """
 For all LLMs in the input list, check if they have a summary file. If it has a 
@@ -53,7 +53,7 @@ def run(models: list[AbstractLLM], article_df: pd.DataFrame):
         summaries_jsonl_file = f"{SUMMARY_FILE}"
         summaries_jsonl_path = os.path.join(model_out_dir, summaries_jsonl_file)
 
-        if file_exists(summaries_jsonl_path):
+        if os.path.isfile(summaries_jsonl_path):
             logger.info(f"{SUMMARY_FILE} found for {model_name}")
             summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
             article_summary_df = pd.merge(

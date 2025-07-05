@@ -79,6 +79,12 @@ CONFIG = {
 }
 ```
 
+#### Configuration superseding order
+
+1. LLM-agnostic configuration in `config.py`
+2. LLM-specific configuration in `config.py` under `LLM_Configs`
+3. Default values in individual LLM classes
+
 ### Program
 
 Main method of using the program is

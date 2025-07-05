@@ -1,9 +1,9 @@
 from . AbstractTest import AbstractTest
-from ..LLMs.AbstractLLM import AbstractLLM
+from .. LLMs.AbstractLLM import AbstractLLM
 from .. data_model import EvalConfig
-from ..config import CONFIG
-from ..LLMs.AbstractLLM import build_models
-from ..Logger import logger
+from .. config import CONFIG
+from .. LLMs.AbstractLLM import build_models
+from .. Logger import logger
 import csv
 
 # Test data file path

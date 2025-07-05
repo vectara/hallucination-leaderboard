@@ -142,7 +142,7 @@ Model List
 import os
 import time
 import re
-from typing import List, Literal
+from typing import List, Literal, Any
 
 from enum import Enum
 from abc import ABC, abstractmethod
@@ -150,7 +150,7 @@ from pydantic import BaseModel
 from tqdm import tqdm
 import torch
 
-from .. data_model import ModelInstantiationError
+from .. data_model import ModelInstantiationError, BasicLLMConfig, SummaryError
 from .. Logger import logger
 
 # Definitions below moved to constants.py -- Forrest, 2025-07-02
@@ -171,62 +171,45 @@ from .. Logger import logger
 #     INCOMPLETE_THINK_TAG
 # ]
 
-default_prompt = """
-You are a chat bot answering questions using data.
-You must stick to the answers provided solely by the text in the 
-passage provided. You are asked the question 'Provide a concise 
-summary of the following passage, covering the core pieces of 
-information described.'
-    
-{{article}}
-"""
-
-class BasicLLMConfig(BaseModel):
-    """
-    Configuration of an LLM for summarization.
-    """
-    company: str
-    model_name: str
-    date_code: str | None = None  # some models have date codes, some don't. 
-    prompt:str = default_prompt
-
-    temperature: float | None = 0.0
-    max_tokens: int | None = 4096
-    min_throttle_time: float = 0.1  # number of seconds to wait before sending another request. Useful for web API calling that may have rate limits.
-
-    thinking_tokens: int | None = None  # only applicable to models that support thinking.
-    execution_mode: Literal["cpu", "gpu", "api"] | None = None # Call the LLM locally on GPU, on CPU), or through web API. Some models are only supported through api, such as Anthropic, OpenAI, or Gemini.
-    # interaction_mode: Literal["chat", "completion"] | None = None # When making a request, use the chat mode/endpoint or the completion mode/endpoint. Not applicable to all models. Almost all modern models do not distinguish between the two. 
-
-    output_dir: str = "output" # TODO: To be read from top level config instead of make it per LLM.     
-
-    # class Config:
-    #     extra = "allow"
-
 class AbstractLLM(ABC):
     """
     Abstract Class for an LLM.
     """
 
-    def __init__(
-            self,
-            llm_config: BasicLLMConfig
-    ):
+    def __init__(self, config: BasicLLMConfig) -> None:
+        
+        # Ensure that the parameters passed into the constructor are of the type BasicLLMConfig.
+        # config = BasicLLMConfig(**kwargs)
         
         # Expose all config keys and values as attributes on self
-        config_dict = llm_config.model_dump()
-        for key, value in config_dict.items():
-            setattr(self, key, value)
-        
+        # for key, value in config.model_dump().items():
+        #     setattr(self, key, value)
+
+        self.company = config.company
+        self.model_name = config.model_name
+
+        self.prompt = config.prompt
+        self.temperature = config.temperature
+        self.max_tokens = config.max_tokens
+        self.min_throttle_time = config.min_throttle_time
+
+        # The following attributes are not required by all models.
+        self.date_code = config.date_code       
+        self.thinking_tokens = config.thinking_tokens
+        self.execution_mode = config.execution_mode
+
         # Create output directory
-        full_output_dir = f"{llm_config.output_dir}/{llm_config.company}/{llm_config.model_name}"
+        full_output_dir = f"{config.output_dir}/{config.company}/{config.model_name}"
         os.makedirs(full_output_dir, exist_ok=True)
         self.model_output_dir = full_output_dir
 
-        if llm_config.date_code not in [None, "", " "]:
-            self.model_fullname = f"{llm_config.model_name}-{llm_config.date_code}"
+        if config.date_code not in [None, "", " "]:
+            self.model_fullname = f"{config.model_name}-{config.date_code}"
         else:
-            self.model_fullname = llm_config.model_name
+            self.model_fullname = config.model_name
+
+        self.client = None # in case the model can be called via web api
+        self.local_model = None # in case the model can be run locally
 
     def __enter__(self):
         self.setup() # TODO: Try to skip the setup() and teardown() 
@@ -308,7 +291,7 @@ class AbstractLLM(ABC):
             logger.warning((
                 f"Model call failed for {self.model_name}: {e} "
             ))
-            return self.summary_error.MODEL_FAILED_TO_RETURN_OUTPUT
+            return SummaryError.MODEL_FAILED_TO_RETURN_OUTPUT
 
         if not isinstance(llm_summary, str):
             bad_output = llm_summary
@@ -317,7 +300,7 @@ class AbstractLLM(ABC):
                 f"string but got {type(bad_output).__name__}. "
                 f"Replacing output."
             ))
-            return self.summary_error.MODEL_RETURNED_NON_STRING_TYPE_OUTPUT
+            return SummaryError.MODEL_RETURNED_NON_STRING_TYPE_OUTPUT
         
         llm_summary = self.remove_thinking_text(llm_summary)
 
@@ -385,7 +368,7 @@ class AbstractLLM(ABC):
         """
         if '<think>' in raw_summary and '</think>' not in raw_summary:
             logger.warning(f"<think> tag found with no </think>. This is indicative of an incomplete response from an LLM. Raw Summary: {raw_summary}")
-            return self.summary_error.INCOMPLETE_THINK_TAG
+            return SummaryError.INCOMPLETE_THINK_TAG
 
         summary = re.sub(
             r'<think>.*?</think>\s*', '',

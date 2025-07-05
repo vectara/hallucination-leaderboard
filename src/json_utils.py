@@ -1,6 +1,6 @@
 import json
 import os
-from src.Logger  import logger
+from . Logger  import logger
 from pydantic import BaseModel
 from typing import Union, List, Any
 
@@ -12,7 +12,6 @@ Functions:
     save_to_jsonl(jsonl_path, records)
     append_record_to_jsonl(jsonl_path, record)
     save_to_json(json_path, records)
-    json_exists(json_path)
 """
 
 def load_json(json_path: str) -> list:
@@ -82,17 +81,18 @@ def save_to_json(json_path: str, data: Any):
         json.dump(json_data, f, indent=4)
     logger.info("JSON file saved")
 
-def file_exists(file_path: str) -> bool:
-    """
-    Checks if file exists, returns True if so else False
+# Commented out because it does not save the code and the Python-native way is more readable. -- Forrest, 2025-07-04
+# def file_exists(file_path: str) -> bool:
+#     """
+#     Checks if file exists, returns True if so else False
 
-    Args:
-        file_path (str): Path to file
+#     Args:
+#         file_path (str): Path to file
 
-    Returns:
-        (bool): State of file existing
-    """
-    if os.path.isfile(file_path):
-        return True
-    else:
-        return False
+#     Returns:
+#         (bool): State of file existing
+#     """
+#     if os.path.isfile(file_path):
+#         return True
+#     else:
+#         return False

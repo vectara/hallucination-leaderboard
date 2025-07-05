@@ -1,9 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List, Literal
 from enum import Enum
-
-from . LLMs import LLMConfig
-
+from datetime import datetime
 class SourceArticle(BaseModel):
     """
     Representation of an Article record from LB dataset
@@ -21,46 +19,6 @@ class SourceArticle(BaseModel):
         ARTICLE_ID = "article_id"
         TEXT = "text"
         DATASET = "dataset"
-
-class BasicSummary(BaseModel):
-    """
-    Representation of a Summary of an Article
-    
-    Fields:
-        timestamp (str): Date summary was produced
-        summary_uid (str): hash for this summary
-        llm (str): unique llm identifier, matches the label the respective
-            company gave it
-        date_code (str): date code of model
-        temperature (float): temperature of model
-        max_tokens (int): max tokens allocated for model
-        thinking_tokens(int): number of allocated thinking tokens
-        article_id (int): unique id of article
-        summary (str): llm generated summary of the text associated to article_id
-    """
-    timestamp: str
-    summary_uid: str
-    llm: str
-    date_code: str
-    interaction_mode: str
-    temperature: float
-    max_tokens: int
-    thinking_tokens: int
-    article_id: int
-    summary: str
-
-    model_config = {"extra": "allow"}
-
-    class Keys:
-        TIMESTAMP = "timestamp"
-        SUMMARY_UID = "summary_uid"
-        LLM = "llm"
-        DATE_CODE = "date_code"
-        TEMPERATURE = "temperature"
-        MAX_TOKENS = "max_tokens"
-        THINKING_TOKENS = "thinking_tokens"
-        ARTICLE_ID = "article_id"
-        SUMMARY = "summary"
 
 class Judgement(BaseModel):
     """
@@ -125,20 +83,118 @@ class Stats(BaseModel):
         ANSWER_RATE = "answer_rate"
         AVG_SUMMARY_LENGTH = "avg_summary_length"
 
+
+default_prompt = """
+You are a chat bot answering questions using data.
+You must stick to the answers provided solely by the text in the 
+passage provided. You are asked the question 'Provide a concise 
+summary of the following passage, covering the core pieces of 
+information described.'
+    
+{article}
+"""
+class BasicLLMConfig(BaseModel):
+    """
+    Configuration of an LLM for summarization.
+    """
+
+    company: str
+    model_name: str
+    model_fullname: str | None = None # Model name if date_code is None or model name + date code otherwise.
+    date_code: str | None = None  # some models have date codes, some don't. 
+    prompt:str = default_prompt
+
+    temperature: float = 0.0
+    max_tokens: int = 4096
+    min_throttle_time: float = 0.1  # number of seconds to wait before sending another request. Useful for web API calling that may have rate limits.
+    thinking_tokens: int | None = None  # only applicable to models that support thinking.
+    execution_mode: Literal["cpu", "gpu", "api"] | None = None # Call the LLM locally on GPU, on CPU), or through web API. Only applicable for open source models. 
+    # interaction_mode: Literal["chat", "completion"] | None = None # When making a request, use the chat mode/endpoint or the completion mode/endpoint. Not applicable to all models. Almost all modern models do not distinguish between the two. 
+
+    output_dir: str = "output"
+
+    class Config:
+        extra = "ignore"
+    
+    @classmethod
+    def merge_with_defaults(cls, config_dict: dict, specific_config_class: type) -> dict:
+        """
+        Merge a config dictionary with defaults from a specific config class.
+        
+        Args:
+            config_dict: Dictionary of config values
+            specific_config_class: The specific config class to get defaults from
+            
+        Returns:
+            dict: Merged config with defaults applied
+        """
+        # Get the default values from the specific config class
+        default_config = specific_config_class()
+        default_dict = default_config.model_dump()
+        
+        # Merge, with config_dict values taking precedence
+        merged = default_dict.copy()
+        for key, value in config_dict.items():
+            if value is not None:  # Only override if value is not None
+                merged[key] = value
+        
+        return merged
+
+class BasicSummary(BaseModel):
+    """
+    Representation of a Summary of an Article
+    
+    Fields:
+        eval_name (str): The name used to identify the evaluation (set in config.py as eval_name). Can be a time stamp.
+        summary_uid (str): hash for this summary
+        company (str): company that produced the model
+        model_name (str): name of the LLM used as summarizer
+        date_code (str): date code of model
+        temperature (float): temperature of model
+        max_tokens (int): max tokens allocated for model
+        thinking_tokens(int): number of allocated thinking tokens
+        article_id (int): unique id of article
+        summary (str): llm generated summary of the text associated to article_id
+    """
+    eval_name: str
+    article_id: int
+    summary_uid: str
+    summary: str
+
+    company: str
+    model_name: str
+    date_code: str | None = None
+
+    temperature: float
+    max_tokens: int
+    prompt: str
+    thinking_tokens: int | None = None
+    execution_mode: Literal["cpu", "gpu", "api"] | None = None
+
+    model_config = {"extra": "ignore"}
+
+    class Keys:
+        TIMESTAMP = "timestamp"
+        SUMMARY_UID = "summary_uid"
+        LLM = "llm"
+        DATE_CODE = "date_code"
+        TEMPERATURE = "temperature"
+        MAX_TOKENS = "max_tokens"
+        THINKING_TOKENS = "thinking_tokens"
+        ARTICLE_ID = "article_id"
+        SUMMARY = "summary"
 class EvalConfig(BaseModel):
     """
     Configuration for an evaluation run. Includes the components of the evaluation pipeline, 
     the date of the evaluation, the LLMs to evaluate and their hyperparameters.
 
     Fields:
-        eval_date: str # Date of the evaluation
-        hhem_version: str # Version of HHEM to use
-        pipeline: List[Literal["summarize", "judge", "reduce"]] 
-                  Steps to execute in the evaluation pipeline. Run sequentially.
-                  Meanings of the steps are as follows:
-                  - summarize: Generate summaries of the articles
-                  - judge: Judge the quality of the summaries
-                  - reduce: Turn per-summary judgements into the hallucination rate, average summary length in words, and answer rate for each LLM.
+        eval_name (str): The name used to identify the evaluation. Default is today's date if not set in config.py.
+        hhem_version: (str): Version of HHEM to use
+        pipeline (List[Literal["summarize", "judge", "reduce"]]): Steps to execute in the evaluation pipeline. Run sequentially. Meanings of the steps are as follows:
+            - summarize: Generate summaries of the articles
+            - judge: Judge the quality of the summaries
+            - reduce: Turn per-summary judgements into the hallucination rate, average summary length in words, and answer rate for each LLM.
         overwrite_summaries (bool): if true overwrites all previously generated summaries. Only applicable to "summarize" step.
         source_article_path (str): path to file that contains the articles to be summarized by the LLMs
         temperature (float): the default temperature for this evaluation run, superseded by the temperature in the LLMConfig
@@ -149,16 +205,17 @@ class EvalConfig(BaseModel):
             representations
     """
 
-    eval_date: str
+    eval_name: str = datetime.now().strftime('%Y%m%d')
     hhem_version: str
     pipeline: List[Literal["summarize", "judge", "reduce"]]
     overwrite_summaries: bool # 
+    output_dir: str
     source_article_path: str
     temperature: float = 0.0
     max_tokens: int = 1024
     simulation_count: int = 1  # no impact now 
     sample_count: int = 1      # no impact now 
-    LLM_Configs: List[LLMConfig]
+    LLM_Configs: List[BasicLLMConfig]
 
     # TODO: Why is this function in the config? 
     def model_post_init(self, __context):

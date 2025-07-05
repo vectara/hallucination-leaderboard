@@ -1,101 +1,118 @@
-from src.LLMs.AbstractLLM import AbstractLLM, MODEL_REGISTRY
-from src.LLMs.AbstractLLM import SummaryError, ModelInstantiationError
 import os
-from openai import OpenAI
-from src.config_model import ExecutionMode, InteractionMode
+from typing import Literal
 
-COMPANY ="openai"
-class OpenAI(AbstractLLM):
+from . AbstractLLM import AbstractLLM
+from .. data_model import BasicLLMConfig, BasicSummary
+from .. data_model import ModelInstantiationError, SummaryError
+
+# Import the Python package for the specific provider.
+from openai import OpenAI
+
+COMPANY = "openai"
+
+class OpenAILLMConfig(BasicLLMConfig):
+    """Extended config for OpenAI-specific properties"""
+    company: Literal["openai"] = "openai"
+    model_name: Literal["gpt-4.1", "o3", "o3-pro"] # Only model names manually added to this list are supported.
+    execution_mode: Literal["api"] = "api" # OpenAI models can only be run via web api.
+    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+
+class OpenAISummary(BasicSummary):
+    endpoint: Literal["chat", "response"] = "chat"
+
+class OpenAILLM(AbstractLLM):
     """
     Class for models from OpenAI
 
     Attributes:
         client (OpenAI): client associated with api calls
-        model (str): OpenAI style model name
+        model_name (str): OpenAI style model name
     """
 
-    local_models = []
-    client_models = ["gpt-4.1", "o3", "o3-pro"]
+    # In which way to run the model via web api. Empty dict means not supported for web api execution.
+    client_mode_group = {
+        "gpt-4.1": {
+            "chat": 1, # chat with temperature
+            "response": 3
+        },
+        "o3": {
+            "chat": 2, # chat without temperature
+            "response": 3
+        },
+        "o3-pro": {
+            "chat": None, # o3-pro doesn't support chatting protocol
+            "response": 3
+        }
+    }
 
-    model_category1 = ["gpt-4.1"]
+    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
+    local_mode_group = {} # Empty for OpenAI models because they cannot be run locally.
 
-    # o3 doesn't support adjusting the temperature
-    model_category2 = ["o3"]
+    def __init__(self, config: OpenAILLMConfig):
+        # Ensure that the parameters passed into the constructor are of the type OpenAILLMConfig.
+        
+        # Call parent constructor to inherit all parent properties
+        super().__init__(config)
+        self.endpoint = config.endpoint
 
-    # o3 doesn't support chatting protocol and doesn't support adjusting temperature
-    model_category3 = ["o3-pro"]
-
-    def __init__(
-            self,
-            model_name: str,
-            execution_mode: ExecutionMode,
-            interaction_mode: InteractionMode,
-            date_code: str,
-            temperature: float,
-            max_tokens: int,
-            thinking_tokens: int,
-            min_throttle_time: float
-    ):
-        super().__init__(
-            model_name,
-            execution_mode,
-            interaction_mode,
-            date_code,
-            temperature,
-            max_tokens,
-            thinking_tokens,
-            min_throttle_time,
-            company=COMPANY
-        )
-        self.model = self.get_model_identifier(model_name, date_code)
+        print (self.__dict__)
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
-        if self.client_is_defined():
-            if self.model_name in self.model_category1:
-                chat_package = self.client.chat.completions.create(
-                    model=self.model,
-                    temperature=self.temperature,
-                    max_tokens=self.max_tokens,
-                    messages=[{"role": "user", "content":prepared_text}]
-                )
-                summary = chat_package.choices[0].message.content
-            elif self.model_name in self.model_category2:
-                chat_package = self.client.chat.completions.create(
-                    model=self.model,
-                    messages=[{"role": "user", "content":prepared_text}],
-                    max_completion_tokens=self.max_tokens
-                )
-                summary = chat_package.choices[0].message.content
-            elif self.model_name in self.model_category3:
-                chat_package = self.client.responses.create(
-                    model=self.model,
-                    input=prepared_text,
-                    max_output_tokens=self.max_tokens
-                )
-                summary = chat_package.output_text
-            else:
-                raise ModelInstantiationError.NOT_REGISTERED(self.model_name, self.company, self.execution_mode)
-        elif self.local_model_is_defined():
-            pass
+        if self.client:
+            match self.client_mode_group[self.model_name][self.endpoint]:
+                case 1: # Chat with temperature
+                    chat_package = self.client.chat.completions.create(
+                        model=self.model_name,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens,
+                        messages=[{"role": "user", "content":prepared_text}]
+                    )
+                    summary = chat_package.choices[0].message.content
+                case 2: # Chat without temperature
+                    chat_package = self.client.chat.completions.create(
+                        model=self.model_name,
+                        messages=[{"role": "user", "content":prepared_text}],
+                        max_completion_tokens=self.max_tokens
+                    )
+                    summary = chat_package.choices[0].message.content
+                case 3: # Use OpenAI's Response API
+                    chat_package = self.client.responses.create(
+                        model=self.model_name,
+                        temperature=self.temperature,
+                        max_output_tokens=self.max_tokens,
+                        input=prepared_text
+                    )
+                    summary = chat_package.output_text
+                case None:
+                    raise Exception(f"Model {self.model_name} does not support {self.endpoint} endpoint")
+        elif self.local_model:
+            pass # OpenAI models cannot be run locally.
         else:
-            raise ModelInstantiationError.MISSING_SETUP(self.__class__.__name__)
+            raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
 
     def setup(self):
-        if self.valid_client_model():
-            api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-            self.client = OpenAI(api_key=api_key)
-        elif self.valid_local_model():
-            pass
+        if self.execution_mode == "api":
+            if self.model_name in self.client_mode_group:
+                api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                assert api_key is not None, f"OpenAI API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                self.client = OpenAI(api_key=api_key)
+            else:
+                raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
+                    model_name=self.model_name,
+                    company=self.company,
+                    execution_mode=self.execution_mode
+                ))
+        elif self.execution_mode == "local":
+            pass # OpenAI models cannot be run locally.
 
     def teardown(self):
-        if self.client_is_defined():
+        if self.client:
             self.close_client()
-        elif self.local_model_is_defined():
-            self.default_local_model_teardown()
+        elif self.local_model:
+            # self.default_local_model_teardown()
+            pass # OpenAI models cannot be run locally.
 
     def close_client(self):
         pass
-
-MODEL_REGISTRY[COMPANY] = OpenAI

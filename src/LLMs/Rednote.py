@@ -1,10 +1,10 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
-from src.LLMs.AbstractLLM import AbstractLLM, MODEL_REGISTRY
-from src.LLMs.AbstractLLM import SummaryError, ModelInstantiationError
+from . AbstractLLM import AbstractLLM, MODEL_REGISTRY
+from . AbstractLLM import SummaryError, ModelInstantiationError
 
-from src.config_model import ExecutionMode, InteractionMode
+from .. config_model import ExecutionMode, InteractionMode
 
 COMPANY = "rednote"
 class Rednote(AbstractLLM):
