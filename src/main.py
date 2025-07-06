@@ -8,15 +8,15 @@ from . data_model import EvalConfig, ModelInstantiationError, SourceArticle
 from . LLMs import AbstractLLM, MODEL_REGISTRY
 from . Logger import logger
 from . pipeline import (
-    get_summaries, get_judgements
-    # get_summaries, get_judgements, get_results
+    get_summaries, get_judgments, aggregate_judgments
 )
 
+# TODO: Move the main function to pipeline/__init__.py
 def main(eval_config: EvalConfig):
 
     SUMMARY_FILE = "summaries.jsonl"
-    JUDGEMENT_FILE = "judgements.jsonl"
-    RESULTS_FILE = "stats.jsonl"
+    JUDGMENT_FILE = "judgments.jsonl"
+    RESULTS_FILE = "results.jsonl"
 
     article_df = pd.read_csv(eval_config.source_article_path)
     
@@ -33,35 +33,11 @@ def main(eval_config: EvalConfig):
         get_summaries(eval_config, article_df, SUMMARY_FILE)
 
     if "judge" in eval_config.pipeline:
-        get_judgements(eval_config, article_df, SUMMARY_FILE, JUDGEMENT_FILE)
+        get_judgments(eval_config, article_df, SUMMARY_FILE, JUDGMENT_FILE)
+    
+    if "aggregate" in eval_config.pipeline:
+        aggregate_judgments(eval_config, JUDGMENT_FILE, RESULTS_FILE)
 
-
-    # TODO: Add reduce to pipeline
-    # if "reduce" in eval_config.pipeline:
-    #     get_results.run(models)
-
-    # if args.process == GET_SUMM:
-    #     get_summaries.run(models, article_df, ow=args.overwrite)
-    # elif args.process == GET_JUDGE:
-    #     get_judgements.run(models, article_df)
-    # elif args.process == GET_RESULTS:
-    #     get_results.run(models)
-    # elif args.process == "get_summ_judge":
-    #     get_summaries.run(models, article_df, ow=args.overwrite)
-    #     get_judgements.run(models, article_df)
-    # elif args.process == "get_judge_results":
-    #     get_judgements.run(models, article_df)
-    #     get_results.run(models)
-    # elif args.process == "get_summ_judge_results":
-    #     get_summaries.run(models, article_df, ow=args.overwrite)
-    #     get_judgements.run(models, article_df)
-    #     get_results.run(models)
-    # else:
-    #     print(
-    #         "No process was specified, running instructions specified in "
-    #         "config.py instead. Run program with --help flag for info"
-    #     )
-    #     config_run(config, models)
 
 # Disabled as now we solely use configuration file to sepecify the pipeline. -- Forrest, 2025-07-03
 # def config_run(config: Config, models: list[AbstractLLM]):
@@ -78,18 +54,18 @@ def main(eval_config: EvalConfig):
 #     if config.pipeline == [GET_SUMM]:
 #         get_summaries.run(models, article_df, ow=config.overwrite)
 #     elif config.pipeline == [GET_JUDGE]:
-#         get_judgements.run(models, article_df)
+#         get_judgments.run(models, article_df)
 #     elif config.pipeline == [GET_RESULTS]:
 #         get_results.run(models)
 #     elif config.pipeline == [GET_SUMM, GET_JUDGE]:
 #         get_summaries.run(models, article_df, ow=config.overwrite)
-#         get_judgements.run(models, article_df)
+#         get_judgments.run(models, article_df)
 #     elif config.pipeline == [GET_JUDGE, GET_RESULTS]:
-#         get_judgements.run(models, article_df)
+#         get_judgments.run(models, article_df)
 #         get_results.run(models)
 #     elif config.pipeline == [GET_SUMM, GET_JUDGE, GET_RESULTS]:
 #         get_summaries.run(models, article_df, ow=config.overwrite)
-#         get_judgements.run(models, article_df)
+#         get_judgments.run(models, article_df)
 #         get_results.run(models)
 
 def cli_main():
@@ -104,7 +80,7 @@ def cli_main():
 
     parser.add_argument(
         "--eval_name",
-        choices=list(eval_configs.keys()),
+        choices=[eval_config.eval_name for eval_config in eval_configs],
         help="Which evaluation to run. Pick evaluation name from config.py. For test, select 'test'.",
         default="test"
     )
@@ -113,12 +89,16 @@ def cli_main():
     eval_name = args.eval_name
     logger.info(f"Running evaluation {eval_name}")
 
-    config: dict = eval_configs[eval_name]
-    config["eval_name"] = eval_name
+    # Qualify the eval_name to get the correct eval_config
+    qualified_eval_config =  [eval_config for eval_config in eval_configs if eval_config.eval_name == eval_name]
+    if len(qualified_eval_config) == 0:
+        raise ValueError(f"Evaluation {eval_name} not found in config.py")
+    elif len(qualified_eval_config) > 1:
+        raise ValueError(f"Evaluation {eval_name} found multiple times in config.py")
+    else:
+        eval_config = qualified_eval_config[0]
 
-    config = EvalConfig(**config)
-
-    main(config)
+    main(eval_config)
 
 if __name__ == "__main__":
     cli_main()
@@ -149,8 +129,7 @@ if __name__ == "__main__":
 #             f"   {GET_SUMM}              - generate and save summaries from\n"
 #             "                            config enabled models in jsonl file.\n"
 #             "                            It's best to avoid get_summ and run\n"
-#             "                            get_summ_judge to ensure judgements\n"
-#             "                            are synchronized\n"
+#             "                            get_summ_judge to ensure judgments\n"
 #             f"   {GET_JUDGE}              - compute and save metrics for the\n"
 #             "                            generated summaries in jsonl file\n"
 #             f"   {GET_RESULTS}            - compute and save aggregate stats\n"

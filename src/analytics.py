@@ -1,6 +1,6 @@
 import pandas as pd
 
-from . data_model import Judgement, SummaryError
+from . data_model import BasicJudgment, SummaryError
 
 def is_valid_summary(summary: str) -> bool:
     """
@@ -17,6 +17,10 @@ def is_valid_summary(summary: str) -> bool:
 
     # Get all SummaryError values
     error_values = [error.value for error in SummaryError]
+
+    # FIXME: This needs to be expanded. What if the LLM says I am sorry that I cannot answer that query? 
+    # For example, Anthropic may say: "I cannot provide a summary of the passage because no actual content was provided. The text only contains the phrase \"Dummy article with no content,\" which indicates there is no substantive information to summarize. To provide a meaningful summary, I would need a passage that contains actual content and information."
+    # As another example, OpenAI may say: ""The passage does not contain any information to summarize."
     
     if summary in error_values:
         return False
@@ -82,13 +86,13 @@ def compute_factual_consistancy_rate(
         float: factual consistancy rate
     """
 
-    valid_summs_df = metrics_df[metrics_df[Judgement.Keys.VALID]]
+    valid_summs_df = metrics_df[metrics_df[BasicJudgment.Keys.IS_VALID]]
     if valid_summs_df.empty:
         return -1.0
     total_count = valid_summs_df.shape[0]
 
     factual_count = 0
-    for score in valid_summs_df[Judgement.Keys.HHEM_SCORE].tolist():
+    for score in valid_summs_df[BasicJudgment.Keys.HHEM_SCORE].tolist():
         if score >= threshold:
             factual_count += 1
     factual_consistancy_rate = factual_count/total_count
@@ -111,25 +115,25 @@ def compute_answer_rate(metrics_df: pd.DataFrame) -> float:
     Returns:
         float: answer rate
     """
-    if metrics_df[Judgement.Keys.VALID].empty:
+    if metrics_df[BasicJudgment.Keys.IS_VALID].empty:
         return -1.0
-    answer_rate = metrics_df[Judgement.Keys.VALID].mean()
+    answer_rate = metrics_df[BasicJudgment.Keys.IS_VALID].mean()
     return answer_rate
 
-def compute_avg_summary_length(metrics_df: pd.DataFrame) -> float:
+def compute_avg_summary_words(metrics_df: pd.DataFrame) -> float:
     """
-    Computes average summary length for valid summaries only. Returns -1.0 if
-    there are no valid summaries.
+    Computes average number of words in a summary for valid summaries only.
+    Returns -1.0 if there are no valid summaries.
 
     Args:
         metrics_df (pd.DataFrame): metrics dataframe
 
     Returns:
-        float: Average summary length
+        float: Average number of words in a summary
     """
 
-    valid_summs_df = metrics_df[metrics_df[Judgement.Keys.VALID]]
+    valid_summs_df = metrics_df[metrics_df[BasicJudgment.Keys.IS_VALID]]
     if valid_summs_df.empty:
         return -1.0
-    avg_summary_length = valid_summs_df[Judgement.Keys.SUMMARY_WORDS].mean()
-    return avg_summary_length 
+    avg_summary_words = valid_summs_df[BasicJudgment.Keys.SUMMARY_WORDS].mean()
+    return avg_summary_words 

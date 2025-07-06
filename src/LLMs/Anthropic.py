@@ -4,7 +4,7 @@ from typing import Literal
 import anthropic
 
 from . AbstractLLM import AbstractLLM
-from .. data_model import BasicLLMConfig, BasicSummary
+from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "anthropic"
@@ -20,6 +20,9 @@ class AnthropicConfig(BasicLLMConfig):
 
 class AnthropicSummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
+
+class AnthropicJudgment(BasicJudgment):
+    pass # Anthropic does not have fields beyond BasicJudgment.
 
 class AnthropicLLM(AbstractLLM):
     """

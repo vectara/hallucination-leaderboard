@@ -1,148 +1,32 @@
-# Running the Program
+# How to run and expand this code base
 
-DO NOT PUSH judgements.jsonl to the repo. It will allow people to chat on the leaderboard.
+DO NOT PUSH judgments.jsonl to the repo. It will allow people to chat on the leaderboard.
 
 TODO: 
 1. Allow interrupting the program and resume from the same point.
 2. Supporting selecting to run HHEM on CPU. 
+3. Do we still need test files?
+4. update the app code to read from new stats files or shall we have a script that pushes to HF datasets repo?
 
-### Configuration
-Before running the program you need to define CONFIG in config.py to include the settings and models you want.
+## How to reproduced
 
+## HOw to support new LLM from a provider already supported
 
-#### File Location
-```plaintext
-src/
-└── config.py
-```
+## How to support new provider
 
-#### File
+## Usage 
 
-Temperature and max_tokens should stay the default of 0.0 and 1024. If a model for whatever reason cannot use the defaults then define the individual model temperature and max_token fields to be as close as possible. If a model does not allow you to adjust it then record the value the company uses for the model.
+1. Go to `src/config.py` and add/edit the configuration for an evaluation that you want. 
+2. Run `hhem-leaderboard --eval_name <eval_name>` to run the evaluation. 
 
-```python
-from src.config_model import ExecutionMode, InteractionMode
-from src.constants import (
-    GET_SUMM, GET_JUDGE, GET_RESULTS,
-    TEST_DATA_PATH, LB_DATA_PATH
-)
+## To evaluate an LLM from a provider that is alreayd supported 
 
-# Runtime config
-# ADJUST THIS GLOBAL VARIABLE
-CONFIG = {
-    # Defines protocols to perform, done in seqence. Not all sequences are valid
-    "pipeline": [GET_SUMM, GET_JUDGE, GET_RESULTS],
-    # Specifies if summary jsonl should be overwritten. Judgemennts and results are always overwritten
-    "overwrite": True,
-    # Specifies the article dataset to generate summaries for
-    "input_file": LB_DATA_PATH,
-    # Sets the temperature for all models to this value if it can be set
-    "temperature": 0.0, 
-    # Sets the max_tokens for all models to this value if it can be set
-    "max_tokens": 1024,
-    # NO EFFECT ON PROGRAM ATM. Necessary for confidence intervals. Specifies how many times to repeat the summary generation process for all articles.
-    "simulation_count": 1,
-    # NO EFFECT ON PROGRAM ATM. Necessary for confidence intervals. Samples a subset of the summaries for all simulations. Should be strictly less than simulation count
-    "sample_count": 1,
-    # List LLMs to evaluate
-    "LLMs_to_eval":
-    [
-        {
-            # Company model is from
-            "company": "anthropic",
-            "params": {
-                # model_name: Company defined model name
-                "model_name": "claude-opus-4",
-                # date_code: Optional, defaults to "". Company defined date code
-                "date_code": "20250514",
-                # interaction_mode: doesn't directly change functionality, but is useful for record keeping, as it can influence output behavior.
-                # Must be either InteractionMode.CHAT or InteractionMode.COMPLETION
-                # InteractionMode.CHAT indicates that the model is responding to the summarization request in a chat-based format
-                # InteractionMode.COMPLETION indicates that the model is completing the summarization request as a single prompt completion
-                "interaction_mode": InteractionMode.CHAT
-                # execution_mode: indicates if this model is expected to run using an API or locally. Can be only ExecutionMode.CLIENT or ExecutionMode.LOCAL
-                # ExecutionMode.CLIENT indicates an API is being used for summary request
-                # ExectionMode.LOCAL indicates the model is being hosted and ran on the same machine as the program
-                "execution_mode": ExecutionMode.CLIENT
-                # temperature: Optional defaults to global config value.
-                "temperature": 0.0,
-                # max_tokens: Optional, defaults to global config value
-                "max_tokens": 1024,
-                # thinking_tokens: Optionals, defaults to 0. Should always be set to 0 but if a model has to have thinking tokens set it to the minimal number required
-                "thinking_tokens": 0,
-                # min_throttle_time: Optional, defaults to 0.0 seconds. This is the minimum amount of time the summary request process must take before it moves on to the next. If it finishes before that time the program will halt until the required time has passed.
-                "min_throttle_time": 0.0
-            }
-        }
-        ,
-        {
-            "company": "openai",
-            "params": {
-                "model_name": "gpt-4.1",
-            }
-        }
-    ]
-}
-```
 
 #### Configuration superseding order
 
 1. LLM-agnostic configuration in `config.py`
 2. LLM-specific configuration in `config.py` under `LLM_Configs`
 3. Default values in individual LLM classes
-
-### Program
-
-Main method of using the program is
-
-```bash
-python3 main.py
-```
-
-This will start the program and run with the settings and models specified by CONFIG within config.py.
-
-Optionally CLI instructions can run the program,  For example below does the same as the sample CONFIG. Runs the protocols in sequence and overwrites previous summary data.
-
-```bash
-python3 main.py get_summ_judge_results --overwrite
-```
-
-Using the CLI will always supercede config pipeline and overwrite settings but still use the same models and defined parameters.
-
-Use the following command for more information on how to use the CLI and general program information
-
-```bash
-python3 main.py --help
-```
-
-#### Valid Pipelines
-Below is all possible pipelines when using the program
-
-Config Approach
-```python
-# Given a dataset, generates summaries and saves to summaries.jsonl
-[GET_SUMM],
-# Given a summary.jsonl generates judgements/metrics and saves to judgements.jsonl
-[GET_JUDGE],
-# Given a judgement.jsonl generates stats for each unique date_code present and saves to stats.jsonl
-[GET_RESULTS],
-# Performs GET_SUMM then GET_JUDGE
-[GET_SUMM, GET_JUDGE],
-# Performs GET_JUDGE then GET_RESULTS 
-[GET_JUDGE, GET_RESULTS],
-# Performs GET_SUMM > GET_JUDGE >  GET_RESULTS
-[GET_SUMM, GET_JUDGE, GET_RESULTS],
-```
-
-CLI Approach
-```bash
-python3 main.py get_summaries
-python3 main.py get_judgements
-python3 main.py get_results
-python3 main.py get_summ_judge
-python3 main.py get_judge_results
-python3 main.py get_summ_judge_results
-```
 
 ### Output File Structure
 

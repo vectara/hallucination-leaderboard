@@ -5,7 +5,7 @@ from google import genai
 from google.genai import types
 
 from . AbstractLLM import AbstractLLM
-from .. data_model import BasicLLMConfig, BasicSummary
+from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "google"
@@ -19,6 +19,9 @@ class GoogleConfig(BasicLLMConfig):
 
 class GoogleSummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
+
+class GoogleJudgment(BasicJudgment):
+    pass # Google does not have fields beyond BasicJudgment.
 
 class GoogleLLM(AbstractLLM):
     """

@@ -53,11 +53,12 @@ def instantiate_llm(llm_config: BasicLLMConfig) -> Tuple[AbstractLLM, type, type
         logger.error(f"Failed to instantiate model {llm_config.company}/{llm_config.model_name}: {e}")
         raise
 
-def run(eval_config: EvalConfig, article_df: pd.DataFrame, summary_file: str):
+def get_summaries(eval_config: EvalConfig, article_df: pd.DataFrame, summary_file: str):
     """
     Generates summaries for a given model and then save to a jsonl file, overwrite flag will overwrite existing jsonl file
     """
-    logger.info(f"Starting to generate {summary_file}")
+    LLMs_to_be_processed = [llm_config.model_name for llm_config in eval_config.LLM_Configs]
+    logger.info(f"Starting to generate {summary_file} for the following LLMs: {LLMs_to_be_processed}")
 
     for llm_config in tqdm(eval_config.LLM_Configs, desc="LLM Loop"):        
 
@@ -87,13 +88,13 @@ def run(eval_config: EvalConfig, article_df: pd.DataFrame, summary_file: str):
         summaries_jsonl_path = os.path.join(llm_out_dir, jsonl_file)
 
         if not os.path.isfile(summaries_jsonl_path):
-            logger.info(f"{summary_file} file does not exist, creating...")
+            logger.info(f"Summary file {summary_file} file does not exist, creating...")
             open(summaries_jsonl_path, 'w').close()
         elif os.path.isfile(summaries_jsonl_path) and eval_config.overwrite_summaries:
-            logger.info(f"Overwriting previous data in {summary_file}")
+            logger.info(f"Overwriting previous summaries in summary file {summary_file}")
             open(summaries_jsonl_path, 'w').close()
         else:
-            logger.info(f"Adding additional data to {summary_file}")
+            logger.info(f"Appending additional summaries to summary file {summary_file}")
 
         generate_and_save_summaries(
             llm, 
@@ -103,11 +104,11 @@ def run(eval_config: EvalConfig, article_df: pd.DataFrame, summary_file: str):
             llm_config, 
             LLM_SUMMARY_CLASS
         )
-        logger.info(f"Finished generating and saving summaries for {llm_name} into {summaries_jsonl_path}.")
+        logger.info(f"Finished generating and saving summaries for LLM {llm_name} into {summaries_jsonl_path}.")
         
         logger.info("Moving on to next LLM")
     
-    logger.info(f"Finished generating and saving summaries for all LLMs")
+    logger.info(f"Finished generating and saving summaries for the following LLMs: {LLMs_to_be_processed}")
 
 def generate_and_save_summaries(
         llm: AbstractLLM,

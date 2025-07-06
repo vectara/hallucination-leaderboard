@@ -2,7 +2,7 @@ import os
 from typing import Literal
 
 from . AbstractLLM import AbstractLLM
-from .. data_model import BasicLLMConfig, BasicSummary
+from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 # Import the Python package for the specific provider.
@@ -13,12 +13,15 @@ COMPANY = "deepseek-ai"
 class DeepSeekAIConfig(BasicLLMConfig):
     """Extended config for DeepSeekAI-specific properties"""
     company: Literal["deepseek-ai"] = "deepseek-ai"
-    model_name: Literal["DeepSeek-R1"] # Only model names manually added to this list are supported.
+    model_name: Literal["deepseek-chat", "deepseek-coder"] # Only model names manually added to this list are supported.
     execution_mode: Literal["api"] = "api" # DeepSeekAI models can only be run via web api.
     date_code: str # You must specify a date code for DeepSeekAI models.
 
 class DeepSeekAISummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
+
+class DeepSeekAIJudgment(BasicJudgment):
+    pass # DeepSeekAI does not have fields beyond BasicJudgment.
 
 class DeepSeekAILLM(AbstractLLM):
     """

@@ -4,7 +4,7 @@ from typing import Literal
 from mistralai import Mistral
 
 from . AbstractLLM import AbstractLLM
-from .. data_model import BasicLLMConfig, BasicSummary
+from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "mistralai"
@@ -18,6 +18,9 @@ class MistralAIConfig(BasicLLMConfig):
 
 class MistralAISummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
+
+class MistralAIJudgment(BasicJudgment):
+    pass # MistralAI does not have fields beyond BasicJudgment.
 
 class MistralAILLM(AbstractLLM):
     """

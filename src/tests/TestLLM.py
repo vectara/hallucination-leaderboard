@@ -1,7 +1,7 @@
 import csv
 
 from . AbstractTest import AbstractTest
-from .. config import CONFIG
+from .. config import eval_configs
 from .. data_model import EvalConfig
 from .. LLMs.AbstractLLM import AbstractLLM, build_models
 from .. Logger import logger
@@ -45,8 +45,9 @@ class TestLLM(AbstractTest):
         Returns:
             None
         """
-        config = EvalConfig(**CONFIG)
-        models = build_models(config.LLMs_to_eval)
+        # Use the first eval_config for testing
+        config = eval_configs[0]
+        models = build_models(config.LLM_Configs)
         logger.info("Testing LLM functionality")
         for model in models:
             logger.info(f"Running tests on {model.get_model_name()}")

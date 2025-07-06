@@ -12,7 +12,7 @@ Main components:
 - LLM integration for various providers (OpenAI, Anthropic, MistralAI, etc.)
 - HHEM evaluation pipeline
 - Analytics and metrics computation
-- Data structures for summaries, judgements, and statistics
+- Data structures for summaries, judgments, and statistics
 """
 
 __version__ = "0.1.0"

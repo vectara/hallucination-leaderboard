@@ -1,0 +1,11 @@
+include README.md
+include LICENSE
+include requirements.txt
+include CITATION.cff
+include GUIDE.md
+include config.json
+include config.py
+recursive-include datasets *
+recursive-include img *
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co] 

@@ -4,12 +4,12 @@ from typing import Literal
 from openai import OpenAI
 
 from . AbstractLLM import AbstractLLM
-from .. data_model import BasicLLMConfig, BasicSummary
+from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "openai"
 
-class OpenAILLMConfig(BasicLLMConfig):
+class OpenAIConfig(BasicLLMConfig):
     """Extended config for OpenAI-specific properties"""
     company: Literal["openai"] = "openai"
     model_name: Literal["gpt-4.1", "o3", "o3-pro"] # Only model names manually added to this list are supported.
@@ -18,6 +18,9 @@ class OpenAILLMConfig(BasicLLMConfig):
 
 class OpenAISummary(BasicSummary):
     endpoint: Literal["chat", "response"] = "chat"
+
+class OpenAIJudgment(BasicJudgment):
+    pass # OpenAI does not have fields beyond BasicJudgment.
 
 class OpenAILLM(AbstractLLM):
     """
@@ -47,8 +50,8 @@ class OpenAILLM(AbstractLLM):
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {} # Empty for OpenAI models because they cannot be run locally.
 
-    def __init__(self, config: OpenAILLMConfig):
-        # Ensure that the parameters passed into the constructor are of the type OpenAILLMConfig.
+    def __init__(self, config: OpenAIConfig):
+        # Ensure that the parameters passed into the constructor are of the type OpenAIConfig.
         
         # Call parent constructor to inherit all parent properties
         super().__init__(config)

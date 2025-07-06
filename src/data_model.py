@@ -20,22 +20,25 @@ class SourceArticle(BaseModel):
         TEXT = "text"
         DATASET = "dataset"
 
-class Judgement(BaseModel):
+class BasicJudgment(BaseModel):
     """
-    Representation of Judgements/Metrics for the Summary of an Article
+    Representation of Judgments/Metrics for the Summary of an Article. An LLM may have its own judgment class that inherits from this class.
 
     Fields:
         eval_name (str): name of the evaluation
         eval_date (str): date of the evaluation
         summary_uid (str): hash for this summary
-        date_code (str): date code of model
         hhem_version (str): version of hhem applied for hhem score
         hhem_score (float): Hughes Hallucination Evaluation Metric (HHEM)
         valid (bool): Validity of the summary, defined in is_valid_summary
         summary_words (int): word count of summary
+
+    Note: 
+        Forrest chose to disable datecode in Judgment class because datacode is a property of the LLM, not the summary.
     """
     eval_name: str
     eval_date: str
+    # date_code: str | None = None # FIXME: No need for date_code in judgment class because aggregate.py loads datecode from summaries.jsonl
     summary_uid: str
     hhem_version: str
     hhem_score: float
@@ -45,44 +48,50 @@ class Judgement(BaseModel):
     class Keys:
         EVAL_NAME = "eval_name"
         EVAL_DATE = "eval_date"
+        # DATE_CODE = "date_code"
         SUMMARY_UID = "summary_uid"
         HHEM_VERSION = "hhem_version"
         HHEM_SCORE = "hhem_score"
-        VALID = "valid"
+        IS_VALID = "is_valid"
         SUMMARY_WORDS = "summary_words"
 
 class Stats(BaseModel):
     """
-    Representation of Stats for the Summaries of the Article Dataset. These are
-    aggregated Judgements/Metrics
+    Per-LLM stats aggregated from Judgments/Metrics for summaries produced by the LLM on a given dataset and under a given evaluation configuration.
 
     Fields:
-        timestamp (str): date the stats were performed
-        llm (str): llm that performed the summarization
-        date_code (str): date code of model
+        eval_name (str): name of the evaluation
+        eval_date (str): date the stats were performed
+        model_name (str): name of the LLM
+        date_code (str): date code of the LLM, if applicable
+        hhem_version (str): version of HHEM used for this evaluation
         hallucination_rate (float): hallucination rate on all summaries
         confidence_interval (float): variation in the hallucination rate
         answer_rate (float): For all summaries what percentage of them were
             valid
-        avg_summary_length (float): Average summary length for all valid
+        avg_summary_words (float): Average number of words in all valid
             summaries
     """
-    timestamp: str
-    llm: str
-    date_code: str
+    eval_name: str
+    eval_date: str
+    model_name: str
+    date_code: str | None = None
+    hhem_version: str
     hallucination_rate: float
     confidence_interval: float
     answer_rate: float
-    avg_summary_length: float
+    avg_summary_words: float
 
     class Keys:
-        TIMESTAMP = "timestamp"
-        LLM = "llm"
+        EVAL_NAME = "eval_name"
+        EVAL_DATE = "eval_date"
+        MODEL_NAME = "model_name"
         DATE_CODE = "date_code"
+        HHEM_VERSION = "hhem_version"
         HALLUCINATION_RATE = "hallucination_rate"
         CONFIDENCE_INTERVAL = "confidence_interval"
         ANSWER_RATE = "answer_rate"
-        AVG_SUMMARY_LENGTH = "avg_summary_length"
+        AVG_SUMMARY_WORDS = "avg_summary_words"
 
 
 default_prompt = """
@@ -151,7 +160,7 @@ class BasicSummary(BaseModel):
         summary_uid (str): hash for this summary
         company (str): company that produced the model
         model_name (str): name of the LLM used as summarizer
-        date_code (str): date code of model
+        date_code (str): date code of model, if applicable
         temperature (float): temperature of model
         max_tokens (int): max tokens allocated for model
         thinking_tokens(int): number of allocated thinking tokens
@@ -177,7 +186,8 @@ class BasicSummary(BaseModel):
     model_config = {"extra": "ignore"}
 
     class Keys:
-        TIMESTAMP = "timestamp"
+        EVAL_NAME = "eval_name"
+        EVAL_DATE = "eval_date"
         SUMMARY_UID = "summary_uid"
         LLM = "llm"
         DATE_CODE = "date_code"
@@ -192,13 +202,13 @@ class EvalConfig(BaseModel):
     the date of the evaluation, the LLMs to evaluate and their hyperparameters.
 
     Fields:
-        eval_name (str): The name used to identify the evaluation (keys in `eval_configs` in `config.py`).
+        eval_name (str): The name used to identify the evaluation
         eval_date (str): The date of the evaluation
         hhem_version: (str): Version of HHEM to use
-        pipeline (List[Literal["summarize", "judge", "reduce"]]): Steps to execute in the evaluation pipeline. Run sequentially. Meanings of the steps are as follows:
+        pipeline (List[Literal["summarize", "judge", "aggregate"]]): Steps to execute in the evaluation pipeline. Run sequentially. Meanings of the steps are as follows:
             - summarize: Generate summaries of the articles
             - judge: Judge the quality of the summaries
-            - reduce: Turn per-summary judgements into the hallucination rate, average summary length in words, and answer rate for each LLM.
+            - aggregate: Turn per-summary judgments into the hallucination rate, average summary length in words, and answer rate for the LLM, and the datecode if applicable, specified in the EvalConfig.
         overwrite_summaries (bool): if true overwrites all previously generated summaries. Only applicable to "summarize" step.
         source_article_path (str): path to file that contains the articles to be summarized by the LLMs
         temperature (float): the default temperature for this evaluation run, superseded by the temperature in the LLMConfig
@@ -212,7 +222,7 @@ class EvalConfig(BaseModel):
     eval_name: str
     eval_date: str
     hhem_version: str
-    pipeline: List[Literal["summarize", "judge", "reduce"]]
+    pipeline: List[Literal["summarize", "judge", "aggregate"]]
     overwrite_summaries: bool # 
     output_dir: str
     source_article_path: str

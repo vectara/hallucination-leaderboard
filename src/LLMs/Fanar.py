@@ -2,7 +2,7 @@ import os
 from typing import Literal
 
 from . AbstractLLM import AbstractLLM
-from .. data_model import BasicLLMConfig, BasicSummary
+from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 # Import the Python package for the specific provider.
@@ -13,12 +13,15 @@ COMPANY = "fanar"
 class FanarConfig(BasicLLMConfig):
     """Extended config for Fanar-specific properties"""
     company: Literal["fanar"] = "fanar"
-    model_name: Literal["Fanar"] # Only model names manually added to this list are supported.
+    model_name: Literal["fanar-model"] # Only model names manually added to this list are supported.
     execution_mode: Literal["api"] = "api" # Fanar models can only be run via web api.
     date_code: str # You must specify a date code for Fanar models.
 
 class FanarSummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
+
+class FanarJudgment(BasicJudgment):
+    pass # Fanar does not have fields beyond BasicJudgment.
 
 class FanarLLM(AbstractLLM):
     """
