@@ -23,7 +23,7 @@ def main(eval_config: EvalConfig):
         validated_articles = [SourceArticle.model_validate(article) for article in articles_data]
         logger.info(f"Successfully validated {len(validated_articles)} SourceArticle objects")
     except Exception as e:
-        raise ValueError(f"Data validation failed: {e}")
+        raise ValueError(f"Source article data validation failed: {e}")
 
     if "summarize" in eval_config.pipeline:
         get_summaries(eval_config, article_df)

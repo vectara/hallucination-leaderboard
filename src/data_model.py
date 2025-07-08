@@ -77,10 +77,14 @@ class Stats(BaseModel):
     model_name: str
     date_code: str | None = None
     hhem_version: str
+    
     hallucination_rate: float
     confidence_interval: float
     answer_rate: float
     avg_word_count: float
+
+    class Config:
+        extra = "allow" # put all settings for LLM generation here, including prompt
 
     class Keys:
         EVAL_NAME = "eval_name"
@@ -91,7 +95,7 @@ class Stats(BaseModel):
         HALLUCINATION_RATE = "hallucination_rate"
         CONFIDENCE_INTERVAL = "confidence_interval"
         ANSWER_RATE = "answer_rate"
-        AVG__WORD_COUNT = "avg_word_count"
+        AVG_WORD_COUNT = "avg_word_count"
 
 default_prompt = """
 You are a chat bot answering questions using data.
@@ -107,7 +111,6 @@ class BasicLLMConfig(BaseModel):
     """
     Configuration of an LLM for summarization.
 
-    Please keep the default values of the optional fields as None. This ensures that when a user does not specify a value for an optional field, the field remains None. The non-none default values are set in the `AbstractLLM` class for all LLMs and the {Provider_name}LLM class under `src/LLMs/{Provider_name}.py` for LLMs from a specific provider. The default values of the provider-specific LLM class supercedes the default values of the provider-agnostic `AbstractLLM` class.
     """
 
     company: str = "ANYCOMPANY"
@@ -126,7 +129,7 @@ class BasicLLMConfig(BaseModel):
     # interaction_mode: Literal["chat", "completion"] | None = None # When making a request, use the chat mode/endpoint or the completion mode/endpoint. Not applicable to all models. Almost all modern models do not distinguish between the two. 
 
     class Config:
-        extra = "allow" # it must be allow because in `config.py`, there are LLM-specific parameters that are not in BasicLLMConfig.
+        extra = "ignore" # TODO: maybe we shall set to forbid to warn users of extra fields. 
         validate_assignment = True # Always validate after updating 
         # valide_assignment == True may be a problem for some cases such as the one here https://stackoverflow.com/questions/62025723/how-to-validate-a-pydantic-object-after-editing-it#comment132889958_62027169 but not a problem for us because all configurable parameters are indenpendent. 
 
@@ -164,7 +167,7 @@ class BasicSummary(BaseModel):
     execution_mode: Literal["cpu", "gpu", "api"] | None = None
 
     class Config:
-        extra = "ignore"
+        extra = "ignore" # TODO: maybe we shall set to forbid to warn users of extra fields. 
     class Keys:
         EVAL_NAME = "eval_name"
         EVAL_DATE = "eval_date"
@@ -203,7 +206,7 @@ class EvalConfig(BaseModel):
     # sample_count: int = 1      # no impact now
 
     class Config:
-        extra = "ignore"
+        extra = "ignore" # TODO: maybe we shall set to forbid to warn users of extra fields. 
 
     # TODO: Can we remove the function below?
     # def model_post_init(self, __context):

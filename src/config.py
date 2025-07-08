@@ -14,7 +14,6 @@ eval_configs = [
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      # "pipeline": ["summarize", "judge", "aggregate"],
       "pipeline": ["summarize", "judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,

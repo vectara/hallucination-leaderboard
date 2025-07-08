@@ -52,7 +52,11 @@ def get_judgments(eval_config: EvalConfig, article_df: pd.DataFrame):
         model_name = llm_config.model_name
         
         # Construct model output directory path
-        model_out_dir = f"{eval_config.output_dir}/{llm_config.company}/{model_name}"
+        model_out_dir = os.path.join(
+            eval_config.output_dir, 
+            llm_config.company, 
+            model_name
+        )
         summaries_jsonl_path = os.path.join(model_out_dir, summary_file)
 
         logger.info(f"Generating judgment file {judgment_file} for LLM {model_name}")
