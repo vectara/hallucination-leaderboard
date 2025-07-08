@@ -8,6 +8,7 @@ TODO:
 3. Do we still need test files?
 4. update the app code to read from new stats files or shall we have a script that pushes to HF datasets repo?
 5. Add a script to generate leaderboard ranking markdown. 
+6. Do we still need `model_fullname` ?
 
 ## Installation
 

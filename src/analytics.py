@@ -120,7 +120,7 @@ def compute_answer_rate(metrics_df: pd.DataFrame) -> float:
     answer_rate = metrics_df[BasicJudgment.Keys.IS_VALID].mean()
     return answer_rate
 
-def compute_avg_summary_words(metrics_df: pd.DataFrame) -> float:
+def compute_avg_word_count(metrics_df: pd.DataFrame) -> float:
     """
     Computes average number of words in a summary for valid summaries only.
     Returns -1.0 if there are no valid summaries.
@@ -135,5 +135,5 @@ def compute_avg_summary_words(metrics_df: pd.DataFrame) -> float:
     valid_summs_df = metrics_df[metrics_df[BasicJudgment.Keys.IS_VALID]]
     if valid_summs_df.empty:
         return -1.0
-    avg_summary_words = valid_summs_df[BasicJudgment.Keys.SUMMARY_WORDS].mean()
-    return avg_summary_words 
+    avg_word_count = valid_summs_df[BasicJudgment.Keys.WORD_COUNT].mean()
+    return avg_word_count

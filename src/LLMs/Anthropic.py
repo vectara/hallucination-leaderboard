@@ -8,15 +8,14 @@ from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "anthropic"
-
 class AnthropicConfig(BasicLLMConfig):
     """Extended config for Anthropic-specific properties"""
-    company: Literal["anthropic"]
+    company: Literal["anthropic"] 
     model_name: Literal["claude-3-5-haiku", "claude-opus-4", "claude-sonnet-4"] # Only model names manually added to this list are supported.
     date_code: str # You must specify a date code for anthropic models.
-    execution_mode: Literal["api"] | None = None # Anthropic models can only be run via web api. Actual default value set below in class `AnthropicLLM`.
+    execution_mode: Literal["api"] = "api" # Anthropic models can only be run via web api. Actual default value set below in class `AnthropicLLM`.
     class Config:
-        extra = "ignore"
+        extra = "forbid"
 
 class AnthropicSummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
@@ -45,7 +44,7 @@ class AnthropicLLM(AbstractLLM):
         super().__init__(config)
 
         # Set default values for optional attributes
-        self.execution_mode = config.execution_mode if config.execution_mode is not None else "api"
+        # self.execution_mode = config.execution_mode if config.execution_mode is not None else "api"
 
     def summarize(self, prepared_text: str) -> str:
         # print("Prompt: ", prepared_text)

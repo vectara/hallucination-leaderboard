@@ -31,7 +31,7 @@ class BasicJudgment(BaseModel):
         hhem_version (str): version of hhem applied for hhem score
         hhem_score (float): Hughes Hallucination Evaluation Metric (HHEM)
         valid (bool): Validity of the summary, defined in is_valid_summary
-        summary_words (int): word count of summary
+        word count (int): word count of summary
 
     Note: 
         Forrest chose to disable datecode in Judgment class because datacode is a property of the LLM, not the summary.
@@ -43,7 +43,7 @@ class BasicJudgment(BaseModel):
     hhem_version: str
     hhem_score: float
     is_valid: bool
-    summary_words: int
+    word_count: int
 
     class Keys:
         EVAL_NAME = "eval_name"
@@ -53,7 +53,7 @@ class BasicJudgment(BaseModel):
         HHEM_VERSION = "hhem_version"
         HHEM_SCORE = "hhem_score"
         IS_VALID = "is_valid"
-        SUMMARY_WORDS = "summary_words"
+        WORD_COUNT = "word_count"
 
 class Stats(BaseModel):
     """
@@ -69,7 +69,7 @@ class Stats(BaseModel):
         confidence_interval (float): variation in the hallucination rate
         answer_rate (float): For all summaries what percentage of them were
             valid
-        avg_summary_words (float): Average number of words in all valid
+        avg_word_count (float): Average number of words in all valid
             summaries
     """
     eval_name: str
@@ -80,7 +80,7 @@ class Stats(BaseModel):
     hallucination_rate: float
     confidence_interval: float
     answer_rate: float
-    avg_summary_words: float
+    avg_word_count: float
 
     class Keys:
         EVAL_NAME = "eval_name"
@@ -91,8 +91,17 @@ class Stats(BaseModel):
         HALLUCINATION_RATE = "hallucination_rate"
         CONFIDENCE_INTERVAL = "confidence_interval"
         ANSWER_RATE = "answer_rate"
-        AVG_SUMMARY_WORDS = "avg_summary_words"
+        AVG__WORD_COUNT = "avg_word_count"
 
+default_prompt = """
+You are a chat bot answering questions using data.
+You must stick to the answers provided solely by the text in the 
+passage provided. You are asked the question 'Provide a concise 
+summary of the following passage, covering the core pieces of 
+information described.'
+    
+{article}
+"""
 
 class BasicLLMConfig(BaseModel):
     """
@@ -101,23 +110,26 @@ class BasicLLMConfig(BaseModel):
     Please keep the default values of the optional fields as None. This ensures that when a user does not specify a value for an optional field, the field remains None. The non-none default values are set in the `AbstractLLM` class for all LLMs and the {Provider_name}LLM class under `src/LLMs/{Provider_name}.py` for LLMs from a specific provider. The default values of the provider-specific LLM class supercedes the default values of the provider-agnostic `AbstractLLM` class.
     """
 
-    company: str
-    model_name: str
+    company: str = "ANYCOMPANY"
+    model_name: str = "ANYMODEL"
     model_fullname: str | None = None # Model name if date_code is None or model name + date code otherwise.
     date_code: str | None = None  # some models have date codes, some don't. 
-    prompt: str | None  = None
+    prompt: str = default_prompt
 
-    temperature: float | None = None
-    max_tokens: int | None = None
-    min_throttle_time: float | None = None  # number of seconds to wait before sending another request. Useful for web API calling that may have rate limits.
+    temperature: float = 0.0
+    max_tokens: int = 4096
+    min_throttle_time: float = 0.1  # number of seconds to wait before sending another request. Useful for web API calling that may have rate limits.
 
     # Below are attributes that are not applicable to all models but are common in many models. We keep them here to establish a naming convention.
-    thinking_tokens: int | None = None  # only applicable to models that support thinking.
+    thinking_tokens: int | None = None  # Number of tokens allocated for thinking. Only applicable to models that support thinking.
     execution_mode: Literal["cpu", "gpu", "api"] | None = None # Call the LLM locally on GPU, on CPU), or through web API. Only applicable for open source models. 
     # interaction_mode: Literal["chat", "completion"] | None = None # When making a request, use the chat mode/endpoint or the completion mode/endpoint. Not applicable to all models. Almost all modern models do not distinguish between the two. 
 
     class Config:
         extra = "allow" # it must be allow because in `config.py`, there are LLM-specific parameters that are not in BasicLLMConfig.
+        validate_assignment = True # Always validate after updating 
+        # valide_assignment == True may be a problem for some cases such as the one here https://stackoverflow.com/questions/62025723/how-to-validate-a-pydantic-object-after-editing-it#comment132889958_62027169 but not a problem for us because all configurable parameters are indenpendent. 
+
 class BasicSummary(BaseModel):
     """
     Representation of a Summary of an Article
@@ -181,7 +193,11 @@ class EvalConfig(BaseModel):
 
     common_LLM_config: BasicLLMConfig
     per_LLM_configs: List[BasicLLMConfig]
-    #TODO: Shall we call it config or params?
+
+    # Default output files for pipeline steps
+    summary_file: str = "summaries.jsonl" 
+    judgment_file: str = "judgments.jsonl"
+    stats_file: str = "stats.jsonl"
 
     # simulation_count: int = 1  # no impact now 
     # sample_count: int = 1      # no impact now
@@ -189,7 +205,7 @@ class EvalConfig(BaseModel):
     class Config:
         extra = "ignore"
 
-    # TODO: Why is this function in the config? 
+    # TODO: Can we remove the function below?
     # def model_post_init(self, __context):
         # for model_config in self.LLM_Configs:
         #     if model_config.temperature is None:

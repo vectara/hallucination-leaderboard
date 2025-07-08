@@ -13,8 +13,8 @@ class OpenAIConfig(BasicLLMConfig):
     """Extended config for OpenAI-specific properties"""
     company: Literal["openai"]
     model_name: Literal["gpt-4.1", "gpt-4.1-nano", "o3", "o3-pro"] # Only model names manually added to this list are supported.
-    execution_mode: Literal["api"] | None = None # OpenAI models can only be run via web api.
-    endpoint: Literal["chat", "response"] | None = None # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    execution_mode: Literal["api"] = "api" # OpenAI models can only be run via web api.
+    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
 
 class OpenAISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
@@ -65,9 +65,12 @@ class OpenAILLM(AbstractLLM):
         # Call parent constructor to inherit all parent properties
         super().__init__(config)
 
+        self.endpoint = config.endpoint
+        self.execution_mode = config.execution_mode
+
         # Set default values for optional attributes
-        self.endpoint = config.endpoint if config.endpoint is not None else "chat" 
-        self.execution_mode = config.execution_mode if config.execution_mode is not None else "api"
+        # self.endpoint = config.endpoint if config.endpoint is not None else "chat" 
+        # self.execution_mode = config.execution_mode if config.execution_mode is not None else "api"
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
@@ -97,7 +100,7 @@ class OpenAILLM(AbstractLLM):
                     )
                     summary = chat_package.output_text
                 case None:
-                    raise Exception(f"Model {self.model_name} does not support {self.endpoint} endpoint")
+                    raise Exception(f"Model `{self.model_name}` cannot be run from `{self.endpoint}` endpoint")
         elif self.local_model:
             pass # OpenAI models cannot be run locally.
         else:

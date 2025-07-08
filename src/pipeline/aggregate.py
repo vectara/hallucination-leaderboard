@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 from .. analytics import (
     compute_hallucination_rate, compute_answer_rate,
-    compute_avg_summary_words, compute_confidence_interval
+    compute_avg_word_count, compute_confidence_interval
 )
 from .. LLMs import MODEL_REGISTRY
 from .. data_model import Stats, EvalConfig
@@ -17,7 +17,7 @@ from .. Logger import logger
 Aggregate the judgments on summaries to get per-LLM stats
 """
 
-def aggregate_judgments(eval_config: EvalConfig, judgment_file: str, stats_file: str):
+def aggregate_judgments(eval_config: EvalConfig):
     """
     Aggregate the judgments on summaries to get per-LLM stats
 
@@ -29,6 +29,10 @@ def aggregate_judgments(eval_config: EvalConfig, judgment_file: str, stats_file:
     Returns:
         None
     """
+
+    judgment_file = eval_config.judgment_file
+    stats_file = eval_config.stats_file
+
     LLMs_to_be_processed = [llm_config.model_name for llm_config in eval_config.per_LLM_configs]
     logger.info(f"Starting aggregation of summary-level judgments to per-LLM stats for the following LLMs: {LLMs_to_be_processed}")
 
@@ -123,16 +127,16 @@ def generate_and_save_results(
         else:
             logger.warning(f"Summary file {summary_file} not found, cannot filter by date_code")
 
-    hr = round(compute_hallucination_rate(judgments_df)*100.0, 1)
-    ar = round(compute_answer_rate(judgments_df)*100.0, 1)
-    asw = round(compute_avg_summary_words(judgments_df), 1)
-    ci = round(compute_confidence_interval(judgments_df)*100.0, 1)
-
     # Add checking that the hhem_version passed in is the same as the hhem_version in the judgments_df
     if len(judgments_df) > 0 and hhem_version != judgments_df[JUDGMENT_CLASS.Keys.HHEM_VERSION].iloc[0]:
         logger.warning(f"HHEM version mismatch between passed-in hhem_version and hhem_version in judgments_df loaded from {judge_jsonl_path}")
     elif len(judgments_df) == 0:
         logger.warning(f"No judgments found after filtering by date_code {date_code} in {judge_jsonl_path}")
+
+    hr = round(compute_hallucination_rate(judgments_df)*100.0, 1)
+    ar = round(compute_answer_rate(judgments_df)*100.0, 1)
+    awc = round(compute_avg_word_count(judgments_df), 1)
+    ci = round(compute_confidence_interval(judgments_df)*100.0, 1)
 
     result_record = Stats(
         eval_name=eval_name,
@@ -143,12 +147,12 @@ def generate_and_save_results(
         hallucination_rate=hr,
         confidence_interval=ci,
         answer_rate=ar,
-        avg_summary_words=asw
+        avg_word_count=awc
     )
 
     append_record_to_jsonl(results_jsonl_path, result_record)
 
-    # Block below commented out because now date_code is part of the LLMConfig. -- Forrest, 2025-07-06
+    # Block below commented out because now date_code is part of the LLMConfig. But please keep the code below for future reference. -- Forrest, 2025-07-06
 
     # grouped_metric_df = metrics_df.groupby(Stats.Keys.DATE_CODE)
 
@@ -171,6 +175,5 @@ def generate_and_save_results(
     #         answer_rate=ar,
     #         avg_summary_words=asw
     #     )
-
 
     #     append_record_to_jsonl(results_jsonl_path, result_record)

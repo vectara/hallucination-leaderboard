@@ -27,7 +27,7 @@ def get_hhem_model(hhem_version: Literal["2.1-open", "2.3"]):
     else:
         raise ValueError(f"Unsupported HHEM version: {hhem_version}. Supported versions: 2.1-open, 2.3")
 
-def get_judgments(eval_config: EvalConfig, article_df: pd.DataFrame, summary_file: str, judgment_file: str):
+def get_judgments(eval_config: EvalConfig, article_df: pd.DataFrame):
     """
     Generate judgment scores for summaries produced by LLMs.
 
@@ -40,6 +40,11 @@ def get_judgments(eval_config: EvalConfig, article_df: pd.DataFrame, summary_fil
     Returns:
         None
     """
+
+    summary_file = eval_config.summary_file
+    judgment_file = eval_config.judgment_file
+
+
     LLMs_to_be_processed = [llm_config.model_name for llm_config in eval_config.per_LLM_configs]
     logger.info(f"Starting to generate {judgment_file} scores for the following LLMs: {LLMs_to_be_processed}")
 
@@ -48,21 +53,15 @@ def get_judgments(eval_config: EvalConfig, article_df: pd.DataFrame, summary_fil
         
         # Construct model output directory path
         model_out_dir = f"{eval_config.output_dir}/{llm_config.company}/{model_name}"
+        summaries_jsonl_path = os.path.join(model_out_dir, summary_file)
 
         logger.info(f"Generating judgment file {judgment_file} for LLM {model_name}")
-
-        # Load summaries for this LLM
-        summaries_jsonl_file = f"{summary_file}"
-        summaries_jsonl_path = os.path.join(model_out_dir, summaries_jsonl_file)
 
         if os.path.isfile(summaries_jsonl_path):
             summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
             
             # Create judgment file
-            judgments_jsonl_file = f"{judgment_file}"
-            judgments_jsonl_path = os.path.join(
-                model_out_dir, judgments_jsonl_file
-            )
+            judgments_jsonl_path = os.path.join(model_out_dir, judgment_file)
             open(judgments_jsonl_path, 'w').close()
             
             # Generate judgments
@@ -77,7 +76,7 @@ def get_judgments(eval_config: EvalConfig, article_df: pd.DataFrame, summary_fil
             logger.info(f"Finished judging summaries produced by LLM {model_name} and saved to {judgment_file}")
         else:
             logger.warning(
-                f"Summary file {summary_file} not found for LLM {model_name}, skipping LLM"
+                f"Summary file {summaries_jsonl_path} not found for LLM {model_name}, skipping LLM"
             )
     logger.info(f"Finished generating {judgment_file} scores for the following LLMs: {LLMs_to_be_processed}")
 
@@ -104,7 +103,7 @@ def generate_judgments(
     for _, row in tqdm(article_summary_df.iterrows(), total=len(article_summary_df), 
                        desc="HHEM/Judgment Loop"):
         hypothesis = row[BasicSummary.Keys.SUMMARY]
-        summary_length = len(hypothesis.split())
+        word_count = len(hypothesis.split())
         valid_summary = is_valid_summary(hypothesis)
         metric_record = BasicJudgment(
             eval_name=eval_name,
@@ -113,7 +112,7 @@ def generate_judgments(
             hhem_version=hhem_model.__str__(),
             hhem_score=hhem_model.predict(row[SourceArticle.Keys.TEXT], hypothesis).score,
             is_valid=valid_summary,
-            summary_words=summary_length
+            word_count = word_count
         )
         append_record_to_jsonl(judgments_jsonl_path, metric_record)
 

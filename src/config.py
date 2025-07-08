@@ -22,8 +22,6 @@ eval_configs = [
       "common_LLM_config": 
         BasicLLMConfig(**
           {
-            "company": "ANYCOMPANY",
-            "model_name": "ANYMODEL",
             "temperature": 1.0, 
             "max_tokens": 1024
           }

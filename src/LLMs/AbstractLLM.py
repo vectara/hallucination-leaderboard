@@ -30,16 +30,6 @@ from .. Logger import logger
 #     INCOMPLETE_THINK_TAG
 # ]
 
-default_prompt = """
-You are a chat bot answering questions using data.
-You must stick to the answers provided solely by the text in the 
-passage provided. You are asked the question 'Provide a concise 
-summary of the following passage, covering the core pieces of 
-information described.'
-    
-{article}
-"""
-
 class AbstractLLM(ABC):
     """
     Abstract Class for an LLM.
@@ -54,10 +44,15 @@ class AbstractLLM(ABC):
         self.model_name = config.model_name
 
         # Set defaults for optional attributes
-        self.prompt = config.prompt if config.prompt is not None else default_prompt
-        self.temperature = config.temperature if config.temperature is not None else 0.0
-        self.max_tokens = config.max_tokens if config.max_tokens is not None else 1024
-        self.min_throttle_time = config.min_throttle_time if config.min_throttle_time is not None else 0.1
+        # self.prompt = config.prompt if config.prompt is not None else default_prompt
+        # self.temperature = config.temperature if config.temperature is not None else 0.0
+        # self.max_tokens = config.max_tokens if config.max_tokens is not None else 1024
+        # self.min_throttle_time = config.min_throttle_time if config.min_throttle_time is not None else 0.1
+
+        self.prompt = config.prompt
+        self.temperature = config.temperature
+        self.max_tokens = config.max_tokens
+        self.min_throttle_time = config.min_throttle_time
 
         # The following attributes are not required by all models.
         self.date_code = config.date_code       
@@ -72,7 +67,7 @@ class AbstractLLM(ABC):
         self.client: Any | None = None # in case the model can be called via web api
         self.local_model: Any | None = None # in case the model can be run locally
 
-        self.summary_file: str | None = None # won't be set until after instantiation in summarize.py
+        # self.summary_file: str | None = None # won't be set until after instantiation in summarize.py
 
     def __enter__(self):
         self.setup() # TODO: Try to skip the setup() and teardown() 

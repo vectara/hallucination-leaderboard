@@ -14,10 +14,6 @@ from . pipeline import (
 # TODO: Move the main function to pipeline/__init__.py
 def main(eval_config: EvalConfig):
 
-    SUMMARY_FILE = "summaries.jsonl"
-    JUDGMENT_FILE = "judgments.jsonl"
-    RESULTS_FILE = "results.jsonl"
-
     article_df = pd.read_csv(eval_config.source_article_path)
     
     # Type check: ensure every row is a valid SourceArticle
@@ -30,13 +26,13 @@ def main(eval_config: EvalConfig):
         raise ValueError(f"Data validation failed: {e}")
 
     if "summarize" in eval_config.pipeline:
-        get_summaries(eval_config, article_df, SUMMARY_FILE)
+        get_summaries(eval_config, article_df)
 
     if "judge" in eval_config.pipeline:
-        get_judgments(eval_config, article_df, SUMMARY_FILE, JUDGMENT_FILE)
+        get_judgments(eval_config, article_df)
     
     if "aggregate" in eval_config.pipeline:
-        aggregate_judgments(eval_config, JUDGMENT_FILE, RESULTS_FILE)
+        aggregate_judgments(eval_config)
 
 
 # Disabled as now we solely use configuration file to sepecify the pipeline. -- Forrest, 2025-07-03
