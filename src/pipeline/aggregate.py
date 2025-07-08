@@ -29,10 +29,10 @@ def aggregate_judgments(eval_config: EvalConfig, judgment_file: str, stats_file:
     Returns:
         None
     """
-    LLMs_to_be_processed = [llm_config.model_name for llm_config in eval_config.LLM_Configs]
+    LLMs_to_be_processed = [llm_config.model_name for llm_config in eval_config.per_LLM_configs]
     logger.info(f"Starting aggregation of summary-level judgments to per-LLM stats for the following LLMs: {LLMs_to_be_processed}")
 
-    for llm_config in tqdm(eval_config.LLM_Configs, desc="LLM Loop"):
+    for llm_config in tqdm(eval_config.per_LLM_configs, desc="LLM Loop"):
         model_name = llm_config.model_name
         date_code = llm_config.date_code
         

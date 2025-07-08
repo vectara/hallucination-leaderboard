@@ -11,13 +11,16 @@ COMPANY = "openai"
 
 class OpenAIConfig(BasicLLMConfig):
     """Extended config for OpenAI-specific properties"""
-    company: Literal["openai"] = "openai"
-    model_name: Literal["gpt-4.1", "o3", "o3-pro"] # Only model names manually added to this list are supported.
-    execution_mode: Literal["api"] = "api" # OpenAI models can only be run via web api.
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    company: Literal["openai"]
+    model_name: Literal["gpt-4.1", "gpt-4.1-nano", "o3", "o3-pro"] # Only model names manually added to this list are supported.
+    execution_mode: Literal["api"] | None = None # OpenAI models can only be run via web api.
+    endpoint: Literal["chat", "response"] | None = None # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
 
 class OpenAISummary(BasicSummary):
-    endpoint: Literal["chat", "response"] = "chat"
+    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+
+    class Config:
+        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
 
 class OpenAIJudgment(BasicJudgment):
     pass # OpenAI does not have fields beyond BasicJudgment.
@@ -32,17 +35,24 @@ class OpenAILLM(AbstractLLM):
     """
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution.
+    # Mode 1: Chat with temperature (default)
+    # Mode 2: Chat without temperature
+    # Mode 3: Use OpenAI's Response API
     client_mode_group = {
         "gpt-4.1": {
-            "chat": 1, # chat with temperature
+            "chat": 1,
             "response": 3
         },
-        "o3": {
-            "chat": 2, # chat without temperature
+        "gpt-4.1-nano": {
+            "chat": 1,
             "response": 3
         },
-        "o3-pro": {
-            "chat": None, # o3-pro doesn't support chatting protocol
+        "o3": {  # o3 does not support temperature
+            "chat": 2,
+            "response": 3
+        },
+        "o3-pro": { # o3-pro doesn't support chatting protocol
+            "chat": None, 
             "response": 3
         }
     }
@@ -51,13 +61,13 @@ class OpenAILLM(AbstractLLM):
     local_mode_group = {} # Empty for OpenAI models because they cannot be run locally.
 
     def __init__(self, config: OpenAIConfig):
-        # Ensure that the parameters passed into the constructor are of the type OpenAIConfig.
-        
+
         # Call parent constructor to inherit all parent properties
         super().__init__(config)
-        self.endpoint = config.endpoint
 
-        print (self.__dict__)
+        # Set default values for optional attributes
+        self.endpoint = config.endpoint if config.endpoint is not None else "chat" 
+        self.execution_mode = config.execution_mode if config.execution_mode is not None else "api"
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY

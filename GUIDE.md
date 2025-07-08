@@ -7,6 +7,7 @@ TODO:
 2. Supporting selecting to run HHEM on CPU. 
 3. Do we still need test files?
 4. update the app code to read from new stats files or shall we have a script that pushes to HF datasets repo?
+5. Add a script to generate leaderboard ranking markdown. 
 
 ## Installation
 
@@ -60,6 +61,15 @@ All setting of evaluations are stored in `src/config.py` which contains one vari
 - `temperature`: The temperature to use for the evaluation.
 - `max_tokens`: The maximum number of tokens to use for the evaluation.
 - `LLM_Configs`: LLMs covered in this evaluation, each of which is an `{Provider_name}Config` object of the corresponding `{Provider_name}Config` class.
+
+### Order of supersedes in LLM configs
+
+There are many places that a user can specify the parameters of an LLM when it summarizes an article. The order of supersedes is determined by the following order (top to bottom): 
+
+1. Those in `LLM_Configs` in an `EvalConfig` object in `src/config.py` -- specific for an LLM in an evaluation run. 
+2. Those not in `LLM_Configs` in an `EvalConfig` object in `src/config.py` -- default for all LLMs in all evaluation runs.
+3. The default values in `{Provider_name}Config` class.
+4. The default values in `BasicLLMConfig` class.
 
 ## The pipeline
 

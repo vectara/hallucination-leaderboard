@@ -11,10 +11,10 @@ COMPANY = "anthropic"
 
 class AnthropicConfig(BasicLLMConfig):
     """Extended config for Anthropic-specific properties"""
-    company: Literal["anthropic"] = "anthropic"
-    model_name: Literal["claude-opus-4", "claude-sonnet-4"] # Only model names manually added to this list are supported.
-    execution_mode: Literal["api"] = "api" # Anthropic models can only be run via web api.
+    company: Literal["anthropic"]
+    model_name: Literal["claude-3-5-haiku", "claude-opus-4", "claude-sonnet-4"] # Only model names manually added to this list are supported.
     date_code: str # You must specify a date code for anthropic models.
+    execution_mode: Literal["api"] | None = None # Anthropic models can only be run via web api. Actual default value set below in class `AnthropicLLM`.
     class Config:
         extra = "ignore"
 
@@ -31,18 +31,21 @@ class AnthropicLLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
+        "claude-3-5-haiku": 1,
         "claude-opus-4": 1,
-        "claude-sonnet-4": 1
+        "claude-sonnet-4": 1, 
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {} # Empty for Anthropic models because they cannot be run locally.
 
     def __init__(self, config: AnthropicConfig):
-        # Ensure that the parameters passed into the constructor are of the type AnthropicConfig.
         
         # Call parent constructor to inherit all parent properties
         super().__init__(config)
+
+        # Set default values for optional attributes
+        self.execution_mode = config.execution_mode if config.execution_mode is not None else "api"
 
     def summarize(self, prepared_text: str) -> str:
         # print("Prompt: ", prepared_text)

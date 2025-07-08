@@ -26,7 +26,12 @@ Functions:
     generate_summary_uid(model_name, date_code, summary_text, date)
 """
 
-def instantiate_llm(llm_config: BasicLLMConfig) -> Tuple[AbstractLLM, type, type]: # TODO: how to type the classes? 
+def prepare_llm(
+    eval_config: EvalConfig, # The config for this evaluation run
+    llm_config: BasicLLMConfig,  # the particular LLM config in the eval_config
+    summary_file: str
+) -> Tuple[AbstractLLM, type]: 
+
     try:
         llm_registry = MODEL_REGISTRY.get(llm_config.company)
         LLM_CLASS = llm_registry["LLM_class"]
@@ -38,55 +43,44 @@ def instantiate_llm(llm_config: BasicLLMConfig) -> Tuple[AbstractLLM, type, type
                 model_name=llm_config.model_name,
                 company=llm_config.company,
             ))
+
+        # print ("LLM config passed to instantiate_llm: ", json.dumps(llm_config.model_dump(), indent=2))
         
+        # update_data = {}
+        # for key, value in llm_config.model_dump().items():
+        #     if value == None and key in LLM_CONFIG_CLASS.model_fields:
+        #         update_data[key] = LLM_CONFIG_CLASS.model_fields[key].default
+        #     else: 
+        #         update_data[key] = value
+        # specific_config = LLM_CONFIG_CLASS(**update_data)
+        
+        # print ("LLM config after instantiation: ", json.dumps(specific_config.model_dump(), indent=2))
+        
+        # llm = LLM_CLASS(specific_config) # instantiate the LLM
+
+        # For parameters that are not in per_LLM_configs or are None, use the Non-None values in common_LLM_config
         update_data = {}
-        for key, value in llm_config.model_dump().items():
-            if value == None and key in LLM_CONFIG_CLASS.model_fields:
-                update_data[key] = LLM_CONFIG_CLASS.model_fields[key].default
-            else: 
-                update_data[key] = value
-        specific_config = LLM_CONFIG_CLASS(**update_data)
-        
-        llm = LLM_CLASS(specific_config) # instantiate the LLM
-        return llm, LLM_CONFIG_CLASS, LLM_SUMMARY_CLASS
-    except Exception as e:
-        logger.error(f"Failed to instantiate model {llm_config.company}/{llm_config.model_name}: {e}")
-        raise
-
-def get_summaries(eval_config: EvalConfig, article_df: pd.DataFrame, summary_file: str):
-    """
-    Generates summaries for a given model and then save to a jsonl file, overwrite flag will overwrite existing jsonl file
-    """
-    LLMs_to_be_processed = [llm_config.model_name for llm_config in eval_config.LLM_Configs]
-    logger.info(f"Starting to generate {summary_file} for the following LLMs: {LLMs_to_be_processed}")
-
-    for llm_config in tqdm(eval_config.LLM_Configs, desc="LLM Loop"):        
-
-        # For parameters that are not in llm_config or are None, use the Non-None values in eval_config
-        update_data = {}        
-        for key, value in eval_config.model_dump().items():
+        for key, value in eval_config.common_LLM_config.model_dump().items():
             if key not in llm_config.model_dump():
                 update_data[key] = value
             elif key in llm_config.model_dump():
                 if value is not None and llm_config.model_dump()[key] is None:
                     update_data[key] = value
+
+        # print ("Update data: ", json.dumps(update_data, indent=2))
         if update_data:
             llm_config = llm_config.model_copy(update=update_data)
 
-        # Instantiate the LLM
-        llm, LLM_CONFIG_CLASS, LLM_SUMMARY_CLASS = instantiate_llm(llm_config)
+        llm = LLM_CLASS(llm_config) # instantiate the LLM
 
-        # print all attributes of llm
-        # logger.info(f"LLM attributes: {json.dumps(llm.__dict__, indent=2)}")
+        # Create output directory 
+        full_output_dir = f"{eval_config.output_dir}/{llm_config.company}/{llm_config.model_name}"
+        os.makedirs(full_output_dir, exist_ok=True)
 
-        llm_name = llm_config.model_name
-        llm_out_dir = llm.model_output_dir
+        summaries_jsonl_path = os.path.join(full_output_dir, summary_file)
+        llm.summary_file = summaries_jsonl_path
 
-        logger.info(f"Generating {summary_file} for {llm_name}")
-
-        jsonl_file = f"{summary_file}"
-        summaries_jsonl_path = os.path.join(llm_out_dir, jsonl_file)
-
+        # Create summary file if it doesn't exist
         if not os.path.isfile(summaries_jsonl_path):
             logger.info(f"Summary file {summary_file} file does not exist, creating...")
             open(summaries_jsonl_path, 'w').close()
@@ -95,16 +89,38 @@ def get_summaries(eval_config: EvalConfig, article_df: pd.DataFrame, summary_fil
             open(summaries_jsonl_path, 'w').close()
         else:
             logger.info(f"Appending additional summaries to summary file {summary_file}")
+        
+        return llm, LLM_SUMMARY_CLASS
+    
+    except Exception as e:
+        logger.error(f"Failed to prepare LLM {llm_config.company}/{llm_config.model_name}: {e}")
+        raise
+
+def get_summaries(eval_config: EvalConfig, article_df: pd.DataFrame, summary_file: str):
+    """
+    Generates summaries for a given model and then save to a jsonl file, overwrite flag will overwrite existing jsonl file
+    """
+    LLMs_to_be_processed = [llm_config.model_name for llm_config in eval_config.per_LLM_configs]
+    logger.info(f"Starting to generate {summary_file} for the following LLMs: {LLMs_to_be_processed}")
+
+    common_LLM_config = eval_config.common_LLM_config
+
+    for llm_config in tqdm(eval_config.per_LLM_configs, desc="LLM Loop"):
+
+        # Instantiate the LLM
+        llm, LLM_SUMMARY_CLASS = prepare_llm(eval_config, llm_config, summary_file)
+
+        # print all attributes of llm
+        # logger.info(f"LLM attributes: {json.dumps(llm.__dict__, indent=2)}")
 
         generate_and_save_summaries(
             llm, 
             article_df, 
-            summaries_jsonl_path, 
             eval_config,
             llm_config, 
             LLM_SUMMARY_CLASS
         )
-        logger.info(f"Finished generating and saving summaries for LLM {llm_name} into {summaries_jsonl_path}.")
+        logger.info(f"Finished generating and saving summaries for LLM {llm_config.model_name} into {llm.summary_file}.")
         
         logger.info("Moving on to next LLM")
     
@@ -113,7 +129,6 @@ def get_summaries(eval_config: EvalConfig, article_df: pd.DataFrame, summary_fil
 def generate_and_save_summaries(
         llm: AbstractLLM,
         article_df: pd.DataFrame,
-        jsonl_path: str,
         eval_config: EvalConfig,
         llm_config: BasicLLMConfig,  # TODO: How can I declear the type as of BasicLLMConfig or any child of BasicLLMConfig?
         LLM_SUMMARY_CLASS: type
@@ -125,7 +140,6 @@ def generate_and_save_summaries(
     Args:
         llm (AbstractLLM): An instance of an LLM following the AbstractLLM interface
         article_df (pd.DataFrame): Article data where each row is an instance of SourceArticle
-        jsonl_path (str): path for the new jsonl file
         eval_config (EvalConfig): The evaluation configuration
         llm_config (BasicLLMConfig): The LLM configuration
         LLM_SUMMARY_CLASS (type): The class of the summary to be saved. For Pydantic validation.
@@ -137,38 +151,7 @@ def generate_and_save_summaries(
     article_texts = article_df[SourceArticle.Keys.TEXT].tolist()
     article_ids = article_df[SourceArticle.Keys.ARTICLE_ID].tolist()
 
-    # # Get the base fields that are common to all configs
-    # common_config_fields = {
-    #     'timestamp': current_date,
-    #     'llm': llm.model_name,
-    #     'temperature': llm.temperature,
-    #     'max_tokens': llm.max_tokens,
-    # }
-
-    # # Extract additional fields from the specific config class that are not in BasicLLMConfig
-    # Get all fields from the config
-    # config_dict = llm_config.model_dump()
-    
-    # # Get fields from BasicLLMConfig to exclude them
-    # basic_config_fields = set(BasicLLMConfig.model_fields.keys())
-
-    # # remove prompt, output_dir, and min_throttle_time from basic_config_fields
-    # basic_config_fields.discard('prompt')
-    # basic_config_fields.discard('output_dir')
-    # basic_config_fields.discard('min_throttle_time')
-
-    # # Remove any basic_config_fields that are None 
-    # basic_config_fields = {
-    #     key: value for key, value in basic_config_fields.items()
-    #     if value is not None
-    # }
-    
-    # Extract additional fields that are specific to this config class
-    # llm_specific_config_fields = {
-    #     key: value for key, value in config_dict.items() 
-    #     if key not in basic_config_fields
-    # }
-    logger.info("Appending to jsonl file")
+    logger.info(f"Generating summaries for LLM {llm_config.model_name} and appending to jsonl file {llm.summary_file}")
     with llm as m: 
         for article_text, article_id in tqdm(
             zip(article_texts, article_ids),
@@ -181,15 +164,6 @@ def generate_and_save_summaries(
                 summary,
                 current_date
             )
-            
-            # Combine base fields with article-specific data and additional config fields
-            # record_data = {
-            #     **common_config_fields,
-            #     'summary_uid': summary_uid,
-            #     'summary': summary,
-            #     'article_id': article_id,
-            #     **llm_specific_config_fields  # Add any additional fields from the specific llm
-            # }
 
             record_data = {
                 'article_id': article_id,
@@ -197,11 +171,15 @@ def generate_and_save_summaries(
                 'summary': summary,
                 'eval_name': eval_config.eval_name,
                 'eval_date': eval_config.eval_date,
-                **llm_config.model_dump()
+                # **llm_config.model_dump()
+                **llm.__dict__
             }
+
+            # do no include prompt in the record
+            record_data.pop('prompt', None)
             
             record = LLM_SUMMARY_CLASS(**record_data)
-            append_record_to_jsonl(jsonl_path, record)
+            append_record_to_jsonl(llm.summary_file, record)
 
 
 def generate_summary_uid(
