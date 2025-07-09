@@ -1,7 +1,9 @@
-from pydantic import BaseModel, Field
 from typing import List, Literal, Dict, Any
-from enum import Enum
 from datetime import datetime
+
+from enum import Enum
+from pydantic import BaseModel, model_serializer
+
 class SourceArticle(BaseModel):
     """
     Representation of an Article record from LB dataset
@@ -132,6 +134,11 @@ class BasicLLMConfig(BaseModel):
         extra = "ignore" # TODO: maybe we shall set to forbid to warn users of extra fields. 
         validate_assignment = True # Always validate after updating 
         # valide_assignment == True may be a problem for some cases such as the one here https://stackoverflow.com/questions/62025723/how-to-validate-a-pydantic-object-after-editing-it#comment132889958_62027169 but not a problem for us because all configurable parameters are indenpendent. 
+
+    @model_serializer
+    def ser_model(self): 
+        fields_to_exclude = ['min_throttle_time', 'model_fullname']
+        return {k: v for k,v in self.__dict__.items() if k not in fields_to_exclude}
 
 class BasicSummary(BaseModel):
     """
