@@ -19,9 +19,6 @@ class MistralAIConfig(BasicLLMConfig):
 class MistralAISummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
 
-class MistralAIJudgment(BasicJudgment):
-    pass # MistralAI does not have fields beyond BasicJudgment.
-
 class MistralAILLM(AbstractLLM):
     """
     Class for models from MistralAI

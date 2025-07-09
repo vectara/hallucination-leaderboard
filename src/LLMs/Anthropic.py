@@ -20,9 +20,6 @@ class AnthropicConfig(BasicLLMConfig):
 class AnthropicSummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
 
-class AnthropicJudgment(BasicJudgment):
-    pass # Anthropic does not have fields beyond BasicJudgment.
-
 class AnthropicLLM(AbstractLLM):
     """
     Class for models from Anthropic

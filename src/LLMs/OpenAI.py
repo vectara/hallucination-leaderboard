@@ -22,9 +22,6 @@ class OpenAISummary(BasicSummary):
     class Config:
         extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
 
-class OpenAIJudgment(BasicJudgment):
-    pass # OpenAI does not have fields beyond BasicJudgment.
-
 class OpenAILLM(AbstractLLM):
     """
     Class for models from OpenAI

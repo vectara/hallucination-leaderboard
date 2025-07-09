@@ -20,9 +20,6 @@ class DeepSeekAIConfig(BasicLLMConfig):
 class DeepSeekAISummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
 
-class DeepSeekAIJudgment(BasicJudgment):
-    pass # DeepSeekAI does not have fields beyond BasicJudgment.
-
 class DeepSeekAILLM(AbstractLLM):
     """
     Class for models from DeepSeekAI

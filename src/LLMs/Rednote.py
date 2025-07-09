@@ -21,9 +21,6 @@ class RednoteConfig(BasicLLMConfig):
 class RednoteSummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
 
-class RednoteJudgment(BasicJudgment):
-    pass # Rednote does not have fields beyond BasicJudgment.
-
 class RednoteLLM(AbstractLLM):
     """
     Class for models from Rednote

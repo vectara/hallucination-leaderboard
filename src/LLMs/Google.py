@@ -20,9 +20,6 @@ class GoogleConfig(BasicLLMConfig):
 class GoogleSummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
 
-class GoogleJudgment(BasicJudgment):
-    pass # Google does not have fields beyond BasicJudgment.
-
 class GoogleLLM(AbstractLLM):
     """
     Class for models from Google

@@ -20,9 +20,6 @@ class FanarConfig(BasicLLMConfig):
 class FanarSummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
 
-class FanarJudgment(BasicJudgment):
-    pass # Fanar does not have fields beyond BasicJudgment.
-
 class FanarLLM(AbstractLLM):
     """
     Class for models from Fanar
