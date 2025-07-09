@@ -117,7 +117,7 @@ class BasicLLMConfig(BaseModel):
 
     company: str = "ANYCOMPANY"
     model_name: str = "ANYMODEL"
-    model_fullname: str | None = None # Model name if date_code is None or model name + date code otherwise.
+    # model_fullname: str | None = None # Model name if date_code is None or model name + date code otherwise.
     date_code: str | None = None  # some models have date codes, some don't. 
     prompt: str = default_prompt
 
@@ -130,15 +130,26 @@ class BasicLLMConfig(BaseModel):
     execution_mode: Literal["cpu", "gpu", "api"] | None = None # Call the LLM locally on GPU, on CPU), or through web API. Only applicable for open source models. 
     # interaction_mode: Literal["chat", "completion"] | None = None # When making a request, use the chat mode/endpoint or the completion mode/endpoint. Not applicable to all models. Almost all modern models do not distinguish between the two. 
 
+    @property
+    def model_fullname(self) -> str:
+        """
+        Dynamically build the model_fullname: model_name if date_code is None, else model_name_date_code. 
+
+        An individual LLM can have it's own fullname builder. 
+        """
+        if self.date_code is None:
+            return self.model_name
+        return f"{self.model_name}-{self.date_code}"
+
+    @model_serializer
+    def clean_model_dump(self): 
+        fields_to_exclude = ['min_throttle_time', 'model_fullname']
+        return {k: v for k,v in self.__dict__.items() if k not in fields_to_exclude}
+
     class Config:
         extra = "ignore" # TODO: maybe we shall set to forbid to warn users of extra fields. 
         validate_assignment = True # Always validate after updating 
         # valide_assignment == True may be a problem for some cases such as the one here https://stackoverflow.com/questions/62025723/how-to-validate-a-pydantic-object-after-editing-it#comment132889958_62027169 but not a problem for us because all configurable parameters are indenpendent. 
-
-    @model_serializer
-    def ser_model(self): 
-        fields_to_exclude = ['min_throttle_time', 'model_fullname']
-        return {k: v for k,v in self.__dict__.items() if k not in fields_to_exclude}
 
 class BasicSummary(BaseModel):
     """

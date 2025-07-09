@@ -9,7 +9,7 @@ from .. analytics import (
     compute_avg_word_count, compute_confidence_interval
 )
 from .. LLMs import MODEL_REGISTRY
-from .. data_model import Stats, EvalConfig, BasicLLMConfig
+from .. data_model import Stats, EvalConfig, BasicLLMConfig, BasicJudgment
 from .. json_utils import append_record_to_jsonl
 from .. Logger import logger
 
@@ -44,8 +44,6 @@ def aggregate_judgments(eval_config: EvalConfig):
 
         logger.info(f"Aggregating judgements to stats for {model_name}")
 
-        JUDGMENT_CLASS = MODEL_REGISTRY[llm_config.company]["judgment_class"]
-
         judgments_jsonl_path = os.path.join(model_out_dir, judgment_file)
 
         if os.path.isfile(judgments_jsonl_path):
@@ -54,7 +52,7 @@ def aggregate_judgments(eval_config: EvalConfig):
             results_jsonl_path = os.path.join(model_out_dir, stats_file)
             open(results_jsonl_path, 'w').close()
 
-            generate_and_save_results(eval_config, llm_config, JUDGMENT_CLASS)
+            generate_and_save_results(eval_config, llm_config)
         else:
             logger.warning(
                 f"Judgment file {judgment_file} not found for LLM {model_name}, skipping LLM"
@@ -65,7 +63,6 @@ def aggregate_judgments(eval_config: EvalConfig):
 def generate_and_save_results(
         eval_config: EvalConfig, 
         llm_config: BasicLLMConfig, # THis llmconfig is from the class of the specific LLM 
-        JUDGMENT_CLASS: type
         # model_name: str, 
         # judgments_jsonl_path: str, 
         # results_jsonl_path: str, 
@@ -124,7 +121,7 @@ def generate_and_save_results(
             logger.warning(f"Summary file {summaries_jsonl_path} not found, cannot filter by date_code")
 
     # Add checking that the hhem_version passed in is the same as the hhem_version in the judgments_df
-    if len(judgments_df) > 0 and hhem_version != judgments_df[JUDGMENT_CLASS.Keys.HHEM_VERSION].iloc[0]:
+    if len(judgments_df) > 0 and hhem_version != judgments_df[BasicJudgment.Keys.HHEM_VERSION].iloc[0]:
         logger.warning(f"HHEM version mismatch between passed-in hhem_version and hhem_version in judgments_df loaded from {judgments_jsonl_path}")
     elif len(judgments_df) == 0:
         logger.warning(f"No judgments found after filtering by date_code {date_code} in {judgments_jsonl_path}")
