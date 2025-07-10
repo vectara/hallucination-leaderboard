@@ -23,6 +23,7 @@ from . AbstractLLM import AbstractLLM
 # All vendor classes are called _{Vendor}_Class below to avoid name conflicts. -- Forrest, 2025-07-03
 from . OpenAI import OpenAILLM, OpenAIConfig, OpenAISummary
 from . Anthropic import AnthropicLLM, AnthropicConfig, AnthropicSummary
+from . Alibaba import AlibabaLLM, AlibabaConfig, AlibabaSummary
 from . Google import GoogleLLM, GoogleConfig, GoogleSummary
 from . DeepSeekAI import DeepSeekAILLM, DeepSeekAIConfig, DeepSeekAISummary
 from . Fanar import FanarLLM, FanarConfig, FanarSummary
@@ -64,6 +65,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": RednoteLLM,
         "config_class": RednoteConfig,
         "summary_class": RednoteSummary
+    },
+    "alibaba": {
+        "LLM_class": AlibabaLLM,
+        "config_class": AlibabaConfig,
+        "summary_class": AlibabaSummary
     }
 }
 

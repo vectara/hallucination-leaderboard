@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List, Dict
 
 from . data_model import EvalConfig, BasicLLMConfig
-from . LLMs import AnthropicConfig, OpenAIConfig
+from . LLMs import AnthropicConfig, OpenAIConfig, AlibabaConfig
 
 # Please only append so we can always know how previous evaluations were done.
 # To select between configs, use the --eval_name flag in `main.py`
@@ -42,21 +42,63 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        AnthropicConfig(**
+        AlibabaConfig(**
           {
-            "company": "anthropic",
-            "model_name": "claude-3-5-haiku",
-            "max_tokens": 2345,
-            "date_code": "20241022",
+            "company": "alibaba",
+            "model_name": "qwen3-32b",
+            "thinking_tokens": 0
           }
         ),
-        OpenAIConfig(**
+        AlibabaConfig(**
           {
-            "company": "openai",
-            "model_name": "gpt-4.1-nano",
-            # "max_tokens": 2345,
+            "company": "alibaba",
+            "model_name": "qwen3-14b",
+            "thinking_tokens": 0
           }
         ),
+        AlibabaConfig(**
+          {
+            "company": "alibaba",
+            "model_name": "qwen3-8b",
+            "thinking_tokens": 0
+          }
+        ),
+        AlibabaConfig(**
+          {
+            "company": "alibaba",
+            "model_name": "qwen3-4b",
+            "thinking_tokens": 0
+          }
+        ),
+        AlibabaConfig(**
+          {
+            "company": "alibaba",
+            "model_name": "qwen3-1.7b",
+            "thinking_tokens": 0
+          }
+        ),
+        AlibabaConfig(**
+          {
+            "company": "alibaba",
+            "model_name": "qwen3-0.6b",
+            "thinking_tokens": 0
+          }
+        ),
+        # AnthropicConfig(**
+        #   {
+        #     "company": "anthropic",
+        #     "model_name": "claude-3-5-haiku",
+        #     "max_tokens": 2345,
+        #     "date_code": "20241022",
+        #   }
+        # ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "gpt-4.1-nano",
+        #     # "max_tokens": 2345,
+        #   }
+        # ),
       ]
     }
   )
