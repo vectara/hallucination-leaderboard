@@ -1,12 +1,17 @@
 import os
 from typing import Literal
-from pydantic import field_validator
 
 from openai import OpenAI
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+
+"""
+Unique Notes:
+
+qwen-max
+"""
 
 COMPANY = "alibaba"
 class AlibabaConfig(BasicLLMConfig):
@@ -18,14 +23,20 @@ class AlibabaConfig(BasicLLMConfig):
         "qwen3-8b",
         "qwen3-4b",
         "qwen3-1.7b",
-        "qwen3-0.6b"
+        "qwen3-0.6b",
+        "qwen-max" 
     ] # Only model names manually added to this list are supported.
     date_code: str = "" # do we need date code for ali baba?
     execution_mode: Literal["api"] = "api" # Is Alibaba only API based?
-    thinking_tokens: bool
+    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    thinking_tokens: bool = None
+    bad_param: str = "testing"
 
 class AlibabaSummary(BasicSummary):
-    pass # Nothing additional to the BasicSummary class.
+    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+
+    class Config:
+        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
 
 class AlibabaLLM(AbstractLLM):
     """
@@ -33,12 +44,30 @@ class AlibabaLLM(AbstractLLM):
     """
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
-        "qwen3-32b": 1,
-        "qwen3-14b": 1,
-        "qwen3-8b": 1,
-        "qwen3-4b": 1,
-        "qwen3-1.7b": 1,
-        "qwen3-0.6b": 1
+        "qwen3-32b": {
+            "chat": 1
+        },
+        "qwen3-14b": {
+            "chat": 1
+        },
+        "qwen3-8b": {
+            "chat": 1
+        },
+        "qwen3-4b": {
+            "chat": 1
+        },
+        "qwen3-1.7b": {
+            "chat": 1
+        },
+        "qwen3-0.6b": {
+            "chat": 1
+        },
+        "Qwen2.5-Max": {
+            "chat": 1
+        },
+        "qwen-max": {
+            "chat": 1
+        }
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
@@ -46,11 +75,13 @@ class AlibabaLLM(AbstractLLM):
 
     def __init__(self, config: AlibabaConfig):
         super().__init__(config)
+        self.endpoint = config.endpoint
+        self.execution_mode = config.execution_mode
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name]:
+            match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Reasoning model with disabled thinking
                     completion = self.client.chat.completions.create(
                         model=self.model_name,

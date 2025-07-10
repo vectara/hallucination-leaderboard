@@ -45,45 +45,53 @@ Here is the passage:
         AlibabaConfig(**
           {
             "company": "alibaba",
-            "model_name": "qwen3-32b",
-            "thinking_tokens": 0
+            "model_name": "qwen-max",
+            "date_code": "2025-01-25", # AKA Qwen2.5-Max
+            "endpoint": "chat"
           }
         ),
-        AlibabaConfig(**
-          {
-            "company": "alibaba",
-            "model_name": "qwen3-14b",
-            "thinking_tokens": 0
-          }
-        ),
-        AlibabaConfig(**
-          {
-            "company": "alibaba",
-            "model_name": "qwen3-8b",
-            "thinking_tokens": 0
-          }
-        ),
-        AlibabaConfig(**
-          {
-            "company": "alibaba",
-            "model_name": "qwen3-4b",
-            "thinking_tokens": 0
-          }
-        ),
-        AlibabaConfig(**
-          {
-            "company": "alibaba",
-            "model_name": "qwen3-1.7b",
-            "thinking_tokens": 0
-          }
-        ),
-        AlibabaConfig(**
-          {
-            "company": "alibaba",
-            "model_name": "qwen3-0.6b",
-            "thinking_tokens": 0
-          }
-        ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen3-32b",
+        #     "thinking_tokens": 0
+        #   }
+        # ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen3-14b",
+        #     "thinking_tokens": 0
+        #   }
+        # ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen3-8b",
+        #     "thinking_tokens": 0
+        #   }
+        # ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen3-4b",
+        #     "thinking_tokens": 0
+        #   }
+        # ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen3-1.7b",
+        #     "thinking_tokens": 0
+        #   }
+        # ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen3-0.6b",
+        #     "thinking_tokens": 0
+        #   }
+        # ),
         # AnthropicConfig(**
         #   {
         #     "company": "anthropic",
@@ -92,13 +100,13 @@ Here is the passage:
         #     "date_code": "20241022",
         #   }
         # ),
-        # OpenAIConfig(**
-        #   {
-        #     "company": "openai",
-        #     "model_name": "gpt-4.1-nano",
-        #     # "max_tokens": 2345,
-        #   }
-        # ),
+        OpenAIConfig(**
+          {
+            "company": "openai",
+            "model_name": "gpt-4.1-nano",
+            # "max_tokens": 2345,
+          }
+        ),
       ]
     }
   )
