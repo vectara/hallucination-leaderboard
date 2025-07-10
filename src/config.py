@@ -100,13 +100,13 @@ Here is the passage:
         #     "date_code": "20241022",
         #   }
         # ),
-        OpenAIConfig(**
-          {
-            "company": "openai",
-            "model_name": "gpt-4.1-nano",
-            # "max_tokens": 2345,
-          }
-        ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "gpt-4.1-nano",
+        #     # "max_tokens": 2345,
+        #   }
+        # ),
       ]
     }
   )
