@@ -142,7 +142,7 @@ class BasicLLMConfig(BaseModel):
         return f"{self.model_name}-{self.date_code}"
 
     @model_serializer
-    def clean_model_dump(self): 
+    def clean_model_dump(self):
         fields_to_exclude = ['min_throttle_time', 'model_fullname']
         return {k: v for k,v in self.__dict__.items() if k not in fields_to_exclude}
 
