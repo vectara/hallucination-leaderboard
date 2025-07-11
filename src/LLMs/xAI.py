@@ -15,10 +15,13 @@ class XAIConfig(BasicLLMConfig):
     date_code: str # do we need date code?
     execution_mode: Literal["api"] = "api" # only API based?
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
-    reasoning_effort: Literal["low", "high"] = "low"
+    reasoning_effort: Literal["NA", "low", "high"] = "NA"
 
 class XAISummary(BasicSummary):
-    pass # Nothing additional to the BasicSummary class.
+    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+
+    class Config:
+        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
 
 class XAILLM(AbstractLLM):
     """
