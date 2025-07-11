@@ -15,7 +15,7 @@ eval_configs = [
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["summarize"],
+      "pipeline": ["aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
@@ -160,20 +160,20 @@ Here is the passage:
         #     "thinking_tokens": 0
         #   }
         # ),
-        # AnthropicConfig(**
-        #   {
-        #     "company": "anthropic",
-        #     "model_name": "claude-3-5-haiku",
-        #     "max_tokens": 2345,
-        #     "date_code": "20241022",
-        #   }
-        # ),
-        # OpenAIConfig(**
-        #   {
-        #     "company": "openai",
-        #     "model_name": "gpt-4.1-nano",
-        #   }
-        # ),
+        AnthropicConfig(**
+          {
+            "company": "anthropic",
+            "model_name": "claude-3-5-haiku",
+            "max_tokens": 2345,
+            "date_code": "20241022",
+          }
+        ),
+        OpenAIConfig(**
+          {
+            "company": "openai",
+            "model_name": "gpt-4.1-nano",
+          }
+        ),
       ]
     }
   ),

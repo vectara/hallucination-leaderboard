@@ -87,9 +87,13 @@ def generate_and_save_results(
     date_code = llm_config.date_code
     hhem_version = eval_config.hhem_version
 
+    # get the summary class of the LLM from model registry
+    LLM_SUMMARY_CLASS = MODEL_REGISTRY[llm_config.company]["summary_class"]
+    SUMMAYR_MODEL_AS_DICT: Dict[str, type] = {field_name: field_type.annotation for field_name, field_type in LLM_SUMMARY_CLASS.model_fields.items()}
+
     model_out_dir = os.path.join(
-            eval_config.output_dir, 
-            llm_config.company, 
+            eval_config.output_dir,
+            llm_config.company,
             llm_config.model_name
         )
     summaries_jsonl_path = os.path.join(
@@ -108,9 +112,8 @@ def generate_and_save_results(
             summaries_df = pd.read_json(
                 summaries_jsonl_path,
                 lines=True,
-                dtype={"date_code": str}
+                dtype=SUMMAYR_MODEL_AS_DICT
             )
-            summaries_df['date_code'] = summaries_df['date_code'].astype('string') # TODO: use a schema-based approach to ensure pandas casts columns to the right types
 
             # Join judgments with summaries on summary_uid to get date_code
             judgments_df = pd.merge(
