@@ -24,7 +24,11 @@ class AlibabaConfig(BasicLLMConfig):
         "qwen3-4b",
         "qwen3-1.7b",
         "qwen3-0.6b",
-        "qwen-max" 
+        "qwen-max",
+        "qwen2.5-72b-instruct", 
+        "qwen2.5-32b-instruct", 
+        "qwen2.5-14b-instruct", 
+        "qwen2.5-7b-instruct", 
     ] # Only model names manually added to this list are supported.
     date_code: str = "" # do we need date code for ali baba?
     execution_mode: Literal["api"] = "api" # Is Alibaba only API based?
@@ -66,6 +70,18 @@ class AlibabaLLM(AbstractLLM):
             "chat": 1
         },
         "qwen-max": {
+            "chat": 1
+        },
+        "qwen2.5-72b-instruct": {
+            "chat": 1
+        },
+        "qwen2.5-32b-instruct": {
+            "chat": 1
+        },
+        "qwen2.5-14b-instruct": {
+            "chat": 1
+        },
+        "qwen2.5-7b-instruct": {
             "chat": 1
         }
     }

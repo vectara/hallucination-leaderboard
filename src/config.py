@@ -45,11 +45,34 @@ Here is the passage:
         AlibabaConfig(**
           {
             "company": "alibaba",
-            "model_name": "qwen-max",
-            "date_code": "2025-01-25", # AKA Qwen2.5-Max
-            "endpoint": "chat"
+            "model_name": "qwen2.5-72b-instruct",
           }
         ),
+        AlibabaConfig(**
+          {
+            "company": "alibaba",
+            "model_name": "qwen2.5-32b-instruct",
+          }
+        ),
+        AlibabaConfig(**
+          {
+            "company": "alibaba",
+            "model_name": "qwen2.5-14b-instruct",
+          }
+        ),
+        AlibabaConfig(**
+          {
+            "company": "alibaba",
+            "model_name": "qwen2.5-7b-instruct",
+          }
+        ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen-max",
+        #     "date_code": "2025-01-25", # AKA Qwen2.5-Max
+        #   }
+        # ),
         # AlibabaConfig(**
         #   {
         #     "company": "alibaba",
