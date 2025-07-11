@@ -104,6 +104,7 @@ Last updated on April 29th, 2025
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Microsoft Phi-4|4.7 %|95.3 %|100.0 %|100.3|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
+|XAI Grok-4-0709|4.8 %|95.2 %|99.8 %|100.6|
 |Anthropic Claude-3-5-haiku|4.9 %|95.1 %|100.0 %|92.9|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
 |Cohere Command-R|4.9 %|95.1 %|100.0 %|68.7|
