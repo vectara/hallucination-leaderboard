@@ -34,7 +34,6 @@ class AlibabaConfig(BasicLLMConfig):
     execution_mode: Literal["api"] = "api" # Is Alibaba only API based?
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
     thinking_tokens: bool = None
-    bad_param: str = "testing"
 
 class AlibabaSummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.

@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List, Dict
 
 from . data_model import EvalConfig, BasicLLMConfig
-from . LLMs import AnthropicConfig, OpenAIConfig, AlibabaConfig
+from . LLMs import AnthropicConfig, OpenAIConfig, AlibabaConfig, XAIConfig
 
 # Please only append so we can always know how previous evaluations were done.
 # To select between configs, use the --eval_name flag in `main.py`
@@ -42,30 +42,38 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        AlibabaConfig(**
+        XAIConfig(**
           {
-            "company": "alibaba",
-            "model_name": "qwen2.5-72b-instruct",
+            "company": "xai",
+            "model_name": "grok-4",
+            "temperature": 0.0,
+            "date_code": "0709"
           }
         ),
-        AlibabaConfig(**
-          {
-            "company": "alibaba",
-            "model_name": "qwen2.5-32b-instruct",
-          }
-        ),
-        AlibabaConfig(**
-          {
-            "company": "alibaba",
-            "model_name": "qwen2.5-14b-instruct",
-          }
-        ),
-        AlibabaConfig(**
-          {
-            "company": "alibaba",
-            "model_name": "qwen2.5-7b-instruct",
-          }
-        ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen2.5-72b-instruct",
+        #   }
+        # ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen2.5-32b-instruct",
+        #   }
+        # ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen2.5-14b-instruct",
+        #   }
+        # ),
+        # AlibabaConfig(**
+        #   {
+        #     "company": "alibaba",
+        #     "model_name": "qwen2.5-7b-instruct",
+        #   }
+        # ),
         # AlibabaConfig(**
         #   {
         #     "company": "alibaba",

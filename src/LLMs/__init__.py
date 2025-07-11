@@ -29,6 +29,7 @@ from . DeepSeekAI import DeepSeekAILLM, DeepSeekAIConfig, DeepSeekAISummary
 from . Fanar import FanarLLM, FanarConfig, FanarSummary
 from . MistralAI import MistralAILLM, MistralAIConfig, MistralAISummary
 from . Rednote import RednoteLLM, RednoteConfig, RednoteSummary
+from . xAI import XAILLM, XAIConfig, XAISummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -70,6 +71,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": AlibabaLLM,
         "config_class": AlibabaConfig,
         "summary_class": AlibabaSummary
+    },
+    "xai": {
+        "LLM_class": XAILLM,
+        "config_class": XAIConfig,
+        "summary_class": XAISummary
     }
 }
 
