@@ -11,8 +11,15 @@ COMPANY = "xai"
 class XAIConfig(BasicLLMConfig):
     """Extended config for xai-specific properties"""
     company: Literal["xai"] 
-    model_name: Literal["grok-4"] # Only model names manually added to this list are supported.
-    date_code: str # do we need date code?
+    model_name: Literal[
+        "grok-4",
+        "grok-3",
+        "grok-3-mini",
+        "grok-3-fast",
+        "grok-3-mini-fast",
+        "grok-2-vision"
+    ] # Only model names manually added to this list are supported.
+    date_code: str = "" # do we need date code?
     execution_mode: Literal["api"] = "api" # only API based?
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
     reasoning_effort: Literal["NA", "low", "high"] = "NA"
@@ -32,7 +39,22 @@ class XAILLM(AbstractLLM):
     client_mode_group = {
         "grok-4":{
             "chat": 1
-        }
+        },
+        "grok-3":{
+            "chat": 2
+        },
+        "grok-3-mini":{
+            "chat": 2
+        },
+        "grok-3-fast":{
+            "chat": 2
+        },
+        "grok-3-mini-fast":{
+            "chat": 2
+        },
+        "grok-2-vision":{
+            "chat": 2
+        },
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
@@ -49,7 +71,7 @@ class XAILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
-                case 1:
+                case 1: # Reasoning Model
                     chat = self.client.chat.create(
                         model=self.model_name,
                         temperature=self.temperature,
@@ -60,6 +82,16 @@ class XAILLM(AbstractLLM):
                     response = chat.sample()
                     summary = response.content
                     self.thinking_tokens = response.usage.reasoning_tokens
+                case 2: # Non reasoning models
+                    chat = self.client.chat.create(
+                        model=self.model_name,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens
+                    )
+                    chat.append(user(prepared_text))
+
+                    response = chat.sample()
+                    summary = response.content
         elif self.local_model: 
             pass
         else:

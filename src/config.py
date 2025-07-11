@@ -14,8 +14,8 @@ eval_configs = [
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      "pipeline": ["summarize", "judge", "aggregate"],
-      # "pipeline": ["aggregate"],
+      # "pipeline": ["summarize", "judge", "aggregate"],
+      "pipeline": ["summarize"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
@@ -42,6 +42,42 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        XAIConfig(**
+          {
+            "company": "xai",
+            "model_name": "grok-3",
+            "temperature": 0.0,
+          }
+        ),
+        XAIConfig(**
+          {
+            "company": "xai",
+            "model_name": "grok-3-mini",
+            "temperature": 0.0,
+          }
+        ),
+        XAIConfig(**
+          {
+            "company": "xai",
+            "model_name": "grok-3-fast",
+            "temperature": 0.0,
+          }
+        ),
+        XAIConfig(**
+          {
+            "company": "xai",
+            "model_name": "grok-3-mini-fast",
+            "temperature": 0.0,
+          }
+        ),
+        XAIConfig(**
+          {
+            "company": "xai",
+            "model_name": "grok-2-vision",
+            "temperature": 0.0,
+            "date_code": "1212",
+          }
+        ),
         # XAIConfig(**
         #   {
         #     "company": "xai",
@@ -132,12 +168,12 @@ Here is the passage:
         #     "date_code": "20241022",
         #   }
         # ),
-        OpenAIConfig(**
-          {
-            "company": "openai",
-            "model_name": "gpt-4.1-nano",
-          }
-        ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "gpt-4.1-nano",
+        #   }
+        # ),
       ]
     }
   ),
