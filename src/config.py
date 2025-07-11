@@ -14,8 +14,8 @@ eval_configs = [
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["summarize"],
+      "pipeline": ["summarize", "judge", "aggregate"],
+      # "pipeline": ["aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
@@ -42,15 +42,15 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        XAIConfig(**
-          {
-            "company": "xai",
-            "model_name": "grok-4",
-            "temperature": 0.0,
-            "date_code": "0709",
-            "min_throttle_time": 4.0
-          }
-        ),
+        # XAIConfig(**
+        #   {
+        #     "company": "xai",
+        #     "model_name": "grok-4",
+        #     "temperature": 0.0,
+        #     "date_code": "0709",
+        #     "min_throttle_time": 4.0
+        #   }
+        # ),
         # AlibabaConfig(**
         #   {
         #     "company": "alibaba",
@@ -132,13 +132,12 @@ Here is the passage:
         #     "date_code": "20241022",
         #   }
         # ),
-        # OpenAIConfig(**
-        #   {
-        #     "company": "openai",
-        #     "model_name": "gpt-4.1-nano",
-        #     # "max_tokens": 2345,
-        #   }
-        # ),
+        OpenAIConfig(**
+          {
+            "company": "openai",
+            "model_name": "gpt-4.1-nano",
+          }
+        ),
       ]
     }
   ),

@@ -37,6 +37,11 @@ def aggregate_judgments(eval_config: EvalConfig):
     logger.info(f"Starting aggregation of summary-level judgments to per-LLM stats for the following LLMs: {LLMs_to_be_processed}")
 
     for llm_config in tqdm(eval_config.per_LLM_configs, desc="LLM Loop"):
+        # Replace fields that are not set in per-llm config with those set (not default) in common-llm config
+        # Need to have this here or stats stores the wrong values
+        for common_key in eval_config.common_LLM_config.model_fields_set:
+            if common_key not in llm_config.model_fields_set:
+                llm_config = llm_config.model_copy(update={common_key: getattr(eval_config.common_LLM_config, common_key)})
         model_name = llm_config.model_name
         
         # Construct model output directory path
