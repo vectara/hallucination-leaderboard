@@ -100,7 +100,11 @@ def generate_and_save_results(
     # If data_code is not none, filter on datecode. 
     if date_code is not None:
         if os.path.isfile(summaries_jsonl_path):
-            summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
+            summaries_df = pd.read_json(
+                summaries_jsonl_path,
+                lines=True,
+                dtype={"date_code": str}
+            )
             summaries_df['date_code'] = summaries_df['date_code'].astype('string') # TODO: use a schema-based approach to ensure pandas casts columns to the right types
 
             # Join judgments with summaries on summary_uid to get date_code
