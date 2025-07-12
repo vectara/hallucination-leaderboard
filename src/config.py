@@ -2,7 +2,13 @@ from datetime import datetime
 from typing import List, Dict
 
 from . data_model import EvalConfig, BasicLLMConfig
-from . LLMs import AnthropicConfig, OpenAIConfig, AlibabaConfig, XAIConfig
+from . LLMs import (
+  AnthropicConfig,
+  OpenAIConfig,
+  AlibabaConfig,
+  XAIConfig,
+  CohereConfig
+)
 
 # Please only append so we can always know how previous evaluations were done.
 # To select between configs, use the --eval_name flag in `main.py`
@@ -15,7 +21,7 @@ eval_configs = [
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["aggregate"],
+      "pipeline": ["summarize"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
@@ -42,42 +48,88 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        XAIConfig(**
+        CohereConfig(**
           {
-            "company": "xai",
-            "model_name": "grok-3",
+            "company": "cohere",
+            "model_name": "command-a",
+            "date_code": "03-2025",
             "temperature": 0.0,
           }
         ),
-        XAIConfig(**
+        CohereConfig(**
           {
-            "company": "xai",
-            "model_name": "grok-3-mini",
+            "company": "cohere",
+            "model_name": "c4ai-aya-expanse-32b",
             "temperature": 0.0,
           }
         ),
-        XAIConfig(**
+        CohereConfig(**
           {
-            "company": "xai",
-            "model_name": "grok-3-fast",
+            "company": "cohere",
+            "model_name": "c4ai-aya-expanse-8b",
             "temperature": 0.0,
           }
         ),
-        XAIConfig(**
+        CohereConfig(**
           {
-            "company": "xai",
-            "model_name": "grok-3-mini-fast",
+            "company": "cohere",
+            "model_name": "command-r-plus",
+            "date_code": "04-2024",
             "temperature": 0.0,
           }
         ),
-        XAIConfig(**
+        CohereConfig(**
           {
-            "company": "xai",
-            "model_name": "grok-2-vision",
-            "temperature": 0.0,
-            "date_code": "1212",
+            "company": "cohere",
+            "model_name": "command-r",
+            "date_code": "08-2024",
+            "temperature": 0.0
           }
         ),
+        CohereConfig(**
+          {
+            "company": "cohere",
+            "model_name": "command-r7b",
+            "date_code": "12-2024",
+            "temperature": 0.0
+          }
+        ),
+        # XAIConfig(**
+        #   {
+        #     "company": "xai",
+        #     "model_name": "grok-3",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # XAIConfig(**
+        #   {
+        #     "company": "xai",
+        #     "model_name": "grok-3-mini",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # XAIConfig(**
+        #   {
+        #     "company": "xai",
+        #     "model_name": "grok-3-fast",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # XAIConfig(**
+        #   {
+        #     "company": "xai",
+        #     "model_name": "grok-3-mini-fast",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # XAIConfig(**
+        #   {
+        #     "company": "xai",
+        #     "model_name": "grok-2-vision",
+        #     "temperature": 0.0,
+        #     "date_code": "1212",
+        #   }
+        # ),
         # XAIConfig(**
         #   {
         #     "company": "xai",
@@ -160,20 +212,20 @@ Here is the passage:
         #     "thinking_tokens": 0
         #   }
         # ),
-        AnthropicConfig(**
-          {
-            "company": "anthropic",
-            "model_name": "claude-3-5-haiku",
-            "max_tokens": 2345,
-            "date_code": "20241022",
-          }
-        ),
-        OpenAIConfig(**
-          {
-            "company": "openai",
-            "model_name": "gpt-4.1-nano",
-          }
-        ),
+        # AnthropicConfig(**
+        #   {
+        #     "company": "anthropic",
+        #     "model_name": "claude-3-5-haiku",
+        #     "max_tokens": 2345,
+        #     "date_code": "20241022",
+        #   }
+        # ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "gpt-4.1-nano",
+        #   }
+        # ),
       ]
     }
   ),

@@ -73,7 +73,7 @@ class XAILLM(AbstractLLM):
             match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Reasoning Model
                     chat = self.client.chat.create(
-                        model=self.model_name,
+                        model=self.model_fullname,
                         temperature=self.temperature,
                         max_tokens=self.max_tokens
                     )
