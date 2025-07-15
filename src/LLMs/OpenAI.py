@@ -12,12 +12,29 @@ COMPANY = "openai"
 class OpenAIConfig(BasicLLMConfig):
     """Extended config for OpenAI-specific properties"""
     company: Literal["openai"]
-    model_name: Literal["gpt-4.1", "gpt-4.1-nano", "o3", "o3-pro"] # Only model names manually added to this list are supported.
+    model_name: Literal[
+        "gpt-4.1",
+        "gpt-4.1-nano",
+        "o3",
+        "o3-pro",
+        "o4-mini",
+        "o1-pro",
+        "gpt-4.1-mini",
+        "o1",
+        "o1-mini",
+        "gpt-4o-mini",
+        "gpt-4o",
+        "gpt-4-turbo",
+        "gpt-3.5-turbo",
+        "gpt-4"
+    ] # Only model names manually added to this list are supported.
     execution_mode: Literal["api"] = "api" # OpenAI models can only be run via web api.
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    reasoning_effort: Literal["low", "medium", "high"] = None
 
 class OpenAISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    reasoning_effort: Literal["low", "medium", "high"] | None = None
 
     class Config:
         extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
@@ -48,9 +65,40 @@ class OpenAILLM(AbstractLLM):
             "chat": 2,
             "response": 3
         },
-        "o3-pro": { # o3-pro doesn't support chatting protocol
+        "o3-pro": { # o3-pro doesn't support chatting protocol or temperature
             "chat": None, 
-            "response": 3
+            "response": 4
+        },
+        "o4-mini": {
+            "chat": 2
+        },
+        "o1-pro": { # doesn't support chatting or temperature
+            "chat": None,
+            "response": 4
+        },
+        "gpt-4.1-mini": {
+            "chat": 1
+        },
+        "o1": {
+            "chat": 2
+        },
+        "o1-mini": { # Doesn't support reasoning effort or temperature
+            "chat": 5
+        },
+        "gpt-4o-mini": {
+            "chat": 1
+        },
+        "gpt-4o": {
+            "chat": 1
+        },
+        "gpt-4-turbo": {
+            "chat": 1
+        },
+        "gpt-3.5-turbo": {
+            "chat": 1
+        },
+        "gpt-4": {
+            "chat": 1
         }
     }
 
@@ -64,6 +112,7 @@ class OpenAILLM(AbstractLLM):
 
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.reasoning_effort = config.reasoning_effort
 
         # Set default values for optional attributes
         # self.endpoint = config.endpoint if config.endpoint is not None else "chat" 
@@ -73,9 +122,9 @@ class OpenAILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Chat with temperature
+                case 1: # Chat with temperature and max_tokens
                     chat_package = self.client.chat.completions.create(
-                        model=self.model_name,
+                        model=self.model_fullname,
                         temperature=self.temperature,
                         max_tokens=self.max_tokens,
                         messages=[{"role": "user", "content":prepared_text}]
@@ -83,19 +132,36 @@ class OpenAILLM(AbstractLLM):
                     summary = chat_package.choices[0].message.content
                 case 2: # Chat without temperature
                     chat_package = self.client.chat.completions.create(
-                        model=self.model_name,
+                        model=self.model_fullname,
                         messages=[{"role": "user", "content":prepared_text}],
-                        max_completion_tokens=self.max_tokens
+                        max_completion_tokens=self.max_tokens,
+                        reasoning_effort = self.reasoning_effort
                     )
                     summary = chat_package.choices[0].message.content
                 case 3: # Use OpenAI's Response API
                     chat_package = self.client.responses.create(
-                        model=self.model_name,
+                        model=self.model_fullname,
                         temperature=self.temperature,
                         max_output_tokens=self.max_tokens,
-                        input=prepared_text
+                        input=prepared_text,
+                        reasoning = {"effort": self.reasoning_effort}
                     )
                     summary = chat_package.output_text
+                case 4: # Use OpenAI's Response API no temp
+                    chat_package = self.client.responses.create(
+                        model=self.model_fullname,
+                        max_output_tokens=self.max_tokens,
+                        input=prepared_text,
+                        reasoning = {"effort": self.reasoning_effort}
+                    )
+                    summary = chat_package.output_text
+                case 5: # Chat without temperature and reasoning effort
+                    chat_package = self.client.chat.completions.create(
+                        model=self.model_fullname,
+                        messages=[{"role": "user", "content":prepared_text}],
+                        max_completion_tokens=self.max_tokens,
+                    )
+                    summary = chat_package.choices[0].message.content
                 case None:
                     raise Exception(f"Model `{self.model_name}` cannot be run from `{self.endpoint}` endpoint")
         elif self.local_model:

@@ -48,52 +48,147 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        CohereConfig(**
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "o4-mini",
+        #     "date_code": "2025-04-16",
+        #     "temperature": 1.0, # ONLY DEFAULT VALUE IS SUPPORTED (1)
+        #     "reasoning_effort": "low"
+        #   }
+        # ),
+        OpenAIConfig(**
           {
-            "company": "cohere",
-            "model_name": "command-a",
-            "date_code": "03-2025",
+            "company": "openai",
+            "model_name": "o1-pro",
+            "date_code": "2025-03-19",
+            "temperature": -1, # ONLY DEFAULT VALUE IS SUPPORTED (Possibly 1 but not stated)
+            "endpoint": "response",
+            "reasoning_effort": "low"
+          }
+        ),
+        OpenAIConfig(**
+          {
+            "company": "openai",
+            "model_name": "o3-pro",
             "temperature": 0.0,
+            "endpoint": "response",
+            "reasoning_effort": "low"
           }
         ),
-        CohereConfig(**
-          {
-            "company": "cohere",
-            "model_name": "c4ai-aya-expanse-32b",
-            "temperature": 0.0,
-          }
-        ),
-        CohereConfig(**
-          {
-            "company": "cohere",
-            "model_name": "c4ai-aya-expanse-8b",
-            "temperature": 0.0,
-          }
-        ),
-        CohereConfig(**
-          {
-            "company": "cohere",
-            "model_name": "command-r-plus",
-            "date_code": "04-2024",
-            "temperature": 0.0,
-          }
-        ),
-        CohereConfig(**
-          {
-            "company": "cohere",
-            "model_name": "command-r",
-            "date_code": "08-2024",
-            "temperature": 0.0
-          }
-        ),
-        CohereConfig(**
-          {
-            "company": "cohere",
-            "model_name": "command-r7b",
-            "date_code": "12-2024",
-            "temperature": 0.0
-          }
-        ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "gpt-4.1-mini",
+        #     "date_code": "2025-04-14",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "o1",
+        #     "date_code": "2024-12-17",
+        #     "temperature": -1, # ONLY DEFAULT VALUE IS SUPPORTED (possibly 1 but not stated)
+        #     "reasoning_effort": "low"
+        #   }
+        # ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "o1-mini",
+        #     "date_code": "2024-09-12",
+        #     "temperature": 1.0, #ONLY DEFAULT VALUE IS SUPPORTED (1)
+        #     "reasoning_effort": "low"
+        #   }
+        # ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "gpt-4o-mini",
+        #     "date_code": "2024-07-18",
+        #     "temperature": 0.0,
+        #     "reasoning_effort": "low"
+        #   }
+        # ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "gpt-4o",
+        #     "date_code": "2024-08-06",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "gpt-4-turbo",
+        #     "date_code": "2024-04-09",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "gpt-3.5-turbo",
+        #     "date_code": "0125",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "gpt-4",
+        #     "date_code": "0613",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # CohereConfig(**
+        #   {
+        #     "company": "cohere",
+        #     "model_name": "command-a",
+        #     "date_code": "03-2025",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # CohereConfig(**
+        #   {
+        #     "company": "cohere",
+        #     "model_name": "c4ai-aya-expanse-32b",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # CohereConfig(**
+        #   {
+        #     "company": "cohere",
+        #     "model_name": "c4ai-aya-expanse-8b",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # CohereConfig(**
+        #   {
+        #     "company": "cohere",
+        #     "model_name": "command-r-plus",
+        #     "date_code": "04-2024",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # CohereConfig(**
+        #   {
+        #     "company": "cohere",
+        #     "model_name": "command-r",
+        #     "date_code": "08-2024",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # CohereConfig(**
+        #   {
+        #     "company": "cohere",
+        #     "model_name": "command-r7b",
+        #     "date_code": "12-2024",
+        #     "temperature": 0.0
+        #   }
+        # ),
         # XAIConfig(**
         #   {
         #     "company": "xai",
