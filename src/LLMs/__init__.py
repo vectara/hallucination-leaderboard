@@ -30,6 +30,8 @@ from . Fanar import FanarLLM, FanarConfig, FanarSummary
 from . MistralAI import MistralAILLM, MistralAIConfig, MistralAISummary
 from . Rednote import RednoteLLM, RednoteConfig, RednoteSummary
 from . xAI import XAILLM, XAIConfig, XAISummary
+from . Cohere import CohereLLM, CohereConfig,CohereSummary
+from . MoonshotAI import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -76,6 +78,16 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": XAILLM,
         "config_class": XAIConfig,
         "summary_class": XAISummary
+    },
+    "cohere": {
+        "LLM_class": CohereLLM,
+        "config_class": CohereConfig,
+        "summary_class": CohereSummary
+    },
+    "moonshotai": {
+        "LLM_class": MoonshotAILLM,
+        "config_class": MoonshotAIConfig,
+        "summary_class": MoonshotAISummary
     }
 }
 

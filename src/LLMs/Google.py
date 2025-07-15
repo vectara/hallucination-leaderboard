@@ -13,12 +13,38 @@ COMPANY = "google"
 class GoogleConfig(BasicLLMConfig):
     """Extended config for Google-specific properties"""
     company: Literal["google"] = "google"
-    model_name: Literal["gemini-2.5-pro-preview", "gemini-2.5-pro"] # Only model names manually added to this list are supported.
+    model_name: Literal[
+        "gemini-2.5-pro-preview",
+        "gemini-2.5-pro",
+        "gemini-2.5-flash-preview", # 05-20
+        "gemma-3-1b-it",
+        "gemma-3-4b-it",
+        "gemma-3-12b-it",
+        "gemma-3-27b-it",
+        "gemini-2.0-flash-001",
+        "gemini-2.0-flash-exp",
+        "gemini-2.0-flash-lite",
+        "gemini-1.5-flash-002",
+        "gemini-1.5-pro-002",
+        "gemini-1.5-flash",
+        "gemini-1.5-pro",
+        "gemma-7n-it", # Try local
+        "gemma-1.1-2b-it", # Try local
+        "gemma-1.1-7b-it", # Try local
+        "gemma-2-2b-it", # Try local
+        "gemma-2-9b-it", # Try local
+        "google/flan-t5-large" # Use through huggingface
+
+    ] # Only model names manually added to this list are supported.
+    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
     execution_mode: Literal["api"] = "api" # Google models can only be run via web api.
-    date_code: str # You must specify a date code for Google models.
+    date_code: str = "" # You must specify a date code for Google models.
 
 class GoogleSummary(BasicSummary):
-    pass # Nothing additional to the BasicSummary class.
+    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+
+    class Config:
+        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
 
 class GoogleLLM(AbstractLLM):
     """
@@ -31,8 +57,69 @@ class GoogleLLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution.
     client_mode_group = {
-        "gemini-2.5-pro-preview": 1, # Requires large output token amount, set to 4096
-        "gemini-2.5-pro": 2 # Supports thinking tokens
+        "gemini-2.5-flash-preview": {
+            "chat": 1
+        }, # 05-20
+        "gemma-3-1b-it": {
+            "chat": 1
+        },
+        "gemma-3-4b-it": {
+            "chat": 1
+        },
+        "gemma-3-12b-it": {
+            "chat": 1
+        },
+        "gemma-3-27b-it": {
+            "chat": 1
+        },
+        "gemini-2.0-pro-exp": {
+            "chat": 1
+        }, # 02-05
+        "gemini-2.0-flash-001": {
+            "chat": 1
+        },
+        "gemini-2.0-flash-exp": {
+            "chat": 1
+        },
+        "gemini-2.0-flash-lite": {
+            "chat": 1
+        },
+        "gemini-1.5-flash-002": {
+            "chat": 1
+        },
+        "gemini-1.5-pro-002": {
+            "chat": 1
+        },
+        "gemini-1.5-flash": {
+            "chat": 1
+        },
+        "gemini-1.5-pro": {
+            "chat": 1
+        },
+        "gemini-pro": {
+            "chat": 1
+        }, # Prob does not work
+        "gemma-7n-it": {
+            "chat": 1
+        }, # Not officially listed
+        "gemma-1.1-2b-it": {
+            "chat": 1
+        }, # Not officially listed
+        "gemma-1.1-7b-it": {
+            "chat": 1
+        }, # Not officially listed
+        "gemma-2-2b-it": {
+            "chat": 1
+        }, # Not officially listed
+        "gemma-2-9b-it": {
+            "chat": 1
+        }, # Not officially listed
+        "gemini-2.5-pro": {
+            "chat": 2
+        },
+        "gemini-2.5-pro-preview": {
+            "chat": 3
+        },
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
@@ -43,19 +130,21 @@ class GoogleLLM(AbstractLLM):
         
         # Call parent constructor to inherit all parent properties
         super().__init__(config)
+        self.endpoint = config.endpoint
+        self.execution_mode = config.execution_mode
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name]:
-                case 1: # gemini-2.5-pro-preview - requires large output token amount
+            match self.client_mode_group[self.model_name][self.endpoint]:
+                case 1: # Default
                     response = self.client.models.generate_content(
                         model=self.model_fullname,
                         contents=prepared_text,
                         config=types.GenerateContentConfig(
-                            max_output_tokens=4096,
-                            temperature=self.temperature
-                        )
+                            temperature=self.temperature,
+                            max_output_tokens=self.max_tokens,
+                        ),
                     )
                     summary = response.text
                 case 2: # gemini-2.5-pro - supports thinking tokens
@@ -67,6 +156,16 @@ class GoogleLLM(AbstractLLM):
                             max_output_tokens=self.max_tokens,
                             thinking_config=types.ThinkingConfig(thinking_budget=self.thinking_tokens)
                         ),
+                    )
+                    summary = response.text
+                case 3: # gemini-2.5-pro-preview - requires large output token amount
+                    response = self.client.models.generate_content(
+                        model=self.model_fullname,
+                        contents=prepared_text,
+                        config=types.GenerateContentConfig(
+                            max_output_tokens=4096,
+                            temperature=self.temperature
+                        )
                     )
                     summary = response.text
         elif self.local_model:
