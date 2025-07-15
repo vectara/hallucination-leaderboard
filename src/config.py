@@ -8,7 +8,8 @@ from . LLMs import (
   AlibabaConfig,
   XAIConfig,
   CohereConfig,
-  GoogleConfig
+  GoogleConfig,
+  MoonshotAIConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -21,8 +22,8 @@ eval_configs = [
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["summarize"],
+      "pipeline": ["summarize", "judge", "aggregate"],
+      # "pipeline": ["summarize"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
@@ -49,6 +50,14 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        MoonshotAIConfig(** 
+          {
+            "company": "moonshotai",
+            "model_name": "moonshotai/Kimi-K2-Instruct",
+            "temperature": 0.0,
+            "min_throttle_time": 4.0
+          }
+        ),
         # GoogleConfig(** 
         #   {
         #     "company": "google",
@@ -442,12 +451,11 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        XAIConfig(**
+        MoonshotAIConfig(** 
           {
-            "company": "xai",
-            "model_name": "grok-4",
+            "company": "moonshotai",
+            "model_name": "moonshotai/Kimi-K2-Instruct",
             "temperature": 0.0,
-            "date_code": "0709",
             "min_throttle_time": 4.0
           }
         ),
