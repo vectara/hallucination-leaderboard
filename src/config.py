@@ -7,7 +7,8 @@ from . LLMs import (
   OpenAIConfig,
   AlibabaConfig,
   XAIConfig,
-  CohereConfig
+  CohereConfig,
+  GoogleConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -48,6 +49,91 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemini-2.5-flash-preview",
+        #     "date_code": "05-20",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemma-3-1b-it",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemma-3-4b-it",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemma-3-12b-it",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(**
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemma-3-27b-it",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemini-2.0-flash-001",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemini-2.0-flash-exp",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemini-2.0-flash-lite",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemini-1.5-flash-002",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemini-1.5-pro-002",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemini-1.5-flash",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # GoogleConfig(** 
+        #   {
+        #     "company": "google",
+        #     "model_name": "gemini-1.5-pro",
+        #     "temperature": 0.0
+        #   }
+        # ),
         # OpenAIConfig(**
         #   {
         #     "company": "openai",
@@ -57,25 +143,25 @@ Here is the passage:
         #     "reasoning_effort": "low"
         #   }
         # ),
-        OpenAIConfig(**
-          {
-            "company": "openai",
-            "model_name": "o1-pro",
-            "date_code": "2025-03-19",
-            "temperature": -1, # ONLY DEFAULT VALUE IS SUPPORTED (Possibly 1 but not stated)
-            "endpoint": "response",
-            "reasoning_effort": "low"
-          }
-        ),
-        OpenAIConfig(**
-          {
-            "company": "openai",
-            "model_name": "o3-pro",
-            "temperature": 0.0,
-            "endpoint": "response",
-            "reasoning_effort": "low"
-          }
-        ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "o1-pro",
+        #     "date_code": "2025-03-19",
+        #     "temperature": -1, # ONLY DEFAULT VALUE IS SUPPORTED (Possibly 1 but not stated)
+        #     "endpoint": "response",
+        #     "reasoning_effort": "low"
+        #   }
+        # ),
+        # OpenAIConfig(**
+        #   {
+        #     "company": "openai",
+        #     "model_name": "o3-pro",
+        #     "temperature": 0.0,
+        #     "endpoint": "response",
+        #     "reasoning_effort": "low"
+        #   }
+        # ),
         # OpenAIConfig(**
         #   {
         #     "company": "openai",
