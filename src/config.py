@@ -10,7 +10,8 @@ from . LLMs import (
   CohereConfig,
   GoogleConfig,
   MoonshotAIConfig,
-  DeepSeekAIConfig
+  DeepSeekAIConfig,
+  MistralAIConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -51,6 +52,77 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        # MistralAIConfig(** # Invalid model? code 1500
+        #   {
+        #     "company": "mistralai",
+        #     "model_name": "mistral-small",
+        #     "date_code": "2407",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MistralAIConfig(**
+        #   {
+        #     "company": "mistralai",
+        #     "model_name": "mistral-small",
+        #     "date_code": "2501",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MistralAIConfig(** # Invalidmodel? code 1500
+        #   {
+        #     "company": "mistralai",
+        #     "model_name": "mistral-small",
+        #     "date_code": "2407",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MistralAIConfig(**
+        #   {
+        #     "company": "mistralai",
+        #     "model_name": "mistral-large",
+        #     "date_code": "2411",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MistralAIConfig(**
+        #   {
+        #     "company": "mistralai",
+        #     "model_name": "ministral-3b",
+        #     "date_code": "2410",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MistralAIConfig(**
+        #   {
+        #     "company": "mistralai",
+        #     "model_name": "ministral-8b",
+        #     "date_code": "2410",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MistralAIConfig(**
+        #   {
+        #     "company": "mistralai",
+        #     "model_name": "pixtral-large",
+        #     "date_code": "2411",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MistralAIConfig(**
+        #   {
+        #     "company": "mistralai",
+        #     "model_name": "pixtral-12b",
+        #     "date_code": "2409",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MistralAIConfig(**
+        #   {
+        #     "company": "mistralai",
+        #     "model_name": "open-mistral-nemo",
+        #     "temperature": 0.0
+        #   }
+        # ),
         # DeepSeekAIConfig(**
         #   {
         #     "company": "deepseek-ai",

@@ -7,17 +7,43 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
+"""
+Notes:
+Mistral Small 3.2: 2506
+Mistral Small 3.1: 2503
+Mistral Small 3: 2501
+Mistral Small 2: 2407 | Doesnt work as of 7/16/2025. Reports invalid model
+Mistral Large 2.1: 2411
+Ministral 3B: 2410
+Ministral 8b: 2410
+Pixtral Large: 2411
+Pixtral 12b: 2409
+"""
+
 COMPANY = "mistralai"
 
 class MistralAIConfig(BasicLLMConfig):
     """Extended config for MistralAI-specific properties"""
     company: Literal["mistralai"] = "mistralai"
-    model_name: Literal["magistral-medium", "mistral-small"] # Only model names manually added to this list are supported.
+    model_name: Literal[
+        "magistral-medium", 
+        "mistral-small",
+        "mistral-large",
+        "ministral-3b",
+        "ministral-8b",
+        "pixtral-large",
+        "pixtral-12b",
+        "open-mistral-nemo"
+    ] # Only model names manually added to this list are supported.
     execution_mode: Literal["api"] = "api" # MistralAI models can only be run via web api.
-    date_code: str # You must specify a date code for MistralAI models.
+    date_code: str = "" # You must specify a date code for MistralAI models.
+    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
 
 class MistralAISummary(BasicSummary):
-    pass # Nothing additional to the BasicSummary class.
+    endpoint: Literal["chat", "response"] | None = None
+
+    class Config:
+        extra = "ignore" 
 
 class MistralAILLM(AbstractLLM):
     """
@@ -30,8 +56,30 @@ class MistralAILLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution.
     client_mode_group = {
-        "magistral-medium": 1, # Doesn't look like magistral can disable thinking
-        "mistral-small": 1
+        "magistral-medium":{
+            "chat": 1
+        }, # Doesn't look like magistral can disable thinking
+        "mistral-small": {
+            "chat": 1
+        },
+        "mistral-large": {
+            "chat": 1
+        },
+        "ministral-3b": {
+            "chat": 1
+        },
+        "ministral-8b": {
+            "chat": 1
+        },
+        "pixtral-large": {
+            "chat": 1
+        },
+        "pixtral-12b": {
+            "chat": 1
+        },
+        "open-mistral-nemo": {
+            "chat": 1
+        }
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
@@ -42,11 +90,13 @@ class MistralAILLM(AbstractLLM):
         
         # Call parent constructor to inherit all parent properties
         super().__init__(config)
+        self.endpoint = config.endpoint
+        self.execution_mode = config.execution_mode
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name]:
+            match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Standard chat completion
                     chat_package = self.client.chat.complete(
                         model=self.model_fullname,
