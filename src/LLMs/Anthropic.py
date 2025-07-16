@@ -11,14 +11,26 @@ COMPANY = "anthropic"
 class AnthropicConfig(BasicLLMConfig):
     """Extended config for Anthropic-specific properties"""
     company: Literal["anthropic"] 
-    model_name: Literal["claude-3-5-haiku", "claude-opus-4", "claude-sonnet-4"] # Only model names manually added to this list are supported.
+    model_name: Literal[
+        "claude-3-5-haiku",
+        "claude-opus-4",
+        "claude-sonnet-4",
+        "claude-3-7-sonnet", # 20250219 
+        "claude-3-5-sonnet", # 20241022/20240620
+        "claude-3-sonnet",
+        "claude-3-opus"
+    ] # Only model names manually added to this list are supported.
     date_code: str # You must specify a date code for anthropic models.
     execution_mode: Literal["api"] = "api" # Anthropic models can only be run via web api. Actual default value set below in class `AnthropicLLM`.
+    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
     class Config:
         extra = "forbid"
 
 class AnthropicSummary(BasicSummary):
-    pass # Nothing additional to the BasicSummary class.
+    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+
+    class Config:
+        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
 
 class AnthropicLLM(AbstractLLM):
     """
@@ -27,9 +39,27 @@ class AnthropicLLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
-        "claude-3-5-haiku": 1,
-        "claude-opus-4": 1,
-        "claude-sonnet-4": 1, 
+        "claude-3-5-haiku": {
+            "chat": 1
+        },
+        "claude-opus-4": {
+            "chat": 1
+        },
+        "claude-sonnet-4": {
+            "chat": 1
+        },
+        "claude-3-7-sonnet": {
+            "chat": 1
+        },
+        "claude-3-5-sonnet": {
+            "chat": 1
+        },
+        "claude-3-sonnet": {
+            "chat": 1
+        },
+        "claude-3-opus": {
+            "chat": 1
+        }
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
@@ -39,15 +69,13 @@ class AnthropicLLM(AbstractLLM):
         
         # Call parent constructor to inherit all parent properties
         super().__init__(config)
-
-        # Set default values for optional attributes
-        # self.execution_mode = config.execution_mode if config.execution_mode is not None else "api"
+        self.endpoint = config.endpoint
+        self.execution_mode = config.execution_mode
 
     def summarize(self, prepared_text: str) -> str:
-        # print("Prompt: ", prepared_text)
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name]:
+            match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1:
                     chat_package = self.client.messages.create(
                         model=self.model_fullname,

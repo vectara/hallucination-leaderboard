@@ -22,8 +22,8 @@ eval_configs = [
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      "pipeline": ["summarize", "judge", "aggregate"],
-      # "pipeline": ["summarize"],
+      # "pipeline": ["summarize", "judge", "aggregate"],
+      "pipeline": ["summarize"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
@@ -50,14 +50,46 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        MoonshotAIConfig(** 
+        # AnthropicConfig(**
+        #   {
+        #     "company": "anthropic",
+        #     "model_name": "claude-3-7-sonnet",
+        #     "date_code": "20250219",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AnthropicConfig(**
+        #   {
+        #     "company": "anthropic",
+        #     "model_name": "claude-3-5-sonnet",
+        #     "date_code": "20241022",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        AnthropicConfig(**
           {
-            "company": "moonshotai",
-            "model_name": "moonshotai/Kimi-K2-Instruct",
-            "temperature": 0.0,
-            "min_throttle_time": 4.0
+            "company": "anthropic",
+            "model_name": "claude-3-sonnet",
+            "date_code": "20240229",
+            "temperature": 0.0
           }
         ),
+        AnthropicConfig(**
+          {
+            "company": "anthropic",
+            "model_name": "claude-3-opus",
+            "date_code": "20240229",
+            "temperature": 0.0
+          }
+        ),
+        # MoonshotAIConfig(** 
+        #   {
+        #     "company": "moonshotai",
+        #     "model_name": "moonshotai/Kimi-K2-Instruct",
+        #     "temperature": 0.0,
+        #     "min_throttle_time": 4.0
+        #   }
+        # ),
         # GoogleConfig(** 
         #   {
         #     "company": "google",
