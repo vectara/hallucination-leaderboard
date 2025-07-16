@@ -13,12 +13,24 @@ COMPANY = "deepseek-ai"
 class DeepSeekAIConfig(BasicLLMConfig):
     """Extended config for DeepSeekAI-specific properties"""
     company: Literal["deepseek-ai"] = "deepseek-ai"
-    model_name: Literal["deepseek-chat", "deepseek-coder"] # Only model names manually added to this list are supported.
+    model_name: Literal[
+        "deepseek-chat",
+        "deepseek-coder",
+        "DeepSeek-V3", #0324
+        "DeepSeek-R1",
+        "DeepSeek-V2.5" # Not implemented
+
+
+    ] # Only model names manually added to this list are supported.
     execution_mode: Literal["api"] = "api" # DeepSeekAI models can only be run via web api.
-    date_code: str # You must specify a date code for DeepSeekAI models.
+    date_code: str = "" # You must specify a date code for DeepSeekAI models.
+    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
 
 class DeepSeekAISummary(BasicSummary):
-    pass # Nothing additional to the BasicSummary class.
+    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+
+    class Config:
+        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
 
 class DeepSeekAILLM(AbstractLLM):
     """
@@ -31,7 +43,15 @@ class DeepSeekAILLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution.
     client_mode_group = {
-        "DeepSeek-R1": 1
+        "DeepSeek-R1": {
+            "chat": 1
+        },
+        "DeepSeek-V3": {
+            "chat": 1
+        },
+        "DeepSeek-V2.5": {
+            "chat": 2
+        }
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
@@ -43,15 +63,27 @@ class DeepSeekAILLM(AbstractLLM):
         # Call parent constructor to inherit all parent properties
         super().__init__(config)
         # Construct the full model name with company prefix
-        self.model_fullname = f"{self.company}/{self.model_name}"
+        self.endpoint = config.endpoint
+        self.execution_mode = config.execution_mode
+        self.model_fullname = f"{self.company}/{self.model_name}" # double check
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name]:
+            match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Standard chat completion
                     messages = [{"role": "user", "content":prepared_text}]
-                    client_package = self.client.chat_completion(messages, temperature=self.temperature)
+                    client_package = self.client.chat_completion(
+                        messages,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens
+                    )
+                    summary = client_package.choices[0].message.content
+                case 2: # V2.5. Does not work
+                    messages = [{"role": "user", "content":prepared_text}]
+                    client_package = self.client.chat_completion(
+                        messages
+                    )
                     summary = client_package.choices[0].message.content
         elif self.local_model:
             pass # DeepSeekAI models cannot be run locally.

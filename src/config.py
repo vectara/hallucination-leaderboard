@@ -9,7 +9,8 @@ from . LLMs import (
   XAIConfig,
   CohereConfig,
   GoogleConfig,
-  MoonshotAIConfig
+  MoonshotAIConfig,
+  DeepSeekAIConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -50,13 +51,38 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        AnthropicConfig(**
-          {
-            "company": "anthropic",
-            "model_name": "claude-2.0",
-            "temperature": 0.0
-          }
-        ),
+        # DeepSeekAIConfig(**
+        #   {
+        #     "company": "deepseek-ai",
+        #     "model_name": "DeepSeek-V3",
+        #     "date_code": "0324",
+        #     "temperature": 0.0,
+        #     "min_throttle_time": 4.0
+        #   }
+        # ),
+        # DeepSeekAIConfig(**
+        #   {
+        #     "company": "deepseek-ai",
+        #     "model_name": "DeepSeek-V3",
+        #     "temperature": 0.0,
+        #     "min_throttle_time": 4.0
+        #   }
+        # ),
+        # DeepSeekAIConfig(**
+        #   {
+        #     "company": "deepseek-ai",
+        #     "model_name": "DeepSeek-R1",
+        #     "temperature": 0.0,
+        #     "min_throttle_time": 4.0
+        #   }
+        # ),
+        # AnthropicConfig(**
+        #   {
+        #     "company": "anthropic",
+        #     "model_name": "claude-2.0",
+        #     "temperature": 0.0
+        #   }
+        # ),
         # AnthropicConfig(**
         #   {
         #     "company": "anthropic",
