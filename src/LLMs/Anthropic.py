@@ -18,9 +18,10 @@ class AnthropicConfig(BasicLLMConfig):
         "claude-3-7-sonnet", # 20250219 
         "claude-3-5-sonnet", # 20241022/20240620
         "claude-3-sonnet",
-        "claude-3-opus"
+        "claude-3-opus",
+        "claude-2.0"
     ] # Only model names manually added to this list are supported.
-    date_code: str # You must specify a date code for anthropic models.
+    date_code: str = "" # You must specify a date code for anthropic models.
     execution_mode: Literal["api"] = "api" # Anthropic models can only be run via web api. Actual default value set below in class `AnthropicLLM`.
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
     class Config:
@@ -58,6 +59,9 @@ class AnthropicLLM(AbstractLLM):
             "chat": 1
         },
         "claude-3-opus": {
+            "chat": 1
+        },
+        "claude-2.0": {
             "chat": 1
         }
     }

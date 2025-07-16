@@ -50,6 +50,13 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        AnthropicConfig(**
+          {
+            "company": "anthropic",
+            "model_name": "claude-2.0",
+            "temperature": 0.0
+          }
+        ),
         # AnthropicConfig(**
         #   {
         #     "company": "anthropic",
@@ -66,22 +73,22 @@ Here is the passage:
         #     "temperature": 0.0
         #   }
         # ),
-        AnthropicConfig(**
-          {
-            "company": "anthropic",
-            "model_name": "claude-3-sonnet",
-            "date_code": "20240229",
-            "temperature": 0.0
-          }
-        ),
-        AnthropicConfig(**
-          {
-            "company": "anthropic",
-            "model_name": "claude-3-opus",
-            "date_code": "20240229",
-            "temperature": 0.0
-          }
-        ),
+        # AnthropicConfig(**
+        #   {
+        #     "company": "anthropic",
+        #     "model_name": "claude-3-sonnet",
+        #     "date_code": "20240229",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AnthropicConfig(**
+        #   {
+        #     "company": "anthropic",
+        #     "model_name": "claude-3-opus",
+        #     "date_code": "20240229",
+        #     "temperature": 0.0
+        #   }
+        # ),
         # MoonshotAIConfig(** 
         #   {
         #     "company": "moonshotai",
