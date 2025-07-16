@@ -32,6 +32,7 @@ from . Rednote import RednoteLLM, RednoteConfig, RednoteSummary
 from . xAI import XAILLM, XAIConfig, XAISummary
 from . Cohere import CohereLLM, CohereConfig,CohereSummary
 from . MoonshotAI import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
+from . Meta import MetaLLM, MetaConfig, MetaSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -88,6 +89,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": MoonshotAILLM,
         "config_class": MoonshotAIConfig,
         "summary_class": MoonshotAISummary
+    },
+    "meta": {
+        "LLM_class": MetaLLM,
+        "config_class": MetaConfig,
+        "summary_class": MetaSummary
     }
 }
 

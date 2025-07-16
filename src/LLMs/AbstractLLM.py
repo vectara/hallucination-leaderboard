@@ -4,6 +4,7 @@ import time
 from abc import ABC, abstractmethod
 from enum import Enum
 from typing import List, Literal, Any
+import pandas as pd
 
 import torch
 from pydantic import BaseModel

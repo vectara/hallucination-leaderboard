@@ -11,7 +11,8 @@ from . LLMs import (
   GoogleConfig,
   MoonshotAIConfig,
   DeepSeekAIConfig,
-  MistralAIConfig
+  MistralAIConfig,
+  MetaConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -62,7 +63,7 @@ Here is the passage:
         # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen3-4b", "thinking_tokens": 0}),
         # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen3-8b", "thinking_tokens": 0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "max_tokens": 2345, "date_code": "20241022"}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "max_tokens": 2345, "date_code": "20241022"}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-sonnet", "date_code": "20241022", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-7-sonnet", "date_code": "20250219", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-opus", "date_code": "20240229", "temperature": 0.0}),
@@ -88,6 +89,112 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "temperature": 0.0}),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Llama-4-Scout-17B-16E-Instruct",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Meta-Llama-3.1-8B-Instruct-Turbo",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Llama-3.3-70B-Instruct-Turbo",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Llama-3.3-70B-Instruct-Turbo-Free",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Meta-Llama-3.1-405B-Instruct-Turbo",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Llama-3.2-3B-Instruct-Turbo",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(** # Unable to Access Model
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Llama-3.2-11B-Vision-Instruct-Turbo*",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(** # Unable to Access Model
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Llama-3.2-90B-Vision-Instruct-Turbo*",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Meta-Llama-3.1-405B-Instruct-Turbo",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Meta-Llama-3.1-8B-Instruct-Turbo",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Meta-Llama-3-8B-Instruct-Lite",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Llama-3-8b-chat-hf*",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Llama-3-70b-chat-hf",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaConfig(**
+        #   {
+        #     "company": "meta",
+        #     "model_name": "Llama-2-70b-hf",
+        #     "temperature": 0.0,
+        #     "endpoint": "response"
+        #   }
+        # ),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2410", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2410", "temperature": 0.0}),
@@ -102,7 +209,7 @@ Here is the passage:
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4", "date_code": "0613", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4-turbo", "date_code": "2024-04-09", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1-mini", "date_code": "2025-04-14", "temperature": 0.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1-nano"}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1-nano"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o", "date_code": "2024-08-06", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o-mini", "date_code": "2024-07-18", "temperature": 0.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o1", "date_code": "2024-12-17", "temperature": -1, "reasoning_effort": "low"}),
