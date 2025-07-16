@@ -111,7 +111,7 @@ def generate_judgments(
         valid_summary = is_valid_summary(hypothesis)
         metric_record = BasicJudgment(
             eval_name=eval_name,
-            eval_date=eval_date,
+            judgment_date=eval_date,
             summary_uid=row[BasicSummary.Keys.SUMMARY_UID],
             hhem_version=hhem_model.__str__(),
             hhem_score=hhem_model.predict(row[SourceArticle.Keys.TEXT], hypothesis).score,

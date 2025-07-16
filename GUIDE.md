@@ -51,17 +51,28 @@ Under `src/LLMs/`, for each LLM provider, there is a corresponding file (`src/LL
 
 ## The configuration file
 
-All setting of evaluations are stored in `src/config.py` which contains one variable `eval_configs` that is a list of `EvalConfig` (defined in `src/data_model.py`) objects. Briefly, an `EvalConfig` object contains the following fields:
+All setting of evaluations are stored in `src/config.py` which contains one variable `eval_configs` that is a list of `EvalConfig` (defined in `src/data_model.py`) objects. Briefly, an `EvalConfig` object includes but is not limited to the following fields:
 
 - `eval_name`: The name of the evaluation.
 - `eval_date`: The date of the evaluation.
 - `hhem_version`: The version of HHEM to use.
-- `pipeline`: Elements of the evaluation pipeline, which is a list of strings that can only take values from the set `{"summarize", "judge", "aggregate"}`. Se
-- `overwrite_summaries`: Whether to overwrite the existing summaries.
-- `source_article_path`: The path to the source article file. 
-- `temperature`: The temperature to use for the evaluation.
-- `max_tokens`: The maximum number of tokens to use for the evaluation.
-- `LLM_Configs`: LLMs covered in this evaluation, each of which is an `{Provider_name}Config` object of the corresponding `{Provider_name}Config` class.
+- `pipeline`: Elements of the evaluation pipeline, which is a list of strings that can only take values from the set `{"summarize", "judge", "aggregate"}`. (Default: `['summarize', 'judge', 'aggregate']` all three steps)
+- `overwrite_summaries`: Whether to overwrite the existing summaries. When `True`, current behavior is that summaries that match the model name, date code, and summary date will be removed. (Default: `False`)
+- `source_article_path`: The file path to the source articles to be summarized by LLMs under the evaluation. (Default: `datasets/test_articles.csv` which is the test data.)
+- `common_LLM_config`: Summarization configurations for all LLMs in this evaluation. (Default: `BasicLLMConfig` with default values)
+- `per_LLM_configs`: LLMs covered in this evaluation, each of which is an `{Provider_name}Config` object of the corresponding `{Provider_name}Config` class.
+
+A `BasicLLMConfig` object includes but is not limited to the following fields (not all are required):
+
+- `model_name`: The name of the LLM. 
+- `company`: The company that provides the LLM.
+- `date_code`: The date code of the LLM. (Default: `None`)
+- `prompt`: The prompt to be used for summarization. (Default: a default prompt defined in `src/data_model.py`)
+- `temperature`: The temperature to be used for summarization. (Default: `0.0`)
+- `max_tokens`: The maximum number of tokens to be used for summarization. (Default: `4096`)
+- `min_throttle_time`: The minimum time to wait between requests. (Default: `0.1`)
+- `thinking_tokens`: The number of tokens allocated for thinking. (Default: `None`)
+- `execution_mode`: The execution mode of the LLM. (Default: `None`)
 
 ### Order of supersedes in LLM configs
 

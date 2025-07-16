@@ -64,8 +64,12 @@ def prepare_llm(
             logger.info(f"Summary file {summaries_jsonl_path} does not exist, creating...")
             open(summaries_jsonl_path, 'w').close()
         elif os.path.isfile(summaries_jsonl_path) and eval_config.overwrite_summaries:
-            logger.info(f"Overwriting previous summaries in summary file {summaries_jsonl_path}")
-            open(summaries_jsonl_path, 'w').close()
+            # warning that we do not recommend overwriting summaries. Type YES is your wanna continue 
+            if not input(f"Are you sure you want to overwrite previous summaries in {summaries_jsonl_path}? (upper case YES to continue)").upper() == "YES":
+                raise Exception("User chose not to overwrite previous summaries. Abort to avoid data loss.")
+            else: 
+                logger.info(f"Overwriting previous summaries in summary file {summaries_jsonl_path}")
+                llm.prepare_for_overwrite(summaries_jsonl_path)
         else:
             logger.info(f"Appending additional summaries to summary file {summaries_jsonl_path}")
         
@@ -96,7 +100,7 @@ def get_summaries(
 
         logger.info(f"Generating summaries for LLM {llm_config.model_name} and saving to jsonl file {summaries_jsonl_path}")
 
-        generate_and_save_summaries(
+        generate_summaries_for_one_llm(
             llm, 
             article_df, 
             eval_config.eval_name,
@@ -110,7 +114,7 @@ def get_summaries(
     
     logger.info(f"Finished generating and saving summaries for the following LLMs: {LLMs_to_be_processed}")
 
-def generate_and_save_summaries(
+def generate_summaries_for_one_llm(
         llm: AbstractLLM,
         article_df: pd.DataFrame,
         eval_name: str, 
@@ -133,7 +137,7 @@ def generate_and_save_summaries(
             total=len(article_texts),
             desc="Article Loop"
         ):
-            summary = m.summarize_clean_wait(article_text)
+            summary = m.try_to_summarize_one_article(article_text)
             summary_uid = generate_summary_uid(
                 llm.model_fullname,
                 summary,
@@ -145,7 +149,7 @@ def generate_and_save_summaries(
                 'summary_uid': summary_uid,
                 'summary': summary,
                 'eval_name': eval_name,
-                'eval_date': eval_date,
+                'summary_date': eval_date,
                 # **llm_config.model_dump()
                 **llm.__dict__ # FIXME: should we use something model_dump here? pydantic.basemodel.__dict__ is the old way
             }

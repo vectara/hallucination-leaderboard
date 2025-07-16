@@ -89,7 +89,8 @@ def generate_and_save_results(
 
     # get the summary class of the LLM from model registry
     LLM_SUMMARY_CLASS = MODEL_REGISTRY[llm_config.company]["summary_class"]
-    SUMMAYR_MODEL_AS_DICT: Dict[str, type] = {field_name: field_type.annotation for field_name, field_type in LLM_SUMMARY_CLASS.model_fields.items()}
+    SUMMARY_MODEL_AS_DICT: Dict[str, type] = {field_name: field_type.annotation for field_name, field_type in LLM_SUMMARY_CLASS.model_fields.items()}
+    JUDGMENT_MODEL_AS_DICT: Dict[str, type] = {field_name: field_type.annotation for field_name, field_type in BasicJudgment.model_fields.items()}
 
     model_out_dir = os.path.join(
             eval_config.output_dir,
@@ -104,33 +105,33 @@ def generate_and_save_results(
         model_out_dir,
         eval_config.judgment_file)
     stats_jsonl_path = os.path.join(model_out_dir, eval_config.stats_file)
-    judgments_df = pd.read_json(judgments_jsonl_path, lines=True)
+    judgments_df = pd.read_json(judgments_jsonl_path, lines=True, dtype=JUDGMENT_MODEL_AS_DICT)
     
-    # If data_code is not none, filter on datecode. 
-    if date_code is not None:
-        if os.path.isfile(summaries_jsonl_path):
-            summaries_df = pd.read_json(
-                summaries_jsonl_path,
-                lines=True,
-                dtype=SUMMAYR_MODEL_AS_DICT
-            )
+    # Merge with summaries_df to get summary_date
+    if os.path.isfile(summaries_jsonl_path):
+        summaries_df = pd.read_json(
+            summaries_jsonl_path,
+            lines=True,
+            dtype=SUMMARY_MODEL_AS_DICT
+        )
 
-            # Join judgments with summaries on summary_uid to get date_code
-            judgments_df = pd.merge(
-                judgments_df, 
-                summaries_df[['summary_uid', 'date_code']], 
-                on='summary_uid', 
-                how='inner'
-            )
+        # Join judgments with summaries on summary_uid to get summary_date and date_code
+        judgments_df = pd.merge(
+            judgments_df, 
+            summaries_df[['summary_uid', 'date_code', 'summary_date']], 
+            on='summary_uid', 
+            how='inner'
+        )
 
-            # print(f"judgments_df after merging: {judgments_df}", type(judgments_df))
-            # print(f"types of columns in judgments_df: {judgments_df.dtypes}")
+        print(f"judgments_df after merging: {judgments_df}", type(judgments_df))
+        print(f"types of columns in judgments_df: {judgments_df.dtypes}")
 
-            # Now the real filtering 
-            judgments_df = judgments_df[judgments_df['date_code'] == date_code]        
+        # Filter by date_code if specified
+        if date_code is not None:
+            judgments_df = judgments_df[judgments_df['date_code'] == date_code]
             
-        else:
-            logger.warning(f"Summary file {summaries_jsonl_path} not found, cannot filter by date_code")
+    else:
+        logger.warning(f"Summary file {summaries_jsonl_path} not found, cannot get summary_date")
 
     # Add checking that the hhem_version passed in is the same as the hhem_version in the judgments_df
     if len(judgments_df) > 0 and hhem_version != judgments_df[BasicJudgment.Keys.HHEM_VERSION].iloc[0]:
@@ -138,23 +139,28 @@ def generate_and_save_results(
     elif len(judgments_df) == 0:
         logger.warning(f"No judgments found after filtering by date_code {date_code} in {judgments_jsonl_path}")
 
-    hr = round(compute_hallucination_rate(judgments_df)*100.0, 1)
-    ar = round(compute_answer_rate(judgments_df)*100.0, 1)
-    awc = round(compute_avg_word_count(judgments_df), 1)
-    ci = round(compute_confidence_interval(judgments_df)*100.0, 1)
+    # Group by summary_date and judgment_date to get per-date stats
+    grouped_judgments_df = judgments_df.groupby(['summary_date', 'judgment_date'])
+    
+    for (summary_date, judgment_date), subset_df in tqdm(grouped_judgments_df, total=len(grouped_judgments_df), desc="Date Group Loop"):
+        hr = round(compute_hallucination_rate(subset_df)*100.0, 1)
+        ar = round(compute_answer_rate(subset_df)*100.0, 1)
+        awc = round(compute_avg_word_count(subset_df), 1)
+        ci = round(compute_confidence_interval(subset_df)*100.0, 1)
 
-    result_record = Stats(
-        eval_name=eval_config.eval_name,
-        eval_date=eval_config.eval_date,
-        hhem_version=hhem_version,
-        **llm_config.model_dump(exclude_none=True), # FIXME: Rethink whether we should exclude_none, exclude_default, or more
-        hallucination_rate=hr,
-        confidence_interval=ci,
-        answer_rate=ar,
-        avg_word_count=awc
-    )
-
-    append_record_to_jsonl(stats_jsonl_path, result_record)
+        result_record = Stats(
+            eval_name=eval_config.eval_name,
+            summary_date=summary_date,
+            judgment_date=judgment_date,
+            hhem_version=hhem_version,
+            **llm_config.model_dump(exclude_none=True), # FIXME: Rethink whether we should exclude_none, exclude_default, or more
+            hallucination_rate=hr,
+            confidence_interval=ci,
+            answer_rate=ar,
+            avg_word_count=awc
+        )
+        
+        append_record_to_jsonl(stats_jsonl_path, result_record)
 
     # Block below commented out because now date_code is part of the LLMConfig. But please keep the code below for future reference. -- Forrest, 2025-07-06
 

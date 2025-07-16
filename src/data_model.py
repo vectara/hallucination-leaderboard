@@ -28,19 +28,18 @@ class BasicJudgment(BaseModel):
 
     Fields:
         eval_name (str): name of the evaluation
-        eval_date (str): date of the evaluation
+        judge_date (str): date when the judgment was made
         summary_uid (str): hash for this summary
         hhem_version (str): version of hhem applied for hhem score
         hhem_score (float): Hughes Hallucination Evaluation Metric (HHEM)
-        valid (bool): Validity of the summary, defined in is_valid_summary
+        is_valid (bool): Validity of the summary, defined in is_valid_summary
         word count (int): word count of summary
 
     Note: 
         Forrest chose to disable datecode in Judgment class because datacode is a property of the LLM, not the summary.
     """
     eval_name: str
-    eval_date: str
-    # date_code: str | None = None # FIXME: No need for date_code in judgment class because aggregate.py loads datecode from summaries.jsonl
+    judgment_date: str
     summary_uid: str
     hhem_version: str
     hhem_score: float
@@ -63,7 +62,8 @@ class Stats(BaseModel):
 
     Fields:
         eval_name (str): name of the evaluation
-        eval_date (str): date the stats were performed
+        summary_date (str): date when the summaries were generated
+        judge_date (str): date when the judgments were made
         model_name (str): name of the LLM
         date_code (str): date code of the LLM, if applicable
         hhem_version (str): version of HHEM used for this evaluation
@@ -75,11 +75,12 @@ class Stats(BaseModel):
             summaries
     """
     eval_name: str
-    eval_date: str
+    summary_date: str
+    judgment_date: str
     model_name: str
     date_code: str | None = None
     hhem_version: str
-    
+
     hallucination_rate: float
     confidence_interval: float
     answer_rate: float
@@ -153,23 +154,9 @@ class BasicLLMConfig(BaseModel):
 
 class BasicSummary(BaseModel):
     """
-    Representation of a Summary of an Article
-    
-    Fields:
-        eval_name (str): The name used to identify the evaluation (set in config.py as eval_name).
-        eval_date (str): date of the evaluation
-        summary_uid (str): hash for this summary
-        company (str): company that produced the model
-        model_name (str): name of the LLM used as summarizer
-        date_code (str): date code of model, if applicable
-        temperature (float): temperature of model
-        max_tokens (int): max tokens allocated for model
-        thinking_tokens(int): number of allocated thinking tokens
-        article_id (int): unique id of article
-        summary (str): llm generated summary of the text associated to article_id
+    Base class for LLM summaries
+
     """
-    eval_name: str
-    eval_date: str
     article_id: int
     summary_uid: str
     summary: str
@@ -177,6 +164,9 @@ class BasicSummary(BaseModel):
     company: str
     model_name: str
     date_code: str | None = None
+
+    eval_name: str
+    summary_date: str
 
     temperature: float | None = None
     max_tokens: int | None = None
@@ -197,6 +187,7 @@ class BasicSummary(BaseModel):
         THINKING_TOKENS = "thinking_tokens"
         ARTICLE_ID = "article_id"
         SUMMARY = "summary"
+
 class EvalConfig(BaseModel):
     """
     Configuration for an evaluation run. Includes the components of the evaluation pipeline, 
@@ -207,10 +198,10 @@ class EvalConfig(BaseModel):
     eval_name: str
     eval_date: str
     hhem_version: str
-    pipeline: List[Literal["summarize", "judge", "aggregate"]]
-    overwrite_summaries: bool # 
-    source_article_path: str
-    output_dir: str
+    pipeline: List[Literal["summarize", "judge", "aggregate"]] = ["summarize", "judge", "aggregate"]
+    overwrite_summaries: bool = False
+    source_article_path: str = "datasets/test_articles.csv"
+    output_dir: str = "./output"
 
     common_LLM_config: BasicLLMConfig
     per_LLM_configs: List[BasicLLMConfig]
