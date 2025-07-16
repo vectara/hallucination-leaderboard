@@ -109,10 +109,6 @@ class AbstractLLM(ABC):
             str: Summary of article or error message
         
         """
-        # llm_summary = self.summary_error.EMPTY_SUMMARY
-        # This line not needed. -- Forrest, 2025-07-02
-
-        # prepared_llm_input = self.prepare_article_for_llm(article)
 
         prepared_llm_input = self.prompt.format(article=article)
 
