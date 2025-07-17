@@ -2,6 +2,7 @@ import os
 from typing import Literal
 
 from azure.ai.inference import ChatCompletionsClient
+from azure.ai.inference.models import SystemMessage, UserMessage
 from azure.core.credentials import AzureKeyCredential
 
 from . AbstractLLM import AbstractLLM
@@ -13,10 +14,15 @@ class MicrosoftConfig(BasicLLMConfig):
     """Extended config for Microsoft-specific properties"""
     company: Literal["microsoft"] 
     model_name: Literal[
-        ""
+        "Phi-4-mini-instruct",
+        "Phi-4",
+        "microsoft-phi-2", # Resource not active
+        "microsoft-Orca-2-13b" # Resource not active
     ] # Only model names manually added to this list are supported.
+    model_key: str
     date_code: str = "" # do we need date code?
     execution_mode: Literal["api"] = "api" # Is this company only API based?
+    azure_endpoint: str
     endpoint: Literal["chat", "response"] = "chat"
 
 class MicrosoftSummary(BasicSummary):
@@ -32,7 +38,18 @@ class MicrosoftLLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
-        ""
+        "Phi-4-mini-instruct": {
+            "chat": 1
+        },
+        "Phi-4": {
+            "chat": 1
+        },
+        "microsoft-phi-2": {
+            "chat": 1
+        },
+        "microsoft-Orca-2-13b": {
+            "chat": 1
+        }
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
@@ -42,13 +59,24 @@ class MicrosoftLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.azure_endpoint = config.azure_endpoint
+        self.model_key = config.model_key
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1:
-                    pass
+                    response = self.client.complete(
+                        messages=[
+                            UserMessage(content=prepared_text),
+                        ],
+                        max_tokens=self.max_tokens,
+                        temperature=self.temperature,
+                        model=self.model_fullname
+                    )
+
+                    summary = response.choices[0].message.content
                 case 2:
                     pass
         elif self.local_model: 
@@ -64,11 +92,12 @@ class MicrosoftLLM(AbstractLLM):
     def setup(self):
         if self.execution_mode == "api":
             if self.model_name in self.client_mode_group:
-                api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                api_key = self.model_key
                 assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
                 self.client = ChatCompletionsClient(
-                    endpoint=endpoint,  # Of the form https://<your-host-name>.<your-azure-region>.models.ai.azure.com
-                    credential=AzureKeyCredential(api_key)
+                    endpoint=self.azure_endpoint,
+                    credential=AzureKeyCredential(api_key),
+                    api_version="2024-05-01-preview"
                 )
 
             else:

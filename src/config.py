@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import List, Dict
+import os
 
 from . data_model import EvalConfig, BasicLLMConfig
 from . LLMs import (
@@ -12,7 +13,8 @@ from . LLMs import (
   MoonshotAIConfig,
   DeepSeekAIConfig,
   MistralAIConfig,
-  MetaConfig
+  MetaConfig,
+  MicrosoftConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -25,7 +27,8 @@ eval_configs = [
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      "pipeline": ["summarize", "judge", "aggregate"],
+      # "pipeline": ["summarize", "judge", "aggregate"],
+      "pipeline": ["summarize"],
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
       "common_LLM_config": 
@@ -196,6 +199,24 @@ Here is the passage:
         #   }
         # ),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "Phi-4-mini-instruct",
+        #     "model_key": os.getenv("PHI_4_MINI_INSTRUCT_API_KEY"),
+        #     "azure_endpoint": "https://hhem-lb-phi-4-mini-inst-resource.services.ai.azure.com/models",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "Phi-4",
+        #     "model_key": os.getenv("PHI_4_API_KEY"),
+        #     "azure_endpoint": "https://hhem-lb-phi-4-resource.services.ai.azure.com/models",
+        #     "temperature": 0.0,
+        #   }
+        # ),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2410", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2410", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-large", "date_code": "2411", "temperature": 0.0}),
