@@ -61,7 +61,7 @@ class Zer01AILLM(AbstractLLM):
         if self.client:
             pass # Rednote models cannot be run via web api.
         elif self.local_model:
-            match self.local_mode_group[self.model_name]:
+            match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname, use_fast=False)
 
