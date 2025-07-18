@@ -24,7 +24,7 @@ def is_valid_summary(summary: str) -> bool:
     
     if summary in error_values:
         return False
-    elif len(summary.split()) < 5:
+    elif len(summary.split()) <= 5:
         return False
     else:
         return True
