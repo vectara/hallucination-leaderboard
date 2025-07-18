@@ -93,14 +93,14 @@ Here is the passage:
           {
             "company": "allenai",
             "model_name": "OLMo-2-1124-7B-Instruct",
-            "temperature": 0.0,
+            "temperature": 0.01,
           }
         ),
         # AllenAIConfig(**
         #   {
         #     "company": "allenai",
         #     "model_name": "OLMo-2-1124-7B-Instruct",
-        #     "temperature": 0.0,
+        #     "temperature": 0.01,
         #   }
         # ),
         # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen-max", "date_code": "2025-01-25"}), # AKA Qwen2.5-Max
@@ -293,18 +293,18 @@ Here is the passage:
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini-fast", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
-        # Zer01AIConfig(**
-        #   {
-        #     "company": "01-ai",
-        #     "model_name": "Yi-1.5-9B-Chat",
-        #     "temperature": -1.0,
-        #   }
-        # ),
+        Zer01AIConfig(**
+          {
+            "company": "01-ai",
+            "model_name": "Yi-1.5-9B-Chat",
+            "temperature": 0.01,
+          }
+        ),
         # Zer01AIConfig(**
         #   {
         #     "company": "01-ai",
         #     "model_name": "Yi-1.5-34B-Chat",
-        #     "temperature": -1.0,
+        #     "temperature": 0.01,
         #   }
         # ),
       ]
