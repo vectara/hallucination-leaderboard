@@ -248,7 +248,7 @@ Here is the passage:
         Zer01AIConfig(**
           {
             "company": "01-ai",
-            "model_name": "01-ai/Yi-1.5-9B-Chat",
+            "model_name": "Yi-1.5-9B-Chat",
             "temperature": 0.0,
           }
         ),

@@ -15,8 +15,8 @@ class Zer01AIConfig(BasicLLMConfig):
     """Extended config for 01-AI-specific properties"""
     company: Literal["01-ai"] = "01-ai"
     model_name: Literal[
-        "01-ai/Yi-1.5-9B-Chat",
-        "01-ai/Yi-1.5-34B-Chat"
+        "Yi-1.5-9B-Chat",
+        "Yi-1.5-34B-Chat"
     ] # Only model names manually added to this list are supported.
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["gpu", "cpu"] = "gpu"
@@ -41,10 +41,10 @@ class Zer01AILLM(AbstractLLM):
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
-        "01-ai/Yi-1.5-9B-Chat": {
+        "Yi-1.5-9B-Chat": {
             "chat": 1
         },
-        "01-ai/Yi-1.5-34B-Chat": {
+        "Yi-1.5-34B-Chat": {
             "chat": 1
         }
     }
@@ -54,6 +54,7 @@ class Zer01AILLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model_fullname = f"{COMPANY}/{self.model_fullname}"
         # self.model_path = config.model_path
 
     def summarize(self, prepared_text: str) -> str:
