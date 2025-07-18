@@ -53,6 +53,7 @@ class Zer01AILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         # self.model_path = config.model_path
 
     def summarize(self, prepared_text: str) -> str:
