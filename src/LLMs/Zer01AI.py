@@ -19,7 +19,7 @@ class Zer01AIConfig(BasicLLMConfig):
         "Yi-1.5-34B-Chat"
     ] # Only model names manually added to this list are supported.
     endpoint: Literal["chat", "response"] = "chat"
-    execution_mode: Literal["local"] = "local"
+    execution_mode: Literal["gpu", "cpu"] = "gpu"
 
 class Zer01AISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
