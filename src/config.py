@@ -252,6 +252,13 @@ Here is the passage:
         #     "temperature": -1.0,
         #   }
         # ),
+        # Zer01AIConfig(**
+        #   {
+        #     "company": "01-ai",
+        #     "model_name": "Yi-1.5-34B-Chat",
+        #     "temperature": -1.0,
+        #   }
+        # ),
       ]
     }
   ),
