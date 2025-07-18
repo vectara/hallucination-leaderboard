@@ -15,7 +15,8 @@ from . LLMs import (
   MistralAIConfig,
   MetaConfig,
   MicrosoftConfig,
-  Zer01AIConfig
+  Zer01AIConfig,
+  AI21Config
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -55,6 +56,38 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        # AI21Config(**
+        #   {
+        #     "company": "ai21",
+        #     "model_name": "jamba-large-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AI21Config(**
+        #   {
+        #     "company": "ai21",
+        #     "model_name": "jamba-mini-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AI21Config(**
+        #   {
+        #     "company": "ai21",
+        #     "model_name": "jamba-large-1.6",
+        #     "date_code": "2025-03",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AI21Config(**
+        #   {
+        #     "company": "ai21",
+        #     "model_name": "jamba-mini-1.6",
+        #     "date_code": "2025-03",
+        #     "temperature": 0.0
+        #   }
+        # ),
         # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen-max", "date_code": "2025-01-25"}), # AKA Qwen2.5-Max
         # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen2.5-14b-instruct"}),
         # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen2.5-32b-instruct"}),

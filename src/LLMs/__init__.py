@@ -35,6 +35,7 @@ from . MoonshotAI import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
 from . Meta import MetaLLM, MetaConfig, MetaSummary
 from . Microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
 from . Zer01AI import Zer01AILLM, Zer01AIConfig, Zer01AISummary
+from . AI21 import AI21LLM, AI21Config, AI21Summary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -106,6 +107,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": Zer01AILLM,
         "config_class": Zer01AIConfig,
         "summary_class": Zer01AISummary
+    },
+    "ai21": {
+        "LLM_class": AI21LLM,
+        "config_class": AI21Config,
+        "summary_class": AI21Summary
     }
 }
 
