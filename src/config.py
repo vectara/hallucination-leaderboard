@@ -145,21 +145,21 @@ Here is the passage:
         IBMConfig(**
           {
             "company": "ibm",
-            "model_name": "ibm-granite-3.2-2b-instruct",
+            "model_name": "granite-3.2-2b-instruct",
             "temperature": 0.01, # Cant be 0.0 has to be positive
           }
         ),
         IBMConfig(**
           {
             "company": "ibm",
-            "model_name": "ibm-granite-3.1-2b-instruct",
+            "model_name": "granite-3.1-2b-instruct",
             "temperature": 0.01, # Cant be 0.0 has to be positive
           }
         ),
         IBMConfig(**
           {
             "company": "ibm",
-            "model_name": "ibm-granite-3.0-2b-instruct",
+            "model_name": "granite-3.0-2b-instruct",
             "temperature": 0.01, # Cant be 0.0 has to be positive
           }
         ),
