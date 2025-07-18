@@ -36,6 +36,7 @@ from . Meta import MetaLLM, MetaConfig, MetaSummary
 from . Microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
 from . Zer01AI import Zer01AILLM, Zer01AIConfig, Zer01AISummary
 from . AI21 import AI21LLM, AI21Config, AI21Summary
+from . AllenAI import AllenAILLM, AllenAIConfig, AllenAISummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -112,6 +113,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": AI21LLM,
         "config_class": AI21Config,
         "summary_class": AI21Summary
+    },
+    "allenai": {
+        "LLM_class": AllenAILLM,
+        "config_class": AllenAIConfig,
+        "summary_class": AllenAISummary
     }
 }
 

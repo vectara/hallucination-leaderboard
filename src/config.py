@@ -16,7 +16,8 @@ from . LLMs import (
   MetaConfig,
   MicrosoftConfig,
   Zer01AIConfig,
-  AI21Config
+  AI21Config,
+  AllenAIConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -88,6 +89,13 @@ Here is the passage:
         #     "temperature": 0.0
         #   }
         # ),
+        AllenAIConfig(**
+          {
+            "company": "allenai",
+            "model_name": "OLMo-2-1124-7B-Instruct",
+            "temperature": 0.0,
+          }
+        ),
         # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen-max", "date_code": "2025-01-25"}), # AKA Qwen2.5-Max
         # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen2.5-14b-instruct"}),
         # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen2.5-32b-instruct"}),
