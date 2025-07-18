@@ -34,6 +34,7 @@ from . Cohere import CohereLLM, CohereConfig,CohereSummary
 from . MoonshotAI import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
 from . Meta import MetaLLM, MetaConfig, MetaSummary
 from . Microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
+from . Zer01AI import Zer01AILLM, Zer01AIConfig, Zer01AISummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -100,6 +101,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": MicrosoftLLM,
         "config_class": MicrosoftConfig,
         "summary_class": MicrosoftSummary
+    },
+    "01-ai": {
+        "LLM_class": Zer01AILLM,
+        "config_class": Zer01AIConfig,
+        "summary_class": Zer01AISummary
     }
 }
 
