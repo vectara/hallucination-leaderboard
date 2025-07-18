@@ -53,7 +53,7 @@ class Zer01AILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
-        self.model_path = config.model_path
+        # self.model_path = config.model_path
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
