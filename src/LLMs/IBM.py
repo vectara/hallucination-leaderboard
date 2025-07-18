@@ -13,7 +13,7 @@ COMPANY = "ibm"
 
 class IBMConfig(BasicLLMConfig):
     """Extended config for IBM-specific properties"""
-    company: Literal["allenai"] = "allenai"
+    company: Literal["ibm"] = "ibm"
     model_name: Literal[
         "granite-3.2-8b-instruct",
         "granite-3.2-2b-instruct",
