@@ -75,7 +75,6 @@ class Zer01AILLM(AbstractLLM):
                     output_ids = self.local_model.generate(
                         input_ids.to('cuda'),
                         eos_token_id=tokenizer.eos_token_id,
-                        temperature=self.temperature,
                         max_new_tokens=self.max_tokens
                     )
                     response = tokenizer.decode(output_ids[0][input_ids.shape[1]:], skip_special_tokens=True)

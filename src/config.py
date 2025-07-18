@@ -245,13 +245,13 @@ Here is the passage:
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini-fast", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
-        Zer01AIConfig(**
-          {
-            "company": "01-ai",
-            "model_name": "Yi-1.5-9B-Chat",
-            "temperature": 0.0,
-          }
-        ),
+        # Zer01AIConfig(**
+        #   {
+        #     "company": "01-ai",
+        #     "model_name": "Yi-1.5-9B-Chat",
+        #     "temperature": -1.0,
+        #   }
+        # ),
       ]
     }
   ),
