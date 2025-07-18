@@ -15,8 +15,8 @@ class Zer01AIConfig(BasicLLMConfig):
     """Extended config for 01-AI-specific properties"""
     company: Literal["01-ai"] = "01-ai"
     model_name: Literal[
-        "Yi-1.5-9B-Chat",
-        "Yi-1.5-34B-Chat"
+        "01-ai/Yi-1.5-9B-Chat",
+        "01-ai/Yi-1.5-34B-Chat"
     ] # Only model names manually added to this list are supported.
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["gpu", "cpu"] = "gpu"
@@ -41,10 +41,10 @@ class Zer01AILLM(AbstractLLM):
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
-        "Yi-1.5-9B-Chat": {
+        "01-ai/Yi-1.5-9B-Chat": {
             "chat": 1
         },
-        "Yi-1.5-34B-Chat": {
+        "01-ai/Yi-1.5-34B-Chat": {
             "chat": 1
         }
     }
@@ -62,7 +62,7 @@ class Zer01AILLM(AbstractLLM):
         elif self.local_model:
             match self.local_mode_group[self.model_name]:
                 case 1: # Uses chat template
-                    tokenizer = AutoTokenizer.from_pretrained(self.model_name, use_fast=False)
+                    tokenizer = AutoTokenizer.from_pretrained(self.model_fullname, use_fast=False)
 
                     messages = [
                         {"role": "user", "content": prepared_text}
@@ -98,7 +98,7 @@ class Zer01AILLM(AbstractLLM):
                 ).to(self.device).eval()
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
-                    model_name=self.model_name,
+                    model_name=self.model_fullname,
                     company=self.company,
                     execution_mode=self.execution_mode
                 ))
