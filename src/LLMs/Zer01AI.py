@@ -55,6 +55,7 @@ class Zer01AILLM(AbstractLLM):
         self.execution_mode = config.execution_mode
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model_fullname = f"{COMPANY}/{self.model_fullname}"
+
         # self.model_path = config.model_path
 
     def summarize(self, prepared_text: str) -> str:
@@ -94,13 +95,13 @@ class Zer01AILLM(AbstractLLM):
                 # )
 
                 self.local_model = AutoModelForCausalLM.from_pretrained(
-                    self.model_name,
+                    self.model_fullname,
                     device_map="auto",
                     torch_dtype="auto"
                 ).to(self.device).eval()
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
-                    model_name=self.model_fullname,
+                    model_name=self.model_name,
                     company=self.company,
                     execution_mode=self.execution_mode
                 ))
