@@ -81,7 +81,10 @@ class IBMLLM(AbstractLLM):
         elif self.local_model:
             match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
-                    tokenizer = AutoTokenizer.from_pretrained(self.model_fullname, use_fast=False)
+                    tokenizer = AutoTokenizer.from_pretrained(
+                        self.model_fullname,
+                        use_fast=False,
+                        return_attention_mask=True)
 
                     messages = [
                         {"role": "user", "content": prepared_text}
