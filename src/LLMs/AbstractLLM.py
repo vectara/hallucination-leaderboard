@@ -181,7 +181,7 @@ class AbstractLLM(ABC):
         torch.cuda.empty_cache()
         self.local_model = None
 
-    def prepare_for_overwrite(self, summaries_jsonl_path: str):
+    def prepare_for_overwrite(self, summaries_jsonl_path: str, summary_date: str):
         """
         Prepare for overwriting existing summaries
         """
@@ -191,7 +191,7 @@ class AbstractLLM(ABC):
         else: 
             # Remove summaries in existing summary file that match the model name, date code, and summary_date
             df = pd.read_json(summaries_jsonl_path, lines=True)
-            df = df[(df['model_name'] != self.model_name) | (df['date_code'] != self.date_code) | (df['summary_date'] != self.eval_date)]
+            df = df[(df['model_name'] != self.model_name) | (df['date_code'] != self.date_code) | (df['summary_date'] != summary_date)]
             df.to_json(summaries_jsonl_path, orient='records', lines=True)
 
     @abstractmethod

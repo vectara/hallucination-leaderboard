@@ -69,7 +69,7 @@ def prepare_llm(
                 raise Exception("User chose not to overwrite previous summaries. Abort to avoid data loss.")
             else: 
                 logger.info(f"Overwriting previous summaries in summary file {summaries_jsonl_path}")
-                llm.prepare_for_overwrite(summaries_jsonl_path)
+                llm.prepare_for_overwrite(summaries_jsonl_path, eval_config.eval_date)
         else:
             logger.info(f"Appending additional summaries to summary file {summaries_jsonl_path}")
         
