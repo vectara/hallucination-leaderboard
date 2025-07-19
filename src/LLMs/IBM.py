@@ -84,7 +84,8 @@ class IBMLLM(AbstractLLM):
                     tokenizer = AutoTokenizer.from_pretrained(
                         self.model_fullname,
                         use_fast=False,
-                        return_attention_mask=True)
+                        return_attention_mask=True
+                    )
 
                     messages = [
                         {"role": "user", "content": prepared_text}
