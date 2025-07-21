@@ -10,7 +10,7 @@ from .. data_model import ModelInstantiationError, SummaryError
 COMPANY = "cohere"
 class CohereConfig(BasicLLMConfig):
     """Extended config for cohere-specific properties"""
-    company: Literal["cohere"] 
+    company: Literal["cohere"] = "cohere"
     model_name: Literal[
         "command-a", #03-2025
         "c4ai-aya-expanse-32b",
