@@ -32,7 +32,7 @@ from . rednote_hilab import RednoteLLM, RednoteConfig, RednoteSummary
 from . x_ai import XAILLM, XAIConfig, XAISummary
 from . cohere import CohereLLM, CohereConfig,CohereSummary
 from . moonshotai import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
-from . meta_llama import MetaLLM, MetaConfig, MetaSummary
+from . meta_llama import MetaLlamaLLM, MetaLlamaConfig, MetaLlamaSummary
 from . microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
 from . zer01_ai import Zer01AILLM, Zer01AIConfig, Zer01AISummary
 from . ai21labs import AI21LabsLLM, AI21LabsConfig, AI21LabsSummary
@@ -97,9 +97,9 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "summary_class": MoonshotAISummary
     },
     "meta": {
-        "LLM_class": MetaLLM,
-        "config_class": MetaConfig,
-        "summary_class": MetaSummary
+        "LLM_class": MetaLlamaLLM,
+        "config_class": MetaLlamaConfig,
+        "summary_class": MetaLlamaSummary
     },
     "microsoft": {
         "LLM_class": MicrosoftLLM,

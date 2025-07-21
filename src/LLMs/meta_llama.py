@@ -7,12 +7,12 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-#TODO: rename meta_llama
+#TODO: rename meta-llama
 
-COMPANY = "meta"
-class MetaConfig(BasicLLMConfig):
+COMPANY = "meta-llama"
+class MetaLlamaConfig(BasicLLMConfig):
     """Extended config for Meta-specific properties"""
-    company: Literal["meta"] 
+    company: Literal["meta-llama"] = "meta-llama" 
     model_name: Literal[
         "Llama-4-Maverick-17B-128E-Instruct-FP8",
         "Llama-4-Scout-17B-16E-Instruct",
@@ -34,13 +34,13 @@ class MetaConfig(BasicLLMConfig):
     execution_mode: Literal["api"] = "api" # Is this company only API based?
     endpoint: Literal["chat", "response"] = "chat"
 
-class MetaSummary(BasicSummary):
+class MetaLlamaSummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
 
     class Config:
         extra = "ignore"
 
-class MetaLLM(AbstractLLM):
+class MetaLlamaLLM(AbstractLLM):
     """
     Class for models from Meta
     """
@@ -97,7 +97,7 @@ class MetaLLM(AbstractLLM):
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
-    def __init__(self, config: MetaConfig):
+    def __init__(self, config: MetaLlamaConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
@@ -138,7 +138,7 @@ class MetaLLM(AbstractLLM):
     def setup(self):
         if self.execution_mode == "api":
             if self.model_name in self.client_mode_group:
-                api_key = os.getenv(f"{COMPANY.upper()}_TOGETHER_API_KEY")
+                api_key = os.getenv(f"TOGETHER_API_KEY")
                 assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
                 self.client = Together(api_key=api_key)
             else:

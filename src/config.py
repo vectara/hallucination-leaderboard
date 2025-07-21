@@ -185,107 +185,107 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Llama-4-Scout-17B-16E-Instruct",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Meta-Llama-3.1-8B-Instruct-Turbo",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Llama-3.3-70B-Instruct-Turbo",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Llama-3.3-70B-Instruct-Turbo-Free",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Meta-Llama-3.1-405B-Instruct-Turbo",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Llama-3.2-3B-Instruct-Turbo",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(** # Unable to Access Model
+        # MetaLlamaConfig(** # Unable to Access Model
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Llama-3.2-11B-Vision-Instruct-Turbo*",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(** # Unable to Access Model
+        # MetaLlamaConfig(** # Unable to Access Model
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Llama-3.2-90B-Vision-Instruct-Turbo*",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Meta-Llama-3.1-405B-Instruct-Turbo",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Meta-Llama-3.1-8B-Instruct-Turbo",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Meta-Llama-3-8B-Instruct-Lite",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Llama-3-8b-chat-hf*",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Llama-3-70b-chat-hf",
         #     "temperature": 0.0
         #   }
         # ),
-        # MetaConfig(**
+        # MetaLlamaConfig(**
         #   {
-        #     "company": "meta",
+        #     "company": "meta-llama",
         #     "model_name": "Llama-2-70b-hf",
         #     "temperature": 0.0,
         #     "endpoint": "response"
