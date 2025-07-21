@@ -94,6 +94,7 @@ Last updated on July 16th, 2025
 |Llama-3.2-90B-Vision-Instruct|4.3 %|95.7 %|100.0 %|79.8|
 |Qwen3-1.7B|4.4 %|95.6 %|100.0 %|69.0|
 |Claude-3.7-Sonnet|4.4 %|95.6 %|100.0 %|97.8|
+|Claude-4-Sonnet|4.5 %|95.5 %|100.0 %|116.0|
 |Claude-3.7-Sonnet-Think|4.5 %|95.5 %|99.8 %|99.9|
 |Cohere Command-A|4.5 %|95.5 %|100.0 %|77.3|
 |OpenAI o4-mini|4.6 %|95.4 %|100.0 %|82.0|
@@ -105,6 +106,7 @@ Last updated on July 16th, 2025
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Microsoft Phi-4|4.7 %|95.3 %|100.0 %|100.3|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
+|Claude-4-Opus|4.8 %|95.2 %|100.0 %|110.0|
 |XAI Grok-4-0709|4.8 %|95.2 %|99.8 %|100.6|
 |Anthropic Claude-3-5-haiku|4.9 %|95.1 %|100.0 %|92.9|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
