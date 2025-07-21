@@ -16,7 +16,7 @@ from . LLMs import (
   MetaConfig,
   MicrosoftConfig,
   Zer01AIConfig,
-  AI21Config,
+  AI21LabsConfig,
   AllenAIConfig,
   IBMConfig,
   TngTechConfig
@@ -59,33 +59,33 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        # AI21Config(**
+        # AI21LabsConfig(**
         #   {
-        #     "company": "ai21",
+        #     "company": "ai21labs",
         #     "model_name": "jamba-large-1.7",
         #     "date_code": "2025-07",
         #     "temperature": 0.0
         #   }
         # ),
-        # AI21Config(**
+        # AI21LabsConfig(**
         #   {
-        #     "company": "ai21",
+        #     "company": "ai21labs",
         #     "model_name": "jamba-mini-1.7",
         #     "date_code": "2025-07",
         #     "temperature": 0.0
         #   }
         # ),
-        # AI21Config(**
+        # AI21LabsConfig(**
         #   {
-        #     "company": "ai21",
+        #     "company": "ai21labs",
         #     "model_name": "jamba-large-1.6",
         #     "date_code": "2025-03",
         #     "temperature": 0.0
         #   }
         # ),
-        # AI21Config(**
+        # AI21LabsConfig(**
         #   {
-        #     "company": "ai21",
+        #     "company": "ai21labs",
         #     "model_name": "jamba-mini-1.6",
         #     "date_code": "2025-03",
         #     "temperature": 0.0

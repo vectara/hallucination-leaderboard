@@ -35,7 +35,7 @@ from . moonshotai import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
 from . meta_llama import MetaLLM, MetaConfig, MetaSummary
 from . microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
 from . zer01_ai import Zer01AILLM, Zer01AIConfig, Zer01AISummary
-from . ai21labs import AI21LLM, AI21Config, AI21Summary
+from . ai21labs import AI21LabsLLM, AI21LabsConfig, AI21LabsSummary
 from . allenai import AllenAILLM, AllenAIConfig, AllenAISummary
 from . ibm_granite import IBMLLM, IBMConfig, IBMSummary
 from .tngtech import TngTechLLM, TngTechConfig, TngTechSummary
@@ -112,9 +112,9 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "summary_class": Zer01AISummary
     },
     "ai21": {
-        "LLM_class": AI21LLM,
-        "config_class": AI21Config,
-        "summary_class": AI21Summary
+        "LLM_class": AI21LabsLLM,
+        "config_class": AI21LabsConfig,
+        "summary_class": AI21LabsSummary
     },
     "allenai": {
         "LLM_class": AllenAILLM,

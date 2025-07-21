@@ -10,10 +10,10 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 #TODO: Rename ai21labs
 
-COMPANY = "ai21"
-class AI21Config(BasicLLMConfig):
+COMPANY = "ai21labs"
+class AI21LabsConfig(BasicLLMConfig):
     """Extended config for AI21-specific properties"""
-    company: Literal["ai21"] 
+    company: Literal["ai21labs"] 
     model_name: Literal[
         "jamba-large-1.7",
         "jamba-mini-1.7",
@@ -26,13 +26,13 @@ class AI21Config(BasicLLMConfig):
     class Config:
         extra = "forbid"
 
-class AI21Summary(BasicSummary):
+class AI21LabsSummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
 
     class Config:
         extra = "ignore"
 
-class AI21LLM(AbstractLLM):
+class AI21LabsLLM(AbstractLLM):
     """
     Class for models from AI21
     """
@@ -56,7 +56,7 @@ class AI21LLM(AbstractLLM):
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
-    def __init__(self, config: AI21Config):
+    def __init__(self, config: AI21LabsConfig):
         
         # Call parent constructor to inherit all parent properties
         super().__init__(config)
