@@ -18,7 +18,7 @@ from . LLMs import (
   Zer01AIConfig,
   AI21LabsConfig,
   AllenAIConfig,
-  IBMConfig,
+  IBMGraniteConfig,
   TngTechConfig
 )
 
@@ -143,44 +143,44 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "temperature": 0.0}),
-        # IBMConfig(**
+        # IBMGraniteConfig(**
         #   {
-        #     "company": "ibm",
+        #     "company": "ibm-granite",
         #     "model_name": "granite-3.2-2b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # IBMConfig(**
+        # IBMGraniteConfig(**
         #   {
-        #     "company": "ibm",
+        #     "company": "ibm-granite",
         #     "model_name": "granite-3.2-8b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # IBMConfig(**
+        # IBMGraniteConfig(**
         #   {
-        #     "company": "ibm",
+        #     "company": "ibm-granite",
         #     "model_name": "granite-3.1-2b-instruct",
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # IBMConfig(**
+        # IBMGraniteConfig(**
         #   {
-        #     "company": "ibm",
+        #     "company": "ibm-granite",
         #     "model_name": "granite-3.1-8b-instruct",
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # IBMConfig(**
+        # IBMGraniteConfig(**
         #   {
-        #     "company": "ibm",
+        #     "company": "ibm-granite",
         #     "model_name": "granite-3.0-2b-instruct",
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # IBMConfig(**
+        # IBMGraniteConfig(**
         #   {
-        #     "company": "ibm",
+        #     "company": "ibm-granite",
         #     "model_name": "granite-3.0-8b-instruct",
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }

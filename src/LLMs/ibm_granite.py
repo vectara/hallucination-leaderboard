@@ -11,11 +11,11 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 #TODO: Rename IbmGranite
 
-COMPANY = "ibm"
+COMPANY = "ibm-granite"
 
-class IBMConfig(BasicLLMConfig):
+class IBMGraniteConfig(BasicLLMConfig):
     """Extended config for IBM-specific properties"""
-    company: Literal["ibm"] = "ibm"
+    company: Literal["ibm-granite"] = "ibm-granite"
     model_name: Literal[
         "granite-3.2-8b-instruct",
         "granite-3.2-2b-instruct",
@@ -27,13 +27,13 @@ class IBMConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["gpu", "cpu"] = "gpu"
 
-class IBMSummary(BasicSummary):
+class IBMGraniteSummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
 
     class Config:
         extra = "ignore"
 
-class IBMLLM(AbstractLLM):
+class IBMGraniteLLM(AbstractLLM):
     """
     Class for models from IBM
 
@@ -67,7 +67,7 @@ class IBMLLM(AbstractLLM):
         }
     }
 
-    def __init__(self, config: IBMConfig):
+    def __init__(self, config: IBMGraniteConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode

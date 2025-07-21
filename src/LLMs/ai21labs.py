@@ -8,8 +8,6 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-#TODO: Rename ai21labs
-
 COMPANY = "ai21labs"
 class AI21LabsConfig(BasicLLMConfig):
     """Extended config for AI21-specific properties"""

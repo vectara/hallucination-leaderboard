@@ -37,8 +37,8 @@ from . microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
 from . zer01_ai import Zer01AILLM, Zer01AIConfig, Zer01AISummary
 from . ai21labs import AI21LabsLLM, AI21LabsConfig, AI21LabsSummary
 from . allenai import AllenAILLM, AllenAIConfig, AllenAISummary
-from . ibm_granite import IBMLLM, IBMConfig, IBMSummary
-from .tngtech import TngTechLLM, TngTechConfig, TngTechSummary
+from . ibm_granite import IBMGraniteLLM, IBMGraniteConfig, IBMGraniteSummary
+from . tngtech import TngTechLLM, TngTechConfig, TngTechSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
