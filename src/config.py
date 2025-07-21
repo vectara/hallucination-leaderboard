@@ -388,14 +388,9 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        MoonshotAIConfig(** 
-          {
-            "company": "moonshotai",
-            "model_name": "moonshotai/Kimi-K2-Instruct",
-            "temperature": 0.0,
-            "min_throttle_time": 4.0
-          }
-        ),
+        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
+        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
+        TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "temperature": 0.0}),
       ]
     }
   )
