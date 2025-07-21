@@ -122,9 +122,9 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "summary_class": AllenAISummary
     },
     "ibm": {
-        "LLM_class": IBMLLM,
-        "config_class": IBMConfig,
-        "summary_class": IBMSummary
+        "LLM_class": IBMGraniteLLM,
+        "config_class": IBMGraniteConfig,
+        "summary_class": IBMGraniteSummary
     },
     "tngtech": {
         "LLM_class": TngTechLLM,
