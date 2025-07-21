@@ -18,6 +18,8 @@ class OpenAIConfig(BasicLLMConfig):
         "o3",
         "o3-pro",
         "o4-mini",
+        "o4-mini-low",
+        "o4-mini-high",
         "o1-pro",
         "gpt-4.1-mini",
         "o1",
@@ -71,6 +73,12 @@ class OpenAILLM(AbstractLLM):
         },
         "o4-mini": {
             "chat": 2
+        },
+        "o4-mini-low": {
+            "chat": 6
+        },
+        "o4-mini-high": {
+            "chat": 7
         },
         "o1-pro": { # doesn't support chatting or temperature
             "chat": None,
@@ -136,6 +144,22 @@ class OpenAILLM(AbstractLLM):
                         messages=[{"role": "user", "content":prepared_text}],
                         max_completion_tokens=self.max_tokens,
                         reasoning_effort = self.reasoning_effort
+                    )
+                    summary = chat_package.choices[0].message.content
+                case 6: # o4-mini-low
+                    chat_package = self.client.chat.completions.create(
+                        model="o4-mini-2025-04-16", # need to talk about this case
+                        messages=[{"role": "user", "content":prepared_text}],
+                        max_completion_tokens=self.max_tokens,
+                        reasoning_effort = "low"
+                    )
+                    summary = chat_package.choices[0].message.content
+                case 7: # o4-mini-high
+                    chat_package = self.client.chat.completions.create(
+                        model="o4-mini-2025-04-16", # need to talk about this case
+                        messages=[{"role": "user", "content":prepared_text}],
+                        max_completion_tokens=self.max_tokens,
+                        reasoning_effort = "high"
                     )
                     summary = chat_package.choices[0].message.content
                 case 3: # Use OpenAI's Response API

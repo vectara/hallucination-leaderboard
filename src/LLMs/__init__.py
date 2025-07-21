@@ -38,6 +38,7 @@ from . Zer01AI import Zer01AILLM, Zer01AIConfig, Zer01AISummary
 from . AI21 import AI21LLM, AI21Config, AI21Summary
 from . AllenAI import AllenAILLM, AllenAIConfig, AllenAISummary
 from . IBM import IBMLLM, IBMConfig, IBMSummary
+from .tngtech import TngTechLLM, TngTechConfig, TngTechSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -124,6 +125,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": IBMLLM,
         "config_class": IBMConfig,
         "summary_class": IBMSummary
+    },
+    "tngtech": {
+        "LLM_class": TngTechLLM,
+        "config_class": TngTechConfig,
+        "summary_class": TngTechSummary
     }
 }
 

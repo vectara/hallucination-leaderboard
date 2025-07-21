@@ -18,7 +18,8 @@ from . LLMs import (
   Zer01AIConfig,
   AI21Config,
   AllenAIConfig,
-  IBMConfig
+  IBMConfig,
+  TngTechConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -31,8 +32,8 @@ eval_configs = [
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["summarize"],
+      "pipeline": ["summarize", "judge", "aggregate"],
+      # "pipeline": ["summarize"],
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
       "common_LLM_config": 
@@ -329,7 +330,9 @@ Here is the passage:
         # OpenAIConfig(**{"company": "openai", "model_name": "o1-mini", "date_code": "2024-09-12", "temperature": 1.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o1-pro", "date_code": "2025-03-19", "temperature": -1, "endpoint": "response", "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low"}),
-        # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
+        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
+        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
+        TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-2-vision", "temperature": 0.0, "date_code": "1212"}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-fast", "temperature": 0.0}),
