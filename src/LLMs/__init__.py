@@ -21,23 +21,23 @@ Key functions in the AbstractLLM class:
 from . AbstractLLM import AbstractLLM
 
 # All vendor classes are called _{Vendor}_Class below to avoid name conflicts. -- Forrest, 2025-07-03
-from . OpenAI import OpenAILLM, OpenAIConfig, OpenAISummary
-from . Anthropic import AnthropicLLM, AnthropicConfig, AnthropicSummary
-from . Alibaba import AlibabaLLM, AlibabaConfig, AlibabaSummary
-from . Google import GoogleLLM, GoogleConfig, GoogleSummary
-from . DeepSeekAI import DeepSeekAILLM, DeepSeekAIConfig, DeepSeekAISummary
-from . Fanar import FanarLLM, FanarConfig, FanarSummary
-from . MistralAI import MistralAILLM, MistralAIConfig, MistralAISummary
-from . Rednote import RednoteLLM, RednoteConfig, RednoteSummary
-from . xAI import XAILLM, XAIConfig, XAISummary
-from . Cohere import CohereLLM, CohereConfig,CohereSummary
-from . MoonshotAI import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
-from . Meta import MetaLLM, MetaConfig, MetaSummary
-from . Microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
-from . Zer01AI import Zer01AILLM, Zer01AIConfig, Zer01AISummary
-from . AI21 import AI21LLM, AI21Config, AI21Summary
-from . AllenAI import AllenAILLM, AllenAIConfig, AllenAISummary
-from . IBM import IBMLLM, IBMConfig, IBMSummary
+from . openai import OpenAILLM, OpenAIConfig, OpenAISummary
+from . anthropic import AnthropicLLM, AnthropicConfig, AnthropicSummary
+from . qwen import AlibabaLLM, AlibabaConfig, AlibabaSummary
+from . google import GoogleLLM, GoogleConfig, GoogleSummary
+from . deepseek_ai import DeepSeekAILLM, DeepSeekAIConfig, DeepSeekAISummary
+from . qcri import FanarLLM, FanarConfig, FanarSummary
+from . mistralai import MistralAILLM, MistralAIConfig, MistralAISummary
+from . rednote_hilab import RednoteLLM, RednoteConfig, RednoteSummary
+from . x_ai import XAILLM, XAIConfig, XAISummary
+from . cohere import CohereLLM, CohereConfig,CohereSummary
+from . moonshotai import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
+from . meta_llama import MetaLLM, MetaConfig, MetaSummary
+from . microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
+from . zer01_ai import Zer01AILLM, Zer01AIConfig, Zer01AISummary
+from . ai21labs import AI21LLM, AI21Config, AI21Summary
+from . allenai import AllenAILLM, AllenAIConfig, AllenAISummary
+from . ibm_granite import IBMLLM, IBMConfig, IBMSummary
 from .tngtech import TngTechLLM, TngTechConfig, TngTechSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
