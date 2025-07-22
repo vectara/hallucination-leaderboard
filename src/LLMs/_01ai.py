@@ -11,7 +11,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 COMPANY = "01-ai"
 
-class Zer01AIConfig(BasicLLMConfig):
+class _01AIConfig(BasicLLMConfig):
     """Extended config for 01-AI-specific properties"""
     company: Literal["01-ai"] = "01-ai"
     model_name: Literal[
@@ -21,13 +21,13 @@ class Zer01AIConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["gpu", "cpu"] = "gpu"
 
-class Zer01AISummary(BasicSummary):
+class _01AISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
 
     class Config:
         extra = "ignore"
 
-class Zer01AILLM(AbstractLLM):
+class _01AILLM(AbstractLLM):
     """
     Class for models from 01-AI
 
@@ -49,7 +49,7 @@ class Zer01AILLM(AbstractLLM):
         }
     }
 
-    def __init__(self, config: Zer01AIConfig):
+    def __init__(self, config: _01AIConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode

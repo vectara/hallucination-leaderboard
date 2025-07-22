@@ -34,7 +34,7 @@ from . cohere import CohereLLM, CohereConfig,CohereSummary
 from . moonshotai import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
 from . meta_llama import MetaLlamaLLM, MetaLlamaConfig, MetaLlamaSummary
 from . microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
-from . zer01_ai import Zer01AILLM, Zer01AIConfig, Zer01AISummary
+from . _01ai import _01AILLM, _01AIConfig, _01AISummary
 from . ai21labs import AI21LabsLLM, AI21LabsConfig, AI21LabsSummary
 from . allenai import AllenAILLM, AllenAIConfig, AllenAISummary
 from . ibm_granite import IBMGraniteLLM, IBMGraniteConfig, IBMGraniteSummary
@@ -107,9 +107,9 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "summary_class": MicrosoftSummary
     },
     "01-ai": {
-        "LLM_class": Zer01AILLM,
-        "config_class": Zer01AIConfig,
-        "summary_class": Zer01AISummary
+        "LLM_class": _01AILLM,
+        "config_class": _01AIConfig,
+        "summary_class": _01AISummary
     },
     "ai21labs": {
         "LLM_class": AI21LabsLLM,
