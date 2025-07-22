@@ -61,7 +61,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": DeepSeekAIConfig,
         "summary_class": DeepSeekAISummary
     },
-    "fanar": {
+    "qcri": {
         "LLM_class": QCRILLM,
         "config_class": QCRIConfig,
         "summary_class": QCRISummary
@@ -96,7 +96,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": MoonshotAIConfig,
         "summary_class": MoonshotAISummary
     },
-    "meta": {
+    "meta-llama": {
         "LLM_class": MetaLlamaLLM,
         "config_class": MetaLlamaConfig,
         "summary_class": MetaLlamaSummary
@@ -111,7 +111,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": Zer01AIConfig,
         "summary_class": Zer01AISummary
     },
-    "ai21": {
+    "ai21labs": {
         "LLM_class": AI21LabsLLM,
         "config_class": AI21LabsConfig,
         "summary_class": AI21LabsSummary
@@ -121,7 +121,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": AllenAIConfig,
         "summary_class": AllenAISummary
     },
-    "ibm": {
+    "ibm-granite": {
         "LLM_class": IBMGraniteLLM,
         "config_class": IBMGraniteConfig,
         "summary_class": IBMGraniteSummary
