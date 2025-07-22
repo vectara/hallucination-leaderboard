@@ -105,17 +105,17 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen-max", "date_code": "2025-01-25"}), # AKA Qwen2.5-Max
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen2.5-14b-instruct"}),
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen2.5-32b-instruct"}),
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen2.5-7b-instruct"}),
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen2.5-72b-instruct"}),
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen3-0.6b", "thinking_tokens": 0}),
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen3-1.7b", "thinking_tokens": 0}),
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen3-14b", "thinking_tokens": 0}),
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen3-32b", "thinking_tokens": 0}),
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen3-4b", "thinking_tokens": 0}),
-        # AlibabaConfig(**{"company": "alibaba", "model_name": "qwen3-8b", "thinking_tokens": 0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25"}), # AKA Qwen2.5-Max
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct"}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct"}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct"}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct"}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "max_tokens": 2345, "date_code": "20241022"}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-sonnet", "date_code": "20241022", "temperature": 0.0}),

@@ -15,10 +15,10 @@ qwen-max
 
 #TODO: Rename Qwen
 
-COMPANY = "alibaba"
-class AlibabaConfig(BasicLLMConfig):
+COMPANY = "qwn" # Previously alibaba
+class QwenConfig(BasicLLMConfig):
     """Extended config for Alibaba-specific properties"""
-    company: Literal["alibaba"] 
+    company: Literal["qwen"] 
     model_name: Literal[
         "qwen3-32b",
         "qwen3-14b",
@@ -37,13 +37,13 @@ class AlibabaConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
     thinking_tokens: bool = None
 
-class AlibabaSummary(BasicSummary):
+class QwenSummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
 
     class Config:
         extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
 
-class AlibabaLLM(AbstractLLM):
+class QwenLLM(AbstractLLM):
     """
     Class for models from Alibaba
     """
@@ -90,7 +90,7 @@ class AlibabaLLM(AbstractLLM):
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
-    def __init__(self, config: AlibabaConfig):
+    def __init__(self, config: QwenConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
