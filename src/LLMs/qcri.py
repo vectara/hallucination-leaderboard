@@ -10,22 +10,22 @@ from .. data_model import ModelInstantiationError, SummaryError
 # Import the Python package for the specific provider.
 from openai import OpenAI
 
-COMPANY = "fanar"
+COMPANY = "qcri" # previously fanar
 
-class FanarConfig(BasicLLMConfig):
+class QCRIConfig(BasicLLMConfig):
     """Extended config for Fanar-specific properties"""
-    company: Literal["fanar"] = "fanar"
+    company: Literal["qcri"] = "qcri"
     model_name: Literal["fanar-model"] # Only model names manually added to this list are supported.
     execution_mode: Literal["api"] = "api" # Fanar models can only be run via web api.
     date_code: str # You must specify a date code for Fanar models.
 
-class FanarSummary(BasicSummary):
+class QCRISummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
 
-class FanarJudgment(BasicJudgment):
+class QCRIJudgment(BasicJudgment):
     pass # Fanar does not have fields beyond BasicJudgment.
 
-class FanarLLM(AbstractLLM):
+class QCRILLM(AbstractLLM):
     """
     Class for models from Fanar
 
@@ -42,7 +42,7 @@ class FanarLLM(AbstractLLM):
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {} # Empty for Fanar models because they cannot be run locally.
 
-    def __init__(self, config: FanarConfig):
+    def __init__(self, config: QCRIConfig):
         # Ensure that the parameters passed into the constructor are of the type FanarConfig.
         
         # Call parent constructor to inherit all parent properties

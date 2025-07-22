@@ -7,8 +7,6 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-#TODO: rename meta-llama
-
 COMPANY = "meta-llama"
 class MetaLlamaConfig(BasicLLMConfig):
     """Extended config for Meta-specific properties"""

@@ -26,7 +26,7 @@ from . anthropic import AnthropicLLM, AnthropicConfig, AnthropicSummary
 from . qwen import AlibabaLLM, AlibabaConfig, AlibabaSummary
 from . google import GoogleLLM, GoogleConfig, GoogleSummary
 from . deepseek_ai import DeepSeekAILLM, DeepSeekAIConfig, DeepSeekAISummary
-from . qcri import FanarLLM, FanarConfig, FanarSummary
+from . qcri import QCRILLM, QCRIConfig, QCRISummary
 from . mistralai import MistralAILLM, MistralAIConfig, MistralAISummary
 from . rednote_hilab import RednoteLLM, RednoteConfig, RednoteSummary
 from . x_ai import XAILLM, XAIConfig, XAISummary
@@ -62,9 +62,9 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "summary_class": DeepSeekAISummary
     },
     "fanar": {
-        "LLM_class": FanarLLM,
-        "config_class": FanarConfig,
-        "summary_class": FanarSummary
+        "LLM_class": QCRILLM,
+        "config_class": QCRIConfig,
+        "summary_class": QCRISummary
     },
     "mistralai": {
         "LLM_class": MistralAILLM,
