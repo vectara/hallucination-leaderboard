@@ -14,10 +14,12 @@ COMPANY = "allenai"
 class AllenAIConfig(BasicLLMConfig):
     """Extended config for AllenAI-specific properties"""
     company: Literal["allenai"] = "allenai"
+        # "OLMo-2-1124-13B-Instruct"
     model_name: Literal[
-        "OLMo-2-1124-7B-Instruct",
-        "OLMo-2-1124-13B-Instruct"
+        "OLMo-2-7B-Instruct", #1124
+        "OLMo-2-13B-Instruct"
     ] # Only model names manually added to this list are supported.
+    date_code: str = ""
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["gpu", "cpu"] = "gpu"
 
@@ -41,10 +43,10 @@ class AllenAILLM(AbstractLLM):
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
-        "OLMo-2-1124-7B-Instruct": {
+        "OLMo-2-7B-Instruct": {
             "chat": 1
         },
-        "OLMo-2-1124-13B-Instruct": {
+        "OLMo-2-13B-Instruct": {
             "chat": 1
         }
     }
@@ -54,6 +56,10 @@ class AllenAILLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+        # Olmo has it's date code in the middle
+        if self.date_code is not "":
+            self.model_fullname = f"{self.model_name[0:6]}-{config.date_code}{self.model_name[6:]}"
         self.model_fullname = f"{COMPANY}/{self.model_fullname}"
 
         # self.model_path = config.model_path
