@@ -333,12 +333,12 @@ Here is the passage:
         OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
         OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
         TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "temperature": 0.0}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-2-vision", "temperature": 0.0, "date_code": "1212"}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-3", "temperature": 0.0}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-3-fast", "temperature": 0.0}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini", "temperature": 0.0}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini-fast", "temperature": 0.0}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
+        # XAIConfig(**{"company": "x-ai", "model_name": "grok-2-vision", "temperature": 0.0, "date_code": "1212"}),
+        # XAIConfig(**{"company": "x-ai", "model_name": "grok-3", "temperature": 0.0}),
+        # XAIConfig(**{"company": "x-ai", "model_name": "grok-3-fast", "temperature": 0.0}),
+        # XAIConfig(**{"company": "x-ai", "model_name": "grok-3-mini", "temperature": 0.0}),
+        # XAIConfig(**{"company": "x-ai", "model_name": "grok-3-mini-fast", "temperature": 0.0}),
+        # XAIConfig(**{"company": "x-ai", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
         # Zer01AIConfig(**
         #   {
         #     "company": "01-ai",

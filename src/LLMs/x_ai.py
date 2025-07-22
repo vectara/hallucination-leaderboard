@@ -9,10 +9,10 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 #TODO: rename x-ai
 
-COMPANY = "xai"
+COMPANY = "x-ai"
 class XAIConfig(BasicLLMConfig):
-    """Extended config for xai-specific properties"""
-    company: Literal["xai"] 
+    """Extended config for x-ai-specific properties"""
+    company: Literal["x-ai"] = "x-ai" 
     model_name: Literal[
         "grok-4",
         "grok-3",
@@ -34,7 +34,7 @@ class XAISummary(BasicSummary):
 
 class XAILLM(AbstractLLM):
     """
-    Class for models from xai
+    Class for models from x-ai
     """
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 

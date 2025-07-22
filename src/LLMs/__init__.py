@@ -81,7 +81,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": QwenConfig,
         "summary_class": QwenSummary
     },
-    "xai": {
+    "x-ai": {
         "LLM_class": XAILLM,
         "config_class": XAIConfig,
         "summary_class": XAISummary
