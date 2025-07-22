@@ -94,14 +94,16 @@ Here is the passage:
         # AllenAIConfig(**
         #   {
         #     "company": "allenai",
-        #     "model_name": "OLMo-2-1124-7B-Instruct",
+        #     "model_name": "OLMo-2-7B-Instruct",
+        #     "date_code": 1124
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
         # AllenAIConfig(**
         #   {
         #     "company": "allenai",
-        #     "model_name": "OLMo-2-1124-7B-Instruct",
+        #     "model_name": "OLMo-2-7B-Instruct",
+        #     "date_code": 1124
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
