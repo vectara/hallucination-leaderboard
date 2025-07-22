@@ -1,4 +1,5 @@
 import argparse
+import os
 from typing import List
 
 import pandas as pd
@@ -10,8 +11,33 @@ from . pipeline import (
     get_summaries, get_judgments, aggregate_judgments
 )
 
+def compile_results_for_all_llms(eval_config: EvalConfig) -> None:
+    output_dir = eval_config.output_dir
+    stats_jsonl = eval_config.stats_file
+
+    columns = ["model_name", "date_code", "hallucination_rate", "confidence_interval", "answer_rate", "avg_word_count"] # The app only cares about these columns
+
+    df_all_llms = pd.DataFrame(columns=columns) # init, empty dataframe
+
+    # Compile all `output/{provider}/{llm_name}/stats.jsonl` files into one dataframe
+    for provider_name in os.listdir(output_dir):
+        for llm_name in os.listdir(os.path.join(output_dir, provider_name)):
+            stats_jsonl_path = os.path.join(output_dir, provider_name, llm_name, stats_jsonl)
+            df_provider = pd.read_json(stats_jsonl_path, lines=True)
+
+            # For every df_provider, keep only one row that has the latest judgment_date (first) and summary_date (second) alphabetically
+            df_provider = df_provider.sort_values(by=["judgment_date", "summary_date"], ascending=False)
+            df_provider = df_provider.head(1)
+
+            df_provider["model_name"] = df_provider["model_name"].apply(lambda x: f"{provider_name}/{x}")
+            df_provider = df_provider[columns]
+            df_all_llms = pd.concat([df_all_llms, df_provider]) 
+
+    df_all_llms = df_all_llms.sort_values(by=["model_name"], ascending=True)
+    df_all_llms.to_json(os.path.join(output_dir, "stats_all_LLMs.json"), orient="records", indent=2)
+
 # TODO: Move the main function to pipeline/__init__.py
-def main(eval_config: EvalConfig):
+def main(eval_config: EvalConfig) -> None:
 
     article_df = pd.read_csv(eval_config.source_article_path)
     
@@ -32,6 +58,10 @@ def main(eval_config: EvalConfig):
     
     if "aggregate" in eval_config.pipeline:
         aggregate_judgments(eval_config)
+
+        compile_results_for_all_llms(eval_config)
+        # Todo: make it incremental. But may not be necessary because the compile function is very fast. 
+
 
 def cli_main():
     load_dotenv()
