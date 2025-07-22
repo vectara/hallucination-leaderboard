@@ -10,21 +10,19 @@ from .. data_model import ModelInstantiationError, SummaryError
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 
-#TODO: rename rednote hilab
+COMPANY = "rednote-hilab"
 
-COMPANY = "rednote"
-
-class RednoteConfig(BasicLLMConfig):
+class RednoteHilabConfig(BasicLLMConfig):
     """Extended config for Rednote-specific properties"""
-    company: Literal["rednote"] = "rednote"
+    company: Literal["rednote-hilab"] = "rednote-hilab"
     model_name: Literal["rednote-model"] # Only model names manually added to this list are supported.
     execution_mode: Literal["api"] = "api" # Rednote models can only be run via web api.
     date_code: str # You must specify a date code for Rednote models.
 
-class RednoteSummary(BasicSummary):
+class RednoteHilabSummary(BasicSummary):
     pass # Nothing additional to the BasicSummary class.
 
-class RednoteLLM(AbstractLLM):
+class RednoteHilabLLM(AbstractLLM):
     """
     Class for models from Rednote
 
@@ -42,7 +40,7 @@ class RednoteLLM(AbstractLLM):
         "rednote-hilab/dots.llm1.base": 2 # Uses direct text input
     }
 
-    def __init__(self, config: RednoteConfig):
+    def __init__(self, config: RednoteHilabConfig):
         # Ensure that the parameters passed into the constructor are of the type RednoteConfig.
         
         # Call parent constructor to inherit all parent properties

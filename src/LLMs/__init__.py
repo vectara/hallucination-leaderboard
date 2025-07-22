@@ -28,7 +28,7 @@ from . google import GoogleLLM, GoogleConfig, GoogleSummary
 from . deepseek_ai import DeepSeekAILLM, DeepSeekAIConfig, DeepSeekAISummary
 from . qcri import QCRILLM, QCRIConfig, QCRISummary
 from . mistralai import MistralAILLM, MistralAIConfig, MistralAISummary
-from . rednote_hilab import RednoteLLM, RednoteConfig, RednoteSummary
+from . rednote_hilab import RednoteHilabLLM, RednoteHilabConfig, RednoteHilabSummary
 from . x_ai import XAILLM, XAIConfig, XAISummary
 from . cohere import CohereLLM, CohereConfig,CohereSummary
 from . moonshotai import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
@@ -71,10 +71,10 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": MistralAIConfig,
         "summary_class": MistralAISummary
     },
-    "rednote": {
-        "LLM_class": RednoteLLM,
-        "config_class": RednoteConfig,
-        "summary_class": RednoteSummary
+    "rednote-hilab": {
+        "LLM_class": RednoteHilabLLM,
+        "config_class": RednoteHilabConfig,
+        "summary_class": RednoteHilabSummary
     },
     "qwen": {
         "LLM_class": QwenLLM,
