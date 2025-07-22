@@ -29,7 +29,7 @@ from . deepseek_ai import DeepSeekAILLM, DeepSeekAIConfig, DeepSeekAISummary
 from . qcri import QCRILLM, QCRIConfig, QCRISummary
 from . mistralai import MistralAILLM, MistralAIConfig, MistralAISummary
 from . rednote_hilab import RednoteHilabLLM, RednoteHilabConfig, RednoteHilabSummary
-from . x_ai import XAILLM, XAIConfig, XAISummary
+from . xai import XAILLM, XAIConfig, XAISummary
 from . cohere import CohereLLM, CohereConfig,CohereSummary
 from . moonshotai import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
 from . meta_llama import MetaLlamaLLM, MetaLlamaConfig, MetaLlamaSummary
@@ -81,7 +81,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": QwenConfig,
         "summary_class": QwenSummary
     },
-    "x-ai": {
+    "xai": {
         "LLM_class": XAILLM,
         "config_class": XAIConfig,
         "summary_class": XAISummary
