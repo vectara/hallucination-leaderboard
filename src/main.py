@@ -25,15 +25,16 @@ def compile_results_for_all_llms(eval_config: EvalConfig) -> None:
     for provider_name in provider_dirs:
         for llm_name in os.listdir(os.path.join(output_dir, provider_name)):
             stats_jsonl_path = os.path.join(output_dir, provider_name, llm_name, stats_jsonl)
-            df_provider = pd.read_json(stats_jsonl_path, lines=True)
+            if os.path.isfile(stats_jsonl_path):
+                df_provider = pd.read_json(stats_jsonl_path, lines=True)
 
-            # For every df_provider, keep only one row that has the latest judgment_date (first) and summary_date (second) alphabetically
-            df_provider = df_provider.sort_values(by=["judgment_date", "summary_date"], ascending=False)
-            df_provider = df_provider.head(1)
+                # For every df_provider, keep only one row that has the latest judgment_date (first) and summary_date (second) alphabetically
+                df_provider = df_provider.sort_values(by=["judgment_date", "summary_date"], ascending=False)
+                df_provider = df_provider.head(1)
 
-            df_provider["model_name"] = df_provider["model_name"].apply(lambda x: f"{provider_name}/{x}")
-            df_provider = df_provider[columns]
-            df_all_llms = pd.concat([df_all_llms, df_provider]) 
+                df_provider["model_name"] = df_provider["model_name"].apply(lambda x: f"{provider_name}/{x}")
+                df_provider = df_provider[columns]
+                df_all_llms = pd.concat([df_all_llms, df_provider]) 
 
     df_all_llms = df_all_llms.sort_values(by=["model_name"], ascending=True)
     output_path = os.path.join(output_dir, "stats_all_LLMs.json")
