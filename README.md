@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on July 16th, 2025
+Last updated on July 22nd, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
 
@@ -112,17 +112,20 @@ Last updated on July 16th, 2025
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
 |Cohere Command-R|4.9 %|95.1 %|100.0 %|68.7|
 |Llama-3.1-70B-Instruct|5.0 %|95.0 %|100.0 %|79.6|
+|OpenAI o4-mini-high|5.1 %|94.9 %|98.2 %|79.2|
 |Google Gemma-3-1B-Instruct|5.3 %|94.7 %|99.9 %|57.9|
 |Llama-3.1-8B-Instruct|5.4 %|94.6 %|100.0 %|71.0|
 |Cohere Command-R-Plus|5.4 %|94.6 %|100.0 %|68.4|
-|Mistral-Small-3.1-24B-Instruct|5.6 %|94.4 %|100.0 %|73.1|
 |Llama-3.2-11B-Vision-Instruct|5.5 %|94.5 %|100.0 %|67.3|
+|TNGTech DeepSeek-TNG-R1T2-Chimera|5.5 %|94.5 %|99.6 %|78.6|
+|Mistral-Small-3.1-24B-Instruct|5.6 %|94.4 %|100.0 %|73.1|
 |Llama-2-70B-Chat-hf|5.9 %|94.1 %|99.9 %|84.9|
 |IBM Granite-3.0-8B-Instruct|6.5 %|93.5 %|100.0 %|74.2|
 |Google Gemini-1.5-Pro-002|6.6 %|93.7 %|99.9 %|62.0|
 |Google Gemini-1.5-Flash|6.6 %|93.4 %|99.9 %|63.3|
 |Mistral-Pixtral|6.6 %|93.4 %|100.0 %|76.4|
 |Microsoft phi-2|6.7 %|93.3 %|91.5 %|80.8|
+|OpenAI o4-mini-low|6.8 %|93.2 %|99.8 %|81.6|
 |OpenAI o3|6.8 %|93.2 %|100.0 %|77.7|
 |Google Gemma-2-2B-it|7.0 %|93.0 %|100.0 %|62.2|
 |Qwen2.5-3B-Instruct|7.0 %|93.0 %|100.0 %|70.4|
