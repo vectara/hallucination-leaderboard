@@ -64,6 +64,7 @@ Last updated on July 22nd, 2025
 |Google Gemma-3-12B-Instruct|2.8 %|97.2 %|100.0 %|69.6|
 |Qwen2.5-7B-Instruct|2.8 %|97.2 %|100.0 %|71.0|
 |Qwen3-32B|2.8 %|97.2 %|100.0 %|82.4|
+|Google Gemini-2.5-Flash-Lite|2.9 %|97.1 %|99.7 %|78.4|
 |AI21 Jamba-1.5-Mini|2.9 %|97.1 %|95.6 %|74.5|
 |XAI Grok-2-Vision|2.9 %|97.1|100.0 %|79.8|
 |Qwen2.5-Max|2.9 %|97.1 %|88.8 %|90.4|
