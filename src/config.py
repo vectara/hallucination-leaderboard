@@ -33,8 +33,8 @@ eval_configs = [
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["aggregate"],
-      # "pipeline": ["summarize"],
+      # "pipeline": ["aggregate"],
+      "pipeline": ["summarize"],
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
       "common_LLM_config": 
@@ -142,6 +142,8 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-exp", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-lite", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-preview", "date_code": "05-20", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite-instinct", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite-think", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "temperature": 0.0}),
@@ -391,9 +393,8 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
-        TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite-instinct", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite-think", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
       ]
     }
   )
