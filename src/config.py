@@ -108,17 +108,6 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25"}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct"}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct"}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct"}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct"}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "max_tokens": 2345, "date_code": "20241022"}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-sonnet", "date_code": "20241022", "temperature": 0.0}),
@@ -337,6 +326,19 @@ Here is the passage:
         # OpenAIConfig(**{"company": "openai", "model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-2-vision", "temperature": 0.0, "date_code": "1212"}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3", "temperature": 0.0}),
@@ -393,7 +395,19 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   )
