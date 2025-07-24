@@ -14,8 +14,7 @@ class GoogleConfig(BasicLLMConfig):
     """Extended config for Google-specific properties"""
     company: Literal["google"] = "google"
     model_name: Literal[
-        "gemini-2.5-flash-lite-think",
-        "gemini-2.5-flash-lite-instinct",
+        "gemini-2.5-flash-lite",
         "gemini-2.5-pro-preview",
         "gemini-2.5-pro",
         "gemini-2.5-flash-preview", # 05-20
@@ -124,11 +123,8 @@ class GoogleLLM(AbstractLLM):
         "gemini-2.5-pro-preview": {
             "chat": 3
         },
-        "gemini-2.5-flash-lite-instinct": {
+        "gemini-2.5-flash-lite": {
             "chat": 4
-        },
-        "gemini-2.5-flash-lite-think": {
-            "chat": 5
         },
     }
 
@@ -179,25 +175,14 @@ class GoogleLLM(AbstractLLM):
                         )
                     )
                     summary = response.text
-                case 4: # gemini-2.5-flash-lite no thinking
+                case 4: # gemini-2.5-flash-lite
                     response = self.client.models.generate_content(
-                        model="gemini-2.5-flash-lite",
+                        model=self.model_fullname,
                         contents=prepared_text,
                         config=types.GenerateContentConfig(
                             max_output_tokens=self.max_tokens,
                             temperature=self.temperature,
-                            thinking_config=types.ThinkingConfig(thinking_budget=0)
-                        )
-                    )
-                    summary = response.text
-                case 5: # gemini-2.5-flash-lite thinking
-                    response = self.client.models.generate_content(
-                        model="gemini-2.5-flash-lite",
-                        contents=prepared_text,
-                        config=types.GenerateContentConfig(
-                            max_output_tokens=self.max_tokens,
-                            temperature=self.temperature,
-                            thinking_config=types.ThinkingConfig(thinking_budget=-1)
+                            thinking_config=types.ThinkingConfig(thinking_budget=self.thinking_budget)
                         )
                     )
                     summary = response.text

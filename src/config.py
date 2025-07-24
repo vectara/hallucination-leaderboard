@@ -393,8 +393,7 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite-instinct", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite-think", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
       ]
     }
   )
