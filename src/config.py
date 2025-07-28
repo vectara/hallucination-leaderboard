@@ -440,7 +440,7 @@ Here is the passage:
       "pipeline": ["summarize", "judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_scrambled.csv",
+      "source_article_path": "datasets/leaderboard_dataset__revised_scrambled.csv",
       "common_LLM_config": 
         BasicLLMConfig(**
           {
