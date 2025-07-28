@@ -114,8 +114,8 @@ Here is the passage:
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-7-sonnet", "date_code": "20250219", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-opus", "date_code": "20240229", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-sonnet", "date_code": "20240229", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "c4ai-aya-expanse-32b", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "c4ai-aya-expanse-8b", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "command-a", "date_code": "03-2025", "temperature": 0.0}),
@@ -362,6 +362,22 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
+        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -397,8 +413,8 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
         # QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
@@ -413,6 +429,57 @@ Here is the passage:
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+      ]
+    }
+  ),
+  EvalConfig(**
+    {
+      "eval_name": "scramble",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.3",
+      "pipeline": ["summarize", "judge", "aggregate"],
+      "output_dir": "output",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/leaderboard_dataset_scrambled.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 0.0, 
+            "max_tokens": 1024, 
+            "prompt": """
+You are a chat bot answering questions using data.
+You must stick to the answers provided solely by the text in the 
+passage provided. You are asked the question 'Provide a concise 
+summary of the following passage, covering the core pieces of 
+information described.'
+
+Just provide your answer in a single paragraph, without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
+
+If you cannot answer the question, for reasons like insufficient information in the passage, 
+just say 'I cannot do it. 2389fdsi2389432ksad' and do not say anything else. 
+  
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
+        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   )
