@@ -22,6 +22,7 @@ class GoogleConfig(BasicLLMConfig):
         "gemma-3-4b-it",
         "gemma-3-12b-it",
         "gemma-3-27b-it",
+        "gemini-2.0-flash",
         "gemini-2.0-flash-001",
         "gemini-2.0-flash-exp",
         "gemini-2.0-flash-lite",
@@ -40,7 +41,7 @@ class GoogleConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
     execution_mode: Literal["api"] = "api" # Google models can only be run via web api.
     date_code: str = "", # You must specify a date code for Google models.
-    thinking_budget: Literal[-1, 0] # -1 is dynamic thinking, 0 thinking is off
+    thinking_budget: Literal[-1, 0] = 0 # -1 is dynamic thinking, 0 thinking is off
 
 class GoogleSummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
@@ -79,6 +80,9 @@ class GoogleLLM(AbstractLLM):
             "chat": 1
         }, # 02-05
         "gemini-2.0-flash-001": {
+            "chat": 1
+        },
+        "gemini-2.0-flash": {
             "chat": 1
         },
         "gemini-2.0-flash-exp": {
