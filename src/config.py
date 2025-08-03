@@ -596,9 +596,9 @@ Here is the passage:
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["summarize", "judge", "aggregate"],
-      "output_dir": "delete_half_rnadom_output",
+      "output_dir": "delete_half_random_output",
       "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_revised_shuffle_delete_half_random.csv",
+      "source_article_path": "datasets/leaderboard_dataset_revised_delete_half_random.csv",
       "common_LLM_config": 
         BasicLLMConfig(**
           {
