@@ -39,6 +39,7 @@ from . ai21labs import AI21LabsLLM, AI21LabsConfig, AI21LabsSummary
 from . allenai import AllenAILLM, AllenAIConfig, AllenAISummary
 from . ibm_granite import IBMGraniteLLM, IBMGraniteConfig, IBMGraniteSummary
 from . tngtech import TngTechLLM, TngTechConfig, TngTechSummary
+from . antgroup_mi import AntGroupMILLM, AntGroupMIConfig, AntGroupMISummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -130,6 +131,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": TngTechLLM,
         "config_class": TngTechConfig,
         "summary_class": TngTechSummary
+    },
+    "antgroup-mi": {
+        "LLM_class": AntGroupMILLM,
+        "config_class": AntGroupMIConfig,
+        "summary_class": AntGroupMISummary
     }
 }
 

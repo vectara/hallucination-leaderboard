@@ -19,7 +19,8 @@ from . LLMs import (
   AI21LabsConfig,
   AllenAIConfig,
   IBMGraniteConfig,
-  TngTechConfig
+  TngTechConfig,
+  AntGroupMIConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -34,6 +35,7 @@ eval_configs = [
       "hhem_version": "2.3",
       # "pipeline": ["summarize", "judge", "aggregate"],
       # "pipeline": ["aggregate"],
+      "output_dir": "output_test",
       "pipeline": ["summarize"],
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
@@ -96,18 +98,19 @@ Here is the passage:
         #   {
         #     "company": "allenai",
         #     "model_name": "OLMo-2-7B-Instruct",
-        #     "date_code": 1124
+        #     "date_code": 1124,
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # AllenAIConfig(**
-        #   {
-        #     "company": "allenai",
-        #     "model_name": "OLMo-2-7B-Instruct",
-        #     "date_code": 1124
-        #     "temperature": 0.01, # Cant be 0.0 has to be positive
-        #   }
-        # ),
+        AntGroupMIConfig(**
+          {
+            "company": "antgroup-mi",
+            "model_name": "antfinix-ir1",
+            "date_code": "",
+            "temperature": 0.1,
+            "max_tokens": 8192
+          }
+        )
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "max_tokens": 2345, "date_code": "20241022"}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-sonnet", "date_code": "20241022", "temperature": 0.0}),
@@ -130,7 +133,7 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-pro", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-pro-002", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-001", "temperature": 0.0, "thinking_budget": -1}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-exp", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-lite", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-preview", "date_code": "05-20", "temperature": 0.0}),
