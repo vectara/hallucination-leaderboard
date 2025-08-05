@@ -205,7 +205,7 @@ class OpenAILLM(AbstractLLM):
             match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Chat with temperature and max_tokens
                     def extract_after_assistant_final(text):
-                        keyword = "assistantFinal"
+                        keyword = "assistantfinal"
                         index = text.find(keyword)
                         if index != -1:
                             return text[index + len(keyword):].strip()
