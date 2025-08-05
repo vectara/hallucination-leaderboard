@@ -204,6 +204,12 @@ class OpenAILLM(AbstractLLM):
         elif self.local_model:
             match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Chat with temperature and max_tokens
+                    def extract_after_assistant_final(text):
+                        keyword = "assistantFinal"
+                        index = text.find(keyword)
+                        if index != -1:
+                            return text[index + len(keyword):].strip()
+                        return ""  # Return empty string if keyword not found
                     messages = [
                         {"role": "user", "content": prepared_text},
                     ]
@@ -213,7 +219,8 @@ class OpenAILLM(AbstractLLM):
                         max_new_tokens=self.max_tokens,
                         temperature=self.temperature
                     )
-                    summary = outputs[0]["generated_text"][-1]
+                    raw_text = outputs[0]["generated_text"][-1]["content"]
+                    summary = extract_after_assistant_final(raw_text)
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
