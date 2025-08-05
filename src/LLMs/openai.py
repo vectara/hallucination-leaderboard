@@ -2,6 +2,7 @@ import os
 from typing import Literal
 
 from openai import OpenAI
+from transformers import pipeline
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -13,6 +14,8 @@ class OpenAIConfig(BasicLLMConfig):
     """Extended config for OpenAI-specific properties"""
     company: Literal["openai"]
     model_name: Literal[
+        "gpt-oss-120b",
+        "gpt-oss-20b",
         "gpt-4.1",
         "gpt-4.1-nano",
         "o3",
@@ -30,7 +33,7 @@ class OpenAIConfig(BasicLLMConfig):
         "gpt-3.5-turbo",
         "gpt-4"
     ] # Only model names manually added to this list are supported.
-    execution_mode: Literal["api"] = "api" # OpenAI models can only be run via web api.
+    execution_mode: Literal["api", "cpu", "gpu"] = "api" # OpenAI models can only be run via web api.
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
     reasoning_effort: Literal["low", "medium", "high"] = None
 
@@ -111,7 +114,15 @@ class OpenAILLM(AbstractLLM):
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
-    local_mode_group = {} # Empty for OpenAI models because they cannot be run locally.
+    local_mode_group = {
+        "gpt-oss-120b": {
+            "chat": 1
+        },
+        "gpt-oss-20b": {
+            "chat": 1
+        },
+
+    }
 
     def __init__(self, config: OpenAIConfig):
 
@@ -189,7 +200,18 @@ class OpenAILLM(AbstractLLM):
                 case None:
                     raise Exception(f"Model `{self.model_name}` cannot be run from `{self.endpoint}` endpoint")
         elif self.local_model:
-            pass # OpenAI models cannot be run locally.
+            match self.local_mode_group[self.model_name][self.endpoint]:
+                case 1: # Chat with temperature and max_tokens
+                    messages = [
+                        {"role": "user", "content": prepared_text},
+                    ]
+
+                    outputs = self.pipe(
+                        messages,
+                        max_new_tokens=self.max_tokens,
+                        temperature=self.temperature
+                    )
+                    summary = outputs[0]["generated_text"][-1]
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
@@ -207,7 +229,12 @@ class OpenAILLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode == "local":
-            pass # OpenAI models cannot be run locally.
+            self.pipe = pipeline(
+                "text-generation",
+                model=self.model_fullname,
+                torch_dtype="auto",
+                device_map="auto", # Set gpu?
+            )
 
     def teardown(self):
         if self.client:
