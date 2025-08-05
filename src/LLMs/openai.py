@@ -208,7 +208,7 @@ class OpenAILLM(AbstractLLM):
                         {"role": "user", "content": prepared_text},
                     ]
 
-                    outputs = self.pipe(
+                    outputs = self.local_model(
                         messages,
                         max_new_tokens=self.max_tokens,
                         temperature=self.temperature
@@ -230,14 +230,20 @@ class OpenAILLM(AbstractLLM):
                     company=self.company,
                     execution_mode=self.execution_mode
                 ))
-        elif self.execution_mode in ["gpu", "cpue"]:
+        elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in self.local_mode_group:
-                self.pipe = pipeline(
+                self.local_model = pipeline(
                     "text-generation",
                     model=self.model_fullname,
                     torch_dtype="auto",
                     device_map="auto", # Set gpu?
                 )
+            else:
+                raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
+                    model_name=self.model_name,
+                    company=self.company,
+                    execution_mode=self.execution_mode
+                ))
 
     def teardown(self):
         if self.client:
