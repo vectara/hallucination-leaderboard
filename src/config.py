@@ -102,14 +102,14 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        AntGroupMIConfig(**
-          {
-            "company": "antgroup-mi",
-            "model_name": "antfinix-ir1",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
+        # AntGroupMIConfig(**
+        #   {
+        #     "company": "antgroup-mi",
+        #     "model_name": "antfinix-ir1",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "max_tokens": 2345, "date_code": "20241022"}),

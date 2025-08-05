@@ -132,6 +132,8 @@ class OpenAILLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.reasoning_effort = config.reasoning_effort
+        if self.model_name in self.local_mode_group:
+            self.model_fullname = f"openai/{self.model_fullname}"
 
         # Set default values for optional attributes
         # self.endpoint = config.endpoint if config.endpoint is not None else "chat" 
@@ -228,20 +230,20 @@ class OpenAILLM(AbstractLLM):
                     company=self.company,
                     execution_mode=self.execution_mode
                 ))
-        elif self.execution_mode == "local":
-            self.pipe = pipeline(
-                "text-generation",
-                model=self.model_fullname,
-                torch_dtype="auto",
-                device_map="auto", # Set gpu?
-            )
+        elif self.execution_mode in ["gpu", "cpue"]:
+            if self.model_name in self.local_mode_group:
+                self.pipe = pipeline(
+                    "text-generation",
+                    model=self.model_fullname,
+                    torch_dtype="auto",
+                    device_map="auto", # Set gpu?
+                )
 
     def teardown(self):
         if self.client:
             self.close_client()
         elif self.local_model:
-            # self.default_local_model_teardown()
-            pass # OpenAI models cannot be run locally.
+            self.default_local_model_teardown()
 
     def close_client(self):
         pass
