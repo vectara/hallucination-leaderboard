@@ -102,15 +102,16 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        AntGroupMIConfig(**
-          {
-            "company": "antgroup-mi",
-            "model_name": "antfinix-ir1",
-            "date_code": "",
-            "temperature": 0.1,
-            "max_tokens": 8192
-          }
-        )
+        # AntGroupMIConfig(**
+        #   {
+        #     "company": "antgroup-mi",
+        #     "model_name": "antfinix-ir1",
+        #     "date_code": "",
+        #     "temperature": 0.1,
+        #     "max_tokens": 8192
+        #   }
+        # ),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "max_tokens": 2345, "date_code": "20241022"}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-sonnet", "date_code": "20241022", "temperature": 0.0}),
@@ -417,7 +418,8 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
