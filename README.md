@@ -19,9 +19,9 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on July 22nd, 2025
+Last updated on August 6th, 2025
 
-![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_with_logo_2025-08-06.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -38,6 +38,7 @@ Last updated on July 22nd, 2025
 |Google Gemini-2.5-Flash-Preview|1.3 %|98.7 %|91.2 %|71.1|
 |OpenAI-o1-mini|1.4 %|98.6 %|100.0 %|78.3|
 |OpenAI GPT-4o|1.5 %|98.5 %|100.0 %|77.8|
+|AntGroup Antfinix-ir1|1.6 %|98.4 %|98.0 %|57.1|
 |Amazon Nova-Micro-V1|1.6 %|98.4 %|100.0 %|90.0|
 |OpenAI GPT-4o-mini|1.7 %|98.3 %|100.0 %|76.3|
 |OpenAI GPT-4-Turbo|1.7 %|98.3 %|100.0 %|86.2|
@@ -78,6 +79,7 @@ Last updated on July 22nd, 2025
 |OpenAI o1-preview|3.3 %|96.7 %|100.0 %|119.3|
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |Microsoft Phi-4-mini-instruct|3.4 %|96.6 %|100.0 %|69.7|
+|OpenAI gpt-oss-20b|3.7 %|96.3 %|99.4 %|90.0|
 |Google Gemma-3-4B-Instruct|3.7 %|96.3 %|100.0 %|63.7|
 |Qwen3-0.6B|3.7 %|96.3 %|100.0 %|65.3|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
@@ -89,6 +91,7 @@ Last updated on July 22nd, 2025
 |Microsoft Phi-3.5-mini-instruct|4.1 %|95.9 %|100.0 %|75.0|
 |Mistral-Large2|4.1 %|95.9 %|100.0 %|77.4|
 |Llama-3-70B-Chat-hf|4.1 %|95.9 %|99.2 %|68.5|
+|Anthropic Claude-Opus-4.1|4.2 %|95.8 %|98.2 %|107.3|
 |Qwen2-VL-7B-Instruct|4.2 %|95.8 %|100.0 %|73.9|
 |Qwen2.5-14B-Instruct|4.2 %|95.8 %|100.0 %|74.8|
 |Qwen2.5-72B-Instruct|4.3 %|95.7 %|100.0 %|80.0|
