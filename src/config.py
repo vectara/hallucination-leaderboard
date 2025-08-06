@@ -321,7 +321,7 @@ Here is the passage:
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-12b", "date_code": "2409", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-large", "date_code": "2411", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "execution_mode": "gpu", "model_name": "gpt-oss-20b", "date_code": "", "temperature": 0.01}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.01}), # Too much memory for h100?
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-3.5-turbo", "date_code": "0125", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4", "date_code": "0613", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4-turbo", "date_code": "2024-04-09", "temperature": 0.0}),
@@ -422,7 +422,7 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.01}), # Too much memory for h100?
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.0}),
         ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
         ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "temperature": 0.0}),
       ]
