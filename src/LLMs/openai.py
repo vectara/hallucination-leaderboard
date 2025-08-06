@@ -3,6 +3,7 @@ from typing import Literal
 
 from openai import OpenAI
 from transformers import pipeline
+from together import Together
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -96,6 +97,10 @@ class OpenAILLM(AbstractLLM):
         "o1-mini": { # Doesn't support reasoning effort or temperature
             "chat": 5
         },
+        "gpt-oss-120b": {
+            "chat": 8,
+            "api_type": "together"
+        },
         "gpt-4o-mini": {
             "chat": 1
         },
@@ -115,13 +120,9 @@ class OpenAILLM(AbstractLLM):
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
-        "gpt-oss-120b": {
-            "chat": 1
-        },
         "gpt-oss-20b": {
             "chat": 1
         },
-
     }
 
     def __init__(self, config: OpenAIConfig):
@@ -175,6 +176,15 @@ class OpenAILLM(AbstractLLM):
                         reasoning_effort = "high"
                     )
                     summary = chat_package.choices[0].message.content
+                case 8: # gpt-oss-120b not supported on open ai and too big to run locally, using together
+                    together_name = f"openai/{self.model_fullname}"
+                    response = self.client.chat.completions.create(
+                        model=together_name,
+                        messages=[{"role": "user", "content": prepared_text}],
+                        max_tokens = self.max_tokens,
+                        temperature = self.temperature
+                    )
+                    summary = response.choices[0].message.content
                 case 3: # Use OpenAI's Response API
                     chat_package = self.client.responses.create(
                         model=self.model_fullname,
@@ -228,9 +238,14 @@ class OpenAILLM(AbstractLLM):
     def setup(self):
         if self.execution_mode == "api":
             if self.model_name in self.client_mode_group:
-                api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-                assert api_key is not None, f"OpenAI API key not found in environment variable {COMPANY.upper()}_API_KEY"
-                self.client = OpenAI(api_key=api_key)
+                if self.client_mode_group[self.model_name]["api_type"] == "together":
+                    api_key = os.getenv(f"TOGETHER_API_KEY")
+                    assert api_key is not None, f"TOGETHER API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    self.client = Together(api_key=api_key)
+                else:
+                    api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                    assert api_key is not None, f"OpenAI API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    self.client = OpenAI(api_key=api_key)
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,

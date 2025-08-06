@@ -40,6 +40,7 @@ from . allenai import AllenAILLM, AllenAIConfig, AllenAISummary
 from . ibm_granite import IBMGraniteLLM, IBMGraniteConfig, IBMGraniteSummary
 from . tngtech import TngTechLLM, TngTechConfig, TngTechSummary
 from . antgroup_mi import AntGroupMILLM, AntGroupMIConfig, AntGroupMISummary
+from . zai_org import ZhipuAILLM, ZhipuAIConfig, ZhipuAISummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -136,6 +137,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": AntGroupMILLM,
         "config_class": AntGroupMIConfig,
         "summary_class": AntGroupMISummary
+    },
+    "zai-org": {
+        "LLM_class": ZhipuAILLM,
+        "config_class": ZhipuAIConfig,
+        "summary_class": ZhipuAISummary
     }
 }
 
