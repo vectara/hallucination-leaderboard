@@ -210,8 +210,8 @@ class OpenAILLM(AbstractLLM):
                             "effort": self.reasoning_effort
                         }
                     )
-                    self.temperature = chat_package["temperature"]
-                    summary = chat_package["output"]["content"]["text"]
+                    self.temperature = chat_package.temperature
+                    summary = chat_package.output[1].content[0].text
                 case 10: # gpt-5-minimal
                     chat_package = self.client.responses.create(
                         model="gpt-5-2025-08-07", # need to talk about this case
@@ -221,8 +221,8 @@ class OpenAILLM(AbstractLLM):
                             "effort": self.reasoning_effort
                         }
                     )
-                    self.temperature = chat_package["temperature"]
-                    summary = chat_package["output"]["content"]["text"]
+                    self.temperature = chat_package.temperature
+                    summary = chat_package.output[1].content[0].text
                 case 11: # gpt-5-high
                     chat_package = self.client.responses.create(
                         model="gpt-5-2025-08-07", # need to talk about this case
@@ -232,8 +232,8 @@ class OpenAILLM(AbstractLLM):
                             "effort": self.reasoning_effort
                         }
                     )
-                    self.temperature = chat_package["temperature"]
-                    summary = chat_package["output"]["content"]["text"]
+                    self.temperature = chat_package.temperature
+                    summary = chat_package.output[1].content[0].text
                 case 8: # gpt-oss-120b not supported on open ai and too big to run locally, using together
                     together_name = f"openai/{self.model_fullname}"
                     response = self.client.chat.completions.create(
