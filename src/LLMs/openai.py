@@ -15,6 +15,11 @@ class OpenAIConfig(BasicLLMConfig):
     """Extended config for OpenAI-specific properties"""
     company: Literal["openai"]
     model_name: Literal[
+        "gpt-5-high",
+        "gpt-5-minimal",
+        "gpt-5",
+        "gpt-5-mini",
+        "gpt-5-nano",
         "gpt-oss-120b",
         "gpt-oss-20b",
         "gpt-4.1",
@@ -36,11 +41,11 @@ class OpenAIConfig(BasicLLMConfig):
     ] # Only model names manually added to this list are supported.
     execution_mode: Literal["api", "cpu", "gpu"] = "api" # OpenAI models can only be run via web api.
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
-    reasoning_effort: Literal["low", "medium", "high"] = None
+    reasoning_effort: Literal["minimal", "low", "medium", "high"] = None
 
 class OpenAISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
-    reasoning_effort: Literal["low", "medium", "high"] | None = None
+    reasoning_effort: Literal["minimal", "low", "medium", "high"] | None = None
 
     class Config:
         extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
@@ -59,6 +64,26 @@ class OpenAILLM(AbstractLLM):
     # Mode 2: Chat without temperature
     # Mode 3: Use OpenAI's Response API
     client_mode_group = {
+        "gpt-5-minimal": {
+            "chat": 10,
+            "api_type": "openai"
+        },
+        "gpt-5-high": {
+            "chat": 11,
+            "api_type": "openai"
+        },
+        "gpt-5": {
+            "chat": 9,
+            "api_type": "openai"
+        },
+        "gpt-5-mini": {
+            "chat": 9,
+            "api_type": "openai"
+        },
+        "gpt-5-nano": {
+            "chat": 9,
+            "api_type": "openai"
+        },
         "gpt-4.1": {
             "chat": 1,
             "response": 3
@@ -176,6 +201,39 @@ class OpenAILLM(AbstractLLM):
                         reasoning_effort = "high"
                     )
                     summary = chat_package.choices[0].message.content
+                case 9: #gpt-5
+                    chat_package = self.client.responses.create(
+                        model=self.model_fullname,
+                        input=prepared_text,
+                        max_output_tokens=self.max_tokens,
+                        reasoning={
+                            "effort": self.reasoning_effort
+                        }
+                    )
+                    self.temperature = chat_package["temperature"]
+                    summary = chat_package["output"]["content"]["text"]
+                case 10: # gpt-5-minimal
+                    chat_package = self.client.responses.create(
+                        model="gpt-5-2025-08-07", # need to talk about this case
+                        input=prepared_text,
+                        max_output_tokens=self.max_tokens,
+                        reasoning={
+                            "effort": self.reasoning_effort
+                        }
+                    )
+                    self.temperature = chat_package["temperature"]
+                    summary = chat_package["output"]["content"]["text"]
+                case 11: # gpt-5-high
+                    chat_package = self.client.responses.create(
+                        model="gpt-5-2025-08-07", # need to talk about this case
+                        input=prepared_text,
+                        max_output_tokens=self.max_tokens,
+                        reasoning={
+                            "effort": self.reasoning_effort
+                        }
+                    )
+                    self.temperature = chat_package["temperature"]
+                    summary = chat_package["output"]["content"]["text"]
                 case 8: # gpt-oss-120b not supported on open ai and too big to run locally, using together
                     together_name = f"openai/{self.model_fullname}"
                     response = self.client.chat.completions.create(
