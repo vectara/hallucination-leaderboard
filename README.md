@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on August 6th, 2025
+Last updated on August 7th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_with_logo_2025-08-06.png)
 
@@ -46,6 +46,7 @@ Last updated on August 6th, 2025
 |Amazon Nova-Lite-V1|1.8 %|98.2 %|99.9 %|80.7|
 |OpenAI GPT-4|1.8 %|98.2 %|100.0 %|81.1|
 |Amazon Nova-Pro-V1|1.8 %|98.2 %|100.0 %|85.5|
+|ZhipuAI GLM-4.5-Air-FP8|1.9 %|98.1 %|99.1 %|74.4|
 |OpenAI GPT-3.5-Turbo|1.9 %|98.1 %|99.6 %|84.1|
 |XAI Grok-2|1.9 %|98.1|100.0 %|86.5|
 |OpenAI GPT-4.1-nano|2.0 %|98.0 %|100.0 %|70.2|
@@ -54,6 +55,7 @@ Last updated on August 6th, 2025
 |OpenAI GPT-4.1-mini|2.2 %|97.8 %|100.0 %|79.6|
 |Qwen3-14B|2.2 %|97.8 %|100.0 %|82.4|
 |AI21 Jamba-1.6-Large|2.3 %|97.7 %|99.9 %|85.6 |
+|OpenAI gpt-oss-120b|2.4 %|97.6 %|100.0 %|82.3|
 |OpenAI o1-Pro|2.4 %|97.6 %|100.0 %|81.0|
 |OpenAI o1|2.4 %|97.6 %|99.9 %|73.0|
 |DeepSeek-V2.5|2.4 %|97.6 %|100.0 %|83.2|
@@ -80,6 +82,7 @@ Last updated on August 6th, 2025
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |Microsoft Phi-4-mini-instruct|3.4 %|96.6 %|100.0 %|69.7|
 |OpenAI gpt-oss-20b|3.7 %|96.3 %|99.4 %|90.0|
+|ZhipuAI GLM-4.5|3.7 %|96.3 %|99.1 %|81.1|
 |Google Gemma-3-4B-Instruct|3.7 %|96.3 %|100.0 %|63.7|
 |Qwen3-0.6B|3.7 %|96.3 %|100.0 %|65.3|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
