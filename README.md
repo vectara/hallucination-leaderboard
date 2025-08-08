@@ -21,7 +21,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 
 Last updated on August 7th, 2025
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_with_logo_2025-08-07.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_with_logo_2025-08-07_v2.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -36,6 +36,7 @@ Last updated on August 7th, 2025
 |Zhipu AI GLM-4-9B-Chat|1.3 %|98.7 %|100.0 %|58.1|
 |Google Gemini-2.0-Flash-Exp|1.3 %|98.7 %|99.9 %|60.0|
 |Google Gemini-2.5-Flash-Preview|1.3 %|98.7 %|91.2 %|71.1|
+|OpenAI GPT-5-high|1.4 %|98.6 %|99.3 %|96.4|
 |OpenAI-o1-mini|1.4 %|98.6 %|100.0 %|78.3|
 |OpenAI GPT-4o|1.5 %|98.5 %|100.0 %|77.8|
 |AntGroup Antfinix-ir1|1.6 %|98.4 %|98.0 %|57.1|
