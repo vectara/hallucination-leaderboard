@@ -78,6 +78,7 @@ Last updated on August 7th, 2025
 |Qwen3-8B|3.0 %|97.0 %|100.0 %|78.2|
 |Microsoft Phi-3-mini-128k-instruct|3.1 %|96.9 %|100.0 %|60.1|
 |Mistral Small3|3.1 %|96.9 %|100.0 %|74.9|
+|OpenAI GPT-5-mini|3.2 %|96.8 %|99.6 %|87.2|
 |XAI Grok-3-Mini-Beta|3.3 %|96.7|100.0 %|90.2|
 |OpenAI o1-preview|3.3 %|96.7 %|100.0 %|119.3|
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
@@ -110,12 +111,14 @@ Last updated on August 7th, 2025
 |Meta Llama-4-Maverick|4.6 %|95.4 %|100.0 %|84.8|
 |XAI Grok|4.6 %|95.4 %|100.0 %|91.0|
 |Anthropic Claude-3-5-sonnet|4.6 %|95.4 %|100.0 %|95.9|
+|OpenAI GPT-5-nano|4.7 %|95.3 %|99.9 %|72.7|
 |Meta Llama-4-Scout|4.7 %|95.3 %|100.0 %|80.7|
 |Qwen2-72B-Instruct|4.7 %|95.3 %|100.0 %|100.1|
 |Microsoft Phi-4|4.7 %|95.3 %|100.0 %|100.3|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
 |Claude-4-Opus|4.8 %|95.2 %|100.0 %|110.0|
 |XAI Grok-4-0709|4.8 %|95.2 %|99.8 %|100.6|
+|OpenAI GPT-5-minimal|4.9 %|95.1 %|99.7 %|83.6|
 |Anthropic Claude-3-5-haiku|4.9 %|95.1 %|100.0 %|92.9|
 |01-AI Yi-1.5-9B-Chat|4.9 %|95.1 %|100.0 %|85.7|
 |Cohere Command-R|4.9 %|95.1 %|100.0 %|68.7|
