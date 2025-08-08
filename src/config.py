@@ -696,7 +696,7 @@ Here is the passage:
   # Special Experiment
   EvalConfig(**
     {
-      "eval_name": "first_80_precent_summs",
+      "eval_name": "first_80_percent_summs",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["summarize"],
@@ -744,7 +744,7 @@ Here is the passage:
   ),
   EvalConfig(**
     {
-      "eval_name": "first_80_precent_summs_eval",
+      "eval_name": "first_80_percent_summs_eval",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["judge", "aggregate"],
