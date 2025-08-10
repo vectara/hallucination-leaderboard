@@ -696,7 +696,7 @@ Here is the passage:
   # Special Experiment: Predict End
   EvalConfig(**
     {
-      "eval_name": "first_80_percent_summs",
+      "eval_name": "last_20_percent_summs",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["summarize"],
@@ -743,7 +743,7 @@ Here is the passage:
   ),
   EvalConfig(**
     {
-      "eval_name": "first_80_percent_summs_eval",
+      "eval_name": "last_20_percent_summs_eval",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["judge", "aggregate"],
@@ -805,7 +805,7 @@ Here is the passage:
             "temperature": 1.0, 
             "max_tokens": 8192, 
             "prompt": """
-The text at the beginning of the passage given below has been deleted. Given the rest of the passage output text such that it would seamlessly combine with the rest of the passage.
+The text at the beginning of the passage given below has been deleted. Given the rest of the passage output text such that it would appear at the beginning of the passage until it would seamlessly combine with the given incomplete passage. Your output with the given passage appended to it should create a complete passage.
 
 Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
 
@@ -852,7 +852,7 @@ Here is the passage:
             "temperature": 1.0, 
             "max_tokens": 8192, 
             "prompt": """
-The text at the beginning of the passage given below has been deleted. Given the rest of the passage output text such that it would seamlessly combine with the rest of the passage.
+The text at the beginning of the passage given below has been deleted. Given the rest of the passage output text such that it would appear at the beginning of the passage until it would seamlessly combine with the given incomplete passage. Your output with the given passage appended to it should create a complete passage.
 
 Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
 
