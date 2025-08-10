@@ -807,7 +807,7 @@ Here is the passage:
             "prompt": """
 The text at the beginning of the passage given below has been deleted. Given the rest of the passage output text such that it would appear at the beginning of the passage until it would seamlessly combine with the given incomplete passage. Your output with the given passage appended to it should create a complete passage.
 
-Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
+Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else. Do not add the newline character between your output and the passage unless it makes sense to add this character.
 
 If you cannot finish the passage, just say 'I cannot do it' and do not say anything else. 
 
@@ -854,7 +854,7 @@ Here is the passage:
             "prompt": """
 The text at the beginning of the passage given below has been deleted. Given the rest of the passage output text such that it would appear at the beginning of the passage until it would seamlessly combine with the given incomplete passage. Your output with the given passage appended to it should create a complete passage.
 
-Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
+Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else. Do not add the newline character between your output and the passage unless it makes sense to add this character.
 
 If you cannot finish the passage, just say 'I cannot do it' and do not say anything else. 
 
