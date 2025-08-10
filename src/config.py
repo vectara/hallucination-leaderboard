@@ -693,7 +693,7 @@ Here is the passage:
       ]
     }
   ),
-  # Special Experiment
+  # Special Experiment: Predict End
   EvalConfig(**
     {
       "eval_name": "first_80_percent_summs",
@@ -709,7 +709,7 @@ Here is the passage:
             "temperature": 1.0, 
             "max_tokens": 8192, 
             "prompt": """
-Continue the passage starting at the very next character after the given incomplete passage below. Write the next part as it would appear in the same document; it may span a couple words, multiple sentences, or paragrpahs. Stop when it feels natural to conclude the passage.
+Continue the passage starting at the very next character after the given incomplete passage below. Write the next part as it would appear in the same document; it may span a couple words, multiple sentences, or paragraphs. Stop when it feels natural to conclude the passage.
 
 Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
 
@@ -756,7 +756,103 @@ Here is the passage:
             "temperature": 1.0, 
             "max_tokens": 8192, 
             "prompt": """
-Continue the passage starting at the very next character after the given incomplete passage below. Write the next part as it would appear in the same document; it may span a couple words, multiple sentences, or paragrpahs. Stop when it feels natural to conclude the passage.
+Continue the passage starting at the very next character after the given incomplete passage below. Write the next part as it would appear in the same document; it may span a couple words, multiple sentences, or paragraphs. Stop when it feels natural to conclude the passage.
+
+Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
+
+If you cannot finish the passage, just say 'I cannot do it' and do not say anything else. 
+
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
+        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+      ]
+    }
+  ),
+  # End of Special Experiment
+  # Special Experiment: Predict Beginning
+  EvalConfig(**
+    {
+      "eval_name": "first_20_percent_summs",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.3",
+      "pipeline": ["summarize"],
+      "output_dir": "output_first_20_percent_predict",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/leaderboard_dataset_revised_delete_first_20_percent.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 1.0, 
+            "max_tokens": 8192, 
+            "prompt": """
+The text at the beginning of the passage given below has been deleted. Given the rest of the passage output text such that it would seamlessly combine with the rest of the passage.
+
+Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
+
+If you cannot finish the passage, just say 'I cannot do it' and do not say anything else. 
+
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
+        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+      ]
+    }
+  ),
+  EvalConfig(**
+    {
+      "eval_name": "first_20_percent_summs_eval",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.3",
+      "pipeline": ["judge", "aggregate"],
+      "output_dir": "output_first_20_percent_predict",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/leaderboard_dataset_revised_delete_last_80_percent.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 1.0, 
+            "max_tokens": 8192, 
+            "prompt": """
+The text at the beginning of the passage given below has been deleted. Given the rest of the passage output text such that it would seamlessly combine with the rest of the passage.
 
 Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
 
