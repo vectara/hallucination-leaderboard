@@ -439,6 +439,50 @@ Here is the passage:
   ),
   EvalConfig(**
     {
+      "eval_name": "bbc",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.3",
+      "pipeline": ["summarize", "judge", "aggregate"],
+      "output_dir": "output_bbc",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/bbc_dataset.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 1.0, 
+            "max_tokens": 1024, 
+            "prompt": """
+You are a chat bot answering questions using data.
+You must stick to the answers provided solely by the text in the 
+passage provided. You are asked the question 'Provide a concise 
+summary of the following passage, covering the core pieces of 
+information described.'
+
+Just provide your answer in a single paragraph, without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
+
+If you cannot answer the question, for reasons like insufficient information in the passage, 
+just say 'I cannot do it. 2389fdsi2389432ksad' and do not say anything else. 
+  
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+        AntGroupMIConfig(**
+          {
+            "company": "antgroup-mi",
+            "model_name": "antfinix-ir1",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+      ]
+    }
+  ),
+  EvalConfig(**
+    {
       "eval_name": "shuffle",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
