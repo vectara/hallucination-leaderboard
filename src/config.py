@@ -951,8 +951,8 @@ Here is the passage:
             "prompt": """
 You will be given a passage filled with tags of the form <mask_id=n, words=m>. Your job is given the passage predict the m words. Produce output in the following form
 
-mask_id_#: "m word string"
-mask_id_#, "m word string"
+1: "m_1 word string"
+2: "m_2 word string"
 ...
 
 Provide exactly m words, no more no less
