@@ -951,7 +951,7 @@ Here is the passage:
             "prompt": """
 You will be given a passage filled with tags of the form <mask_id=n, words=m>. Your job is given the passage predict the m words. Place all your predictions in a compact json of the form
 
-{["mask_id_#": "m word string", "mask_id_#, "m word string", ...]}
+{{["mask_id_#": "m word string", "mask_id_#, "m word string", ...]}}
 
 Provide exactly m words, no more no less
 
@@ -968,6 +968,7 @@ Just provide your answer without any prompt like "Here is the answer:" or any en
 If you cannot finish the passage, just say 'I cannot do it' and do not say anything else. 
 
 Here is the passage:
+
 {article}
 """,
           }
