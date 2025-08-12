@@ -19,12 +19,13 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on August 7th, 2025
+Last updated on August 12th, 2025
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_with_logo_2025-08-07_v2.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_with_logo_2025-08-11.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
+|AntGroup Finix-S1-32B|0.6 %|99.4 %|99.8 %|86.9|
 |Google Gemini-2.0-Flash-001|0.7 %|99.3 %|100.0 %|65.2|
 |Google Gemini-2.0-Pro-Exp|0.8 %|99.2 %|99.7 %|61.5|
 |OpenAI o3-mini-high|0.8 %|99.2 %|100.0 %|79.5|
@@ -39,7 +40,6 @@ Last updated on August 7th, 2025
 |OpenAI GPT-5-high|1.4 %|98.6 %|99.3 %|96.4|
 |OpenAI-o1-mini|1.4 %|98.6 %|100.0 %|78.3|
 |OpenAI GPT-4o|1.5 %|98.5 %|100.0 %|77.8|
-|AntGroup Antfinix-ir1|1.6 %|98.4 %|98.0 %|57.1|
 |Amazon Nova-Micro-V1|1.6 %|98.4 %|100.0 %|90.0|
 |OpenAI GPT-4o-mini|1.7 %|98.3 %|100.0 %|76.3|
 |OpenAI GPT-4-Turbo|1.7 %|98.3 %|100.0 %|86.2|
