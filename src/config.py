@@ -949,7 +949,7 @@ Here is the passage:
             "temperature": 1.0, 
             "max_tokens": 8192, 
             "prompt": """
-You will be given a passage filled with tags of the form <mask_id=n, words=m>. Your job is given the passage predict the m words. Place all your predictions in a compact json of the form
+You will be given a passage filled with tags of the form <mask_id=n, words=m>. Your job is given the passage predict the m words. Produce output in the following form
 
 mask_id_#: "m word string"
 mask_id_#, "m word string"
