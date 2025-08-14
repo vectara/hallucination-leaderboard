@@ -949,25 +949,28 @@ Here is the passage:
             "temperature": 1.0, 
             "max_tokens": 8192, 
             "prompt": """
-You will be given a passage filled with tags of the form <mask_id=n, words=m>. Your job is given the passage predict the m words. Produce output in the following form
+You will be given a passage filled with tags of the form <mask_id=n, words=m>. Your job is given the passage predict the m words.
 
-Output the following JSON for all mask tags in the passage
+Output the results in the following way
 
-[{{1: m_1 word string}}, {{2: m_2 word string}}, {{...}}}}
+1: m_1 word string
+2: m_2 word string
 
 Provide exactly m words, no more no less
+
+The predicted words should fit in with the passage seamlessly
 
 A word is defined as a single token made of letters/digits/apostrophe/hyphen with no spaces. (Don't, state-of-the-art, 1999)
 
 Isolated punctuation symbols also count as words for example "( Hello World )" is 4 words
 
-Other examples of single words include: 1-1 | "Hello, | $200million
+Other examples of single words include: 3-3 | "Hello, | $200million
 
 Do not rewrite the other parts of the passage
 
 Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
 
-If you cannot finish the passage, just say '{{}}' and do not say anything else. 
+If you cannot finish the passage, just say '' and do not say anything else. 
 
 Here is the passage:
 
@@ -976,7 +979,7 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
