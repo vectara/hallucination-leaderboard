@@ -127,6 +127,7 @@ Last updated on August 12th, 2025
 |Google Gemma-3-1B-Instruct|5.3 %|94.7 %|99.9 %|57.9|
 |Llama-3.1-8B-Instruct|5.4 %|94.6 %|100.0 %|71.0|
 |Cohere Command-R-Plus|5.4 %|94.6 %|100.0 %|68.4|
+|DeepSeek-AI DeepSeek-V3.1|5.5 %|94.5 %|98.7 %|78.0|
 |Llama-3.2-11B-Vision-Instruct|5.5 %|94.5 %|100.0 %|67.3|
 |TNGTech DeepSeek-TNG-R1T2-Chimera|5.5 %|94.5 %|99.6 %|78.6|
 |Mistral-Small-3.1-24B-Instruct|5.6 %|94.4 %|100.0 %|73.1|
@@ -164,6 +165,7 @@ Last updated on August 12th, 2025
 |AllenAI-OLMo-2-7B-Instruct|11.1 %|88.9 %|100.0 %|112.6|
 |Mistral-Nemo-Instruct|11.2 %|88.8 %|100.0 %|69.9|
 |Llama-2-7B-Chat-hf|11.3 %|88.7 %|99.6 %|119.9|
+|MistralAI Mistral-Medium-2508|11.4 %|88.6 %|98.3 %|99.2|
 |Microsoft WizardLM-2-8x22B|11.7 %|88.3 %|99.9 %|140.8|
 |Cohere Aya Expanse 8B|12.2 %|87.8 %|99.9 %|83.9|
 |Amazon Titan-Express|13.5 %|86.5 %|99.5 %|98.4|
