@@ -126,7 +126,7 @@ Here is the passage:
         # CohereConfig(**{"company": "cohere", "model_name": "command-r", "date_code": "08-2024", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "command-r-plus", "date_code": "04-2024", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "command-r7b", "date_code": "12-2024", "temperature": 0.0}),
-        CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096}),
+        CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096, "min_throttle_time": 5.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "date_code": "0324", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
@@ -431,7 +431,7 @@ Here is the passage:
       "per_LLM_configs": [
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
-        CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096}),
+        CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096, "min_throttle_time": 5.0}),
       ]
     }
   ),
