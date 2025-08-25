@@ -89,7 +89,6 @@ class CohereLLM(AbstractLLM):
                         max_tokens=self.max_tokens,
                         temperature=self.temperature
                     )
-                    print(response)
                     for content in response.message.content:
                         if content.type == "text":
                             summary = content.text
