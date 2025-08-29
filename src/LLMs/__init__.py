@@ -41,6 +41,7 @@ from . ibm_granite import IBMGraniteLLM, IBMGraniteConfig, IBMGraniteSummary
 from . tngtech import TngTechLLM, TngTechConfig, TngTechSummary
 from . antgroup_mi import AntGroupMILLM, AntGroupMIConfig, AntGroupMISummary
 from . zai_org import ZhipuAILLM, ZhipuAIConfig, ZhipuAISummary
+from . vectara import VectaraLLM, VectaraConfig, VectaraSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -137,6 +138,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": AntGroupMILLM,
         "config_class": AntGroupMIConfig,
         "summary_class": AntGroupMISummary
+    },
+    "vectara": {
+        "LLM_class": VectaraLLM,
+        "config_class": VectaraConfig,
+        "summary_class": VectaraSummary
     },
     "zai-org": {
         "LLM_class": ZhipuAILLM,

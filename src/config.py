@@ -21,7 +21,8 @@ from . LLMs import (
   IBMGraniteConfig,
   TngTechConfig,
   AntGroupMIConfig,
-  ZhipuAIConfig
+  ZhipuAIConfig,
+  VectaraConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -402,7 +403,8 @@ Here is the passage:
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      "pipeline": ["summarize", "judge", "aggregate"],
+      # "pipeline": ["summarize", "judge", "aggregate"],
+      "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_revised.csv",
@@ -429,9 +431,9 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
-        # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
-        CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096, "min_throttle_time": 5.0}),
+        # CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096, "min_throttle_time": 5.0}),
+        VectaraConfig(**{"company": "vectara", "model_name": "manual_short_summaries", "date_code": "", "temperature": 0.0, "max_tokens": 8192}),
+        VectaraConfig(**{"company": "vectara", "model_name": "manual_long_summaries", "date_code": "", "temperature": 0.0, "max_tokens": 8192}),
       ]
     }
   ),
