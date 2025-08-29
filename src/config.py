@@ -402,7 +402,7 @@ Here is the passage:
     {
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3",
+      "hhem_version": "2.1-open",
       # "pipeline": ["summarize", "judge", "aggregate"],
       "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
