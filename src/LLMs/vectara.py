@@ -10,8 +10,8 @@ class VectaraConfig(BasicLLMConfig):
     """Extended config for vectara-specific properties"""
     company: Literal["vectara"] = "vectara" 
     model_name: Literal[
-        "manual_short_summaries",
-        "manual_long_summaries",
+        "manual_short_summary",
+        "manual_long_summary",
     ] # Only model names manually added to this list are supported.
     date_code: str = "" # do we need date code?
     execution_mode: Literal["api"] = "api" # only API based?
@@ -30,10 +30,10 @@ class VectaraLLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
-        "manual_short_summaries":{
+        "manual_short_summary":{
             "chat": 0
         },
-        "manual_long_summaries":{
+        "manual_long_summary":{
             "chat": 0
         },
     }
