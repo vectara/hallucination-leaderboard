@@ -402,9 +402,8 @@ Here is the passage:
     {
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.1-open",
-      # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["judge", "aggregate"],
+      "hhem_version": "2.3",
+      "pipeline": ["summarize", "judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_revised.csv",
