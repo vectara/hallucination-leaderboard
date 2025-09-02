@@ -15,6 +15,7 @@ class GoogleConfig(BasicLLMConfig):
     company: Literal["google"] = "google"
     model_name: Literal[
         "gemini-2.5-flash-lite",
+        "gemini-2.5-flash"
         "gemini-2.5-pro-preview",
         "gemini-2.5-pro",
         "gemini-2.5-flash-preview", # 05-20
@@ -128,6 +129,9 @@ class GoogleLLM(AbstractLLM):
             "chat": 3
         },
         "gemini-2.5-flash-lite": {
+            "chat": 4
+        },
+        "gemini-2.5-flash": {
             "chat": 4
         },
     }
