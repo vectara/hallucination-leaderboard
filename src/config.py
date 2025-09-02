@@ -438,11 +438,11 @@ Here is the passage:
   ),
   EvalConfig(**
     {
-      "eval_name": "short_summary",
+      "eval_name": "short_summary_2.3",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["summarize", "judge", "aggregate"],
-      "output_dir": "output_short_summary",
+      "output_dir": "output_short_summary_2.3",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_revised.csv",
       "common_LLM_config": 
@@ -472,11 +472,81 @@ Here is the passage:
   ),
   EvalConfig(**
     {
-      "eval_name": "long_summary",
+      "eval_name": "long_summary_2.3",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["summarize", "judge", "aggregate"],
-      "output_dir": "output_long_summary",
+      "output_dir": "output_long_summary_2.3",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 1.0, 
+            "max_tokens": 4096, 
+            "prompt": """
+You are a chat bot answering questions using data.
+You must stick to the answers provided solely by the text in the 
+passage provided. You are asked the question 'Provide a  
+summary of the following passage, covering the core pieces of 
+information described.' It is crucial the summary covers ALL information
+in the passage. This summary should be long but do not make it longer
+than the original passage.
+
+If you cannot answer the question, for reasons like insufficient information in the passage, 
+just say 'I cannot do it. 2389fdsi2389432ksad' and do not say anything else. 
+
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+      ]
+    }
+  ),
+  EvalConfig(**
+    {
+      "eval_name": "short_summary_2.1-open",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.1-open",
+      "pipeline": ["judge", "aggregate"],
+      "output_dir": "output_short_summary_2.1-open",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 1.0, 
+            "max_tokens": 4096, 
+            "prompt": """
+You are a chat bot answering questions using data.
+You must stick to the answers provided solely by the text in the 
+passage provided. You are asked the question 'Provide a concise 
+summary of the following passage, covering the core pieces of 
+information described.' It is crucial to make the summary as short as possible.
+
+If you cannot answer the question, for reasons like insufficient information in the passage, 
+just say 'I cannot do it. 2389fdsi2389432ksad' and do not say anything else. 
+  
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+      ]
+    }
+  ),
+  EvalConfig(**
+    {
+      "eval_name": "long_summary_2.1-open",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.1-open",
+      "pipeline": ["judge", "aggregate"],
+      "output_dir": "output_long_summary_2.1-open",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_revised.csv",
       "common_LLM_config": 
