@@ -1080,18 +1080,17 @@ Here is the passage:
             "temperature": 1.0, 
             "max_tokens": 8192, 
             "prompt": """
-You will be given a passage filled with tags of the form <mask_id=n, words=m>. Your job is given the passage predict the m words.
+You will be given a passage with a singular tag of the form <mask_id=n, words=m>. Your job is given the passage predict the m words.
 
 Output the results in the following way
 
-1: m_1 word string
-2: m_2 word string
+mask_id_NUMBER = m word string
 
 Provide exactly m words, no more no less
 
 The predicted words should fit in with the passage seamlessly
 
-A word is defined as a single token made of letters/digits/apostrophe/hyphen with no spaces. (Don't, state-of-the-art, 1999)
+A word is defined as a continous string of non space characters made of letters/digits/apostrophe/hyphen with no spaces. (Don't | state-of-the-art | 1999)
 
 Isolated punctuation symbols also count as words for example "( Hello World )" is 4 words
 
@@ -1101,7 +1100,7 @@ Do not rewrite the other parts of the passage
 
 Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
 
-If you cannot finish the passage, just say '' and do not say anything else. 
+If you cannot predict the mask just say "" and nothing else. 
 
 Here is the passage:
 
