@@ -445,7 +445,7 @@ Here is the passage:
       "pipeline": ["summarize", "judge", "aggregate"],
       "output_dir": "output_short_summary_2.3",
       "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
+      "source_article_path": "datasets/leaderboard_dataset_revised_and_bbc_dataset.csv",
       "common_LLM_config": 
         BasicLLMConfig(**
           {
@@ -479,7 +479,7 @@ Here is the passage:
       "pipeline": ["summarize", "judge", "aggregate"],
       "output_dir": "output_long_summary_2.3",
       "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
+      "source_article_path": "datasets/leaderboard_dataset_revised_and_bbc_dataset.csv",
       "common_LLM_config": 
         BasicLLMConfig(**
           {
@@ -515,7 +515,7 @@ Here is the passage:
       "pipeline": ["judge", "aggregate"],
       "output_dir": "output_short_summary_2.1-open",
       "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
+      "source_article_path": "datasets/leaderboard_dataset_revised_and_bbc_dataset.csv",
       "common_LLM_config": 
         BasicLLMConfig(**
           {
@@ -549,7 +549,7 @@ Here is the passage:
       "pipeline": ["judge", "aggregate"],
       "output_dir": "output_long_summary_2.1-open",
       "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
+      "source_article_path": "datasets/leaderboard_dataset_revised_and_bbc_dataset.csv",
       "common_LLM_config": 
         BasicLLMConfig(**
           {
