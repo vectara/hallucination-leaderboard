@@ -20,6 +20,7 @@ class QwenConfig(BasicLLMConfig):
     """Extended config for Alibaba-specific properties"""
     company: Literal["qwen"] 
     model_name: Literal[
+        "qwen3-max-preview",
         "qwen3-32b",
         "qwen3-14b",
         "qwen3-8b",
@@ -53,6 +54,9 @@ class QwenLLM(AbstractLLM):
     """
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
+        "qwen3-max-preview": {
+            "chat": 2
+        },
         "qwen3-32b": {
             "chat": 2
         },

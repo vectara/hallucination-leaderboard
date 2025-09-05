@@ -8,6 +8,7 @@ from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 from huggingface_hub import InferenceClient
+from together import Together
 
 """
 Unique Notes:
@@ -55,17 +56,32 @@ class MoonshotAILLM(AbstractLLM):
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Default
-                    messages = [
-                        {"role": "user", "content": [{"type": "text", "text":  prepared_text}]}
-                    ]
-                    response = self.client.chat.completions.create(
+                    if self.date_code == "0905":
+                        client = Together()
+                        response = client.chat.completions.create(
                         model=self.huggingface_name,
-                        messages=messages,
-                        stream=False,
-                        temperature=self.temperature,
-                        max_tokens=self.max_tokens
-                    )
-                    summary = response.choices[0].message.content
+                            messages=[
+                                {
+                                "role": "user",
+                                "content": prepared_text
+                                }
+                            ],
+                            max_tokens = self.max_tokens,
+                            temperature = self.temperature,
+                        )
+                        summary = response.choices[0].message.content
+                    else:
+                        messages = [
+                            {"role": "user", "content": [{"type": "text", "text":  prepared_text}]}
+                        ]
+                        response = self.client.chat.completions.create(
+                            model=self.huggingface_name,
+                            messages=messages,
+                            stream=False,
+                            temperature=self.temperature,
+                            max_tokens=self.max_tokens
+                        )
+                        summary = response.choices[0].message.content
         elif self.local_model: 
             pass
         else:
