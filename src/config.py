@@ -127,7 +127,7 @@ Here is the passage:
         # CohereConfig(**{"company": "cohere", "model_name": "command-r", "date_code": "08-2024", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "command-r-plus", "date_code": "04-2024", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "command-r7b", "date_code": "12-2024", "temperature": 0.0}),
-        CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096, "min_throttle_time": 5.0}),
+        # CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096, "min_throttle_time": 5.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "date_code": "0324", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
@@ -296,6 +296,7 @@ Here is the passage:
         #   }
         # ),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
+        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
         # MicrosoftConfig(**
         #   {
         #     "company": "microsoft",
@@ -430,7 +431,8 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
         # CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096, "min_throttle_time": 5.0}),
         # VectaraConfig(**{"company": "vectara", "model_name": "manual_short_summary", "date_code": "", "temperature": 0.0, "max_tokens": 8192}),
         # VectaraConfig(**{"company": "vectara", "model_name": "manual_long_summary", "date_code": "", "temperature": 0.0, "max_tokens": 8192}),
