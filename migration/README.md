@@ -2,23 +2,25 @@
 
 ## 2025-07-17:  From HF summaries repo `leaderboard_results` to July 2025 format. 
 
-The working directory for this migration is `old_summarie_to_2025_July_format/`
+This migrates **only the summaries**. Judgements and stats should be regenerated using specific version of HHEM.
 
-Vectara has two dataset repos on HF: 
-1. `vectarra/leaderboard_results`: The summaries produced by LLMs.
-2. `vectarra/results`: The hallucination rates, answer rates, avg. word count, etc. of each LLM.
+The working directory for this migration is `old_summaries_to_2025_July_format/`
+
+Vectara has two dataset repos on HF:
+1. `vectara/leaderboard_results`: The summaries produced by LLMs.
+2. `vectara/results`: The hallucination rates, answer rates, avg. word count, etc. of each LLM.
 
 Convert summaries previously generated from HuggingFace Dataset repo https://huggingface.co/datasets/vectara/leaderboard_results to new output format of the LB.
 
 Migration notes: 
-1. The Google Drive snapshot of summaries is no longer needed. It was last updated in July 2024. It's superset is the HF dataset repo `vectarra/leaderboard_results`.
+1. The Google Drive snapshot of summaries is no longer needed. It was last updated in July 2024. Its superset is the HF dataset repo `vectara/leaderboard_results`.
 2. `gpt-4-turbo` in HF repo `vectara/results` should have been `openai/gpt-4-turbo-2024-04-09`. But no need to change as we will discard `vectara/results`. 
 3. The summaries for `gemma-3-12b-it` and `google/gemini-2.5-pro-preview-06-05` cannot be found in `vectara/leaderboard_results` although they are on our LB. We may or may not need to reproduce it. 
 4. [TODO] Unifying company/model names (Please expand the mapping in `company_and_model_name_mapping.py` and use the mapping to unify company/model names in `convert_HF_summaries_to_2025_July_format_summaries_jsonl.ipynb`): 
   - Merge company names: 
     - `x-ai` to `xai`. 
     - `gemini-2.0-flash-exp` to `google/gemini-2.0-flash-exp`
-    - `anthropic` to `Anthropic`
+    - `Anthropic` to `anthropic`
   - For non-open-source models, use their names in their official API
     - Anthropic's official model names (see `anthropic_list_models.py`)
     - OpenAI's official model names (see `openai_list_models.py`)
