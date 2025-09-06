@@ -9,8 +9,6 @@ from .. data_model import ModelInstantiationError, SummaryError
 # Import the Python package for the specific provider.
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
-#TODO: Rename IbmGranite
-
 COMPANY = "ibm-granite"
 
 class IBMGraniteConfig(BasicLLMConfig):

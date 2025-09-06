@@ -15,17 +15,20 @@ qwen-max
 
 #TODO: Rename Qwen
 
-COMPANY = "qwn" # Previously alibaba
+COMPANY = "qwen" # Previously alibaba
 class QwenConfig(BasicLLMConfig):
     """Extended config for Alibaba-specific properties"""
     company: Literal["qwen"] 
     model_name: Literal[
+        "qwen3-max-preview",
         "qwen3-32b",
         "qwen3-14b",
         "qwen3-8b",
         "qwen3-4b",
         "qwen3-1.7b",
         "qwen3-0.6b",
+        "qwen-plus",
+        "qwen-turbo",
         "qwen-max",
         "qwen2.5-72b-instruct", 
         "qwen2.5-32b-instruct", 
@@ -36,9 +39,11 @@ class QwenConfig(BasicLLMConfig):
     execution_mode: Literal["api"] = "api" # Is Alibaba only API based?
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
     thinking_tokens: bool = None
+    enable_thinking: bool = None
 
 class QwenSummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    enable_thinking: bool | None = None
 
     class Config:
         extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
@@ -49,24 +54,33 @@ class QwenLLM(AbstractLLM):
     """
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
+        "qwen3-max-preview": {
+            "chat": 2
+        },
         "qwen3-32b": {
-            "chat": 1
+            "chat": 2
         },
         "qwen3-14b": {
-            "chat": 1
+            "chat": 2
         },
         "qwen3-8b": {
-            "chat": 1
+            "chat": 2
         },
         "qwen3-4b": {
-            "chat": 1
+            "chat": 2
         },
         "qwen3-1.7b": {
-            "chat": 1
+            "chat": 2
         },
         "qwen3-0.6b": {
-            "chat": 1
+            "chat": 2
         },
+        "qwen-plus": {
+            "chat": 2
+        }, # 2025-04-28
+        "qwen-turbo": {
+            "chat": 2
+        }, # 2025-04-28
         "Qwen2.5-Max": {
             "chat": 1
         },
@@ -94,17 +108,27 @@ class QwenLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.enable_thinking = config.enable_thinking
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Reasoning model with disabled thinking
+                case 1: # Default
                     completion = self.client.chat.completions.create(
                         model=self.model_fullname,
                         temperature=self.temperature,
                         max_tokens=self.max_tokens,
-                        extra_body = {"enable_thinking": self.thinking_tokens},
+                        messages=[
+                            {"role": "user", "content": prepared_text}],
+                        )
+                    summary = completion.choices[0].message.content
+                case 2: # Reasoning model
+                    completion = self.client.chat.completions.create(
+                        model=self.model_fullname,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens,
+                        extra_body = {"enable_thinking": self.enable_thinking},
                         messages=[
                             {"role": "user", "content": prepared_text}],
                         )

@@ -17,6 +17,7 @@ class DeepSeekAIConfig(BasicLLMConfig):
         "deepseek-chat",
         "deepseek-coder",
         "DeepSeek-V3", #0324
+        "DeepSeek-V3.1",
         "DeepSeek-R1",
         "DeepSeek-V2.5" # Not implemented
 
@@ -47,6 +48,9 @@ class DeepSeekAILLM(AbstractLLM):
             "chat": 1
         },
         "DeepSeek-V3": {
+            "chat": 1
+        },
+        "DeepSeek-V3.1": {
             "chat": 1
         },
         "DeepSeek-V2.5": {

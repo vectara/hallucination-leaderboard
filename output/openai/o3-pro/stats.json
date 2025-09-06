@@ -1,0 +1,8 @@
+{
+    "timestamp": "2025-06-12",
+    "llm": "o3-pro",
+    "hallucination_rate": 7.0,
+    "confidence_interval": -1.0,
+    "answer_rate": 100.0,
+    "avg_summary_length": 88.9
+}

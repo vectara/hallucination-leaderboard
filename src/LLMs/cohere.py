@@ -13,6 +13,7 @@ class CohereConfig(BasicLLMConfig):
     company: Literal["cohere"] = "cohere"
     model_name: Literal[
         "command-a", #03-2025
+        "command-a-reasoning",
         "c4ai-aya-expanse-32b",
         "c4ai-aya-expanse-8b",
         "command-r-plus", #04-2024
@@ -38,6 +39,9 @@ class CohereLLM(AbstractLLM):
     client_mode_group = {
         "command-a": {
             "chat": 1
+        },
+        "command-a-reasoning": {
+            "chat": 2
         },
         "c4ai-aya-expanse-32b": {
             "chat": 1
@@ -78,6 +82,16 @@ class CohereLLM(AbstractLLM):
                     )
 
                     summary = response.message.content[0].text
+                case 2:
+                    response = self.client.chat(
+                        model=self.model_fullname,
+                        messages=[{"role": "user", "content": prepared_text}],
+                        max_tokens=self.max_tokens,
+                        temperature=self.temperature
+                    )
+                    for content in response.message.content:
+                        if content.type == "text":
+                            summary = content.text
         elif self.local_model: 
             pass
         else:

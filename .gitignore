@@ -7,7 +7,7 @@ log.txt
 TODO.md
 
 models/
-output/
+output_test/
 
 config.json
 test_config.json

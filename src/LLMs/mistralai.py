@@ -27,6 +27,7 @@ class MistralAIConfig(BasicLLMConfig):
     company: Literal["mistralai"] = "mistralai"
     model_name: Literal[
         "magistral-medium", 
+        "mistral-medium",
         "mistral-small",
         "mistral-large",
         "ministral-3b",
@@ -59,6 +60,9 @@ class MistralAILLM(AbstractLLM):
         "magistral-medium":{
             "chat": 1
         }, # Doesn't look like magistral can disable thinking
+        "mistral-medium":{
+            "chat": 1
+        },
         "mistral-small": {
             "chat": 1
         },

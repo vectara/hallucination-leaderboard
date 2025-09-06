@@ -8,6 +8,7 @@ from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 from huggingface_hub import InferenceClient
+from together import Together
 
 """
 Unique Notes:
@@ -18,7 +19,7 @@ class MoonshotAIConfig(BasicLLMConfig):
     """Extended config for moonshotai-specific properties"""
     company: Literal["moonshotai"] 
     model_name: Literal[
-        "moonshotai/Kimi-K2-Instruct"
+        "Kimi-K2-Instruct"
     ] # Only model names manually added to this list are supported.
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
@@ -36,7 +37,7 @@ class MoonshotAILLM(AbstractLLM):
     """
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
-        "moonshotai/Kimi-K2-Instruct": {
+        "Kimi-K2-Instruct": {
             "chat": 1
         },
     }
@@ -48,23 +49,39 @@ class MoonshotAILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.huggingface_name = f"moonshotai/{self.model_fullname}"
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Default
-                    messages = [
-                        {"role": "user", "content": [{"type": "text", "text":  prepared_text}]}
-                    ]
-                    response = self.client.chat.completions.create(
-                        model=self.model_fullname,
-                        messages=messages,
-                        stream=False,
-                        temperature=self.temperature,
-                        max_tokens=self.max_tokens
-                    )
-                    summary = response.choices[0].message.content
+                    if self.date_code == "0905":
+                        client = Together()
+                        response = client.chat.completions.create(
+                        model=self.huggingface_name,
+                            messages=[
+                                {
+                                "role": "user",
+                                "content": prepared_text
+                                }
+                            ],
+                            max_tokens = self.max_tokens,
+                            temperature = self.temperature,
+                        )
+                        summary = response.choices[0].message.content
+                    else:
+                        messages = [
+                            {"role": "user", "content": [{"type": "text", "text":  prepared_text}]}
+                        ]
+                        response = self.client.chat.completions.create(
+                            model=self.huggingface_name,
+                            messages=messages,
+                            stream=False,
+                            temperature=self.temperature,
+                            max_tokens=self.max_tokens
+                        )
+                        summary = response.choices[0].message.content
         elif self.local_model: 
             pass
         else:
@@ -78,7 +95,7 @@ class MoonshotAILLM(AbstractLLM):
     def setup(self):
         if self.execution_mode == "api":
             if self.model_name in self.client_mode_group:
-                self.client = InferenceClient(model=self.model_fullname)
+                self.client = InferenceClient(model=self.huggingface_name)
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
