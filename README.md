@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on August 12th, 2025
+Last updated on September 8th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_with_logo_2025-08-11.png)
 
@@ -88,6 +88,7 @@ Last updated on August 12th, 2025
 |Google Gemma-3-4B-Instruct|3.7 %|96.3 %|100.0 %|63.7|
 |Qwen3-0.6B|3.7 %|96.3 %|100.0 %|65.3|
 |01-AI Yi-1.5-34B-Chat|3.7 %|96.3 %|100.0 %|83.7|
+|Qwen3-Max-Preview|3.8 %|96.2 %|97.0 %|80.8|
 |Llama-3.1-405B-Instruct|3.9 %|96.1 %|99.6 %|85.7|
 |DeepSeek-V3|3.9 %|96.1 %|100.0 %|88.2|
 |Microsoft Phi-3-mini-4k-instruct|4.0 %|96.0 %|100.0 %|86.8|
@@ -132,6 +133,7 @@ Last updated on August 12th, 2025
 |TNGTech DeepSeek-TNG-R1T2-Chimera|5.5 %|94.5 %|99.6 %|78.6|
 |Mistral-Small-3.1-24B-Instruct|5.6 %|94.4 %|100.0 %|73.1|
 |Llama-2-70B-Chat-hf|5.9 %|94.1 %|99.9 %|84.9|
+|MoonshotAI Kimi-K2-Instruct-0905|6.2%|93.8 %|99.6 %|61.2|
 |IBM Granite-3.0-8B-Instruct|6.5 %|93.5 %|100.0 %|74.2|
 |Google Gemini-1.5-Pro-002|6.6 %|93.7 %|99.9 %|62.0|
 |Google Gemini-1.5-Flash|6.6 %|93.4 %|99.9 %|63.3|
