@@ -23,8 +23,11 @@
     # !!! cohere -> CohereLabs
         # Model names incorrect (Done)
     # databricks - Correct
+        # Models Correct
     # !!! deepseek -> deepseek-ai
+        # Models Incorrect (Done)
     # google - Correct
+        # Models Incorrect
     # ibm-granite - Correct
     # intel - Correct
     # internlm - Correct
@@ -69,6 +72,25 @@ name_mapping = {
     'cohere/command-a': 'CohereLabs/command-a-03-2025', # Open source on HF
     'cohere/command-r': 'CohereLabs/command-r-08-2024', # Open source on HF
     'cohere/command-r-plus': 'CohereLabs/command-r-plus-08-2024',
+
+    'deepseek/deepseek-chat': 'ambiguous',
+    'deepseek/deepseek-r1': 'deepseek-ai/DeepSeek-R1',
+    'deepseek/deepseek-v3': 'deepseek-ai/DeepSeek-V3',
+    'deepseek/deepseek-v3-0324': 'deepseek-ai/DeepSeek-V3-0324',
+
+    '': '',
+    'google/Gemini-1.5-flash': 'google/gemini-1.5-flash',
+    'google/Gemini-1.5-Pro': 'google/gemini-1.5-pro',
+    'google/gemini-2.5-pro-exp': 'ambiguous', #Date Code could be 01-21 or 1219
+    # 'google/gemini-flash-experimental': 'ambiguous', #Model not listed anywhere but naming pattern is correct
+    'google/Gemini-Pro': 'google/gemini-pro', # or 'ambiguous', #Model not listed anywhere and naming patter is incorrect
+    # 'google/gemini-pro-experimental': 'ambiguous', #Model not listed anywhere but naming pattern is correct
+    # 'google/PaLM-2': 'google/test-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
+    # 'google/PaLM-2-Chat': 'google/chat-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
+
+
+    
+
 
     'mistralai/mistral-small-3.1-24b-instruct': 'mistralai/Mistral-Small-3.1-24b-instruct-2503',  # I cannot find the model mistral-small-3.1-24b-instruct in google. the closest I can find is mistral-small-3.1-24b-instruct-2503. 
     'mistralai/Mixtral-8x22B-Instruct-v0.1': 'mistralai/Mixtral-8x22B-Instruct-v0.1',
