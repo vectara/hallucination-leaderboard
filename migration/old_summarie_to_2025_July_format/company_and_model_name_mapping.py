@@ -27,10 +27,13 @@
     # !!! deepseek -> deepseek-ai
         # Models Incorrect (Done)
     # google - Correct
-        # Models Incorrect
+        # Models Incorrect (Done but needs review)
     # ibm-granite - Correct
+        # Models Correct
     # intel - Correct
+        # Models correct
     # internlm - Correct
+        # Models Correct
     # meta-llama - Correct
     # microsoft - Correct
     # mistralai - Correct
@@ -78,7 +81,6 @@ name_mapping = {
     'deepseek/deepseek-v3': 'deepseek-ai/DeepSeek-V3',
     'deepseek/deepseek-v3-0324': 'deepseek-ai/DeepSeek-V3-0324',
 
-    '': '',
     'google/Gemini-1.5-flash': 'google/gemini-1.5-flash',
     'google/Gemini-1.5-Pro': 'google/gemini-1.5-pro',
     'google/gemini-2.5-pro-exp': 'ambiguous', #Date Code could be 01-21 or 1219
@@ -88,7 +90,7 @@ name_mapping = {
     # 'google/PaLM-2': 'google/test-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
     # 'google/PaLM-2-Chat': 'google/chat-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
 
-
+    '': '',
     
 
 
@@ -106,5 +108,5 @@ name_mapping = {
     'mistralai/pixtral-large-latest': 'mistralai/Pixtral-Large-Instruct-2411', # there is only one version pixal-large so far, which is 2411
 
 
-    'gemini-2.0-flash-exp' : 'google/gemini-2.0-flash-exp',
+    # 'gemini-2.0-flash-exp' : 'google/gemini-2.0-flash-exp',
 }
