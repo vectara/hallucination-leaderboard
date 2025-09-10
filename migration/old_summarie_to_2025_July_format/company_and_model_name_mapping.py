@@ -50,6 +50,7 @@ name_mapping = {
     'xai' : 'xai-org',
     'cohere': 'CohereLabs',
     'deepseek': 'deepseek-ai',
+    'THUDM': 'zai-org',
 
     '01-ai/Yi-1.5-6B-Chat': '01-ai/Yi-1.5-6B-Chat', # Same
     '01-ai/Yi-1.5-9B-Chat': '01-ai/Yi-1.5-9B-Chat', # Same
@@ -160,7 +161,6 @@ name_mapping = {
     'microsoft/Phi-4-mini-instruct': 'microsoft/Phi-4-mini-instruct',
     'microsoft/WizardLM-2-8x22B': 'microsoft/WizardLM-2-8x22B',
 
-    # Review below
     # TODO 'mistralai/ministral-3b-latest': 'ambiguous', # I cannot find this model. There is only ministral-3b-instruct. 
     'mistralai/ministral-8b-latest': 'mistralai/Ministral-8B-Instruct-2410',  # there seems to be only one ministral-8b. So i assume it is this one
     'mistralai/Mistral-7B-Instruct-v0.3': 'mistralai/Mistral-7B-Instruct-v0.3',
@@ -174,10 +174,56 @@ name_mapping = {
     'mistralai/Mixtral-8x22B-Instruct-v0.1': 'mistralai/Mixtral-8x22B-Instruct-v0.1',
     'mistralai/pixtral-large-latest': 'mistralai/Pixtral-Large-Instruct-2411', # there is only one version pixal-large so far, which is 2411
 
+    'openai/chatgpt-4o': 'openai/chatgpt-4o-latest',
+    # TODO 'openai/GPT-3.5-Turbo': 'ambiguous', two date code versions
+    # TODO 'openai/GPT-4': 'ambiguous', two date code versions
+    'openai/GPT-4-Turbo': 'openai/gpt-4-turbo-2024-04-09',
+    'openai/gpt-4.1': 'openai/gpt-4.1-2025-04-14',
+    'openai/gpt-4.1-mini': 'openai/gpt-4.1-mini-2025-04-14',
+    'openai/gpt-4.1-nano': 'openai/gpt-4.1-nano-2025-04-14',
+    'openai/gpt-4.5-preview': 'openai/gpt-4.5-preview-2025-02-27',
+    # 'openai/gpt-4o': 'ambiguous', 3 date codes
+    'openai/GPT-4o-mini': 'openai/gpt-4o-mini-2024-07-18',
+    'openai/o1': 'openai/o1-2024-12-17',
+    'openai/o1-mini': 'openai/o1-mini-2024-09-12',
+    'openai/o1-preview': 'openai/o1-preview-2024-09-12',
+    'openai/o1-pro': 'openai/o1-pro-2025-03-19',
+    'openai/o3': 'openai/o3-2025-04-16',
+    'openai/o4-mini': 'openai/o4-mini-2025-04-16',
 
+    # qwen
+    'qwen/qwen-max': 'qwen/qwen-max-2025-01-25',
+    'qwen/Qwen2-72B-Instruct': 'qwen/Qwen2-72B-Instruct',
+    'qwen/Qwen2-VL-2B-Instruct': 'qwen/Qwen2-VL-2B-Instruct',
+    'qwen/Qwen2-VL-7B-Instruct': 'qwen/Qwen2-VL-7B-Instruct',
+    'qwen/Qwen2.5-0.5B-Instruct': 'qwen/Qwen2.5-0.5B-Instruct',
+    'qwen/Qwen2.5-1.5B-Instruct': 'qwen/Qwen2.5-1.5B-Instruct',
+    'qwen/Qwen2.5-3B-Instruct': 'qwen/Qwen2.5-3B-Instruct',
+    'qwen/Qwen2.5-7B-Instruct': 'qwen/Qwen2.5-7B-Instruct',
+    'qwen/Qwen2.5-14B-Instruct': 'qwen/Qwen2.5-14B-Instruct',
+    'qwen/Qwen2.5-32B-Instruct': 'qwen/Qwen2.5-32B-Instruct',
+    'qwen/Qwen2.5-72B-Instruct': 'qwen/Qwen2.5-72B-Instruct',
+    'qwen/Qwen3-0.6B': 'qwen/Qwen3-0.6B',
+    'qwen/Qwen3-1.7B': 'qwen/Qwen3-1.7B',
+    'qwen/Qwen3-4B': 'qwen/Qwen3-4B',
+    'qwen/Qwen3-8B': 'qwen/Qwen3-8B',
+    'qwen/Qwen3-14B': 'qwen/Qwen3-14B',
+    'qwen/qwen3-30b-a3b': 'qwen/Qwen3-30B-A3B',
+    'qwen/Qwen3-32B': 'qwen/Qwen3-32B',
+    'qwen/qwen3-235b-a22b': 'qwen/Qwen3-235B-A22B',
+    'qwen/QwQ-32B-Preview': 'qwen/QwQ-32B-Preview',
 
+    'snowflake/snowflake-arctic-instruct': 'snowflake/snowflake-arctic-instruct',
 
-    '': '',
+    'THUDM/glm-4-9b-chat': 'zai-org/glm-4-9b-chat',
 
-    # 'gemini-2.0-flash-exp' : 'google/gemini-2.0-flash-exp',
+    'tiiuae/falcon-7b-instruct': 'tiiuae/falcon-7b-instruct',
+
+    'xai/grok-2-1212': 'xai-org/grok-2-1212',
+    'xai/grok-2-vision-1212': 'xai-org/grok-2-vision-1212',
+    'xai/grok-3-latest': 'xai-org/grok-3',
+    'xai/grok-3-mini-latest': 'xai-org/grok-3-mini',
+    # TODO 'xai/grok-beta': 'ambiguous', Grok-1-beta?
+
+    # 'gemini-2.0-flash-exp' : 'google/gemini-2.0-flash-exp', shouldn't need this one
 }
