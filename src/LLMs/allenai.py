@@ -17,7 +17,10 @@ class AllenAIConfig(BasicLLMConfig):
         # "OLMo-2-1124-13B-Instruct"
     model_name: Literal[
         "OLMo-2-7B-Instruct", #1124
-        "OLMo-2-13B-Instruct"
+        "OLMo-2-13B-Instruct",
+        "OLMo-2-0325-32B-Instruct",
+        "OLMo-2-1124-7b-instruct",
+        "OLMo-2-1124-12b-instruct",
     ] # Only model names manually added to this list are supported.
     date_code: str = ""
     endpoint: Literal["chat", "response"] = "chat"
