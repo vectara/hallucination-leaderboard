@@ -24,7 +24,8 @@ from . LLMs import (
   AntGroupMIConfig,
   ZhipuAIConfig,
   VectaraConfig,
-  AmazonConfig
+  AmazonConfig,
+  DatabricksConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -582,6 +583,7 @@ Here is the passage:
         CohereConfig(**{"company": "CohereLabs", "model_name": "command-chat", "date_code": "", "temperature": 0.0}),
         CohereConfig(**{"company": "CohereLabs", "model_name": "command-r", "date_code": "08-2024", "temperature": 0.0}),
 
+        DatabricksConfig(**{"company": "databricks", "model_name": "dbrx-instruct", "date_code": "", "temperature": 0.0}),
 
 
       ]

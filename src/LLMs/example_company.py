@@ -20,7 +20,7 @@ class COMPANY_NAMESummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
 
     class Config:
-        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
+        extra = "ignore"
 
 class COMPANY_NAMELLM(AbstractLLM):
     """

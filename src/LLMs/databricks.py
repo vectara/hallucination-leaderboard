@@ -5,26 +5,26 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-COMPANY = "apple" #Official company name on huggingface
-class AppleConfig(BasicLLMConfig):
-    """Extended config for apple-specific properties"""
-    company: Literal["apple"] = "apple"
+COMPANY = "databricks" #Official company name on huggingface
+class DatabricksConfig(BasicLLMConfig):
+    """Extended config for databricks-specific properties"""
+    company: Literal["databricks"] = "databricks"
     model_name: Literal[
-        "OpenELM-3B-Instruct",
+        "dbrx-instruct",
     ] # Only model names manually added to this list are supported.
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
 
-class AppleSummary(BasicSummary):
+class DatabricksSummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
 
     class Config:
         extra = "ignore"
 
-class AppleLLM(AbstractLLM):
+class DatabricksLLM(AbstractLLM):
     """
-    Class for models from apple
+    Class for models from databricks
     """
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
@@ -37,7 +37,7 @@ class AppleLLM(AbstractLLM):
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
-    def __init__(self, config: AppleConfig):
+    def __init__(self, config: DatabricksConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode

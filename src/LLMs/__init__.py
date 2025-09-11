@@ -44,6 +44,7 @@ from . zai_org import ZhipuAILLM, ZhipuAIConfig, ZhipuAISummary
 from . vectara import VectaraLLM, VectaraConfig, VectaraSummary
 from . amazon import AmazonLLM, AmazonConfig, AmazonSummary
 from . apple import AppleLLM, AppleConfig, AppleSummary
+from . databricks import DatabricksLLM, DatabricksConfig, DatabricksSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -65,6 +66,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": AnthropicLLM,
         "config_class": AnthropicConfig,
         "summary_class": AnthropicSummary,
+    },
+    "databricks": {
+        "LLM_class": DatabricksLLM,
+        "config_class": DatabricksConfig,
+        "summary_class": DatabricksSummary,
     },
     "google": {
         "LLM_class": GoogleLLM,
