@@ -15,6 +15,7 @@ class _01AIConfig(BasicLLMConfig):
     """Extended config for 01-AI-specific properties"""
     company: Literal["01-ai"] = "01-ai"
     model_name: Literal[
+        "Yi-1.5-6B-Chat"
         "Yi-1.5-9B-Chat",
         "Yi-1.5-34B-Chat"
     ] # Only model names manually added to this list are supported.
@@ -41,6 +42,9 @@ class _01AILLM(AbstractLLM):
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
+        "Yi-1.5-6B-Chat": { # Needs a real summary case in the future
+            "chat": 100
+        },
         "Yi-1.5-9B-Chat": {
             "chat": 1
         },

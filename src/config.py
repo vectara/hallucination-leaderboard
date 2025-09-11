@@ -473,7 +473,27 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
+        _01AIConfig(**
+          {
+            "company": "01-ai",
+            "model_name": "Yi-1.5-6B-Chat",
+            "temperature": 0.01, # Cant be 0.0 has to be positive
+          }
+        ),
+        _01AIConfig(**
+          {
+            "company": "01-ai",
+            "model_name": "Yi-1.5-9B-Chat",
+            "temperature": 0.01, # Cant be 0.0 has to be positive
+          }
+        ),
+        _01AIConfig(**
+          {
+            "company": "01-ai",
+            "model_name": "Yi-1.5-34B-Chat",
+            "temperature": 0.01, # Cant be 0.0 has to be positive
+          }
+        ),
       ]
     }
   ),
