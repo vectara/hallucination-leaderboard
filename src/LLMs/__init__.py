@@ -42,12 +42,18 @@ from . tngtech import TngTechLLM, TngTechConfig, TngTechSummary
 from . antgroup_mi import AntGroupMILLM, AntGroupMIConfig, AntGroupMISummary
 from . zai_org import ZhipuAILLM, ZhipuAIConfig, ZhipuAISummary
 from . vectara import VectaraLLM, VectaraConfig, VectaraSummary
+from . amazon import AmazonLLM, AmazonConfig, AmazonSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
         "LLM_class": OpenAILLM,
         "config_class": OpenAIConfig,
         "summary_class": OpenAISummary,
+    },
+    "amazon": {
+        "LLM_class": AmazonLLM,
+        "config_class": AmazonConfig,
+        "summary_class": AmazonSummary,
     },
     "anthropic": {
         "LLM_class": AnthropicLLM,

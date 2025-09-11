@@ -22,7 +22,8 @@ from . LLMs import (
   TngTechConfig,
   AntGroupMIConfig,
   ZhipuAIConfig,
-  VectaraConfig
+  VectaraConfig,
+  AmazonConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -522,6 +523,28 @@ Here is the passage:
             "company": "allenai",
             "model_name": "OLMo-2-1124-13b-instruct",
             "date_code": "1124",
+          }
+        ),
+
+        AmazonConfig(**
+          {
+            "company": "amazon",
+            "model_name": "nova-lite-v1:0",
+            "date_code": "",
+          }
+        ),
+        AmazonConfig(**
+          {
+            "company": "amazon",
+            "model_name": "nova-micro-v1:0",
+            "date_code": "",
+          }
+        ),
+        AmazonConfig(**
+          {
+            "company": "amazon",
+            "model_name": "nova-pro-v1:0",
+            "date_code": "",
           }
         ),
       ]
