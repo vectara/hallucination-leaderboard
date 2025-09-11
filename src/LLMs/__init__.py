@@ -45,6 +45,7 @@ from . vectara import VectaraLLM, VectaraConfig, VectaraSummary
 from . amazon import AmazonLLM, AmazonConfig, AmazonSummary
 from . apple import AppleLLM, AppleConfig, AppleSummary
 from . databricks import DatabricksLLM, DatabricksConfig, DatabricksSummary
+from . intel import IntelLLM, IntelConfig, IntelSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -72,15 +73,20 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": DatabricksConfig,
         "summary_class": DatabricksSummary,
     },
+    "deepseek-ai": {
+        "LLM_class": DeepSeekAILLM,
+        "config_class": DeepSeekAIConfig,
+        "summary_class": DeepSeekAISummary
+    },
     "google": {
         "LLM_class": GoogleLLM,
         "config_class": GoogleConfig,
         "summary_class": GoogleSummary
     },
-    "deepseek-ai": {
-        "LLM_class": DeepSeekAILLM,
-        "config_class": DeepSeekAIConfig,
-        "summary_class": DeepSeekAISummary
+    "Intel": {
+        "LLM_class": IntelLLM,
+        "config_class": IntelConfig,
+        "summary_class": IntelSummary
     },
     "qcri": {
         "LLM_class": QCRILLM,

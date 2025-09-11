@@ -25,7 +25,8 @@ from . LLMs import (
   ZhipuAIConfig,
   VectaraConfig,
   AmazonConfig,
-  DatabricksConfig
+  DatabricksConfig,
+  IntelConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -661,6 +662,14 @@ Here is the passage:
           }
         ),
 
+        IntelConfig(**
+          {
+            "company": "Intel",
+            "model_name": "neural-chat-7b-v3-3",
+            "temperature": 0.0,
+            "date_code": ""
+          }
+        ),
 
       ]
     }
