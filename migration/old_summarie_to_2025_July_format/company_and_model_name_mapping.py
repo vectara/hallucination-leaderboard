@@ -47,10 +47,10 @@
     # !!! xai -> xai-org
 
 name_mapping = {
-    'xai' : 'xai-org',
-    'cohere': 'CohereLabs',
-    'deepseek': 'deepseek-ai',
-    'THUDM': 'zai-org',
+    # 'xai' : 'xai-org',
+    # 'cohere': 'CohereLabs',
+    # 'deepseek': 'deepseek-ai',
+    # 'THUDM': 'zai-org',
 
     '01-ai/Yi-1.5-6B-Chat': '01-ai/Yi-1.5-6B-Chat', # Same
     '01-ai/Yi-1.5-9B-Chat': '01-ai/Yi-1.5-9B-Chat', # Same
@@ -61,8 +61,8 @@ name_mapping = {
     'ai21labs/jamba-1.6-mini': 'ai21labs/AI21-Jamba-Mini-1.6',
 
     'allenai/olmo-2-0325-32b-instruct': 'allenai/OLMo-2-0325-32B-Instruct',
-    'allenai/OLMo-2-1124-7b-instruct': 'allenai/OLMo-2-1124-7b-instruct', # Same
-    'allenai/OLMo-2-1124-13b-instruct': 'allenai/OLMo-2-1124-13b-instruct', # Same
+    'allenai/OLMo-2-1124-7B-Instruct': 'allenai/OLMo-2-1124-7b-instruct', # Same
+    'allenai/OLMo-2-1124-13B-Instruct': 'allenai/OLMo-2-1124-13b-instruct', # Same
 
     'amazon/nova-lite-v1': 'amazon/nova-lite-v1:0',
     'amazon/nova-micro-v1': 'amazon/nova-micro-v1:0',
@@ -70,8 +70,8 @@ name_mapping = {
     # TODO 'amazon/Titan-Express': 'amazon/titan-text-express-v1', # MAYBE: Ambiguous can skip
 
     'anthropic/Claude-2': 'anthropic/claude-2.0',
-    'anthropic/claude-3-5-haiku': 'anthropic/claude-3-5-haiku', # Same
-    'anthropic/claude-3-5-sonnet': 'anthropic/claude-3-5-sonnet-20241022',
+    'anthropic/claude-3-5-haiku-20241022': 'anthropic/claude-3-5-haiku-20241022', # Same
+    'anthropic/claude-3-5-sonnet-20241022': 'anthropic/claude-3-5-sonnet-20241022',
     'anthropic/claude-3-5-sonnet-20240620': 'anthropic/claude-3-5-sonnet-20240620', # Same
     # TODO 'anthropic/claude-3-7-sonnet-latest': 'ambiguous',
     # TODO 'anthropic/claude-3-7-sonnet-latest-think': 'ambiguous',
@@ -89,6 +89,11 @@ name_mapping = {
     'cohere/command-r': 'CohereLabs/command-r-08-2024', # Open source on HF
     'cohere/command-r-plus': 'CohereLabs/command-r-plus-08-2024',
 
+    'cohere/command-r-08-2024': 'CohereLabs/command-r-08-2024',
+    'cohere/command-r-plus-08-2024': 'CohereLabs/command-r-08-2024',
+    'cohere/command-a-03-2025': 'CohereLabs/command-a-03-2025', # Open source on HF
+
+
     'databricks/dbrx-instruct': 'databricks/dbrx-instruct', # Same
 
     # TODO 'deepseek/deepseek-chat': 'ambiguous',
@@ -98,31 +103,35 @@ name_mapping = {
 
     'google/flan-t5-large': 'google/flan-t5-large', 
     'google/Gemini-1.5-flash': 'google/gemini-1.5-flash',
-    # TODO 'google/gemini-1.5-flash-001': 'google/gemini-1.5-flash-001', # Model not listed online
-    # TODO 'google/gemini-1.5-flash-002': 'google/gemini-1.5-flash-002', # Model not listed online
+    'google/gemini-1.5-flash-001': 'google/gemini-1.5-flash-001', # Model not listed online
+    'google/gemini-1.5-flash-002': 'google/gemini-1.5-flash-002', # Model not listed online
     'google/Gemini-1.5-Pro': 'google/gemini-1.5-pro',
-    # TODO 'google/gemini-1.5-pro-001': 'google/gemini-1.5-pro-001', # Model not listed online
-    # TODO 'google/gemini-1.5-pro-002': 'google/gemini-1.5-pro-002', # Model not listed online
-    # TODO 'google/gemini-2.0-flash-001': 'google/gemini-2.0-flash-001' # Model not listed but it is mentioned?
+    'google/gemini-1.5-pro-001': 'google/gemini-1.5-pro-001', # Model not listed online
+    'google/gemini-1.5-pro-002': 'google/gemini-1.5-pro-002', # Model not listed online
+    'google/gemini-2.0-flash-001': 'google/gemini-2.0-flash-001', # Model not listed but it is mentioned?
     'google/gemini-2.0-flash-exp': 'google/gemini-2.0-flash-exp',
     # TODO 'google/gemini-2.0-flash-lite-preview': 'google/gemini-2.0-flash-lite-preview' # Model not listed
     # TODO 'google/gemini-2.0-flash-thinking-exp': 'ambiguous' # Date code could be 01-21 or 1219
     'google/gemini-2.0-pro-exp': 'google/gemini-2.0-pro-exp-02-05',
-    'google/gemini-2.5-flash-preview': 'google/gemini-2.5-flash-preview-04-17',
+    'google/gemini-2.5-flash-preview-04-17': 'google/gemini-2.5-flash-preview-04-17',
     # TODO 'google/gemini-2.5-pro-exp': 'ambiguous', #Date Code could be 01-21 or 1219
     # TODO 'google/gemini-flash-experimental': 'google/gemini-flash-experimental', #Model not listed anywhere but naming pattern is correct
     # TODO 'google/Gemini-Pro': 'google/gemini-pro', # Model not listed anywhere
     # TODO 'google/gemini-pro-experimental': 'gemini-pro-experimental', #Model not listed anywhere
     'google/gemma-1.1-2b-it': 'google/gemma-1.1-2b-it',
     'google/gemma-1.1-7b-it': 'google/gemma-1.1-7b-it',
-    'google/gemma-2-2b-it': 'gooogle/gemma-2-2b-it',
-    'google/gemma-2-9b-it': 'gooogle/gemma-2-9b-it',
-    'google/gemma-3-1b-it': 'gooogle/gemma-3-1b-it',
-    'google/gemma-3-4b-it': 'gooogle/gemma-3-4b-it',
-    'google/gemma-3-27b-it': 'gooogle/gemma-3-27b-it',
-    'google/gemma-7b-it': 'gooogle/gemma-7b-it',
-    # TODO 'google/PaLM-2': 'google/test-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
-    # TODO 'google/PaLM-2-Chat': 'google/chat-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
+    'google/gemma-2-2b-it': 'google/gemma-2-2b-it',
+    'google/gemma-2-9b-it': 'google/gemma-2-9b-it',
+    'google/gemma-3-1b-it': 'google/gemma-3-1b-it',
+    'google/gemma-3-4b-it': 'google/gemma-3-4b-it',
+    'google/gemma-3-27b-it': 'google/gemma-3-27b-it',
+    'google/gemma-7b-it': 'google/gemma-7b-it',
+    'google/PaLM-2': 'google/test-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
+    'google/PaLM-2-Chat': 'google/chat-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
+
+    'google/gemini-2.5-pro-exp-03-25': 'google/gemini-2.5-pro-exp-03-25',
+    'google/gemini-2.0-pro-exp-02-05': 'google/gemini-2.0-pro-exp-02-05',
+    'google/gemini-2.0-flash-lite-preview-02-05': 'google/gemini-2.0-flash-lite-preview-02-05',
 
     'ibm-granite/granite-3.0-2b-instruct': 'ibm-granite/granite-3.0-2b-instruct',
     'ibm-granite/granite-3.0-8b-instruct': 'ibm-granite/granite-3.0-8b-instruct',
@@ -138,18 +147,19 @@ name_mapping = {
     'meta-llama/Llama-2-7b-chat-hf': 'meta-llama/Llama-2-7b-chat-hf',
     'meta-llama/Llama-2-13b-chat-hf': 'meta-llama/Llama-2-13b-chat-hf',
     'meta-llama/Llama-2-70b-chat-hf': 'meta-llama/Llama-2-70b-chat-hf',
-    # TODO 'meta-llama/Llama-3-8B-chat-hf': 'Not On Huggingface',
-    # TODO 'meta-llama/Llama-3-70B-chat-hf': 'Not On Huggingface',
-    'meta-llama/': 'meta-llama/',
-    # TODO 'meta-llama/Llama-3.2-3B-Instruct-Turbo': 'Not On Huggingface',
-    # TODO 'meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo': 'Not On Huggingface',
-    # TODO 'meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo': 'Not On Huggingface',
+    'meta-llama/Llama-3-8B-chat-hf': 'meta-llama/Llama-3-8B-chat-hf',
+    'meta-llama/Llama-3-70B-chat-hf': 'meta-llama/Llama-3-70B-chat-hf',
+    'meta-llama/Llama-3.2-3B-Instruct-Turbo': 'meta-llama/Llama-3.2-3B-Instruct-Turbo',
+    'meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo': 'meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo',
+    'meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo': 'meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo',
     'meta-llama/Llama-3.3-70B-Instruct': 'meta-llama/Llama-3.3-70B-Instruct',
     # TODO 'meta-llama/llama-4-maverick': 'ambiguous',
     # TODO 'meta-llama/llama-4-scout': 'ambiguous',
     'meta-llama/Meta-Llama-3.1-8b-Instruct': 'meta-llama/Meta-Llama-3.1-8b-Instruct',
     'meta-llama/Meta-Llama-3.1-70B-Instruct': 'meta-llama/Meta-Llama-3.1-70B-Instruct',
     'meta-llama/Meta-Llama-3.1-405B-Instruct': 'meta-llama/Meta-Llama-3.1-405B-Instruct',
+
+    'meta-llama/Llama-3.2-1B-Instruct': 'meta-llama/Llama-3.2-1B-Instruct',
 
     'microsoft/Orca-2-13b': 'microsoft/Orca-2-13b',
     'microsoft/Phi-2': 'microsoft/phi-2',
@@ -175,9 +185,11 @@ name_mapping = {
     'mistralai/pixtral-large-latest': 'mistralai/Pixtral-Large-Instruct-2411', # there is only one version pixal-large so far, which is 2411
 
     'openai/chatgpt-4o': 'openai/chatgpt-4o-latest',
+    'openai/chatgpt-4o-latest': 'openai/chatgpt-4o-latest',
     # TODO 'openai/GPT-3.5-Turbo': 'ambiguous', two date code versions
     # TODO 'openai/GPT-4': 'ambiguous', two date code versions
     'openai/GPT-4-Turbo': 'openai/gpt-4-turbo-2024-04-09',
+    'openai/GPT-4-Turbo-2024-04-09': 'openai/gpt-4-turbo-2024-04-09',
     'openai/gpt-4.1': 'openai/gpt-4.1-2025-04-14',
     'openai/gpt-4.1-mini': 'openai/gpt-4.1-mini-2025-04-14',
     'openai/gpt-4.1-nano': 'openai/gpt-4.1-nano-2025-04-14',
@@ -193,25 +205,25 @@ name_mapping = {
 
     # qwen
     'qwen/qwen-max': 'qwen/qwen-max-2025-01-25',
-    'qwen/Qwen2-72B-Instruct': 'qwen/Qwen2-72B-Instruct',
-    'qwen/Qwen2-VL-2B-Instruct': 'qwen/Qwen2-VL-2B-Instruct',
-    'qwen/Qwen2-VL-7B-Instruct': 'qwen/Qwen2-VL-7B-Instruct',
-    'qwen/Qwen2.5-0.5B-Instruct': 'qwen/Qwen2.5-0.5B-Instruct',
-    'qwen/Qwen2.5-1.5B-Instruct': 'qwen/Qwen2.5-1.5B-Instruct',
-    'qwen/Qwen2.5-3B-Instruct': 'qwen/Qwen2.5-3B-Instruct',
-    'qwen/Qwen2.5-7B-Instruct': 'qwen/Qwen2.5-7B-Instruct',
-    'qwen/Qwen2.5-14B-Instruct': 'qwen/Qwen2.5-14B-Instruct',
-    'qwen/Qwen2.5-32B-Instruct': 'qwen/Qwen2.5-32B-Instruct',
-    'qwen/Qwen2.5-72B-Instruct': 'qwen/Qwen2.5-72B-Instruct',
-    'qwen/Qwen3-0.6B': 'qwen/Qwen3-0.6B',
-    'qwen/Qwen3-1.7B': 'qwen/Qwen3-1.7B',
-    'qwen/Qwen3-4B': 'qwen/Qwen3-4B',
-    'qwen/Qwen3-8B': 'qwen/Qwen3-8B',
-    'qwen/Qwen3-14B': 'qwen/Qwen3-14B',
+    'Qwen/Qwen2-72B-Instruct': 'qwen/Qwen2-72B-Instruct',
+    'Qwen/Qwen2-VL-2B-Instruct': 'qwen/Qwen2-VL-2B-Instruct',
+    'Qwen/Qwen2-VL-7B-Instruct': 'qwen/Qwen2-VL-7B-Instruct',
+    'Qwen/Qwen2.5-0.5B-Instruct': 'qwen/Qwen2.5-0.5B-Instruct',
+    'Qwen/Qwen2.5-1.5B-Instruct': 'qwen/Qwen2.5-1.5B-Instruct',
+    'Qwen/Qwen2.5-3B-Instruct': 'qwen/Qwen2.5-3B-Instruct',
+    'Qwen/Qwen2.5-7B-Instruct': 'qwen/Qwen2.5-7B-Instruct',
+    'Qwen/Qwen2.5-14B-Instruct': 'qwen/Qwen2.5-14B-Instruct',
+    'Qwen/Qwen2.5-32B-Instruct': 'qwen/Qwen2.5-32B-Instruct',
+    'Qwen/Qwen2.5-72B-Instruct': 'qwen/Qwen2.5-72B-Instruct',
+    'Qwen/Qwen3-0.6B': 'qwen/Qwen3-0.6B',
+    'Qwen/Qwen3-1.7B': 'qwen/Qwen3-1.7B',
+    'Qwen/Qwen3-4B': 'qwen/Qwen3-4B',
+    'Qwen/Qwen3-8B': 'qwen/Qwen3-8B',
+    'Qwen/Qwen3-14B': 'qwen/Qwen3-14B',
     'qwen/qwen3-30b-a3b': 'qwen/Qwen3-30B-A3B',
-    'qwen/Qwen3-32B': 'qwen/Qwen3-32B',
+    'Qwen/Qwen3-32B': 'qwen/Qwen3-32B',
     'qwen/qwen3-235b-a22b': 'qwen/Qwen3-235B-A22B',
-    'qwen/QwQ-32B-Preview': 'qwen/QwQ-32B-Preview',
+    'Qwen/QwQ-32B-Preview': 'qwen/QwQ-32B-Preview',
 
     'snowflake/snowflake-arctic-instruct': 'snowflake/snowflake-arctic-instruct',
 
@@ -225,5 +237,5 @@ name_mapping = {
     'xai/grok-3-mini-latest': 'xai-org/grok-3-mini',
     # TODO 'xai/grok-beta': 'ambiguous', Grok-1-beta?
 
-    # 'gemini-2.0-flash-exp' : 'google/gemini-2.0-flash-exp', shouldn't need this one
+    'gemini-2.0-flash-exp' : 'google/gemini-2.0-flash-exp', # shouldn't need this one
 }
