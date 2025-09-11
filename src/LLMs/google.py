@@ -14,6 +14,15 @@ class GoogleConfig(BasicLLMConfig):
     """Extended config for Google-specific properties"""
     company: Literal["google"] = "google"
     model_name: Literal[
+        "chat-bison-001",
+        "flan-t5-large",
+        "gemini-1.5-flash-001",
+        "gemini-1.5-pro-001",
+        "gemini-2.0-flash-lite-preview",
+        "gemini-2.0-pro-exp",
+        "gemini-2.5-pro-exp",
+        "text-bison-001",
+
         "gemini-2.5-flash-lite",
         "gemini-2.5-flash",
         "gemini-2.5-pro-preview",
@@ -31,7 +40,7 @@ class GoogleConfig(BasicLLMConfig):
         "gemini-1.5-pro-002",
         "gemini-1.5-flash",
         "gemini-1.5-pro",
-        "gemma-7n-it", # Try local
+        "gemma-7b-it", # Try local
         "gemma-1.1-2b-it", # Try local
         "gemma-1.1-7b-it", # Try local
         "gemma-2-2b-it", # Try local
