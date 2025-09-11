@@ -19,6 +19,7 @@ class _01AIConfig(BasicLLMConfig):
         "Yi-1.5-9B-Chat",
         "Yi-1.5-34B-Chat"
     ] # Only model names manually added to this list are supported.
+    date_code: str = "",
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["gpu", "cpu"] = "gpu"
 

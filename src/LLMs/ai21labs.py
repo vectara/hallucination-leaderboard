@@ -13,6 +13,7 @@ class AI21LabsConfig(BasicLLMConfig):
     """Extended config for AI21-specific properties"""
     company: Literal["ai21labs"] = "ai21labs"
     model_name: Literal[
+        "AI21-Jamba-Mini-1.5",
         "jamba-large-1.7",
         "jamba-mini-1.7",
         "jamba-large-1.6", # Deprecated
@@ -48,6 +49,9 @@ class AI21LabsLLM(AbstractLLM):
         },
         "jamba-mini-1.6": {
             "chat": 1
+        },
+        "AI21-Jamba-Mini-1.5": { # No defined summary logic
+            "chat": 100
         },
     }
 

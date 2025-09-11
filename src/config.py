@@ -473,25 +473,33 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        _01AIConfig(**
+        # _01AIConfig(**
+        #   {
+        #     "company": "01-ai",
+        #     "model_name": "Yi-1.5-6B-Chat",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #   }
+        # ),
+        # _01AIConfig(**
+        #   {
+        #     "company": "01-ai",
+        #     "model_name": "Yi-1.5-9B-Chat",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #   }
+        # ),
+        # _01AIConfig(**
+        #   {
+        #     "company": "01-ai",
+        #     "model_name": "Yi-1.5-34B-Chat",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #   }
+        # ),
+
+        AI21LabsConfig(**
           {
-            "company": "01-ai",
-            "model_name": "Yi-1.5-6B-Chat",
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-          }
-        ),
-        _01AIConfig(**
-          {
-            "company": "01-ai",
-            "model_name": "Yi-1.5-9B-Chat",
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-          }
-        ),
-        _01AIConfig(**
-          {
-            "company": "01-ai",
-            "model_name": "Yi-1.5-34B-Chat",
-            "temperature": 0.01, # Cant be 0.0 has to be positive
+            "company": "ai21labs",
+            "model_name": "AI21-Jamba-Mini-1.5",
+            "date_code": "",
           }
         ),
       ]
