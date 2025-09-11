@@ -585,6 +585,32 @@ Here is the passage:
 
         DatabricksConfig(**{"company": "databricks", "model_name": "dbrx-instruct", "date_code": "", "temperature": 0.0}),
 
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "", "temperature": 0.0}),
 
       ]
     }

@@ -126,7 +126,7 @@ name_mapping = {
     'google/gemma-3-4b-it': 'google/gemma-3-4b-it',
     'google/gemma-3-27b-it': 'google/gemma-3-27b-it',
     'google/gemma-7b-it': 'google/gemma-7b-it',
-    'google/PaLM-2': 'google/test-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
+    'google/PaLM-2': 'google/text-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
     'google/PaLM-2-Chat': 'google/chat-bison-001', # Commenting out for now but according to docs this is the reference internally(https://ai.google.dev/palm_docs/palm)
 
     'google/gemini-2.5-pro-exp-03-25': 'google/gemini-2.5-pro-exp-03-25',
