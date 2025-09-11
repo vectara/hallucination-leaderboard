@@ -5,6 +5,7 @@ import os
 from . data_model import EvalConfig, BasicLLMConfig
 from . LLMs import (
   AnthropicConfig,
+  AppleConfig,
   OpenAIConfig,
   QwenConfig,
   XAIConfig,
@@ -562,6 +563,8 @@ Here is the passage:
         AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-opus", "date_code": "20240229", "temperature": 0.0}),
         AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-sonnet", "date_code": "20240229", "temperature": 0.0}),
         AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
+
+        AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
       ]
     }
   ),

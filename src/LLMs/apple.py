@@ -5,26 +5,26 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-COMPANY = "COMPANY_NAME" #Official company name on huggingface
-class COMPANY_NAMEConfig(BasicLLMConfig):
-    """Extended config for COMPANY_NAME-specific properties"""
-    company: Literal["COMPANY_NAME"] = "COMPANY_NAME"
+COMPANY = "apple" #Official company name on huggingface
+class AppleConfig(BasicLLMConfig):
+    """Extended config for apple-specific properties"""
+    company: Literal["apple"] = "apple"
     model_name: Literal[
-        "MODEL_NAME",
+        "OpenELM-3B-Instruct",
     ] # Only model names manually added to this list are supported.
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
 
-class COMPANY_NAMESummary(BasicSummary):
+class AppleSummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
 
     class Config:
         extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
 
-class COMPANY_NAMELLM(AbstractLLM):
+class AppleLLM(AbstractLLM):
     """
-    Class for models from COMPANY_NAME
+    Class for models from apple
     """
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
@@ -37,7 +37,7 @@ class COMPANY_NAMELLM(AbstractLLM):
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
-    def __init__(self, config: COMPANY_NAMEConfig):
+    def __init__(self, config: AppleConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode

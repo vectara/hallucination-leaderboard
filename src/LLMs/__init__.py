@@ -43,6 +43,7 @@ from . antgroup_mi import AntGroupMILLM, AntGroupMIConfig, AntGroupMISummary
 from . zai_org import ZhipuAILLM, ZhipuAIConfig, ZhipuAISummary
 from . vectara import VectaraLLM, VectaraConfig, VectaraSummary
 from . amazon import AmazonLLM, AmazonConfig, AmazonSummary
+from . apple import AppleLLM, AppleConfig, AppleSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "openai": {
@@ -54,6 +55,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": AmazonLLM,
         "config_class": AmazonConfig,
         "summary_class": AmazonSummary,
+    },
+    "apple": {
+        "LLM_class": AppleLLM,
+        "config_class": AppleConfig,
+        "summary_class": AppleSummary,
     },
     "anthropic": {
         "LLM_class": AnthropicLLM,
