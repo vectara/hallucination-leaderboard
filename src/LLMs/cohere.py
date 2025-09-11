@@ -7,11 +7,16 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-COMPANY = "cohere"
+COMPANY = "CohereLabs"
 class CohereConfig(BasicLLMConfig):
     """Extended config for cohere-specific properties"""
-    company: Literal["cohere"] = "cohere"
+    company: Literal["CohereLabs"] = "CohereLabs"
     model_name: Literal[
+        "aya-expansed-8b",
+        "aya-expanse-32b",
+        "c4ai-command-r-plus",
+        "command",
+        "command-chat",
         "command-a", #03-2025
         "command-a-reasoning",
         "c4ai-aya-expanse-32b",

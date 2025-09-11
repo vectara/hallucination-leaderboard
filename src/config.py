@@ -502,6 +502,7 @@ Here is the passage:
             "company": "ai21labs",
             "model_name": "AI21-Jamba-Mini-1.5",
             "date_code": "",
+            "temperature": 0.0
           }
         ),
 
@@ -510,6 +511,7 @@ Here is the passage:
             "company": "allenai",
             "model_name": "OLMo-2-0325-32B-Instruct",
             "date_code": "0325",
+            "temperature": 0.0
           }
         ),
         AllenAIConfig(**
@@ -517,6 +519,7 @@ Here is the passage:
             "company": "allenai",
             "model_name": "OLMo-2-1124-7b-instruct",
             "date_code": "1124",
+            "temperature": 0.0
           }
         ),
         AllenAIConfig(**
@@ -524,6 +527,7 @@ Here is the passage:
             "company": "allenai",
             "model_name": "OLMo-2-1124-13b-instruct",
             "date_code": "1124",
+            "temperature": 0.0
           }
         ),
 
@@ -532,6 +536,7 @@ Here is the passage:
             "company": "amazon",
             "model_name": "nova-lite-v1:0",
             "date_code": "",
+            "temperature": 0.0
           }
         ),
         AmazonConfig(**
@@ -539,6 +544,7 @@ Here is the passage:
             "company": "amazon",
             "model_name": "nova-micro-v1:0",
             "date_code": "",
+            "temperature": 0.0
           }
         ),
         AmazonConfig(**
@@ -546,6 +552,7 @@ Here is the passage:
             "company": "amazon",
             "model_name": "nova-pro-v1:0",
             "date_code": "",
+            "temperature": 0.0
           }
         ),
 
@@ -565,6 +572,18 @@ Here is the passage:
         AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
 
         AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
+
+        CohereConfig(**{"company": "CohereLabs", "model_name": "aya-expanse-32b", "date_code": "", "temperature": 0.0}),
+        CohereConfig(**{"company": "CohereLabs", "model_name": "aya-expanse-8b", "date_code": "", "temperature": 0.0}),
+        CohereConfig(**{"company": "CohereLabs", "model_name": "c4ai-command-r-plus", "date_code": "", "temperature": 0.0}),
+        CohereConfig(**{"company": "CohereLabs", "model_name": "command", "date_code": "", "temperature": 0.0}),
+        CohereConfig(**{"company": "CohereLabs", "model_name": "command-a", "date_code": "03-2025", "temperature": 0.0}),
+        CohereConfig(**{"company": "CohereLabs", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0}),
+        CohereConfig(**{"company": "CohereLabs", "model_name": "command-chat", "date_code": "", "temperature": 0.0}),
+        CohereConfig(**{"company": "CohereLabs", "model_name": "command-r", "date_code": "08-2024", "temperature": 0.0}),
+
+
+
       ]
     }
   ),
