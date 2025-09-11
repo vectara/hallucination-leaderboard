@@ -9,13 +9,13 @@ import json
 import multiprocessing
 import requests
 
-COMPANY = "antgroup-mi"
+COMPANY = "antgroup"
 
 class AntGroupMIConfig(BasicLLMConfig):
     """Extended config for AntGroup-MI-specific properties"""
-    company: Literal["antgroup-mi"] = "antgroup-mi"
+    company: Literal["antgroup"] = "antgroup"
     model_name: Literal[
-        "antfinix-ir1"
+        "finix_s1_32b"
     ] # Only model names manually added to this list are supported.
     execution_mode: Literal["api"] = "api" # MistralAI models can only be run via web api.
     date_code: str = "" # You must specify a date code for MistralAI models.
@@ -38,7 +38,7 @@ class AntGroupMILLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution.
     client_mode_group = {
-        "antfinix-ir1":{
+        "finix_s1_32b":{
             "chat": 1
         }
     }
@@ -64,7 +64,7 @@ class AntGroupMILLM(AbstractLLM):
                     summary = self.call_insllm_api(
                         api_token=self.api_key,
                         base_url=base_url,
-                        model_name=self.model_fullname,
+                        model_name="antfinix-ir1",
                         messages=messages,
                         temperature=self.temperature,
                         max_tokens=self.max_tokens

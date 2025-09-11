@@ -547,6 +547,14 @@ Here is the passage:
             "date_code": "",
           }
         ),
+
+        AntGroupMIConfig(**
+          {
+            "company": "antgroup",
+            "model_name": "finix_s1_32b",
+            "date_code": "",
+          }
+        ),
       ]
     }
   ),
