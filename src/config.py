@@ -26,7 +26,8 @@ from . LLMs import (
   VectaraConfig,
   AmazonConfig,
   DatabricksConfig,
-  IntelConfig
+  IntelConfig,
+  InternLmConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -666,6 +667,15 @@ Here is the passage:
           {
             "company": "Intel",
             "model_name": "neural-chat-7b-v3-3",
+            "temperature": 0.0,
+            "date_code": ""
+          }
+        ),
+
+        InternLmConfig(**
+          {
+            "company": "internlm",
+            "model_name": "internlm3-8b-instruct",
             "temperature": 0.0,
             "date_code": ""
           }

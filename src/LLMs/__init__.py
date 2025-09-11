@@ -46,8 +46,29 @@ from . amazon import AmazonLLM, AmazonConfig, AmazonSummary
 from . apple import AppleLLM, AppleConfig, AppleSummary
 from . databricks import DatabricksLLM, DatabricksConfig, DatabricksSummary
 from . intel import IntelLLM, IntelConfig, IntelSummary
+from . internlm import InternLmLLM, InternLmConfig, InternLmSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
+    "01-ai": {
+        "LLM_class": _01AILLM,
+        "config_class": _01AIConfig,
+        "summary_class": _01AISummary
+    },
+    "antgroup-mi": {
+        "LLM_class": AntGroupMILLM,
+        "config_class": AntGroupMIConfig,
+        "summary_class": AntGroupMISummary
+    },
+    "ai21labs": {
+        "LLM_class": AI21LabsLLM,
+        "config_class": AI21LabsConfig,
+        "summary_class": AI21LabsSummary
+    },
+    "allenai": {
+        "LLM_class": AllenAILLM,
+        "config_class": AllenAIConfig,
+        "summary_class": AllenAISummary
+    },
     "openai": {
         "LLM_class": OpenAILLM,
         "config_class": OpenAIConfig,
@@ -67,6 +88,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": AnthropicLLM,
         "config_class": AnthropicConfig,
         "summary_class": AnthropicSummary,
+    },
+    "cohere": {
+        "LLM_class": CohereLLM,
+        "config_class": CohereConfig,
+        "summary_class": CohereSummary
     },
     "databricks": {
         "LLM_class": DatabricksLLM,
@@ -88,35 +114,10 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": IntelConfig,
         "summary_class": IntelSummary
     },
-    "qcri": {
-        "LLM_class": QCRILLM,
-        "config_class": QCRIConfig,
-        "summary_class": QCRISummary
-    },
-    "mistralai": {
-        "LLM_class": MistralAILLM,
-        "config_class": MistralAIConfig,
-        "summary_class": MistralAISummary
-    },
-    "rednote-hilab": {
-        "LLM_class": RednoteHilabLLM,
-        "config_class": RednoteHilabConfig,
-        "summary_class": RednoteHilabSummary
-    },
-    "qwen": {
-        "LLM_class": QwenLLM,
-        "config_class": QwenConfig,
-        "summary_class": QwenSummary
-    },
-    "xai": {
-        "LLM_class": XAILLM,
-        "config_class": XAIConfig,
-        "summary_class": XAISummary
-    },
-    "cohere": {
-        "LLM_class": CohereLLM,
-        "config_class": CohereConfig,
-        "summary_class": CohereSummary
+    "internlm": {
+        "LLM_class": InternLmLLM,
+        "config_class": InternLmConfig,
+        "summary_class": InternLmSummary
     },
     "moonshotai": {
         "LLM_class": MoonshotAILLM,
@@ -133,20 +134,30 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": MicrosoftConfig,
         "summary_class": MicrosoftSummary
     },
-    "01-ai": {
-        "LLM_class": _01AILLM,
-        "config_class": _01AIConfig,
-        "summary_class": _01AISummary
+    "mistralai": {
+        "LLM_class": MistralAILLM,
+        "config_class": MistralAIConfig,
+        "summary_class": MistralAISummary
     },
-    "ai21labs": {
-        "LLM_class": AI21LabsLLM,
-        "config_class": AI21LabsConfig,
-        "summary_class": AI21LabsSummary
+    "qcri": {
+        "LLM_class": QCRILLM,
+        "config_class": QCRIConfig,
+        "summary_class": QCRISummary
     },
-    "allenai": {
-        "LLM_class": AllenAILLM,
-        "config_class": AllenAIConfig,
-        "summary_class": AllenAISummary
+    "qwen": {
+        "LLM_class": QwenLLM,
+        "config_class": QwenConfig,
+        "summary_class": QwenSummary
+    },
+    "rednote-hilab": {
+        "LLM_class": RednoteHilabLLM,
+        "config_class": RednoteHilabConfig,
+        "summary_class": RednoteHilabSummary
+    },
+    "xai": {
+        "LLM_class": XAILLM,
+        "config_class": XAIConfig,
+        "summary_class": XAISummary
     },
     "ibm-granite": {
         "LLM_class": IBMGraniteLLM,
@@ -157,11 +168,6 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": TngTechLLM,
         "config_class": TngTechConfig,
         "summary_class": TngTechSummary
-    },
-    "antgroup-mi": {
-        "LLM_class": AntGroupMILLM,
-        "config_class": AntGroupMIConfig,
-        "summary_class": AntGroupMISummary
     },
     "vectara": {
         "LLM_class": VectaraLLM,
