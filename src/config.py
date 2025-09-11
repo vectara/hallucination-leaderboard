@@ -555,6 +555,13 @@ Here is the passage:
             "date_code": "",
           }
         ),
+
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "date_code": "", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "date_code": "20241022", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-sonnet", "date_code": "20241022", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-opus", "date_code": "20240229", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-sonnet", "date_code": "20240229", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
       ]
     }
   ),
