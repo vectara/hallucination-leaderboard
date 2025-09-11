@@ -443,6 +443,44 @@ Here is the passage:
   ),
   EvalConfig(**
     {
+      "eval_name": "pre_2025-07",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.3",
+      "pipeline": ["judge", "aggregate"],
+      "output_dir": "output",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 1.0, 
+            "max_tokens": 1024, 
+            "prompt": """
+You are a chat bot answering questions using data.
+You must stick to the answers provided solely by the text in the 
+passage provided. You are asked the question 'Provide a concise 
+summary of the following passage, covering the core pieces of 
+information described.'
+
+Just provide your answer in a single paragraph, without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
+
+If you cannot answer the question, for reasons like insufficient information in the passage, 
+just say 'I cannot do it. 2389fdsi2389432ksad' and do not say anything else. 
+  
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
+      ]
+    }
+  ),
+
+
+  EvalConfig(**
+    {
       "eval_name": "short_summary_2.3",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
