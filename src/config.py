@@ -27,7 +27,9 @@ from . LLMs import (
   AmazonConfig,
   DatabricksConfig,
   IntelConfig,
-  InternLmConfig
+  InternLmConfig,
+  TiiuaeConfig,
+  SnowflakeConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
@@ -903,6 +905,9 @@ Here is the passage:
         QwenConfig(**{"company": "qwen", "model_name": "Qwen3-235B-A22B", "date_code": "", "temperature": 0.0}),
         QwenConfig(**{"company": "qwen", "model_name": "QwQ-32B-Preview", "date_code": "", "temperature": 0.0}),
 
+        SnowflakeConfig(**{"company": "snowflake", "model_name": "snowflake-arctic-instruct", "date_code": "", "temperature": 0.0}),
+
+        TiiuaeConfig(**{"company": "tiiuae", "model_name": "falcon-7b-instruct", "date_code": "", "temperature": 0.0}),
 
       ]
     }

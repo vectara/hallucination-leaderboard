@@ -47,6 +47,8 @@ from . apple import AppleLLM, AppleConfig, AppleSummary
 from . databricks import DatabricksLLM, DatabricksConfig, DatabricksSummary
 from . intel import IntelLLM, IntelConfig, IntelSummary
 from . internlm import InternLmLLM, InternLmConfig, InternLmSummary
+from . snowflake import SnowflakeLLM, SnowflakeConfig, SnowflakeSummary
+from . tiiuae import TiiuaeLLM, TiiuaeConfig, TiiuaeSummary
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "01-ai": {
@@ -153,6 +155,16 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": RednoteHilabLLM,
         "config_class": RednoteHilabConfig,
         "summary_class": RednoteHilabSummary
+    },
+    "snowflake": {
+        "LLM_class": SnowflakeLLM,
+        "config_class": SnowflakeConfig,
+        "summary_class": SnowflakeSummary
+    },
+    "tiiuae": {
+        "LLM_class": TiiuaeLLM,
+        "config_class": TiiuaeConfig,
+        "summary_class": TiiuaeSummary
     },
     "xai": {
         "LLM_class": XAILLM,
