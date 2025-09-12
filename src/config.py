@@ -778,6 +778,79 @@ Here is the passage:
           }
         ),
 
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "Orca-2-13b",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "phi-2",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "Phi-3-mini-4k-instruct",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "Phi-3-mini-128k-instruct",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "Phi-3.5-mini-instruct",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "Phi-3.5-MoE-instruct",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "phi-4",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "Phi-4-mini-instruct",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "WizardLM-2-8x22B",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+
       ]
     }
   ),

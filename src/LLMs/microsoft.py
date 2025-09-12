@@ -14,6 +14,16 @@ class MicrosoftConfig(BasicLLMConfig):
     """Extended config for Microsoft-specific properties"""
     company: Literal["microsoft"] 
     model_name: Literal[
+        "Orca-2-13b",
+        "phi-2",
+        "Phi-3-mini-4k-instruct",
+        "Phi-3-mini-128k-instruct",
+        "Phi-3.5-mini-instruct",
+        "Phi-3.5-MoE-instruct",
+        "phi-4",
+        "WizardLM-2-8x22B"
+
+
         "Phi-4-mini-instruct",
         "Phi-4",
         "microsoft-phi-2", # Resource not active
