@@ -910,6 +910,10 @@ Here is the passage:
         TiiuaeConfig(**{"company": "tiiuae", "model_name": "falcon-7b-instruct", "date_code": "", "temperature": 0.0}),
 
         TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "date_code": "", "temperature": 0.0}),
+
+        XAIConfig(**{"company": "xai-org", "model_name": "grok-3", "temperature": 0.0, "date_code": ""}),
+        XAIConfig(**{"company": "xai-org", "model_name": "grok-3-mini", "temperature": 0.0, "date_code": ""}),
+        XAIConfig(**{"company": "xai-org", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709"}),
       ]
     }
   ),

@@ -7,10 +7,10 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-COMPANY = "xai"
+COMPANY = "xai-org"
 class XAIConfig(BasicLLMConfig):
     """Extended config for x-ai-specific properties"""
-    company: Literal["xai"] = "xai" 
+    company: Literal["xai-org"] = "xai-org" 
     model_name: Literal[
         "grok-4",
         "grok-3",
