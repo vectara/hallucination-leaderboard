@@ -453,7 +453,7 @@ Here is the passage:
       "eval_name": "pre_2025-07",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      "pipeline": ["judge", "aggregate"],
+      "pipeline": ["aggregate"],
       "output_dir": "migrated_output_fixed",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_revised.csv",
