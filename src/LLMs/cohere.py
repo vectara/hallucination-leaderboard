@@ -12,7 +12,7 @@ class CohereConfig(BasicLLMConfig):
     """Extended config for cohere-specific properties"""
     company: Literal["CohereLabs"] = "CohereLabs"
     model_name: Literal[
-        "aya-expansed-8b",
+        "aya-expanse-8b",
         "aya-expanse-32b",
         "c4ai-command-r-plus",
         "command",
