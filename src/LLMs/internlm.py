@@ -10,7 +10,7 @@ class InternLmConfig(BasicLLMConfig):
     """Extended config for internlm-specific properties"""
     company: Literal["internlm"] = "internlm"
     model_name: Literal[
-        "MODEL_NAME",
+        "internlm3-8b-instruct",
     ] # Only model names manually added to this list are supported.
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
