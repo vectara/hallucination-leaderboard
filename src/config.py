@@ -909,6 +909,7 @@ Here is the passage:
 
         TiiuaeConfig(**{"company": "tiiuae", "model_name": "falcon-7b-instruct", "date_code": "", "temperature": 0.0}),
 
+        TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "date_code": "", "temperature": 0.0}),
       ]
     }
   ),
