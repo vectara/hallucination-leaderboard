@@ -453,7 +453,7 @@ Here is the passage:
       "eval_name": "pre_2025-07",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      "pipeline": ["aggregate"],
+      "pipeline": ["judge", "aggregate"],
       "output_dir": "migrated_output_fixed",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_revised.csv",
@@ -480,447 +480,452 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        _01AIConfig(**
-          {
-            "company": "01-ai",
-            "model_name": "Yi-1.5-6B-Chat",
-            "date_code": "",
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-          }
-        ),
-        _01AIConfig(**
-          {
-            "company": "01-ai",
-            "model_name": "Yi-1.5-9B-Chat",
-            "date_code": "",
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-          }
-        ),
-        _01AIConfig(**
-          {
-            "company": "01-ai",
-            "model_name": "Yi-1.5-34B-Chat",
-            "date_code": "",
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-          }
-        ),
+        # _01AIConfig(**
+        #   {
+        #     "company": "01-ai",
+        #     "model_name": "Yi-1.5-6B-Chat",
+        #     "date_code": "",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #   }
+        # ),
+        # _01AIConfig(**
+        #   {
+        #     "company": "01-ai",
+        #     "model_name": "Yi-1.5-9B-Chat",
+        #     "date_code": "",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #   }
+        # ),
+        # _01AIConfig(**
+        #   {
+        #     "company": "01-ai",
+        #     "model_name": "Yi-1.5-34B-Chat",
+        #     "date_code": "",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #   }
+        # ),
 
-        AI21LabsConfig(**
-          {
-            "company": "ai21labs",
-            "model_name": "AI21-Jamba-Mini-1.5",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
+        # AI21LabsConfig(**
+        #   {
+        #     "company": "ai21labs",
+        #     "model_name": "AI21-Jamba-Mini-1.5",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
 
-        AllenAIConfig(**
-          {
-            "company": "allenai",
-            "model_name": "OLMo-2-0325-32B-Instruct",
-            "date_code": "0325",
-            "temperature": 0.0
-          }
-        ),
-        AllenAIConfig(**
-          {
-            "company": "allenai",
-            "model_name": "OLMo-2-1124-7b-instruct",
-            "date_code": "1124",
-            "temperature": 0.0
-          }
-        ),
-        AllenAIConfig(**
-          {
-            "company": "allenai",
-            "model_name": "OLMo-2-1124-13b-instruct",
-            "date_code": "1124",
-            "temperature": 0.0
-          }
-        ),
+        # AllenAIConfig(**
+        #   {
+        #     "company": "allenai",
+        #     "model_name": "OLMo-2-0325-32B-Instruct",
+        #     "date_code": "0325",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AllenAIConfig(**
+        #   {
+        #     "company": "allenai",
+        #     "model_name": "OLMo-2-1124-7b-instruct",
+        #     "date_code": "1124",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AllenAIConfig(**
+        #   {
+        #     "company": "allenai",
+        #     "model_name": "OLMo-2-1124-13b-instruct",
+        #     "date_code": "1124",
+        #     "temperature": 0.0
+        #   }
+        # ),
 
-        AmazonConfig(**
-          {
-            "company": "amazon",
-            "model_name": "nova-lite-v1:0",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        AmazonConfig(**
-          {
-            "company": "amazon",
-            "model_name": "nova-micro-v1:0",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        AmazonConfig(**
-          {
-            "company": "amazon",
-            "model_name": "nova-pro-v1:0",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
+        # AmazonConfig(**
+        #   {
+        #     "company": "amazon",
+        #     "model_name": "nova-lite-v1:0",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AmazonConfig(**
+        #   {
+        #     "company": "amazon",
+        #     "model_name": "nova-micro-v1:0",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AmazonConfig(**
+        #   {
+        #     "company": "amazon",
+        #     "model_name": "nova-pro-v1:0",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
 
-        AntGroupMIConfig(**
-          {
-            "company": "antgroup",
-            "model_name": "finix_s1_32b",
-            "date_code": "",
-          }
-        ),
+        # AntGroupMIConfig(**
+        #   {
+        #     "company": "antgroup",
+        #     "model_name": "finix_s1_32b",
+        #     "date_code": "",
+        #   }
+        # ),
 
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "date_code": "", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "date_code": "20241022", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-sonnet", "date_code": "20241022", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-opus", "date_code": "20240229", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-sonnet", "date_code": "20240229", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "date_code": "", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "date_code": "20241022", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-sonnet", "date_code": "20241022", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-opus", "date_code": "20240229", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-sonnet", "date_code": "20240229", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
 
-        AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
+        # AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
 
-        CohereConfig(**{"company": "CohereLabs", "model_name": "aya-expanse-32b", "date_code": "", "temperature": 0.0}),
-        CohereConfig(**{"company": "CohereLabs", "model_name": "aya-expanse-8b", "date_code": "", "temperature": 0.0}),
-        CohereConfig(**{"company": "CohereLabs", "model_name": "c4ai-command-r-plus", "date_code": "", "temperature": 0.0}),
-        CohereConfig(**{"company": "CohereLabs", "model_name": "command", "date_code": "", "temperature": 0.0}),
-        CohereConfig(**{"company": "CohereLabs", "model_name": "command-a", "date_code": "03-2025", "temperature": 0.0}),
-        CohereConfig(**{"company": "CohereLabs", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0}),
-        CohereConfig(**{"company": "CohereLabs", "model_name": "command-chat", "date_code": "", "temperature": 0.0}),
-        CohereConfig(**{"company": "CohereLabs", "model_name": "command-r", "date_code": "08-2024", "temperature": 0.0}),
+        # CohereConfig(**{"company": "CohereLabs", "model_name": "aya-expanse-32b", "date_code": "", "temperature": 0.0}),
+        # CohereConfig(**{"company": "CohereLabs", "model_name": "aya-expanse-8b", "date_code": "", "temperature": 0.0}),
+        # CohereConfig(**{"company": "CohereLabs", "model_name": "c4ai-command-r-plus", "date_code": "", "temperature": 0.0}),
+        # CohereConfig(**{"company": "CohereLabs", "model_name": "command", "date_code": "", "temperature": 0.0}),
+        # CohereConfig(**{"company": "CohereLabs", "model_name": "command-a", "date_code": "03-2025", "temperature": 0.0}),
+        # CohereConfig(**{"company": "CohereLabs", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0}),
+        # CohereConfig(**{"company": "CohereLabs", "model_name": "command-chat", "date_code": "", "temperature": 0.0}),
+        # CohereConfig(**{"company": "CohereLabs", "model_name": "command-r", "date_code": "08-2024", "temperature": 0.0}),
 
-        DatabricksConfig(**{"company": "databricks", "model_name": "dbrx-instruct", "date_code": "", "temperature": 0.0}),
+        # DatabricksConfig(**{"company": "databricks", "model_name": "dbrx-instruct", "date_code": "", "temperature": 0.0}),
 
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "chat-bison-001", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "flan-t5-large", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-flash", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-flash-001", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-flash-002", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-pro", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-pro-001", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-pro-002", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-2.0-flash-001", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-2.0-flash-exp", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "02-05", "model_name": "gemini-2.0-flash-lite-preview", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "02-05", "model_name": "gemini-2.0-pro-exp", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-2.5-flash", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-2.5-flash-lite", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "04-17", "model_name": "gemini-2.5-flash-preview", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "03-25", "model_name": "gemini-2.5-pro-exp", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-2.5-pro-preview", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-1.1-2b-it", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-1.1-7b-it", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-2-2b-it", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-2-9b-it", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-3-1b-it", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-3-4b-it", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-3-27b-it", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-7b-it", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "date_code": "", "model_name": "text-bison-001", "temperature": 0.0}),
+        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-R1", "date_code": "", "temperature": 0.0}),
+        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-R1-0528", "date_code": "", "temperature": 0.0}),
+        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "date_code": "", "temperature": 0.0}),
+        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "date_code": "", "temperature": 0.0}),
 
-        IBMGraniteConfig(**
-          {
-            "company": "ibm-granite",
-            "model_name": "granite-3.2-2b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-            "date_code": ""
-          }
-        ),
-        IBMGraniteConfig(**
-          {
-            "company": "ibm-granite",
-            "model_name": "granite-3.2-8b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-            "date_code": ""
-          }
-        ),
-        IBMGraniteConfig(**
-          {
-            "company": "ibm-granite",
-            "model_name": "granite-3.1-2b-instruct",
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-            "date_code": ""
-          }
-        ),
-        IBMGraniteConfig(**
-          {
-            "company": "ibm-granite",
-            "model_name": "granite-3.1-8b-instruct",
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-            "date_code": ""
-          }
-        ),
-        IBMGraniteConfig(**
-          {
-            "company": "ibm-granite",
-            "model_name": "granite-3.0-2b-instruct",
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-            "date_code": ""
-          }
-        ),
-        IBMGraniteConfig(**
-          {
-            "company": "ibm-granite",
-            "model_name": "granite-3.0-8b-instruct",
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-            "date_code": ""
-          }
-        ),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "chat-bison-001", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "flan-t5-large", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-flash", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-flash-001", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-flash-002", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-pro", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-pro-001", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-1.5-pro-002", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-2.0-flash-001", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-2.0-flash-exp", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "02-05", "model_name": "gemini-2.0-flash-lite-preview", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "02-05", "model_name": "gemini-2.0-pro-exp", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-2.5-flash", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-2.5-flash-lite", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "04-17", "model_name": "gemini-2.5-flash-preview", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "03-25", "model_name": "gemini-2.5-pro-exp", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemini-2.5-pro-preview", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-1.1-2b-it", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-1.1-7b-it", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-2-2b-it", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-2-9b-it", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-3-1b-it", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-3-4b-it", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-3-27b-it", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "gemma-7b-it", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "date_code": "", "model_name": "text-bison-001", "temperature": 0.0}),
 
-        IntelConfig(**
-          {
-            "company": "Intel",
-            "model_name": "neural-chat-7b-v3-3",
-            "temperature": 0.0,
-            "date_code": ""
-          }
-        ),
+        # IBMGraniteConfig(**
+        #   {
+        #     "company": "ibm-granite",
+        #     "model_name": "granite-3.2-2b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #     "date_code": ""
+        #   }
+        # ),
+        # IBMGraniteConfig(**
+        #   {
+        #     "company": "ibm-granite",
+        #     "model_name": "granite-3.2-8b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #     "date_code": ""
+        #   }
+        # ),
+        # IBMGraniteConfig(**
+        #   {
+        #     "company": "ibm-granite",
+        #     "model_name": "granite-3.1-2b-instruct",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #     "date_code": ""
+        #   }
+        # ),
+        # IBMGraniteConfig(**
+        #   {
+        #     "company": "ibm-granite",
+        #     "model_name": "granite-3.1-8b-instruct",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #     "date_code": ""
+        #   }
+        # ),
+        # IBMGraniteConfig(**
+        #   {
+        #     "company": "ibm-granite",
+        #     "model_name": "granite-3.0-2b-instruct",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #     "date_code": ""
+        #   }
+        # ),
+        # IBMGraniteConfig(**
+        #   {
+        #     "company": "ibm-granite",
+        #     "model_name": "granite-3.0-8b-instruct",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #     "date_code": ""
+        #   }
+        # ),
 
-        InternLmConfig(**
-          {
-            "company": "internlm",
-            "model_name": "internlm3-8b-instruct",
-            "temperature": 0.0,
-            "date_code": ""
-          }
-        ),
+        # IntelConfig(**
+        #   {
+        #     "company": "Intel",
+        #     "model_name": "neural-chat-7b-v3-3",
+        #     "temperature": 0.0,
+        #     "date_code": ""
+        #   }
+        # ),
 
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-2-7b-chat-hf",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-2-13b-chat-hf",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-2-70b-chat-hf",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-3-8B-chat-hf",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-3-70B-chat-hf",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-3.2-1B-Instruct",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-3.2-3B-Instruct-Turbo",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-3.2-11B-Vision-Instruct-Turbo",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-3.2-90B-Vision-Instruct-Turbo",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-3.3-70B-Instruct",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Meta-Llama-3.1-70B-Instruct",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Meta-Llama-3.1-405B-Instruct",
-            "date_code": "",
-            "temperature": 0.0
-          }
-        ),
+        # InternLmConfig(**
+        #   {
+        #     "company": "internlm",
+        #     "model_name": "internlm3-8b-instruct",
+        #     "temperature": 0.0,
+        #     "date_code": ""
+        #   }
+        # ),
 
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "Orca-2-13b",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "phi-2",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "Phi-3-mini-4k-instruct",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "Phi-3-mini-128k-instruct",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "Phi-3.5-mini-instruct",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "Phi-3.5-MoE-instruct",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "phi-4",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "Phi-4-mini-instruct",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "WizardLM-2-8x22B",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-2-7b-chat-hf",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-2-13b-chat-hf",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-2-70b-chat-hf",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-3-8B-chat-hf",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-3-70B-chat-hf",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-3.2-1B-Instruct",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-3.2-3B-Instruct-Turbo",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-3.2-11B-Vision-Instruct-Turbo",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-3.2-90B-Vision-Instruct-Turbo",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-3.3-70B-Instruct",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Meta-Llama-3.1-70B-Instruct",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Meta-Llama-3.1-405B-Instruct",
+        #     "date_code": "",
+        #     "temperature": 0.0
+        #   }
+        # ),
 
-        MistralAIConfig(**{"company": "mistralai", "model_name": "Ministral-8B-Instruct", "date_code": "2410", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-7B-Instruct-v0.3", "date_code": "", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-Nemo-Instruct", "date_code": "2407", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2506", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-Small-3.1-24b-instruct", "date_code": "2503", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-Small-24B-Instruct", "date_code": "2501", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "Mixtral-8x7B-Instruct-v0.1", "date_code": "", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "Mixtral-8x22B-Instruct-v0.1", "date_code": "", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "Pixtral-Large-Instruct", "date_code": "2411", "temperature": 0.0}),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "Orca-2-13b",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "phi-2",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "Phi-3-mini-4k-instruct",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "Phi-3-mini-128k-instruct",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "Phi-3.5-mini-instruct",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "Phi-3.5-MoE-instruct",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "phi-4",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "Phi-4-mini-instruct",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "WizardLM-2-8x22B",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
 
-        OpenAIConfig(**{"company": "openai", "model_name": "chatgpt-4o", "date_code": "", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4-turbo", "date_code": "2024-04-09", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1-mini", "date_code": "2025-04-14", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1-nano", "date_code": "2025-04-14", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.5-preview", "date_code": "2025-02-27", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o-mini", "date_code": "2024-07-18", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-nano", "date_code": "2025-08-07", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-20b", "date_code": "", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o1", "date_code": "2024-12-17", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o1-mini", "date_code": "2024-09-12", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o1-preview", "date_code": "2024-09-12", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o1-pro", "date_code": "2025-03-19", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o3", "date_code": "2025-04-16", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini", "date_code": "2025-04-16", "temperature": -1.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "Ministral-8B-Instruct", "date_code": "2410", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-7B-Instruct-v0.3", "date_code": "", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-Nemo-Instruct", "date_code": "2407", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2506", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-Small-3.1-24b-instruct", "date_code": "2503", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-Small-24B-Instruct", "date_code": "2501", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "Mixtral-8x7B-Instruct-v0.1", "date_code": "", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "Mixtral-8x22B-Instruct-v0.1", "date_code": "", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "Pixtral-Large-Instruct", "date_code": "2411", "temperature": 0.0}),
 
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen2-72B-Instruct", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen2-VL-2B-Instruct", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen2-VL-7B-Instruct", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-0.5B-Instruct", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-1.5B-Instruct", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-3B-Instruct", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-7B-Instruct", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-14B-Instruct", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-32B-Instruct", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-72B-Instruct", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-0.6B", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-1.7B", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-4B", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-8B", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-14B", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-30B-A3B", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-32B", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-235B-A22B", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "QwQ-32B-Preview", "date_code": "", "temperature": 0.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "chatgpt-4o", "date_code": "", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4-turbo", "date_code": "2024-04-09", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1-mini", "date_code": "2025-04-14", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1-nano", "date_code": "2025-04-14", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.5-preview", "date_code": "2025-02-27", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o-mini", "date_code": "2024-07-18", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-nano", "date_code": "2025-08-07", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-20b", "date_code": "", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "o1", "date_code": "2024-12-17", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "o1-mini", "date_code": "2024-09-12", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "o1-preview", "date_code": "2024-09-12", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "o1-pro", "date_code": "2025-03-19", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "o3", "date_code": "2025-04-16", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini", "date_code": "2025-04-16", "temperature": -1.0}),
 
-        SnowflakeConfig(**{"company": "snowflake", "model_name": "snowflake-arctic-instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen2-72B-Instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen2-VL-2B-Instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen2-VL-7B-Instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-0.5B-Instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-1.5B-Instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-3B-Instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-7B-Instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-14B-Instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-32B-Instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-72B-Instruct", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen3-0.6B", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen3-1.7B", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen3-4B", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen3-8B", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen3-14B", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen3-30B-A3B", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen3-32B", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "Qwen3-235B-A22B", "date_code": "", "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "QwQ-32B-Preview", "date_code": "", "temperature": 0.0}),
 
-        TiiuaeConfig(**{"company": "tiiuae", "model_name": "falcon-7b-instruct", "date_code": "", "temperature": 0.0}),
+        # SnowflakeConfig(**{"company": "snowflake", "model_name": "snowflake-arctic-instruct", "date_code": "", "temperature": 0.0}),
 
-        TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "date_code": "", "temperature": 0.0}),
+        # TiiuaeConfig(**{"company": "tiiuae", "model_name": "falcon-7b-instruct", "date_code": "", "temperature": 0.0}),
 
-        XAIConfig(**{"company": "xai-org", "model_name": "grok-3", "temperature": 0.0, "date_code": ""}),
-        XAIConfig(**{"company": "xai-org", "model_name": "grok-3-mini", "temperature": 0.0, "date_code": ""}),
-        XAIConfig(**{"company": "xai-org", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709"}),
+        # TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "date_code": "", "temperature": 0.0}),
 
-        ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4-9b-chat", "date_code": "", "temperature": 0.0}),
-        ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "date_code": "", "temperature": 0.0}),
-        ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "date_code": "", "temperature": 0.0}),
+        # XAIConfig(**{"company": "xai-org", "model_name": "grok-3", "temperature": 0.0, "date_code": ""}),
+        # XAIConfig(**{"company": "xai-org", "model_name": "grok-3-mini", "temperature": 0.0, "date_code": ""}),
+        # XAIConfig(**{"company": "xai-org", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709"}),
+
+        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4-9b-chat", "date_code": "", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "date_code": "", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "date_code": "", "temperature": 0.0}),
       ]
     }
   ),

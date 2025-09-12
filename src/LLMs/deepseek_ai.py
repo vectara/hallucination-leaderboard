@@ -16,6 +16,7 @@ class DeepSeekAIConfig(BasicLLMConfig):
     model_name: Literal[
         "deepseek-chat",
         "deepseek-coder",
+        "DeepSeek-R1-0528",
         "DeepSeek-V3", #0324
         "DeepSeek-V3.1",
         "DeepSeek-R1",
