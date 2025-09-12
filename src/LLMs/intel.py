@@ -10,7 +10,7 @@ class IntelConfig(BasicLLMConfig):
     """Extended config for Intel-specific properties"""
     company: Literal["Intel"] = "Intel"
     model_name: Literal[
-        "MODEL_NAME",
+        "neural-chat-7b-v3-3",
     ] # Only model names manually added to this list are supported.
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
