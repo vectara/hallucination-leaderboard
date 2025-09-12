@@ -681,6 +681,103 @@ Here is the passage:
           }
         ),
 
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-2-7b-chat-hf",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-2-13b-chat-hf",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-2-70b-chat-hf",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-3-8B-chat-hf",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-3-70B-chat-hf",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-3.2-1B-Instruct",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-3.2-3B-Instruct-Turbo",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-3.2-11B-Vision-Instruct-Turbo",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-3.2-90B-Vision-Instruct-Turbo",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-3.3-70B-Instruct",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Meta-Llama-3.1-70B-Instruct",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Meta-Llama-3.1-405B-Instruct",
+            "date_code": "",
+            "temperature": 0.0
+          }
+        ),
+
       ]
     }
   ),

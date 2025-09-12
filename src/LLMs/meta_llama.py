@@ -12,6 +12,19 @@ class MetaLlamaConfig(BasicLLMConfig):
     """Extended config for Meta-specific properties"""
     company: Literal["meta-llama"] = "meta-llama" 
     model_name: Literal[
+        "Llama-2-7b-chat-hf",
+        "Llama-2-13b-chat-hf",
+        "Llama-2-70b-chat-hf",
+        "Llama-3-8B-chat-hf",
+        "Llama-3-70B-chat-hf",
+        "Llama-3.2-1B-Instruct",
+        "Llama-3.2-3B-Instruct-Turbo",
+        "Llama-3.2-11B-Vision-Instruct-Turbo",
+        "Llama-3.2-90B-Vision-Instruct-Turbo",
+        "Llama-3.3-70B-Instruct",
+        "Meta-Llama-3.1-70B-Instruct",
+        "Meta-Llama-3.1-405B-Instruct",
+
         "Llama-4-Maverick-17B-128E-Instruct-FP8",
         "Llama-4-Scout-17B-16E-Instruct",
         "Meta-Llama-3.1-8B-Instruct-Turbo",
