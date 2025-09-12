@@ -28,6 +28,10 @@ def compile_results_for_all_llms(eval_config: EvalConfig) -> None:
             if os.path.isfile(stats_jsonl_path):
                 df_provider = pd.read_json(stats_jsonl_path, lines=True)
 
+                if df_provider.empty:
+                    print(f"Stats file {stats_jsonl_path} is empty. Skipping {provider_name}/{llm_name}.")
+                    continue
+
                 # For every df_provider, keep only one row that has the latest judgment_date (first) and summary_date (second) alphabetically
                 df_provider = df_provider.sort_values(by=["judgment_date", "summary_date"], ascending=False)
                 df_provider = df_provider.head(1)
