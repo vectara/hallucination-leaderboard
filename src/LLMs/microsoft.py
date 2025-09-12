@@ -21,7 +21,7 @@ class MicrosoftConfig(BasicLLMConfig):
         "Phi-3.5-mini-instruct",
         "Phi-3.5-MoE-instruct",
         "phi-4",
-        "WizardLM-2-8x22B"
+        "WizardLM-2-8x22B",
 
 
         "Phi-4-mini-instruct",
