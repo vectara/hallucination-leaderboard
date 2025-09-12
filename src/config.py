@@ -914,6 +914,10 @@ Here is the passage:
         XAIConfig(**{"company": "xai-org", "model_name": "grok-3", "temperature": 0.0, "date_code": ""}),
         XAIConfig(**{"company": "xai-org", "model_name": "grok-3-mini", "temperature": 0.0, "date_code": ""}),
         XAIConfig(**{"company": "xai-org", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709"}),
+
+        ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4-9b-chat", "date_code": "", "temperature": 0.0}),
+        ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "date_code": "", "temperature": 0.0}),
+        ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "date_code": "", "temperature": 0.0}),
       ]
     }
   ),

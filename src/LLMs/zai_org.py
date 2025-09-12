@@ -14,7 +14,8 @@ class ZhipuAIConfig(BasicLLMConfig):
     company: Literal["zai-org"] = "zai-org" 
     model_name: Literal[
         "GLM-4.5-AIR-FP8", # Together
-        "glm-4p5" # Fireworks but using OpenAI
+        "glm-4p5", # Fireworks but using OpenAI
+        "glm-4-9b-chat"
     ] # Only model names manually added to this list are supported.
     date_code: str = "" # do we need date code?
     execution_mode: Literal["api"] = "api" # only API based?
