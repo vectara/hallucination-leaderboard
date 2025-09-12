@@ -484,6 +484,7 @@ Here is the passage:
           {
             "company": "01-ai",
             "model_name": "Yi-1.5-6B-Chat",
+            "date_code": "",
             "temperature": 0.01, # Cant be 0.0 has to be positive
           }
         ),
@@ -491,6 +492,7 @@ Here is the passage:
           {
             "company": "01-ai",
             "model_name": "Yi-1.5-9B-Chat",
+            "date_code": "",
             "temperature": 0.01, # Cant be 0.0 has to be positive
           }
         ),
@@ -498,6 +500,7 @@ Here is the passage:
           {
             "company": "01-ai",
             "model_name": "Yi-1.5-34B-Chat",
+            "date_code": "",
             "temperature": 0.01, # Cant be 0.0 has to be positive
           }
         ),
