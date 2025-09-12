@@ -20,6 +20,26 @@ class QwenConfig(BasicLLMConfig):
     """Extended config for Alibaba-specific properties"""
     company: Literal["qwen"] 
     model_name: Literal[
+        "Qwen2-72B-Instruct",
+        "Qwen2-VL-2B-Instruct",
+        "Qwen2-VL-7B-Instruct",
+        "Qwen2.5-0.5B-Instruct",
+        "Qwen2.5-1.5B-Instruct",
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-7B-Instruct",
+        "Qwen2.5-14B-Instruct",
+        "Qwen2.5-32B-Instruct",
+        "Qwen2.5-72B-Instruct",
+        "Qwen3-0.6B",
+        "Qwen3-1.7B",
+        "Qwen3-4B",
+        "Qwen3-8B",
+        "Qwen3-14B",
+        "Qwen3-30B-A3B",
+        "Qwen3-32B",
+        "Qwen3-235B-A22B",
+        "QwQ-32B-Preview",
+
         "qwen3-max-preview",
         "qwen3-32b",
         "qwen3-14b",

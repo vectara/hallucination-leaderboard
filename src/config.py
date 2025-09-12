@@ -881,6 +881,29 @@ Here is the passage:
         OpenAIConfig(**{"company": "openai", "model_name": "o1-pro", "date_code": "2025-03-19", "temperature": -1.0}),
         OpenAIConfig(**{"company": "openai", "model_name": "o3", "date_code": "2025-04-16", "temperature": -1.0}),
         OpenAIConfig(**{"company": "openai", "model_name": "o4-mini", "date_code": "2025-04-16", "temperature": -1.0}),
+
+        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen2-72B-Instruct", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen2-VL-2B-Instruct", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen2-VL-7B-Instruct", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-0.5B-Instruct", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-1.5B-Instruct", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-3B-Instruct", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-7B-Instruct", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-14B-Instruct", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-32B-Instruct", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen2.5-72B-Instruct", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-0.6B", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-1.7B", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-4B", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-8B", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-14B", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-30B-A3B", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-32B", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-235B-A22B", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "QwQ-32B-Preview", "date_code": "", "temperature": 0.0}),
+
+
       ]
     }
   ),
