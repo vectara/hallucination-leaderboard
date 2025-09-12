@@ -29,10 +29,10 @@ class MicrosoftConfig(BasicLLMConfig):
         "microsoft-phi-2", # Resource not active
         "microsoft-Orca-2-13b" # Resource not active
     ] # Only model names manually added to this list are supported.
-    model_key: str
+    model_key: str = "NoneGiven"
     date_code: str = "" # do we need date code?
     execution_mode: Literal["api"] = "api" # Is this company only API based?
-    azure_endpoint: str
+    azure_endpoint: str = "NoneGiven"
     endpoint: Literal["chat", "response"] = "chat"
 
 class MicrosoftSummary(BasicSummary):
