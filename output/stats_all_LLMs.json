@@ -1,0 +1,1122 @@
+[
+  {
+    "model_name": "01-ai/Yi-1.5-34B-Chat",
+    "date_code": "",
+    "hallucination_rate": 5.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 83.6
+  },
+  {
+    "model_name": "01-ai/Yi-1.5-6B-Chat",
+    "date_code": "",
+    "hallucination_rate": 10.4,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 99.9
+  },
+  {
+    "model_name": "01-ai/Yi-1.5-9B-Chat",
+    "date_code": "",
+    "hallucination_rate": 7.5,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 86.0
+  },
+  {
+    "model_name": "CohereLabs/aya-expanse-32b",
+    "date_code": "",
+    "hallucination_rate": 9.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 84.1
+  },
+  {
+    "model_name": "CohereLabs/aya-expanse-8b",
+    "date_code": "",
+    "hallucination_rate": 5.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 85.5
+  },
+  {
+    "model_name": "CohereLabs/c4ai-command-r-plus",
+    "date_code": "",
+    "hallucination_rate": 9.5,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 70.7
+  },
+  {
+    "model_name": "CohereLabs/command",
+    "date_code": "",
+    "hallucination_rate": 17.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 59.0
+  },
+  {
+    "model_name": "CohereLabs/command-a",
+    "date_code": "03-2025",
+    "hallucination_rate": 6.9,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 76.8
+  },
+  {
+    "model_name": "CohereLabs/command-a-reasoning",
+    "date_code": "08-2025",
+    "hallucination_rate": 13.7,
+    "confidence_interval": -1,
+    "answer_rate": 63.5,
+    "avg_word_count": 97.9
+  },
+  {
+    "model_name": "CohereLabs/command-chat",
+    "date_code": "",
+    "hallucination_rate": 16.8,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 74.2
+  },
+  {
+    "model_name": "CohereLabs/command-r",
+    "date_code": "08-2024",
+    "hallucination_rate": 7.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 64.6
+  },
+  {
+    "model_name": "Intel/neural-chat-7b-v3-3",
+    "date_code": "",
+    "hallucination_rate": 4.2,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 60.8
+  },
+  {
+    "model_name": "ai21labs/AI21-Jamba-Mini-1.5",
+    "date_code": "",
+    "hallucination_rate": 5.6,
+    "confidence_interval": -1,
+    "answer_rate": 43.0,
+    "avg_word_count": 74.4
+  },
+  {
+    "model_name": "amazon/nova-lite-v1:0",
+    "date_code": "",
+    "hallucination_rate": 3.9,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 80.7
+  },
+  {
+    "model_name": "amazon/nova-micro-v1:0",
+    "date_code": "",
+    "hallucination_rate": 3.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 89.5
+  },
+  {
+    "model_name": "amazon/nova-pro-v1:0",
+    "date_code": "",
+    "hallucination_rate": 3.4,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 85.8
+  },
+  {
+    "model_name": "antgroup/finix_s1_32b",
+    "date_code": "",
+    "hallucination_rate": 0.6000000000000001,
+    "confidence_interval": -1,
+    "answer_rate": 99.8,
+    "avg_word_count": 86.9
+  },
+  {
+    "model_name": "anthropic/claude-2.0",
+    "date_code": "",
+    "hallucination_rate": 14.3,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 87.0
+  },
+  {
+    "model_name": "anthropic/claude-3-5-haiku",
+    "date_code": 20241022,
+    "hallucination_rate": 3.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 92.7
+  },
+  {
+    "model_name": "anthropic/claude-3-5-sonnet",
+    "date_code": 20241022,
+    "hallucination_rate": 4.9,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 96.7
+  },
+  {
+    "model_name": "anthropic/claude-3-opus",
+    "date_code": 20240229,
+    "hallucination_rate": 6.7,
+    "confidence_interval": -1,
+    "answer_rate": 42.7,
+    "avg_word_count": 91.2
+  },
+  {
+    "model_name": "anthropic/claude-3-sonnet",
+    "date_code": 20240229,
+    "hallucination_rate": 8.4,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 106.7
+  },
+  {
+    "model_name": "anthropic/claude-opus-4-1",
+    "date_code": 20250805,
+    "hallucination_rate": 4.2,
+    "confidence_interval": -1,
+    "answer_rate": 98.2,
+    "avg_word_count": 107.3
+  },
+  {
+    "model_name": "apple/OpenELM-3B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 45.6,
+    "confidence_interval": -1,
+    "answer_rate": 99.8,
+    "avg_word_count": 27.0
+  },
+  {
+    "model_name": "databricks/dbrx-instruct",
+    "date_code": "",
+    "hallucination_rate": 9.2,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 84.9
+  },
+  {
+    "model_name": "deepseek-ai/DeepSeek-R1",
+    "date_code": "",
+    "hallucination_rate": 14.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 77.0
+  },
+  {
+    "model_name": "deepseek-ai/DeepSeek-R1-0528",
+    "date_code": "",
+    "hallucination_rate": 7.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 138.9
+  },
+  {
+    "model_name": "deepseek-ai/DeepSeek-V3",
+    "date_code": "",
+    "hallucination_rate": 5.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 87.6
+  },
+  {
+    "model_name": "deepseek-ai/DeepSeek-V3.1",
+    "date_code": "",
+    "hallucination_rate": 5.5,
+    "confidence_interval": -1,
+    "answer_rate": 98.7,
+    "avg_word_count": 78.0
+  },
+  {
+    "model_name": "google/chat-bison-001",
+    "date_code": "",
+    "hallucination_rate": 59.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 221.0
+  },
+  {
+    "model_name": "google/flan-t5-large",
+    "date_code": "",
+    "hallucination_rate": 21.9,
+    "confidence_interval": -1,
+    "answer_rate": 99.4,
+    "avg_word_count": 21.0
+  },
+  {
+    "model_name": "google/gemini-1.5-flash",
+    "date_code": "",
+    "hallucination_rate": 9.0,
+    "confidence_interval": -1,
+    "answer_rate": 72.2,
+    "avg_word_count": 62.9
+  },
+  {
+    "model_name": "google/gemini-1.5-flash-001",
+    "date_code": "",
+    "hallucination_rate": 8.8,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 63.4
+  },
+  {
+    "model_name": "google/gemini-1.5-flash-002",
+    "date_code": "",
+    "hallucination_rate": 4.9,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 59.5
+  },
+  {
+    "model_name": "google/gemini-1.5-pro",
+    "date_code": "",
+    "hallucination_rate": 9.8,
+    "confidence_interval": -1,
+    "answer_rate": 8.3,
+    "avg_word_count": 84.3
+  },
+  {
+    "model_name": "google/gemini-1.5-pro-001",
+    "date_code": "",
+    "hallucination_rate": 9.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.6,
+    "avg_word_count": 61.8
+  },
+  {
+    "model_name": "google/gemini-1.5-pro-002",
+    "date_code": "",
+    "hallucination_rate": 6.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 61.9
+  },
+  {
+    "model_name": "google/gemini-2.0-flash-001",
+    "date_code": "",
+    "hallucination_rate": 1.2,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 65.8
+  },
+  {
+    "model_name": "google/gemini-2.0-flash-exp",
+    "date_code": "",
+    "hallucination_rate": 1.6,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 61.1
+  },
+  {
+    "model_name": "google/gemini-2.0-flash-lite-preview",
+    "date_code": "02-05",
+    "hallucination_rate": 1.2,
+    "confidence_interval": -1,
+    "answer_rate": 97.4,
+    "avg_word_count": 62.6
+  },
+  {
+    "model_name": "google/gemini-2.0-pro-exp",
+    "date_code": "02-05",
+    "hallucination_rate": 1.7000000000000002,
+    "confidence_interval": -1,
+    "answer_rate": 99.1,
+    "avg_word_count": 62.3
+  },
+  {
+    "model_name": "google/gemini-2.5-flash",
+    "date_code": "",
+    "hallucination_rate": 2.1,
+    "confidence_interval": -1,
+    "answer_rate": 98.8,
+    "avg_word_count": 83.9
+  },
+  {
+    "model_name": "google/gemini-2.5-flash-lite",
+    "date_code": "",
+    "hallucination_rate": 2.9,
+    "confidence_interval": -1,
+    "answer_rate": 99.7,
+    "avg_word_count": 78.4
+  },
+  {
+    "model_name": "google/gemini-2.5-flash-preview",
+    "date_code": "04-17",
+    "hallucination_rate": 4.6,
+    "confidence_interval": -1,
+    "answer_rate": 13.4,
+    "avg_word_count": 71.5
+  },
+  {
+    "model_name": "google/gemini-2.5-pro-exp",
+    "date_code": "03-25",
+    "hallucination_rate": 4.2,
+    "confidence_interval": -1,
+    "answer_rate": 32.8,
+    "avg_word_count": 73.8
+  },
+  {
+    "model_name": "google/gemini-2.5-pro-preview",
+    "date_code": "",
+    "hallucination_rate": 2.8,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 72.9
+  },
+  {
+    "model_name": "google/gemma-1.1-2b-it",
+    "date_code": "",
+    "hallucination_rate": 4.5,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 69.0
+  },
+  {
+    "model_name": "google/gemma-1.1-7b-it",
+    "date_code": "",
+    "hallucination_rate": 4.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 67.4
+  },
+  {
+    "model_name": "google/gemma-2-2b-it",
+    "date_code": "",
+    "hallucination_rate": 6.9,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 61.8
+  },
+  {
+    "model_name": "google/gemma-2-9b-it",
+    "date_code": "",
+    "hallucination_rate": 11.8,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 71.7
+  },
+  {
+    "model_name": "google/gemma-3-1b-it",
+    "date_code": "",
+    "hallucination_rate": 17.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 57.6
+  },
+  {
+    "model_name": "google/gemma-3-27b-it",
+    "date_code": "",
+    "hallucination_rate": 6.7,
+    "confidence_interval": -1,
+    "answer_rate": 80.6,
+    "avg_word_count": 64.9
+  },
+  {
+    "model_name": "google/gemma-3-4b-it",
+    "date_code": "",
+    "hallucination_rate": 6.9,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 63.4
+  },
+  {
+    "model_name": "google/gemma-7b-it",
+    "date_code": "",
+    "hallucination_rate": 8.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 109.7
+  },
+  {
+    "model_name": "google/text-bison-001",
+    "date_code": "",
+    "hallucination_rate": 11.0,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 35.6
+  },
+  {
+    "model_name": "ibm-granite/granite-3.0-2b-instruct",
+    "date_code": "",
+    "hallucination_rate": 13.5,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 80.8
+  },
+  {
+    "model_name": "ibm-granite/granite-3.0-8b-instruct",
+    "date_code": "",
+    "hallucination_rate": 7.8,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 74.2
+  },
+  {
+    "model_name": "ibm-granite/granite-3.1-2b-instruct",
+    "date_code": "",
+    "hallucination_rate": 13.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 108.1
+  },
+  {
+    "model_name": "ibm-granite/granite-3.1-8b-instruct",
+    "date_code": "",
+    "hallucination_rate": 9.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 107.4
+  },
+  {
+    "model_name": "ibm-granite/granite-3.2-2b-instruct",
+    "date_code": "",
+    "hallucination_rate": 13.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 116.3
+  },
+  {
+    "model_name": "ibm-granite/granite-3.2-8b-instruct",
+    "date_code": "",
+    "hallucination_rate": 8.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 118.5
+  },
+  {
+    "model_name": "internlm/internlm3-8b-instruct",
+    "date_code": "",
+    "hallucination_rate": 5.8,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 96.8
+  },
+  {
+    "model_name": "meta-llama/Llama-2-13b-chat-hf",
+    "date_code": "",
+    "hallucination_rate": 11.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 81.0
+  },
+  {
+    "model_name": "meta-llama/Llama-2-70b-chat-hf",
+    "date_code": "",
+    "hallucination_rate": 7.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 83.7
+  },
+  {
+    "model_name": "meta-llama/Llama-2-7b-chat-hf",
+    "date_code": "",
+    "hallucination_rate": 8.9,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 120.6
+  },
+  {
+    "model_name": "meta-llama/Llama-3-70B-chat-hf",
+    "date_code": "",
+    "hallucination_rate": 5.7,
+    "confidence_interval": -1,
+    "answer_rate": 93.7,
+    "avg_word_count": 69.1
+  },
+  {
+    "model_name": "meta-llama/Llama-3-8B-chat-hf",
+    "date_code": "",
+    "hallucination_rate": 6.7,
+    "confidence_interval": -1,
+    "answer_rate": 99.6,
+    "avg_word_count": 79.5
+  },
+  {
+    "model_name": "meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo",
+    "date_code": "",
+    "hallucination_rate": 8.7,
+    "confidence_interval": -1,
+    "answer_rate": 99.2,
+    "avg_word_count": 68.8
+  },
+  {
+    "model_name": "meta-llama/Llama-3.2-1B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 11.3,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 30.4
+  },
+  {
+    "model_name": "meta-llama/Llama-3.2-3B-Instruct-Turbo",
+    "date_code": "",
+    "hallucination_rate": 10.2,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 72.3
+  },
+  {
+    "model_name": "meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo",
+    "date_code": "",
+    "hallucination_rate": 6.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 76.7
+  },
+  {
+    "model_name": "meta-llama/Llama-3.3-70B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 5.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 85.4
+  },
+  {
+    "model_name": "meta-llama/Meta-Llama-3.1-405B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 2.9,
+    "confidence_interval": -1,
+    "answer_rate": 99.1,
+    "avg_word_count": 86.2
+  },
+  {
+    "model_name": "meta-llama/Meta-Llama-3.1-70B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 5.2,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 79.7
+  },
+  {
+    "model_name": "microsoft/Orca-2-13b",
+    "date_code": "",
+    "hallucination_rate": 7.2,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 65.0
+  },
+  {
+    "model_name": "microsoft/Phi-3-mini-128k-instruct",
+    "date_code": "",
+    "hallucination_rate": 9.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 60.3
+  },
+  {
+    "model_name": "microsoft/Phi-3-mini-4k-instruct",
+    "date_code": "",
+    "hallucination_rate": 8.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 86.7
+  },
+  {
+    "model_name": "microsoft/Phi-3.5-MoE-instruct",
+    "date_code": "",
+    "hallucination_rate": 5.4,
+    "confidence_interval": -1,
+    "answer_rate": 40.0,
+    "avg_word_count": 69.7
+  },
+  {
+    "model_name": "microsoft/Phi-3.5-mini-instruct",
+    "date_code": "",
+    "hallucination_rate": 6.8,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 74.7
+  },
+  {
+    "model_name": "microsoft/Phi-4-mini-instruct",
+    "date_code": "",
+    "hallucination_rate": 7.4,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 69.3
+  },
+  {
+    "model_name": "microsoft/WizardLM-2-8x22B",
+    "date_code": "",
+    "hallucination_rate": 6.7,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 141.1
+  },
+  {
+    "model_name": "microsoft/phi-2",
+    "date_code": "",
+    "hallucination_rate": 10.8,
+    "confidence_interval": -1,
+    "answer_rate": 32.3,
+    "avg_word_count": 78.7
+  },
+  {
+    "model_name": "microsoft/phi-4",
+    "date_code": "",
+    "hallucination_rate": 5.3,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 100.2
+  },
+  {
+    "model_name": "mistralai/Ministral-8B-Instruct",
+    "date_code": 2410,
+    "hallucination_rate": 7.2,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 64.3
+  },
+  {
+    "model_name": "mistralai/Mistral-7B-Instruct-v0.3",
+    "date_code": "",
+    "hallucination_rate": 10.9,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 98.0
+  },
+  {
+    "model_name": "mistralai/Mistral-Nemo-Instruct",
+    "date_code": 2407,
+    "hallucination_rate": 11.0,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 71.1
+  },
+  {
+    "model_name": "mistralai/Mistral-Small-24B-Instruct",
+    "date_code": 2501,
+    "hallucination_rate": 5.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 75.9
+  },
+  {
+    "model_name": "mistralai/Mistral-Small-3.1-24b-instruct",
+    "date_code": 2503,
+    "hallucination_rate": 6.5,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 74.2
+  },
+  {
+    "model_name": "mistralai/Mixtral-8x22B-Instruct-v0.1",
+    "date_code": "",
+    "hallucination_rate": 5.6,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 91.9
+  },
+  {
+    "model_name": "mistralai/Mixtral-8x7B-Instruct-v0.1",
+    "date_code": "",
+    "hallucination_rate": 12.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.1,
+    "avg_word_count": 89.3
+  },
+  {
+    "model_name": "mistralai/Pixtral-Large-Instruct",
+    "date_code": 2411,
+    "hallucination_rate": 5.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 79.5
+  },
+  {
+    "model_name": "mistralai/mistral-medium",
+    "date_code": 2508,
+    "hallucination_rate": 11.4,
+    "confidence_interval": -1,
+    "answer_rate": 98.3,
+    "avg_word_count": 99.2
+  },
+  {
+    "model_name": "mistralai/mistral-small",
+    "date_code": 2506,
+    "hallucination_rate": 6.0,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 99.1
+  },
+  {
+    "model_name": "openai/gpt-4-turbo",
+    "date_code": "2024-04-09",
+    "hallucination_rate": 2.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 85.6
+  },
+  {
+    "model_name": "openai/gpt-4.1",
+    "date_code": "2025-04-14",
+    "hallucination_rate": 4.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 71.5
+  },
+  {
+    "model_name": "openai/gpt-4.1-mini",
+    "date_code": "2025-04-14",
+    "hallucination_rate": 5.0,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 79.2
+  },
+  {
+    "model_name": "openai/gpt-4.1-nano",
+    "date_code": "2025-04-14",
+    "hallucination_rate": 5.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 69.6
+  },
+  {
+    "model_name": "openai/gpt-4.5-preview",
+    "date_code": "2025-02-27",
+    "hallucination_rate": 4.4,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 76.5
+  },
+  {
+    "model_name": "openai/gpt-4o-mini",
+    "date_code": "2024-07-18",
+    "hallucination_rate": 3.3,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 76.4
+  },
+  {
+    "model_name": "openai/gpt-5-high",
+    "date_code": "2025-08-07",
+    "hallucination_rate": 1.4,
+    "confidence_interval": -1,
+    "answer_rate": 99.3,
+    "avg_word_count": 96.4
+  },
+  {
+    "model_name": "openai/gpt-5-mini",
+    "date_code": "2025-08-07",
+    "hallucination_rate": 3.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.6,
+    "avg_word_count": 87.2
+  },
+  {
+    "model_name": "openai/gpt-5-minimal",
+    "date_code": "2025-08-07",
+    "hallucination_rate": 4.9,
+    "confidence_interval": -1,
+    "answer_rate": 99.7,
+    "avg_word_count": 83.6
+  },
+  {
+    "model_name": "openai/gpt-5-nano",
+    "date_code": "2025-08-07",
+    "hallucination_rate": 4.7,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 72.7
+  },
+  {
+    "model_name": "openai/gpt-oss-120b",
+    "date_code": "",
+    "hallucination_rate": 2.4,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 82.3
+  },
+  {
+    "model_name": "openai/gpt-oss-20b",
+    "date_code": "",
+    "hallucination_rate": 3.7,
+    "confidence_interval": -1,
+    "answer_rate": 99.4,
+    "avg_word_count": 90.0
+  },
+  {
+    "model_name": "openai/o1",
+    "date_code": "2024-12-17",
+    "hallucination_rate": 4.7,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 72.5
+  },
+  {
+    "model_name": "openai/o1-mini",
+    "date_code": "2024-09-12",
+    "hallucination_rate": 4.2,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 78.2
+  },
+  {
+    "model_name": "openai/o1-preview",
+    "date_code": "2024-09-12",
+    "hallucination_rate": 3.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 117.8
+  },
+  {
+    "model_name": "openai/o1-pro",
+    "date_code": "2025-03-19",
+    "hallucination_rate": 4.4,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 79.9
+  },
+  {
+    "model_name": "openai/o3",
+    "date_code": "2025-04-16",
+    "hallucination_rate": 8.8,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 81.5
+  },
+  {
+    "model_name": "openai/o4-mini",
+    "date_code": "2025-04-16",
+    "hallucination_rate": 6.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 83.8
+  },
+  {
+    "model_name": "qwen/QwQ-32B-Preview",
+    "date_code": "",
+    "hallucination_rate": 19.5,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 139.5
+  },
+  {
+    "model_name": "qwen/Qwen2-72B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 4.8,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 100.3
+  },
+  {
+    "model_name": "qwen/Qwen2-VL-2B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 14.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 81.7
+  },
+  {
+    "model_name": "qwen/Qwen2-VL-7B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 6.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 73.8
+  },
+  {
+    "model_name": "qwen/Qwen2.5-0.5B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 42.6,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 73.5
+  },
+  {
+    "model_name": "qwen/Qwen2.5-1.5B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 25.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 71.4
+  },
+  {
+    "model_name": "qwen/Qwen2.5-14B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 7.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 75.0
+  },
+  {
+    "model_name": "qwen/Qwen2.5-32B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 6.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 67.9
+  },
+  {
+    "model_name": "qwen/Qwen2.5-3B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 12.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 70.3
+  },
+  {
+    "model_name": "qwen/Qwen2.5-72B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 7.0,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 80.6
+  },
+  {
+    "model_name": "qwen/Qwen2.5-7B-Instruct",
+    "date_code": "",
+    "hallucination_rate": 6.5,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 71.2
+  },
+  {
+    "model_name": "qwen/Qwen3-0.6B",
+    "date_code": "",
+    "hallucination_rate": 17.9,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 65.6
+  },
+  {
+    "model_name": "qwen/Qwen3-1.7B",
+    "date_code": "",
+    "hallucination_rate": 11.4,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 68.6
+  },
+  {
+    "model_name": "qwen/Qwen3-14B",
+    "date_code": "",
+    "hallucination_rate": 3.6,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 81.6
+  },
+  {
+    "model_name": "qwen/Qwen3-235B-A22B",
+    "date_code": "",
+    "hallucination_rate": 14.8,
+    "confidence_interval": -1,
+    "answer_rate": 95.0,
+    "avg_word_count": 85.9
+  },
+  {
+    "model_name": "qwen/Qwen3-30B-A3B",
+    "date_code": "",
+    "hallucination_rate": 9.4,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 69.6
+  },
+  {
+    "model_name": "qwen/Qwen3-32B",
+    "date_code": "",
+    "hallucination_rate": 5.0,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 81.8
+  },
+  {
+    "model_name": "qwen/Qwen3-4B",
+    "date_code": "",
+    "hallucination_rate": 3.7,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 86.9
+  },
+  {
+    "model_name": "qwen/Qwen3-8B",
+    "date_code": "",
+    "hallucination_rate": 5.0,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 78.1
+  },
+  {
+    "model_name": "qwen/qwen-max",
+    "date_code": "2025-01-25",
+    "hallucination_rate": 3.8,
+    "confidence_interval": -1,
+    "answer_rate": 8.5,
+    "avg_word_count": 90.0
+  },
+  {
+    "model_name": "snowflake/snowflake-arctic-instruct",
+    "date_code": "",
+    "hallucination_rate": 5.0,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 68.7
+  },
+  {
+    "model_name": "tiiuae/falcon-7b-instruct",
+    "date_code": "",
+    "hallucination_rate": 28.4,
+    "confidence_interval": -1,
+    "answer_rate": 12.5,
+    "avg_word_count": 71.7
+  },
+  {
+    "model_name": "tngtech/DeepSeek-TNG-R1T2-Chimera",
+    "date_code": "",
+    "hallucination_rate": 5.5,
+    "confidence_interval": -1,
+    "answer_rate": 99.6,
+    "avg_word_count": 78.6
+  },
+  {
+    "model_name": "xai-org/grok-3",
+    "date_code": "",
+    "hallucination_rate": 3.2,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 96.9
+  },
+  {
+    "model_name": "xai-org/grok-3-mini",
+    "date_code": "",
+    "hallucination_rate": 4.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 89.9
+  },
+  {
+    "model_name": "xai-org/grok-4",
+    "date_code": 709,
+    "hallucination_rate": 4.5,
+    "confidence_interval": -1,
+    "answer_rate": 99.5,
+    "avg_word_count": 100.9
+  },
+  {
+    "model_name": "zai-org/GLM-4.5-AIR-FP8",
+    "date_code": "",
+    "hallucination_rate": 1.9,
+    "confidence_interval": -1,
+    "answer_rate": 99.1,
+    "avg_word_count": 74.4
+  },
+  {
+    "model_name": "zai-org/glm-4-9b-chat",
+    "date_code": "",
+    "hallucination_rate": 5.9,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 58.0
+  },
+  {
+    "model_name": "zai-org/glm-4p5",
+    "date_code": "",
+    "hallucination_rate": 3.7,
+    "confidence_interval": -1,
+    "answer_rate": 99.1,
+    "avg_word_count": 81.1
+  }
+]

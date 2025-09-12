@@ -1,7 +1,0 @@
-{
-    "timestamp": "2025-06-05",
-    "llm": "DeepSeek-R1-0528",
-    "hallucination_rate": 7.7,
-    "answer_rate": 100.0,
-    "avg_summary_length": 138.9
-}

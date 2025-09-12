@@ -1,4 +1,0 @@
-Endpoint name does not match model name.
-
-Requested Name is: finix_s1_32b (this will not appear in the files)
-Endpoint Name is: antfinix_ir1 (this will appear in the files)

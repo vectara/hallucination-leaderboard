@@ -8,6 +8,7 @@ TODO.md
 
 models/
 output_test/
+old_output/
 
 config.json
 test_config.json
@@ -16,8 +17,5 @@ leaderboard_dataset_revised.csv
 leaderboard_dataset.csv
 temp.py
 hhem_leaderboard.egg-info/
-
-judgments.jsonl
-judgements.jsonl
 
 migrated_errors.txt
