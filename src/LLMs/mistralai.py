@@ -26,6 +26,17 @@ class MistralAIConfig(BasicLLMConfig):
     """Extended config for MistralAI-specific properties"""
     company: Literal["mistralai"] = "mistralai"
     model_name: Literal[
+        "Ministral-8B-Instruct",
+        "Mistral-7B-Instruct-v0.3",
+        "Mistral-Nemo-Instruct",
+        "Mistral-Small-3.1-24b-instruct",
+        "Mistral-Small-24B-Instruct",
+        "Mixtral-8x7B-Instruct-v0.1",
+        "Mixtral-8x22B-Instruct-v0.1",
+        "Pixtral-Large-Instruct",
+        
+
+
         "magistral-medium", 
         "mistral-medium",
         "mistral-small",

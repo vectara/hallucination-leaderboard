@@ -851,6 +851,16 @@ Here is the passage:
           }
         ),
 
+        MistralAIConfig(**{"company": "mistralai", "model_name": "Ministral-8B-Instruct", "date_code": "2410", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-7B-Instruct-v0.3", "date_code": "", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-Nemo-Instruct", "date_code": "2407", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2506", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-Small-3.1-24b-instruct", "date_code": "2503", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "Mistral-Small-24B-Instruct", "date_code": "2501", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "Mixtral-8x7B-Instruct-v0.1", "date_code": "", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "Mixtral-8x22B-Instruct-v0.1", "date_code": "", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "Pixtral-Large-Instruct", "date_code": "2411", "temperature": 0.0}),
       ]
     }
   ),
