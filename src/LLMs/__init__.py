@@ -56,7 +56,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": _01AIConfig,
         "summary_class": _01AISummary
     },
-    "antgroup-mi": {
+    "antgroup": {
         "LLM_class": AntGroupMILLM,
         "config_class": AntGroupMIConfig,
         "summary_class": AntGroupMISummary
@@ -91,7 +91,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": AnthropicConfig,
         "summary_class": AnthropicSummary,
     },
-    "cohere": {
+    "CohereLabs": {
         "LLM_class": CohereLLM,
         "config_class": CohereConfig,
         "summary_class": CohereSummary
@@ -166,7 +166,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": TiiuaeConfig,
         "summary_class": TiiuaeSummary
     },
-    "xai": {
+    "xai-org": {
         "LLM_class": XAILLM,
         "config_class": XAIConfig,
         "summary_class": XAISummary
