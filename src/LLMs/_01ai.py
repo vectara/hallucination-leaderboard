@@ -15,9 +15,9 @@ class _01AIConfig(BasicLLMConfig):
     """Extended config for 01-AI-specific properties"""
     company: Literal["01-ai"] = "01-ai"
     model_name: Literal[
-        "Yi-1.5-6B-Chat"
+        "Yi-1.5-6B-Chat",
         "Yi-1.5-9B-Chat",
-        "Yi-1.5-34B-Chat"
+        "Yi-1.5-34B-Chat",
     ] # Only model names manually added to this list are supported.
     date_code: str = "",
     endpoint: Literal["chat", "response"] = "chat"
