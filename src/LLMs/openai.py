@@ -15,6 +15,10 @@ class OpenAIConfig(BasicLLMConfig):
     """Extended config for OpenAI-specific properties"""
     company: Literal["openai"]
     model_name: Literal[
+        "chatgpt-4o",
+        "gpt-4.5-preview",
+        "o1-preview",
+
         "gpt-5-high",
         "gpt-5-minimal",
         "gpt-5",
