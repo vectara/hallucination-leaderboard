@@ -188,7 +188,6 @@ class AntGroupMILLM(AbstractLLM):
             response = requests.post(base_url, headers=headers, json=payload, stream=stream_state)
             result = ""
             for line in response.iter_lines():
-                print(line)
                 if line:
                     # remove "data: " prefix and parse JSON
                     # line_text = line.decode("utf-8")
