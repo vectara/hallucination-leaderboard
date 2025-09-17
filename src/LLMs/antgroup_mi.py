@@ -15,7 +15,8 @@ class AntGroupMIConfig(BasicLLMConfig):
     """Extended config for AntGroup-MI-specific properties"""
     company: Literal["antgroup"] = "antgroup"
     model_name: Literal[
-        "finix_s1_32b"
+        "finix_s1_32b",
+        "antfinix-a1"
     ] # Only model names manually added to this list are supported.
     execution_mode: Literal["api"] = "api" # MistralAI models can only be run via web api.
     date_code: str = "" # You must specify a date code for MistralAI models.
@@ -40,6 +41,9 @@ class AntGroupMILLM(AbstractLLM):
     client_mode_group = {
         "finix_s1_32b":{
             "chat": 1
+        },
+        "antfinix-a1":{
+            "chat":2
         }
     }
 
@@ -69,6 +73,19 @@ class AntGroupMILLM(AbstractLLM):
                         temperature=self.temperature,
                         max_tokens=self.max_tokens
                     )
+
+                case 2:
+                    base_url = "https://antfinix.alipay.com/v1/chat/completions"
+                    messages = [{"role": "user", "content": prepared_text}]
+                    summary = self.call_insllm_api_v2(
+                        api_token=self.api_key,
+                        base_url=base_url,
+                        model_name="antfinix-a1",
+                        messages=messages,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens
+                    )
+                    pass
         elif self.local_model:
             pass
         else:
@@ -145,3 +162,54 @@ class AntGroupMILLM(AbstractLLM):
         except Exception as e:
             print(f"Error calling INSLLM API: {e}")
             return None
+
+    def call_insllm_api_v2(
+            self,
+            api_token,
+            base_url,
+            model_name,
+            messages,
+            temperature,
+            max_tokens
+        ):
+        headers = {
+            'Content-Type': 'application/json',
+            "Authorization": f"Bearer {api_token}"
+        }
+        stream_state = True
+        payload = {
+            "model": model_name,
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+            "stream": stream_state,  # avoid timeout for long think and response
+        }
+        try:
+            response = requests.post(base_url, headers=headers, json=payload, stream=stream_state)
+            result = ""
+            for line in response.iter_lines():
+                print(line)
+                if line:
+                    # remove "data: " prefix and parse JSON
+                    # line_text = line.decode("utf-8")
+                    if line.startswith(b"data: "):
+                        json_str = line[5:]
+                        if json_str.strip() == b"[DONE]":
+                            break
+                        try:
+                            chunk = json.loads(json_str)
+                            if "choices" in chunk and chunk["choices"] and "delta" in chunk["choices"][0]:
+                                delta = chunk["choices"][0]["delta"]
+                                if "reasoning_content" in delta and delta["reasoning_content"]:
+                                    # skipping reasoning content for now
+                                    pass
+                                elif "content" in delta and delta["content"]:
+                                    result += delta["content"]
+
+                        except json.JSONDecodeError:
+                            print(f"Error Decoding JSON: {json_str}")
+            
+            return result
+        except Exception as e:
+            print(f"Error calling INSLLM API: {e}")
+            return "ERROR CALLING INSLLM API"

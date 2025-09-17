@@ -113,12 +113,20 @@ Here is the passage:
         # ),
         # AntGroupMIConfig(**
         #   {
-        #     "company": "antgroup-mi",
+        #     "company": "antgroup",
         #     "model_name": "antfinix-ir1",
         #     "date_code": "",
         #     "temperature": 0.0,
         #   }
         # ),
+        AntGroupMIConfig(**
+          {
+            "company": "antgroup",
+            "model_name": "antfinix-a1",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "max_tokens": 2345, "date_code": "20241022"}),
@@ -303,7 +311,7 @@ Here is the passage:
         #   }
         # ),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
+        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
         # MicrosoftConfig(**
         #   {
         #     "company": "microsoft",
@@ -401,7 +409,7 @@ Here is the passage:
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-max-preview", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-max-preview", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "temperature": 0.0}),
       ]
@@ -439,8 +447,16 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-max-preview", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        AntGroupMIConfig(**
+          {
+            "company": "antgroup",
+            "model_name": "antfinix-a1",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
+        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-max-preview", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
         # CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096, "min_throttle_time": 5.0}),
         # VectaraConfig(**{"company": "vectara", "model_name": "manual_short_summary", "date_code": "", "temperature": 0.0, "max_tokens": 8192}),
