@@ -1119,6 +1119,14 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        AntGroupMIConfig(**
+          {
+            "company": "antgroup",
+            "model_name": "antfinix-a1",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
       ]
     }
   ),

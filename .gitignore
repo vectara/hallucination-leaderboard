@@ -9,6 +9,7 @@ TODO.md
 models/
 output_test/
 old_output/
+staging_output/
 
 config.json
 test_config.json
