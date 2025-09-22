@@ -25,6 +25,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-action.txt
 
+      # Debug: Confirm working directory & expected files exist
+      - name: Debug show working directory and files
+        run: |
+          echo "PWD: $(pwd)"
+          ls -l
+          ls -l output
+          ls -l img || echo "img folder missing"
+
+      - name: Run update script
+        run: python update_readme.py
+
+      # Debug: Show what changed
+      - name: Debug show git status and README diff
+        run: |
+          git status
+          git diff README.md || echo "No diff in README.md"
+          ls -l img
+
       - name: Run update script
         run: python update_readme.py
 
