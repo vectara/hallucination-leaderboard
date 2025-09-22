@@ -18,7 +18,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
   </tr>
 </table>
 
-
+<!-- LEADERBOARD_START -->
 Last updated on April 29th, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/hallucination_rates_with_logo.png)
@@ -164,6 +164,8 @@ Last updated on April 29th, 2025
 |Qwen2.5-0.5B-Instruct|25.2 %|74.8 %|100.0 %|72.6|
 |Google Gemma-1.1-2B-it|27.8 %|72.2 %|100.0 %|66.8|
 |TII falcon-7B-instruct|29.9 %|70.1 %|90.0 %|75.5|
+
+<!-- LEADERBOARD_END -->
 
 ## Model
 This leaderboard uses HHEM-2.1, Vectara's commercial hallucination evaluation model, to compute the LLM rankings. You can find an open-source variant of that model, HHEM-2.1-Open on [Hugging Face](https://huggingface.co/vectara/hallucination_evaluation_model) and [Kaggle](https://www.kaggle.com/models/vectara/hallucination_evaluation_model).
