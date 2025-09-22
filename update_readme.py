@@ -70,7 +70,7 @@ try:
     logo_resized = np.array(logo_resized)
     fig.figimage(logo_resized, xo=3000, yo=2200, zorder=10, alpha=1.0)
 except Exception as e:
-    print(f"⚠️ Logo not added: {e}")
+    print(f"Logo not added: {e}")
 
 # === Save plot ===
 date_str = datetime.datetime.utcnow().strftime("%Y-%m-%d")
