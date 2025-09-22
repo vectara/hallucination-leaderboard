@@ -1,5 +1,5 @@
 import json
-import datetime
+from datetime import datetime, timezone
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
@@ -31,7 +31,7 @@ df_top25 = df_sorted.head(25)
 # === Generate Markdown Table ===
 table_md = "|Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|\n"
 table_md += "|----|----:|----:|----:|----:|\n"
-for _, row in df_top10.iterrows():
+for _, row in df_sorted.iterrows():
     table_md += f"|{row['Model']}|{row['Hallucination Rate']} %|{row['Factual Consistency Rate']} %|{row['Answer Rate']} %|{row['Average Summary Length (Words)']}|\n"
 
 # === Generate Plot ===
@@ -61,7 +61,7 @@ ax.spines["right"].set_visible(False)
 ax.set_ylim(len(df_top25) - 0.5, -0.5)
 
 # === Add logo ===
-logo_path = "vectara_logo_official.png"
+logo_path = "img/vectara_logo_official.png"
 try:
     logo = Image.open(logo_path)
     scale = 0.5
@@ -73,14 +73,14 @@ except Exception as e:
     print(f"Logo not added: {e}")
 
 # === Save plot ===
-date_str = datetime.datetime.utcnow().strftime("%Y-%m-%d")
+date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 plot_filename = f"top25_hallucination_rates_{date_str}.png"
 plot_path = f"./img/{plot_filename}"
 plt.savefig(plot_path, dpi=300, bbox_inches='tight')
 plt.close()
 
 # === Format timestamp ===
-date_for_readme = datetime.datetime.utcnow().strftime("%B %d, %Y")  # e.g., September 22, 2025
+date_for_readme = datetime.now(timezone.utc).strftime("%B %d, %Y")
 
 # === Compose leaderboard section for README ===
 readme_section = f"""Last updated on {date_for_readme}
