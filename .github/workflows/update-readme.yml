@@ -3,7 +3,7 @@ name: Update Leaderboard
 on:
   push:
     paths:
-      - 'output/stats_all_LLMs.json'
+      - output/stats_all_LLMs.json
 
 jobs:
   update-readme:
