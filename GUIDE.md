@@ -1,15 +1,5 @@
 # How to run and expand this code base
 
-DO NOT PUSH judgments.jsonl to the repo. It will allow people to chat on the leaderboard.
-
-TODO: 
-1. Allow interrupting the program and resume from the same point.
-2. Supporting selecting to run HHEM on CPU. 
-3. Do we still need test files?
-4. update the app code to read from new stats files or shall we have a script that pushes to HF datasets repo?
-5. Add a script to generate leaderboard ranking markdown. 
-6. Do we still need `model_fullname` ?
-
 ## Quick Guide
 
 This section serves as a quick refresher for those familiar with the code base or want an abridged version.
