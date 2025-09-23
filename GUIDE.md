@@ -10,6 +10,62 @@ TODO:
 5. Add a script to generate leaderboard ranking markdown. 
 6. Do we still need `model_fullname` ?
 
+## Quick Guide
+
+This section serves as a quick refresher for those familiar with the code base or want an abridged version.
+
+Make sure you are in the correct environment, have the proper libraries installed, and the installation command has been run. Run always in root.
+
+#### Add New Company and Models
+
+Copy the example_company.py code and create a new file preferably with the name of the company. If there are unusual characters then the python file name can be whatever is a proper file name that still clearly refers to the company.
+
+Within the python file reference and satisfy all TODO comments.
+
+Once the new python file is complete update the model registry in `src/LLMs/__init__.py` with the new company objects you created in the company python file. Place the company alphabetically within the dictionary.
+
+Lastly it's time for a test run. config.py contains various experimental setups including the test and live runs. Scan for the EvalConfig object with field eval_name assigned to "test". Then under per_LLM_configs add the new model using the companys config object you created in its respective company class alphabetically by company. Repeat the previous step for all the models you added.
+
+The test run object also serves as an example for how to add models for other tests so leave them there as a reference and overall list of all possible models we can run. Comment out other company objects if that hasn't been done yet and do a test run with only the models you added by inputting the command. 
+
+`hhem-leaderboard --eval_name test`
+
+Inspect the console output for any issues. If it runs to completion then inspect the output_test directory for the saved summaries. We have two test cases. A null case and a real summary case. The first article you should see a real summary. The second case you should see "I cannot do it.". If both are satisfied then you successfully added the company and its models.
+
+
+#### Add Models to Existing Company
+
+Decide if the models execution mode is local(cpu/gpu) or api based.
+
+Search for the company python file within `src/LLMs/`. Within the class find the `class COMPANY_NAMEConfig(BasicLLMConfig)` object and add the model to the field model_name. 
+
+Next you should understand how your model should be ran to get a summary. When you do inspect the summarize method and at the respective execution modes conditional branch. If there is no case that matches how your model needs to be executed then you will need to add a new case with a new unique id number(Just go +1 from the last number shown). If there is a valid case then record the case number for later.
+
+Find either the client_mode_group or local_mode_group dictionary. Add your model to the dictionary. If there existed a case that matched how your model should run then simply record that number. If there wasn't a case then use then one you should have made in the previous step.
+
+Lastly it's time for a test run. config.py contains various experimental setups including the test and live runs. Scan for the EvalConfig object with field eval_name assigned to "test". Then under per_LLM_configs add the new model using the companys config object you created in its respective company class alphabetically by company. Repeat the previous step for all the models you added.
+
+The test run object also serves as an example for how to add models for other tests so leave them there as a reference and overall list of all possible models we can run. Comment out other company objects if that hasn't been done yet and do a test run with only the models you added by inputting the command. 
+
+`hhem-leaderboard --eval_name test`
+
+Inspect the console output for any issues. If it runs to completion then inspect the output_test directory for the saved summaries. We have two test cases. A null case and a real summary case. The first article you should see a real summary. The second case you should see "I cannot do it.". If both are satisfied then you successfully added the company and its models.
+
+
+#### Live LB Run
+
+Similar to before we need to adjust the config.py file but this time adjust the EvalConfig object with field eval_name assigned to "live". Within live find the per_LLM_configs field and remove all other models currently there. Add the models you want to run, save the file, and run the following command.
+
+`hhem-leaderboard --eval_name live`
+
+Once complete run the following git commands
+
+`git add .`
+`git commit -a -m "adding {model_name-date_code}`
+`git push`
+
+The LB will automatically update the leaderboard once it see the file changes.
+
 ## Installation
 
 Suppose you are in the root directory of the project.

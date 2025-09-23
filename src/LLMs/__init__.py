@@ -71,25 +71,20 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": AllenAIConfig,
         "summary_class": AllenAISummary
     },
-    "openai": {
-        "LLM_class": OpenAILLM,
-        "config_class": OpenAIConfig,
-        "summary_class": OpenAISummary,
-    },
     "amazon": {
         "LLM_class": AmazonLLM,
         "config_class": AmazonConfig,
         "summary_class": AmazonSummary,
     },
-    "apple": {
-        "LLM_class": AppleLLM,
-        "config_class": AppleConfig,
-        "summary_class": AppleSummary,
-    },
     "anthropic": {
         "LLM_class": AnthropicLLM,
         "config_class": AnthropicConfig,
         "summary_class": AnthropicSummary,
+    },
+    "apple": {
+        "LLM_class": AppleLLM,
+        "config_class": AppleConfig,
+        "summary_class": AppleSummary,
     },
     "CohereLabs": {
         "LLM_class": CohereLLM,
@@ -111,6 +106,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": GoogleConfig,
         "summary_class": GoogleSummary
     },
+    "ibm-granite": {
+        "LLM_class": IBMGraniteLLM,
+        "config_class": IBMGraniteConfig,
+        "summary_class": IBMGraniteSummary
+    },
     "Intel": {
         "LLM_class": IntelLLM,
         "config_class": IntelConfig,
@@ -120,11 +120,6 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": InternLmLLM,
         "config_class": InternLmConfig,
         "summary_class": InternLmSummary
-    },
-    "moonshotai": {
-        "LLM_class": MoonshotAILLM,
-        "config_class": MoonshotAIConfig,
-        "summary_class": MoonshotAISummary
     },
     "meta-llama": {
         "LLM_class": MetaLlamaLLM,
@@ -140,6 +135,16 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": MistralAILLM,
         "config_class": MistralAIConfig,
         "summary_class": MistralAISummary
+    },
+    "moonshotai": {
+        "LLM_class": MoonshotAILLM,
+        "config_class": MoonshotAIConfig,
+        "summary_class": MoonshotAISummary
+    },
+    "openai": {
+        "LLM_class": OpenAILLM,
+        "config_class": OpenAIConfig,
+        "summary_class": OpenAISummary,
     },
     "qcri": {
         "LLM_class": QCRILLM,
@@ -166,16 +171,6 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "config_class": TiiuaeConfig,
         "summary_class": TiiuaeSummary
     },
-    "xai-org": {
-        "LLM_class": XAILLM,
-        "config_class": XAIConfig,
-        "summary_class": XAISummary
-    },
-    "ibm-granite": {
-        "LLM_class": IBMGraniteLLM,
-        "config_class": IBMGraniteConfig,
-        "summary_class": IBMGraniteSummary
-    },
     "tngtech": {
         "LLM_class": TngTechLLM,
         "config_class": TngTechConfig,
@@ -185,6 +180,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": VectaraLLM,
         "config_class": VectaraConfig,
         "summary_class": VectaraSummary
+    },
+    "xai-org": {
+        "LLM_class": XAILLM,
+        "config_class": XAIConfig,
+        "summary_class": XAISummary
     },
     "zai-org": {
         "LLM_class": ZhipuAILLM,
