@@ -21,8 +21,9 @@ def is_valid_summary(summary: str) -> bool:
     # FIXME: This needs to be expanded. What if the LLM says I am sorry that I cannot answer that query? 
     # For example, Anthropic may say: "I cannot provide a summary of the passage because no actual content was provided. The text only contains the phrase \"Dummy article with no content,\" which indicates there is no substantive information to summarize. To provide a meaningful summary, I would need a passage that contains actual content and information."
     # As another example, OpenAI may say: ""The passage does not contain any information to summarize."
+
     
-    if summary in error_values:
+    if summary.strip() in error_values:
         return False
     elif len(summary.split()) <= 5:
         return False

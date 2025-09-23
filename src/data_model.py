@@ -245,6 +245,7 @@ class SummaryError(str, Enum):
         "VARIABLE GETS. A REAL SUMMARY WAS NOT ASSIGNED TO THIS VARIABLE."
     )
     INCOMPLETE_THINK_TAG = "FOUND <think> WITH NO CLOSING </think>"
+    SUMMARY_REFUSAL_OUTPUT = "I am unable to summarize this text."
 
 class ModelInstantiationError(str, Enum):
     CANNOT_EXECUTE_IN_MODE = "Model {model_name} by company {company} cannot execute in {execution_mode} mode. Because each LLM providers are different, please check the `setup()` method in class `{company}LLM` in `src/LLMs/{company}.py`."

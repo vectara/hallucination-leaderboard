@@ -42,10 +42,10 @@ eval_configs = [
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
-      # "pipeline": ["summarize", "judge", "aggregate"],
+      "pipeline": ["summarize", "judge", "aggregate"],
       # "pipeline": ["aggregate"],
+      # "pipeline": ["summarize"],
       "output_dir": "output_test",
-      "pipeline": ["summarize"],
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
       "common_LLM_config": 
@@ -60,10 +60,11 @@ passage provided. You are asked the question 'Provide a concise
 summary of the following passage, covering the core pieces of 
 information described.'
 
-Just provide your answer in a single paragraph, without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
+Just provide your answer without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
 
-If you cannot answer the question, for reasons like insufficient information in the passage, 
-just say 'I cannot do it. 2389fdsi2389432ksad' and do not say anything else. 
+If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
+
+"I am unable to summarize this text."
   
 Here is the passage:
 {article}
@@ -126,14 +127,14 @@ Here is the passage:
         #     "temperature": 0.0,
         #   }
         # ),
-        AntGroupMIConfig(**
-          {
-            "company": "antgroup",
-            "model_name": "antfinix-a1",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
+        # AntGroupMIConfig(**
+        #   {
+        #     "company": "antgroup",
+        #     "model_name": "antfinix-a1",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
@@ -161,7 +162,7 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-pro", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-pro-002", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-001", "temperature": 0.0, "thinking_budget": -1}),
-        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-exp", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-lite", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-preview", "date_code": "05-20", "temperature": 0.0}),
@@ -436,10 +437,11 @@ passage provided. You are asked the question 'Provide a concise
 summary of the following passage, covering the core pieces of 
 information described.'
 
-Just provide your answer in a single paragraph, without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
+Just provide your answer without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
 
-If you cannot answer the question, for reasons like insufficient information in the passage, 
-just say 'I cannot do it. 2389fdsi2389432ksad' and do not say anything else. 
+If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
+
+"I am unable to summarize this text."
   
 Here is the passage:
 {article}
@@ -485,10 +487,11 @@ passage provided. You are asked the question 'Provide a concise
 summary of the following passage, covering the core pieces of 
 information described.'
 
-Just provide your answer in a single paragraph, without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
+Just provide your answer without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
 
-If you cannot answer the question, for reasons like insufficient information in the passage, 
-just say 'I cannot do it. 2389fdsi2389432ksad' and do not say anything else. 
+If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
+
+"I am unable to summarize this text."
   
 Here is the passage:
 {article}
