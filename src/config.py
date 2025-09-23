@@ -71,6 +71,13 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        # _01AIConfig(**
+        #   {
+        #     "company": "01-ai",
+        #     "model_name": "Yi-1.5-34B-Chat",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #   }
+        # ),
         # AI21LabsConfig(**
         #   {
         #     "company": "ai21labs",
@@ -127,6 +134,8 @@ Here is the passage:
             "temperature": 0.0,
           }
         ),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "max_tokens": 2345, "date_code": "20241022"}),
@@ -310,8 +319,6 @@ Here is the passage:
         #     "endpoint": "response"
         #   }
         # ),
-        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
         # MicrosoftConfig(**
         #   {
         #     "company": "microsoft",
@@ -340,6 +347,9 @@ Here is the passage:
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-12b", "date_code": "2409", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-large", "date_code": "2411", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
+        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
@@ -372,30 +382,6 @@ Here is the passage:
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "temperature": 0.0}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-2-vision", "temperature": 0.0, "date_code": "1212"}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-3", "temperature": 0.0}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-3-fast", "temperature": 0.0}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini", "temperature": 0.0}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini-fast", "temperature": 0.0}),
-        # XAIConfig(**{"company": "xai", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
-        # _01AIConfig(**
-        #   {
-        #     "company": "01-ai",
-        #     "model_name": "Yi-1.5-9B-Chat",
-        #     "temperature": 0.01, # Cant be 0.0 has to be positive
-        #   }
-        # ),
-        # _01AIConfig(**
-        #   {
-        #     "company": "01-ai",
-        #     "model_name": "Yi-1.5-34B-Chat",
-        #     "temperature": 0.01, # Cant be 0.0 has to be positive
-        #   }
-        # ),
-        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
         # QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
         # QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
@@ -410,6 +396,20 @@ Here is the passage:
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-max-preview", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "temperature": 0.0}),
+        # XAIConfig(**{"company": "xai", "model_name": "grok-2-vision", "temperature": 0.0, "date_code": "1212"}),
+        # XAIConfig(**{"company": "xai", "model_name": "grok-3", "temperature": 0.0}),
+        # XAIConfig(**{"company": "xai", "model_name": "grok-3-fast", "temperature": 0.0}),
+        # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini", "temperature": 0.0}),
+        # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini-fast", "temperature": 0.0}),
+        # XAIConfig(**{"company": "xai", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
+        # _01AIConfig(**
+        #   {
+        #     "company": "01-ai",
+        #     "model_name": "Yi-1.5-9B-Chat",
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #   }
+        # ),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "temperature": 0.0}),
       ]
