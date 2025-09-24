@@ -37,6 +37,11 @@ def aggregate_judgments(eval_config: EvalConfig):
     logger.info(f"Starting aggregation of summary-level judgments to per-LLM stats for the following LLMs: {LLMs_to_be_processed}")
 
     for llm_config in tqdm(eval_config.per_LLM_configs, desc="LLM Loop"):
+        llm_alias = ""
+        if llm_config.date_code == "" or llm_config.date_code == None:
+            llm_alias = f"{llm_config.model_name}"
+        else:
+            llm_alias = f"{llm_config.model_name}-{llm_config.date_code}"
         # Replace fields that are not set in per-llm config with those set (not default) in common-llm config
         # Need to have this here or stats stores the wrong values
         for common_key in eval_config.common_LLM_config.model_fields_set:
@@ -45,9 +50,21 @@ def aggregate_judgments(eval_config: EvalConfig):
         model_name = llm_config.model_name
         
         # Construct model output directory path
-        model_out_dir = f"{eval_config.output_dir}/{llm_config.company}/{model_name}"
+        model_out_dir = ""
+        if llm_config.date_code == "" or llm_config.date_code == None:
+            model_out_dir = os.path.join(
+                eval_config.output_dir, 
+                llm_config.company, 
+                llm_config.model_name
+            )
+        else:
+            model_out_dir = os.path.join(
+                eval_config.output_dir, 
+                llm_config.company, 
+                f"{llm_config.model_name}-{llm_config.date_code}"
+            )
 
-        logger.info(f"Aggregating judgements to stats for {model_name}")
+        logger.info(f"Aggregating judgements to stats for {llm_alias}")
 
         judgments_jsonl_path = os.path.join(model_out_dir, judgment_file)
 
@@ -60,9 +77,9 @@ def aggregate_judgments(eval_config: EvalConfig):
             generate_and_save_results(eval_config, llm_config)
         else:
             logger.warning(
-                f"Judgment file {judgment_file} not found for LLM {model_name}, skipping LLM"
+                f"Judgment file {judgment_file} not found for LLM {llm_alias}, skipping LLM"
             )
-        logger.info(f"Finished aggregating summary-level judgments to per-LLM stats for LLM {model_name}")
+        logger.info(f"Finished aggregating summary-level judgments to per-LLM stats for LLM {llm_alias}")
     logger.info(f"Finished aggregating summary-level judgments to per-LLM stats for the following LLMs: {LLMs_to_be_processed}")
 
 def generate_and_save_results(
@@ -92,10 +109,18 @@ def generate_and_save_results(
     SUMMARY_MODEL_AS_DICT: Dict[str, type] = {field_name: field_type.annotation for field_name, field_type in LLM_SUMMARY_CLASS.model_fields.items()}
     JUDGMENT_MODEL_AS_DICT: Dict[str, type] = {field_name: field_type.annotation for field_name, field_type in BasicJudgment.model_fields.items()}
 
-    model_out_dir = os.path.join(
-            eval_config.output_dir,
-            llm_config.company,
+    model_out_dir = ""
+    if llm_config.date_code == "" or llm_config.date_code == None:
+        model_out_dir = os.path.join(
+            eval_config.output_dir, 
+            llm_config.company, 
             llm_config.model_name
+        )
+    else:
+        model_out_dir = os.path.join(
+            eval_config.output_dir, 
+            llm_config.company, 
+            f"{llm_config.model_name}-{llm_config.date_code}"
         )
     summaries_jsonl_path = os.path.join(
         model_out_dir,

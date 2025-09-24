@@ -119,7 +119,7 @@ class BasicLLMConfig(BaseModel):
     company: str = "ANYCOMPANY"
     model_name: str = "ANYMODEL"
     # model_fullname: str | None = None # Model name if date_code is None or model name + date code otherwise.
-    date_code: str | None = None  # some models have date codes, some don't. 
+    date_code: str = ""  # some models have date codes, some don't. 
     prompt: str = default_prompt
 
     temperature: float = 0.0

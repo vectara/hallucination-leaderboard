@@ -12,6 +12,7 @@ from . pipeline import (
     get_summaries, get_judgments, aggregate_judgments
 )
 
+
 def compile_results_for_all_llms(eval_config: EvalConfig) -> None:
     output_dir = eval_config.output_dir
     stats_jsonl = eval_config.stats_file
@@ -26,7 +27,7 @@ def compile_results_for_all_llms(eval_config: EvalConfig) -> None:
         for llm_name in os.listdir(os.path.join(output_dir, provider_name)):
             stats_jsonl_path = os.path.join(output_dir, provider_name, llm_name, stats_jsonl)
             if os.path.isfile(stats_jsonl_path):
-                df_provider = pd.read_json(stats_jsonl_path, lines=True)
+                df_provider = pd.read_json(stats_jsonl_path, lines=True, dtype={"date_code": str})
 
                 if df_provider.empty:
                     print(f"Stats file {stats_jsonl_path} is empty. Skipping {provider_name}/{llm_name}.")
@@ -36,7 +37,14 @@ def compile_results_for_all_llms(eval_config: EvalConfig) -> None:
                 df_provider = df_provider.sort_values(by=["judgment_date", "summary_date"], ascending=False)
                 df_provider = df_provider.head(1)
 
-                df_provider["model_name"] = df_provider["model_name"].apply(lambda x: f"{provider_name}/{x}")
+                # df_provider["model_name"] = df_provider["model_name"].apply(lambda x: f"{provider_name}/{x}")
+                def model_alias(row):
+                    base = f"{provider_name}/{row['model_name']}"
+                    if 'date_code' in row and isinstance(row['date_code'], str) and row['date_code'].strip():
+                        return f"{base}-{row['date_code']}"
+                    return base
+                df_provider["model_name"] = df_provider.apply(model_alias, axis=1)
+
                 df_provider = df_provider[columns]
                 df_all_llms = pd.concat([df_all_llms, df_provider]) 
 

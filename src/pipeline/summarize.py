@@ -56,7 +56,12 @@ def prepare_llm(
         llm = LLM_CLASS(llm_config) # instantiate the LLM
 
         # Create output directory 
-        full_output_dir = f"{eval_config.output_dir}/{llm_config.company}/{llm_config.model_name}"
+        full_output_dir = ""
+        if llm_config.date_code == "" or llm_config.date_code == None:
+            full_output_dir = f"{eval_config.output_dir}/{llm_config.company}/{llm_config.model_name}"
+        else:
+            full_output_dir = f"{eval_config.output_dir}/{llm_config.company}/{llm_config.model_name}-{llm_config.date_code}"
+
         os.makedirs(full_output_dir, exist_ok=True)
 
         summaries_jsonl_path = os.path.join(full_output_dir, eval_config.summary_file)
@@ -98,7 +103,13 @@ def get_summaries(
         # print all attributes of llm
         # logger.info(f"LLM attributes: {json.dumps(llm.__dict__, indent=2)}")
 
-        logger.info(f"Generating summaries for LLM {llm_config.model_name} and saving to jsonl file {summaries_jsonl_path}")
+        llm_alias = ""
+        if llm_config.date_code == "" or llm_config.date_code == None:
+            llm_alias = f"{llm_config.model_name}"
+        else:
+            llm_alias = f"{llm_config.model_name}-{llm_config.date_code}"
+
+        logger.info(f"Generating summaries for LLM {llm_alias} and saving to jsonl file {summaries_jsonl_path}")
 
         generate_summaries_for_one_llm(
             llm, 
@@ -108,7 +119,7 @@ def get_summaries(
             summaries_jsonl_path,
             LLM_SUMMARY_CLASS
         )
-        logger.info(f"Finished generating and saving summaries for LLM {llm_config.model_name} into {summary_file}.")
+        logger.info(f"Finished generating and saving summaries for LLM {llm_alias} into {summary_file}.")
         
         logger.info("Moving on to next LLM")
     

@@ -154,15 +154,15 @@ Here is the passage:
         # CohereConfig(**{"company": "cohere", "model_name": "command-r7b", "date_code": "12-2024", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096, "min_throttle_time": 5.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0}),
-        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "date_code": "0324", "temperature": 0.0, "min_throttle_time": 4.0}),
-        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
+        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "date_code": "0324", "temperature": 0.0, "min_throttle_time": 4.0}),
+        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-flash", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-flash-002", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-pro", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-pro-002", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-001", "temperature": 0.0, "thinking_budget": -1}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-exp", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-lite", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-preview", "date_code": "05-20", "temperature": 0.0}),

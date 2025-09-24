@@ -50,16 +50,30 @@ def get_judgments(eval_config: EvalConfig, article_df: pd.DataFrame):
 
     for llm_config in tqdm(eval_config.per_LLM_configs, desc="LLM Loop"):
         model_name = llm_config.model_name
+
+        llm_alias = ""
+        if llm_config.date_code == "" or llm_config.date_code == None:
+            llm_alias = f"{llm_config.model_name}"
+        else:
+            llm_alias = f"{llm_config.model_name}-{llm_config.date_code}"
         
         # Construct model output directory path
-        model_out_dir = os.path.join(
-            eval_config.output_dir, 
-            llm_config.company, 
-            model_name
-        )
+        model_out_dir = ""
+        if llm_config.date_code == "" or llm_config.date_code == None:
+            model_out_dir = os.path.join(
+                eval_config.output_dir, 
+                llm_config.company, 
+                model_name
+            )
+        else:
+            model_out_dir = os.path.join(
+                eval_config.output_dir, 
+                llm_config.company, 
+                f"{llm_config.model_name}-{llm_config.date_code}"
+            )
         summaries_jsonl_path = os.path.join(model_out_dir, summary_file)
 
-        logger.info(f"Generating judgment file {judgment_file} for LLM {model_name}")
+        logger.info(f"Generating judgment file {judgment_file} for LLM {llm_alias}")
 
         if os.path.isfile(summaries_jsonl_path):
             summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
@@ -77,10 +91,10 @@ def get_judgments(eval_config: EvalConfig, article_df: pd.DataFrame):
             generate_judgments(
                 hhem_model, article_summary_df, judgments_jsonl_path, eval_config.eval_name, eval_config.eval_date
             )
-            logger.info(f"Finished judging summaries produced by LLM {model_name} and saved to {judgment_file}")
+            logger.info(f"Finished judging summaries produced by LLM {llm_alias} and saved to {judgment_file}")
         else:
             logger.warning(
-                f"Summary file {summaries_jsonl_path} not found for LLM {model_name}, skipping LLM"
+                f"Summary file {summaries_jsonl_path} not found for LLM {llm_alias}, skipping LLM"
             )
     logger.info(f"Finished generating {judgment_file} scores for the following LLMs: {LLMs_to_be_processed}")
 
