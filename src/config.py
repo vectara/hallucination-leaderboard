@@ -459,7 +459,7 @@ Here is the passage:
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["aggregate"],
-      "output_dir": "migrated_output_fixed",
+      "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_revised.csv",
       "common_LLM_config": 
