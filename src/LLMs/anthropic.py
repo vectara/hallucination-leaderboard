@@ -12,6 +12,7 @@ class AnthropicConfig(BasicLLMConfig):
     """Extended config for Anthropic-specific properties"""
     company: Literal["anthropic"] = "anthropic"
     model_name: Literal[
+        "claude-sonnet-4-5",
         "claude-opus-4-1", # 20250805
         "claude-3-5-haiku",
         "claude-opus-4",
@@ -42,6 +43,9 @@ class AnthropicLLM(AbstractLLM):
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
         "claude-3-5-haiku": {
+            "chat": 1
+        },
+        "claude-sonnet-4-5": {
             "chat": 1
         },
         "claude-opus-4-1": {
