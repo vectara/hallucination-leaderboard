@@ -454,10 +454,10 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
         DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-30b-a3b-thinking", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-30b-a3b-thinking", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
       ]
     }
   ),
