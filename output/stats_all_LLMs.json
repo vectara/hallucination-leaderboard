@@ -184,6 +184,14 @@
     "avg_word_count": 107.3
   },
   {
+    "model_name": "anthropic/claude-sonnet-4-5-20250929",
+    "date_code": "20250929",
+    "hallucination_rate": 5.5,
+    "confidence_interval": -1,
+    "answer_rate": 99.4,
+    "avg_word_count": 87.7
+  },
+  {
     "model_name": "apple/OpenELM-3B-Instruct",
     "date_code": "",
     "hallucination_rate": 45.6,
@@ -230,6 +238,14 @@
     "confidence_interval": -1,
     "answer_rate": 98.7,
     "avg_word_count": 78.0
+  },
+  {
+    "model_name": "deepseek-ai/DeepSeek-V3.2-Exp",
+    "date_code": "",
+    "hallucination_rate": 4.6,
+    "confidence_interval": -1,
+    "answer_rate": 99.3,
+    "avg_word_count": 61.9
   },
   {
     "model_name": "google/chat-bison-001",
@@ -1046,6 +1062,22 @@
     "confidence_interval": -1,
     "answer_rate": 8.5,
     "avg_word_count": 90.0
+  },
+  {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "date_code": "2507",
+    "hallucination_rate": 4.8,
+    "confidence_interval": -1,
+    "answer_rate": 98.2,
+    "avg_word_count": 68.0
+  },
+  {
+    "model_name": "qwen/qwen3-next-80b-a3b-thinking",
+    "date_code": "",
+    "hallucination_rate": 3.7,
+    "confidence_interval": -1,
+    "answer_rate": 99.7,
+    "avg_word_count": 64.6
   },
   {
     "model_name": "snowflake/snowflake-arctic-instruct",
