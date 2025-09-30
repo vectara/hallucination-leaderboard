@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on September 8th, 2025
+Last updated on September 30, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_with_logo_2025-08-11.png)
 
@@ -84,6 +84,7 @@ Last updated on September 8th, 2025
 |Google Gemini-1.5-Flash-002|3.4 %|96.6 %|99.9 %|59.4|
 |Microsoft Phi-4-mini-instruct|3.4 %|96.6 %|100.0 %|69.7|
 |OpenAI gpt-oss-20b|3.7 %|96.3 %|99.4 %|90.0|
+|Qwen3-next-80b-a3b-thinking|3.7 %|96.3 %|99.7 %|64.6|
 |ZhipuAI GLM-4.5|3.7 %|96.3 %|99.1 %|81.1|
 |Google Gemma-3-4B-Instruct|3.7 %|96.3 %|100.0 %|63.7|
 |Qwen3-0.6B|3.7 %|96.3 %|100.0 %|65.3|
@@ -107,6 +108,7 @@ Last updated on September 8th, 2025
 |Claude-4-Sonnet|4.5 %|95.5 %|100.0 %|116.0|
 |Claude-3.7-Sonnet-Think|4.5 %|95.5 %|99.8 %|99.9|
 |Cohere Command-A|4.5 %|95.5 %|100.0 %|77.3|
+|DeepSeek-AI DeepSeek-V3.2-Exp|4.6 %|95.4 %|99.3 %|61.9|
 |OpenAI o4-mini|4.6 %|95.4 %|100.0 %|82.0|
 |AI21 Jamba-1.6-Mini|4.6 %|95.4 %|100.0 %|82.3 |
 |Meta Llama-4-Maverick|4.6 %|95.4 %|100.0 %|84.8|
@@ -118,6 +120,7 @@ Last updated on September 8th, 2025
 |Microsoft Phi-4|4.7 %|95.3 %|100.0 %|100.3|
 |Mixtral-8x22B-Instruct-v0.1|4.7 %|95.3 %|99.9 %|92.0|
 |Claude-4-Opus|4.8 %|95.2 %|100.0 %|110.0|
+|Qwen3-30b-a3b-thinking-2507|4.8 %|95.2 %|98.2 %|68.0|
 |XAI Grok-4-0709|4.8 %|95.2 %|99.8 %|100.6|
 |OpenAI GPT-5-minimal|4.9 %|95.1 %|99.7 %|83.6|
 |Anthropic Claude-3-5-haiku|4.9 %|95.1 %|100.0 %|92.9|
@@ -128,6 +131,7 @@ Last updated on September 8th, 2025
 |Google Gemma-3-1B-Instruct|5.3 %|94.7 %|99.9 %|57.9|
 |Llama-3.1-8B-Instruct|5.4 %|94.6 %|100.0 %|71.0|
 |Cohere Command-R-Plus|5.4 %|94.6 %|100.0 %|68.4|
+|Anthropic Claude-Sonnet-4-5-20250929|5.5 %|94.5 %|99.4 %|87.7|
 |DeepSeek-AI DeepSeek-V3.1|5.5 %|94.5 %|98.7 %|78.0|
 |Llama-3.2-11B-Vision-Instruct|5.5 %|94.5 %|100.0 %|67.3|
 |TNGTech DeepSeek-TNG-R1T2-Chimera|5.5 %|94.5 %|99.6 %|78.6|
