@@ -14,6 +14,7 @@ class DeepSeekAIConfig(BasicLLMConfig):
     """Extended config for DeepSeekAI-specific properties"""
     company: Literal["deepseek-ai"] = "deepseek-ai"
     model_name: Literal[
+        "DeepSeek-V3.1-Terminus",
         "DeepSeek-V3.2-Exp",
         "deepseek-chat",
         "deepseek-coder",
@@ -53,6 +54,9 @@ class DeepSeekAILLM(AbstractLLM):
             "chat": 1
         },
         "DeepSeek-V3.1": {
+            "chat": 1
+        },
+        "DeepSeek-V3.1-Terminus": {
             "chat": 1
         },
         "DeepSeek-V3.2-Exp": {

@@ -86,64 +86,80 @@ class OpenAILLM(AbstractLLM):
         },
         "gpt-5-nano": {
             "chat": 9,
-            "api_type": "openai"
+            "api_type": "openai",
         },
         "gpt-4.1": {
             "chat": 1,
+            "api_type": "openai",
             "response": 3
         },
         "gpt-4.1-nano": {
             "chat": 1,
+            "api_type": "openai",
             "response": 3
         },
         "o3": {  # o3 does not support temperature
             "chat": 2,
+            "api_type": "openai",
             "response": 3
         },
         "o3-pro": { # o3-pro doesn't support chatting protocol or temperature
             "chat": None, 
+            "api_type": "openai",
             "response": 4
         },
         "o4-mini": {
-            "chat": 2
+            "chat": 2,
+            "api_type": "openai",
         },
         "o4-mini-low": {
-            "chat": 6
+            "chat": 6,
+            "api_type": "openai",
         },
         "o4-mini-high": {
-            "chat": 7
+            "chat": 7,
+            "api_type": "openai",
         },
         "o1-pro": { # doesn't support chatting or temperature
             "chat": None,
+            "api_type": "openai",
             "response": 4
         },
         "gpt-4.1-mini": {
-            "chat": 1
+            "chat": 1,
+            "api_type": "openai",
         },
         "o1": {
-            "chat": 2
+            "chat": 2,
+            "api_type": "openai",
         },
         "o1-mini": { # Doesn't support reasoning effort or temperature
-            "chat": 5
+            "chat": 5,
+            "api_type": "openai",
         },
         "gpt-oss-120b": {
             "chat": 8,
             "api_type": "together"
         },
         "gpt-4o-mini": {
-            "chat": 1
+            "chat": 1,
+            "api_type": "openai",
         },
         "gpt-4o": {
-            "chat": 1
+            "chat": 1,
+            "api_type": "openai",
         },
         "gpt-4-turbo": {
-            "chat": 1
+            "chat": 1,
+            "api_type": "openai",
         },
         "gpt-3.5-turbo": {
-            "chat": 1
+            "chat": 1,
+            "api_type": "openai",
         },
         "gpt-4": {
-            "chat": 1
+            "chat": 1,
+            "api_type": "openai",
         }
     }
 
