@@ -433,7 +433,7 @@ Here is the passage:
       "pipeline": ["summarize", "judge", "aggregate"],
       "output_dir": "output_alpha",
       "overwrite_summaries": True,
-      "source_article_path": "datasets/alpha.csv",
+      "source_article_path": "datasets/alpha_set.csv",
       "common_LLM_config": 
         BasicLLMConfig(**
           {
