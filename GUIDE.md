@@ -58,7 +58,13 @@ The LB will automatically update the leaderboard once it see the file changes.
 
 ## Installation
 
-Suppose you are in the root directory of the project.
+Suppose you are in the root directory of the project with a virtual environment.
+
+```bash
+pip install -r requirements.txt
+```
+
+Then
 
 ```bash
 pip install -e .
