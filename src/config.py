@@ -438,7 +438,7 @@ Here is the passage:
         BasicLLMConfig(**
           {
             "temperature": 1.0, 
-            "max_tokens": 1024, 
+            "max_tokens": 2048, 
             "prompt": """
 You are a chat bot answering questions using data.
 You must stick to the answers provided solely by the text in the 
