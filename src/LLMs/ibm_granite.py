@@ -15,6 +15,10 @@ class IBMGraniteConfig(BasicLLMConfig):
     """Extended config for IBM-specific properties"""
     company: Literal["ibm-granite"] = "ibm-granite"
     model_name: Literal[
+        "granite-4.0-h-small",
+        "granite-4.0-h-tiny",
+        "granite-4.0-h-micro",
+        "granite-4.0-micro",
         "granite-3.2-8b-instruct",
         "granite-3.2-2b-instruct",
         "granite-3.1-8b-instruct",
@@ -45,6 +49,18 @@ class IBMGraniteLLM(AbstractLLM):
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
+        "granite-4.0-h-small": {
+            "chat": 1
+        },
+        "granite-4.0-h-tiny": {
+            "chat": 1
+        },
+        "granite-4.0-h-micro": {
+            "chat": 1
+        },
+        "granite-4.0-micro": {
+            "chat": 1
+        },
         "granite-3.2-8b-instruct": {
             "chat": 1
         },
