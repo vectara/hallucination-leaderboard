@@ -131,9 +131,10 @@ class IBMGraniteLLM(AbstractLLM):
                     output = self.local_model.generate(
                         **input_tokens, 
                         max_new_tokens=self.max_tokens,
+                        temperature=self.temperature
                     )
                     output = tokenizer.batch_decode(output)
-                    summary = output
+                    summary = output[0]
 
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
@@ -148,18 +149,18 @@ class IBMGraniteLLM(AbstractLLM):
                 #     load_in_4bit=True,
                 # )
 
-                # self.local_model = AutoModelForCausalLM.from_pretrained(
-                #     self.model_fullname,
-                #     device_map="auto",
-                #     torch_dtype="auto"
-                # ).to(self.device).eval()
-
                 self.local_model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
-                    device_map=self.device,
+                    device_map="auto",
                     torch_dtype="auto"
-                )
-                self.local_model.eval()
+                ).to(self.device).eval()
+
+                # self.local_model = AutoModelForCausalLM.from_pretrained(
+                #     self.model_fullname,
+                #     device_map=self.device,
+                #     torch_dtype="auto"
+                # )
+                # self.local_model.eval()
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,
