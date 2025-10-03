@@ -56,10 +56,10 @@ class IBMGraniteLLM(AbstractLLM):
             "chat": 1
         },
         "granite-4.0-h-micro": {
-            "chat": 1
+            "chat": 2
         },
         "granite-4.0-micro": {
-            "chat": 1
+            "chat": 2
         },
         "granite-3.2-8b-instruct": {
             "chat": 1
@@ -116,6 +116,39 @@ class IBMGraniteLLM(AbstractLLM):
                         temperature=self.temperature
                     )
                     response = tokenizer.decode(output_ids[0][input_ids.shape[1]:], skip_special_tokens=True)
+
+                    summary = response
+                case 2: # micro has some issues with original method
+                    tokenizer = AutoTokenizer.from_pretrained(
+                        self.model_fullname,
+                        use_fast=False,
+                        return_attention_mask=True,
+                        trust_remote_code=True
+                    )
+
+                    messages = [
+                        {"role": "user", "content": prepared_text}
+                    ]
+
+                    input_ids = tokenizer.apply_chat_template(
+                        conversation=messages, tokenize=True, return_tensors="pt"
+                    )
+
+                    # ensure model is on GPU / correct device
+                    self.local_model = self.local_model.to("cuda")
+                    self.local_model.eval()
+
+                    output_ids = self.local_model.generate(
+                        input_ids.to("cuda"),
+                        do_sample=True,
+                        eos_token_id=tokenizer.eos_token_id,
+                        max_new_tokens=self.max_tokens,
+                        temperature=self.temperature
+                    )
+
+                    response = tokenizer.decode(
+                        output_ids[0][input_ids.shape[1]:], skip_special_tokens=True
+                    )
 
                     summary = response
         else:
