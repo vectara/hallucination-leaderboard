@@ -6,6 +6,7 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 import re
+import gc
 
 # Import the Python package for the specific provider.
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
@@ -125,6 +126,11 @@ class IBMGraniteLLM(AbstractLLM):
                     response = tokenizer.decode(output_ids[0][input_ids.shape[1]:], skip_special_tokens=True)
 
                     summary = response
+
+                    del input_ids, output_ids, response
+                    gc.collect()
+                    torch.cuda.empty_cache()
+                    torch.cuda.ipc_collect()
                 case 2: # micro has some issues with original method
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
@@ -141,6 +147,10 @@ class IBMGraniteLLM(AbstractLLM):
                     )
                     output = tokenizer.batch_decode(output)
                     summary = extract_assistant_response(output[0])
+                    del input_ids, output_ids, response
+                    gc.collect()
+                    torch.cuda.empty_cache()
+                    torch.cuda.ipc_collect()
 
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
