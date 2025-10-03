@@ -86,7 +86,7 @@ class IBMGraniteLLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model_fullname = f"{COMPANY}-granite/{self.model_fullname}"
+        self.model_fullname = f"{COMPANY}/{self.model_fullname}"
 
         # self.model_path = config.model_path
 
