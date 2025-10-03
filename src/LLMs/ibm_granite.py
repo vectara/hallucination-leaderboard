@@ -119,38 +119,24 @@ class IBMGraniteLLM(AbstractLLM):
 
                     summary = response
                 case 2: # micro has some issues with original method
-                    tokenizer = AutoTokenizer.from_pretrained(
-                        self.model_fullname,
-                        use_fast=False,
-                        return_attention_mask=True,
-                        trust_remote_code=True
-                    )
+                    tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
                     messages = [
                         {"role": "user", "content": prepared_text}
                     ]
+                    chat = tokenizer.apply_chat_template(conversation=messages, tokenize=False, add_generation_prompt=True)
 
-                    input_ids = tokenizer.apply_chat_template(
-                        conversation=messages, tokenize=True, return_tensors="pt"
-                    )
+                    input_tokens = tokenizer(chat, return_tensors="pt").to(self.device)
 
-                    # ensure model is on GPU / correct device
-                    self.local_model = self.local_model.to("cuda")
-                    self.local_model.eval()
-
-                    output_ids = self.local_model.generate(
-                        input_ids.to("cuda"),
-                        do_sample=True,
-                        eos_token_id=tokenizer.eos_token_id,
+                    output = self.local_model.generate(
+                        **input_tokens,
                         max_new_tokens=self.max_tokens,
                         temperature=self.temperature
                     )
 
-                    response = tokenizer.decode(
-                        output_ids[0][input_ids.shape[1]:], skip_special_tokens=True
-                    )
+                    output = tokenizer.batch_decode(output)
 
-                    summary = response
+                    summary=output[0]
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
