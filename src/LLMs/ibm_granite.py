@@ -138,7 +138,6 @@ class IBMGraniteLLM(AbstractLLM):
                     output = self.local_model.generate(
                         **input_tokens, 
                         max_new_tokens=self.max_tokens,
-                        temperature=self.temperature
                     )
                     output = tokenizer.batch_decode(output)
                     summary = extract_assistant_response(output[0])

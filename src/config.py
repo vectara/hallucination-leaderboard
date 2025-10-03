@@ -192,13 +192,13 @@ Here is the passage:
         IBMGraniteConfig(**
           {
             "model_name": "granite-4.0-h-micro", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-            "temperature": 0.01, # Cant be 0.0 has to be positive
+            "temperature": -1, # Cant be 0.0 has to be positive
           }
         ),
         IBMGraniteConfig(**
           {
             "model_name": "granite-4.0-micro", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-            "temperature": 0.01, # Cant be 0.0 has to be positive
+            "temperature": -1, # Cant be 0.0 has to be positive
           }
         ),
         # IBMGraniteConfig(**
@@ -542,13 +542,13 @@ Here is the passage:
         IBMGraniteConfig(**
           {
             "model_name": "granite-4.0-h-micro", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-            "temperature": 0.01, # Cant be 0.0 has to be positive
+            "temperature": -1,
           }
         ),
         IBMGraniteConfig(**
           {
             "model_name": "granite-4.0-micro", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-            "temperature": 0.01, # Cant be 0.0 has to be positive
+            "temperature": -1,
           }
         ),
       ]
