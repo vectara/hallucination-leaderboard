@@ -157,7 +157,7 @@ class IBMGraniteLLM(AbstractLLM):
 
                 self.local_model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
-                    device_map="auto",
+                    device_map=self.device,
                 )
                 self.local_model.eval()
             else:
