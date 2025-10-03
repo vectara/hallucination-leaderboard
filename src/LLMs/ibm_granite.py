@@ -5,6 +5,7 @@ from typing import Literal
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+import re
 
 # Import the Python package for the specific provider.
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
@@ -91,6 +92,12 @@ class IBMGraniteLLM(AbstractLLM):
         # self.model_path = config.model_path
 
     def summarize(self, prepared_text: str) -> str:
+        def extract_assistant_response(text: str) -> str:
+            pattern = r"<\|start_of_role\|>assistant<\|end_of_role\|>(.*?)<\|end_of_text\|>"
+            match = re.search(pattern, text, re.DOTALL)
+            if match:
+                return match.group(1).strip()
+            return "FAILED TO FIND TEXT"
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             pass
@@ -134,7 +141,7 @@ class IBMGraniteLLM(AbstractLLM):
                         temperature=self.temperature
                     )
                     output = tokenizer.batch_decode(output)
-                    summary = output[0]
+                    summary = extract_assistant_response(output[0])
 
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
