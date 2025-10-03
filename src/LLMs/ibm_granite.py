@@ -124,19 +124,18 @@ class IBMGraniteLLM(AbstractLLM):
                     messages = [
                         {"role": "user", "content": prepared_text}
                     ]
-                    chat = tokenizer.apply_chat_template(conversation=messages, tokenize=False, add_generation_prompt=True)
+
+                    chat = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
                     input_tokens = tokenizer(chat, return_tensors="pt").to(self.device)
-
                     output = self.local_model.generate(
-                        **input_tokens,
+                        **input_tokens, 
                         max_new_tokens=self.max_tokens,
                         temperature=self.temperature
                     )
-
                     output = tokenizer.batch_decode(output)
+                    summary = output
 
-                    summary=output[0]
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
@@ -150,11 +149,17 @@ class IBMGraniteLLM(AbstractLLM):
                 #     load_in_4bit=True,
                 # )
 
+                # self.local_model = AutoModelForCausalLM.from_pretrained(
+                #     self.model_fullname,
+                #     device_map="auto",
+                #     torch_dtype="auto"
+                # ).to(self.device).eval()
+
                 self.local_model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
                     device_map="auto",
-                    torch_dtype="auto"
-                ).to(self.device).eval()
+                )
+                self.local_model.eval()
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,
