@@ -118,7 +118,7 @@ class IBMGraniteLLM(AbstractLLM):
 
                     input_ids = tokenizer.apply_chat_template(conversation=messages, tokenize=True, return_tensors='pt')
                     output_ids = self.local_model.generate(
-                        input_ids# .to('cuda'),
+                        input_ids, # .to('cuda'),
                         do_sample=True,
                         eos_token_id=tokenizer.eos_token_id,
                         max_new_tokens=self.max_tokens,
