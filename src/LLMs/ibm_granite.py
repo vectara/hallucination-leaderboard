@@ -52,20 +52,20 @@ class IBMGraniteLLM(AbstractLLM):
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
         "granite-4.0-h-small": {
-            "chat": 3,
-            "multi-gpu": True
+            "chat": 1,
+            "multi-gpu": False
         },
         "granite-4.0-h-tiny": {
-            "chat": 3,
-            "multi-gpu": True
+            "chat": 1,
+            "multi-gpu": False
         },
         "granite-4.0-h-micro": {
-            "chat": 4,
-            "multi-gpu": True
+            "chat": 2,
+            "multi-gpu": False
         },
         "granite-4.0-micro": {
-            "chat": 4,
-            "multi-gpu": True
+            "chat": 2,
+            "multi-gpu": False
         },
         "granite-3.2-8b-instruct": {
             "chat": 1
@@ -188,7 +188,7 @@ class IBMGraniteLLM(AbstractLLM):
                     )
                     output = tokenizer.batch_decode(output)
                     summary = extract_assistant_response(output[0])
-                case 3:  # Manual shard version of case 1
+                case 3:
                     tokenizer = AutoTokenizer.from_pretrained(
                         self.model_fullname,
                         use_fast=False,
@@ -199,17 +199,13 @@ class IBMGraniteLLM(AbstractLLM):
                     ]
                     input_ids = tokenizer.apply_chat_template(conversation=messages, tokenize=True, return_tensors='pt').input_ids
 
-                    # Manually run forward pass with manual_forward
                     logits = self.manual_forward(input_ids)
-
-                    # Sample or greedy decoding from logits manually
-                    # For simplicity, do greedy decode on CPU here
                     predicted_ids = torch.argmax(logits, dim=-1).cpu()
 
                     response = tokenizer.decode(predicted_ids[0][input_ids.shape[1]:], skip_special_tokens=True)
                     summary = response
 
-                case 4:  # Manual shard version of case 2
+                case 4:
                     tokenizer = AutoTokenizer.from_pretrained(
                         self.model_fullname,
                         return_attention_mask=False
@@ -277,7 +273,9 @@ class IBMGraniteLLM(AbstractLLM):
                     self.local_model = AutoModelForCausalLM.from_pretrained(
                         self.model_fullname,
                         device_map="auto",
-                        torch_dtype="auto"
+                        dtype="auto",
+                        offload_folder="./offload",
+                        low_cpu_mem_usage=True
                     ).to(self.device).eval()
 
             else:
