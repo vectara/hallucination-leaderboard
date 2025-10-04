@@ -170,7 +170,7 @@ class IBMGraniteLLM(AbstractLLM):
                 self.local_model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
                     device_map="auto",
-                    torch_dtype=torch.bfloat16,
+                    dtype=torch.bfloat16,
                     # torch_dtype="auto"
                 ).to(self.device).eval()
 
