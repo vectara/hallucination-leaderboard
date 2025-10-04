@@ -121,7 +121,8 @@ class IBMGraniteLLM(AbstractLLM):
                         do_sample=True,
                         eos_token_id=tokenizer.eos_token_id,
                         max_new_tokens=self.max_tokens,
-                        temperature=self.temperature
+                        temperature=self.temperature,
+                        use_cache=False
                     )
                     response = tokenizer.decode(output_ids[0][input_ids.shape[1]:], skip_special_tokens=True)
 
@@ -144,6 +145,7 @@ class IBMGraniteLLM(AbstractLLM):
                     output = self.local_model.generate(
                         **input_tokens, 
                         max_new_tokens=self.max_tokens,
+                        use_cache=False
                     )
                     output = tokenizer.batch_decode(output)
                     summary = extract_assistant_response(output[0])
@@ -168,7 +170,8 @@ class IBMGraniteLLM(AbstractLLM):
                 self.local_model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
                     device_map="auto",
-                    torch_dtype="auto"
+                    torch_dtype=torch.bfloat16,
+                    # torch_dtype="auto"
                 ).to(self.device).eval()
 
                 # self.local_model = AutoModelForCausalLM.from_pretrained(
