@@ -270,10 +270,13 @@ class IBMGraniteLLM(AbstractLLM):
                     self.local_model = model.eval()
 
                 else:
+                    max_memory = {0: "65GiB", "cpu": "200GiB"}
                     self.local_model = AutoModelForCausalLM.from_pretrained(
                         self.model_fullname,
                         device_map="auto",
-                        dtype="auto",
+                        # dtype="auto",
+                        dtype=torch.bfloat16,
+                        max_memory=max_memory,
                         offload_folder="./offload",
                         low_cpu_mem_usage=True
                     ).to(self.device).eval()
