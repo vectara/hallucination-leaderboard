@@ -52,16 +52,20 @@ class IBMGraniteLLM(AbstractLLM):
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
         "granite-4.0-h-small": {
-            "chat": 1
+            "chat": 3,
+            "multi-gpu": True
         },
         "granite-4.0-h-tiny": {
-            "chat": 1
+            "chat": 3,
+            "multi-gpu": True
         },
         "granite-4.0-h-micro": {
-            "chat": 2
+            "chat": 4,
+            "multi-gpu": True
         },
         "granite-4.0-micro": {
-            "chat": 2
+            "chat": 4,
+            "multi-gpu": True
         },
         "granite-3.2-8b-instruct": {
             "chat": 1
@@ -91,6 +95,42 @@ class IBMGraniteLLM(AbstractLLM):
         self.model_fullname = f"{COMPANY}/{self.model_fullname}"
 
         # self.model_path = config.model_path
+
+    def manual_forward(self, input_ids, attention_mask=None):
+        n_gpus = torch.cuda.device_count()
+        device_ids = [f'cuda:{i}' for i in range(n_gpus)]
+
+        # Move input_ids and attention_mask to first GPU
+        input_ids = input_ids.to(device_ids[0])
+        if attention_mask is not None:
+            attention_mask = attention_mask.to(device_ids[0])
+
+        # Embeddings
+        hidden_states = self.local_model.transformer.wte(input_ids) + self.local_model.transformer.wpe(
+            torch.arange(input_ids.size(1), device=device_ids[0])
+        )
+
+        # Pass through transformer layers on respective GPUs
+        num_layers = len(self.local_model.transformer.h)
+        layers_per_gpu = num_layers // n_gpus
+        for i in range(n_gpus):
+            start = i * layers_per_gpu
+            end = (i + 1) * layers_per_gpu if i != n_gpus - 1 else num_layers
+
+            hidden_states = hidden_states.to(device_ids[i])
+            for layer in self.local_model.transformer.h[start:end]:
+                # Handle attention_mask if needed
+                if attention_mask is not None:
+                    hidden_states = layer(hidden_states, attention_mask=attention_mask)[0]
+                else:
+                    hidden_states = layer(hidden_states)[0]
+
+        # Move hidden_states to lm_head GPU
+        hidden_states = hidden_states.to(device_ids[-1])
+        logits = self.local_model.lm_head(hidden_states)
+
+        return logits
+
 
     def summarize(self, prepared_text: str) -> str:
         def extract_assistant_response(text: str) -> str:
@@ -148,6 +188,43 @@ class IBMGraniteLLM(AbstractLLM):
                     )
                     output = tokenizer.batch_decode(output)
                     summary = extract_assistant_response(output[0])
+                case 3:  # Manual shard version of case 1
+                    tokenizer = AutoTokenizer.from_pretrained(
+                        self.model_fullname,
+                        use_fast=False,
+                        return_attention_mask=True
+                    )
+                    messages = [
+                        {"role": "user", "content": prepared_text}
+                    ]
+                    input_ids = tokenizer.apply_chat_template(conversation=messages, tokenize=True, return_tensors='pt').input_ids
+
+                    # Manually run forward pass with manual_forward
+                    logits = self.manual_forward(input_ids)
+
+                    # Sample or greedy decoding from logits manually
+                    # For simplicity, do greedy decode on CPU here
+                    predicted_ids = torch.argmax(logits, dim=-1).cpu()
+
+                    response = tokenizer.decode(predicted_ids[0][input_ids.shape[1]:], skip_special_tokens=True)
+                    summary = response
+
+                case 4:  # Manual shard version of case 2
+                    tokenizer = AutoTokenizer.from_pretrained(
+                        self.model_fullname,
+                        return_attention_mask=False
+                    )
+                    messages = [
+                        {"role": "user", "content": prepared_text}
+                    ]
+                    chat = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+                    input_tokens = tokenizer(chat, return_tensors="pt")
+
+                    logits = self.manual_forward(input_tokens.input_ids)
+
+                    predicted_ids = torch.argmax(logits, dim=-1).cpu()
+                    output_text = tokenizer.batch_decode(predicted_ids)
+                    summary = extract_assistant_response(output_text[0])
 
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
@@ -169,12 +246,39 @@ class IBMGraniteLLM(AbstractLLM):
                 #     dtype="auto",               # Still used for compute, required by transformers
                 #     quantization_config=bnb_config           # ← Pass quantization config
                 # ).eval()
+                if self.local_mode_group[self.model_name]["multi-gpu"]:
+                    model = AutoModelForCausalLM.from_pretrained(
+                        self.model_fullname,
+                        torch_dtype="auto"
+                    )
+                    
+                    n_gpus = torch.cuda.device_count()
+                    device_ids = [f'cuda:{i}' for i in range(n_gpus)]
 
-                self.local_model = AutoModelForCausalLM.from_pretrained(
-                    self.model_fullname,
-                    device_map="auto",
-                    torch_dtype="auto"
-                ).to(self.device).eval()
+                    # Example assumes model.transformer.h holds layers
+                    num_layers = len(model.transformer.h)
+                    layers_per_gpu = num_layers // n_gpus
+
+                    # Move embeddings to first GPU
+                    model.transformer.wte.to(device_ids[0])
+                    model.transformer.wpe.to(device_ids[0])
+                    model.lm_head.to(device_ids[-1])  # Output head on last GPU
+
+                    # Move layers to GPUs manually
+                    for i in range(n_gpus):
+                        start = i * layers_per_gpu
+                        end = (i + 1) * layers_per_gpu if i != n_gpus - 1 else num_layers
+                        for layer in model.transformer.h[start:end]:
+                            layer.to(device_ids[i])
+
+                    self.local_model = model.eval()
+
+                else:
+                    self.local_model = AutoModelForCausalLM.from_pretrained(
+                        self.model_fullname,
+                        device_map="auto",
+                        torch_dtype="auto"
+                    ).to(self.device).eval()
 
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
