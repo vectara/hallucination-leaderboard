@@ -118,7 +118,7 @@ class IBMGraniteLLM(AbstractLLM):
 
                     input_ids = tokenizer.apply_chat_template(conversation=messages, tokenize=True, return_tensors='pt')
                     output_ids = self.local_model.generate(
-                        input_ids, # .to('cuda'),
+                        input_ids.to(self.device),
                         do_sample=True,
                         eos_token_id=tokenizer.eos_token_id,
                         max_new_tokens=self.max_tokens,
@@ -141,7 +141,7 @@ class IBMGraniteLLM(AbstractLLM):
 
                     chat = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
-                    input_tokens = tokenizer(chat, return_tensors="pt")# .to(self.device)
+                    input_tokens = tokenizer(chat, return_tensors="pt").to(self.device)
                     output = self.local_model.generate(
                         **input_tokens, 
                         max_new_tokens=self.max_tokens,
@@ -168,7 +168,6 @@ class IBMGraniteLLM(AbstractLLM):
                     self.model_fullname,
                     device_map="auto",
                     dtype="auto",               # Still used for compute, required by transformers
-                    trust_remote_code=True,                  # Granite models often require this
                     quantization_config=bnb_config           # ← Pass quantization config
                 ).eval()
 

@@ -176,7 +176,7 @@ class AbstractLLM(ABC):
         Returns:
             None
         """
-        self.local_model.to("cpu")
+        # self.local_model.to("cpu")
         del self.local_model
         torch.cuda.empty_cache()
         self.local_model = None
