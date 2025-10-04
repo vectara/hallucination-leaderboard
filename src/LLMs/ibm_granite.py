@@ -108,8 +108,7 @@ class IBMGraniteLLM(AbstractLLM):
                     tokenizer = AutoTokenizer.from_pretrained(
                         self.model_fullname,
                         use_fast=False,
-                        return_attention_mask=False
-                        # return_attention_mask=True
+                        return_attention_mask=True
                     )
 
                     messages = [
@@ -159,23 +158,23 @@ class IBMGraniteLLM(AbstractLLM):
             pass
         elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in self.local_mode_group:
-                bnb_config = BitsAndBytesConfig(
-                    load_in_8bit=True,                       # ← Enable 8-bit loading
-                    load_in_8bit_fp32_cpu_offload=True       # ← Offload some weights to CPU
-                )
-
-                self.local_model = AutoModelForCausalLM.from_pretrained(
-                    self.model_fullname,
-                    device_map="auto",
-                    dtype="auto",               # Still used for compute, required by transformers
-                    quantization_config=bnb_config           # ← Pass quantization config
-                ).eval()
+                # bnb_config = BitsAndBytesConfig(
+                #     load_in_8bit=True,                       # ← Enable 8-bit loading
+                #     load_in_8bit_fp32_cpu_offload=True       # ← Offload some weights to CPU
+                # )
 
                 # self.local_model = AutoModelForCausalLM.from_pretrained(
                 #     self.model_fullname,
                 #     device_map="auto",
-                #     torch_dtype="auto"
-                # ).to(self.device).eval()
+                #     dtype="auto",               # Still used for compute, required by transformers
+                #     quantization_config=bnb_config           # ← Pass quantization config
+                # ).eval()
+
+                self.local_model = AutoModelForCausalLM.from_pretrained(
+                    self.model_fullname,
+                    device_map="auto",
+                    torch_dtype="auto"
+                ).to(self.device).eval()
 
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
