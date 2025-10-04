@@ -108,7 +108,8 @@ class IBMGraniteLLM(AbstractLLM):
                     tokenizer = AutoTokenizer.from_pretrained(
                         self.model_fullname,
                         use_fast=False,
-                        return_attention_mask=True
+                        return_attention_mask=False
+                        # return_attention_mask=True
                     )
 
                     messages = [
@@ -128,12 +129,11 @@ class IBMGraniteLLM(AbstractLLM):
 
                     summary = response
 
-                    del input_ids, output_ids, response
-                    gc.collect()
-                    torch.cuda.empty_cache()
-                    torch.cuda.ipc_collect()
                 case 2: # micro has some issues with original method
-                    tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
+                    tokenizer = AutoTokenizer.from_pretrained(
+                        self.model_fullname,
+                        return_attention_mask=False
+                    )
 
                     messages = [
                         {"role": "user", "content": prepared_text}
@@ -149,10 +149,6 @@ class IBMGraniteLLM(AbstractLLM):
                     )
                     output = tokenizer.batch_decode(output)
                     summary = extract_assistant_response(output[0])
-                    del input_ids, output_ids, response
-                    gc.collect()
-                    torch.cuda.empty_cache()
-                    torch.cuda.ipc_collect()
 
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
@@ -163,23 +159,25 @@ class IBMGraniteLLM(AbstractLLM):
             pass
         elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in self.local_mode_group:
-                # bnb_config = BitsAndBytesConfig(
-                #     load_in_4bit=True,
-                # )
+                bnb_config = BitsAndBytesConfig(
+                    load_in_8bit=True,                       # ← Enable 8-bit loading
+                    load_in_8bit_fp32_cpu_offload=True       # ← Offload some weights to CPU
+                )
 
                 self.local_model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
                     device_map="auto",
-                    dtype=torch.bfloat16,
-                    # torch_dtype="auto"
-                ).to(self.device).eval()
+                    dtype="auto",               # Still used for compute, required by transformers
+                    trust_remote_code=True,                  # Granite models often require this
+                    quantization_config=bnb_config           # ← Pass quantization config
+                ).eval()
 
                 # self.local_model = AutoModelForCausalLM.from_pretrained(
                 #     self.model_fullname,
-                #     device_map=self.device,
+                #     device_map="auto",
                 #     torch_dtype="auto"
-                # )
-                # self.local_model.eval()
+                # ).to(self.device).eval()
+
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,
