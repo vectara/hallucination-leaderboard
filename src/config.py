@@ -552,7 +552,7 @@ Here is the passage:
         #     "temperature": -1,
         #   }
         # ),
-        ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
+        ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0, "min_throttle_time": 4.0}),
       ]
     }
   ),
