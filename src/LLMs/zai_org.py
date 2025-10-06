@@ -15,7 +15,8 @@ class ZhipuAIConfig(BasicLLMConfig):
     model_name: Literal[
         "GLM-4.5-AIR-FP8", # Together
         "glm-4p5", # Fireworks but using OpenAI
-        "glm-4-9b-chat"
+        "glm-4-9b-chat",
+        "GLM-4.6"
     ] # Only model names manually added to this list are supported.
     date_code: str = "" # do we need date code?
     execution_mode: Literal["api"] = "api" # only API based?
@@ -41,6 +42,10 @@ class ZhipuAILLM(AbstractLLM):
         "glm-4p5":{
             "chat": 2,
             "api_type": "fireworks"
+        },
+        "GLM-4.6": {
+            "chat": 3,
+            "api_type": "deepinfra"
         }
     }
 
@@ -79,6 +84,15 @@ class ZhipuAILLM(AbstractLLM):
                     )
 
                     summary = response.choices[0].message.content
+
+                case 3: # Deepinfra glm 4.6
+                    self.model_fullname = f"{COMPANY}/{self.model_name}"
+                    chat_completion = self.client.chat.completions.create(
+                        model=self.model_fullname,
+                        messages=[{"role": "user", "content": prepared_text}],
+                    )
+                    summary = chat_completion.choices[0].message.content
+
         elif self.local_model: 
             pass
         else:
@@ -102,6 +116,13 @@ class ZhipuAILLM(AbstractLLM):
                     self.client = OpenAI(
                         api_key=api_key,
                         base_url="https://api.fireworks.ai/inference/v1"
+                    )
+                elif self.client_mode_group[self.model_name]["api_type"] == "deepinfra":
+                    api_key = os.getenv(f"DEEPINFRA_API_KEY")
+                    assert api_key is not None, f"DEEPINFRA API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    self.client = OpenAI(
+                        api_key=api_key,
+                        base_url="https://api.deepinfra.com/v1/openai"
                     )
                 else:
                     self.client  = None
