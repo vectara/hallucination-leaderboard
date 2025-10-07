@@ -558,6 +558,42 @@ Here is the passage:
   ),
   EvalConfig(**
     {
+      "eval_name": "all_stats",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.3",
+      "pipeline": ["aggregate"],
+      "output_dir": "output",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 1.0, 
+            "max_tokens": 1024, 
+            "prompt": """
+You are a chat bot answering questions using data.
+You must stick to the answers provided solely by the text in the 
+passage provided. You are asked the question 'Provide a concise 
+summary of the following passage, covering the core pieces of 
+information described.'
+
+Just provide your answer without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
+
+If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
+
+"I am unable to summarize this text."
+  
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+      ]
+    }
+  ),
+  EvalConfig(**
+    {
       "eval_name": "pre_2025-07",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
