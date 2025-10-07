@@ -504,6 +504,30 @@
     "avg_word_count": 118.5
   },
   {
+    "model_name": "ibm-granite/granite-4.0-h-micro",
+    "date_code": "",
+    "hallucination_rate": 8.4,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 71.8
+  },
+  {
+    "model_name": "ibm-granite/granite-4.0-h-tiny",
+    "date_code": "",
+    "hallucination_rate": 7.3,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 94.7
+  },
+  {
+    "model_name": "ibm-granite/granite-4.0-micro",
+    "date_code": "",
+    "hallucination_rate": 6.5,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 59.0
+  },
+  {
     "model_name": "internlm/internlm3-8b-instruct",
     "date_code": "",
     "hallucination_rate": 5.8,
@@ -1134,6 +1158,14 @@
     "confidence_interval": -1,
     "answer_rate": 99.1,
     "avg_word_count": 74.4
+  },
+  {
+    "model_name": "zai-org/GLM-4.6",
+    "date_code": "",
+    "hallucination_rate": 4.3,
+    "confidence_interval": -1,
+    "answer_rate": 98.3,
+    "avg_word_count": 64.0
   },
   {
     "model_name": "zai-org/glm-4-9b-chat",
