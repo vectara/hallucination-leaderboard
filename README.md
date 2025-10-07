@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on September 30, 2025
+Last updated on October 07, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_with_logo_2025-08-11.png)
 
@@ -103,6 +103,7 @@ Last updated on September 30, 2025
 |Qwen2.5-14B-Instruct|4.2 %|95.8 %|100.0 %|74.8|
 |Qwen2.5-72B-Instruct|4.3 %|95.7 %|100.0 %|80.0|
 |Llama-3.2-90B-Vision-Instruct|4.3 %|95.7 %|100.0 %|79.8|
+|ZhipuAI GLM-4.6|4.3 %|95.7 %|98.3 %|64.0|
 |Qwen3-1.7B|4.4 %|95.6 %|100.0 %|69.0|
 |Claude-3.7-Sonnet|4.4 %|95.6 %|100.0 %|97.8|
 |Claude-4-Sonnet|4.5 %|95.5 %|100.0 %|116.0|
@@ -139,6 +140,7 @@ Last updated on September 30, 2025
 |Llama-2-70B-Chat-hf|5.9 %|94.1 %|99.9 %|84.9|
 |MoonshotAI Kimi-K2-Instruct-0905|6.2%|93.8 %|99.6 %|61.2|
 |IBM Granite-3.0-8B-Instruct|6.5 %|93.5 %|100.0 %|74.2|
+|IBM Granite-4.0-micro|6.5 %|93.5 %|100.0 %|59.0|
 |Google Gemini-1.5-Pro-002|6.6 %|93.7 %|99.9 %|62.0|
 |Google Gemini-1.5-Flash|6.6 %|93.4 %|99.9 %|63.3|
 |Mistral-Pixtral|6.6 %|93.4 %|100.0 %|76.4|
@@ -147,6 +149,7 @@ Last updated on September 30, 2025
 |OpenAI o3|6.8 %|93.2 %|100.0 %|77.7|
 |Google Gemma-2-2B-it|7.0 %|93.0 %|100.0 %|62.2|
 |Qwen2.5-3B-Instruct|7.0 %|93.0 %|100.0 %|70.4|
+|IBM Granite-4.0-h-tiny|7.3 %|92.7 %|99.9 %|94.7|
 |Llama-3-8B-Chat-hf|7.4 %|92.6 %|99.8 %|79.7|
 |Mistral-Ministral-8B|7.5 %|92.5 %|100.0 %|62.7|
 |Google Gemini-Pro|7.7 %|92.3 %|98.4 %|89.5|
@@ -157,6 +160,7 @@ Last updated on September 30, 2025
 |Mistral-Ministral-3B|8.3 %|91.7 %|100.0 %|73.2|
 |databricks dbrx-instruct|8.3 %|91.7 %|100.0 %|85.9|
 |Qwen2-VL-2B-Instruct|8.3 %|91.7 %|100.0 %|81.8|
+|IBM Granite-4.0-h-micro|8.4 %|91.6 %|100.0 %|71.8|
 |Cohere Aya Expanse 32B|8.5 %|91.5 %|99.9 %|81.9|
 |IBM Granite-3.1-8B-Instruct|8.6 %|91.4 %|100.0 %|107.4|
 |Mistral-Small2|8.6 %|91.4 %|100.0 %|74.2|
