@@ -14,6 +14,7 @@ class AnthropicConfig(BasicLLMConfig):
     model_name: Literal[
         "claude-sonnet-4-5",
         "claude-opus-4-1", # 20250805
+        "claude-haiku-4-5",
         "claude-3-5-haiku",
         "claude-opus-4",
         "claude-sonnet-4",
@@ -46,6 +47,9 @@ class AnthropicLLM(AbstractLLM):
             "chat": 1
         },
         "claude-sonnet-4-5": {
+            "chat": 1
+        },
+        "claude-haiku-4-5": {
             "chat": 1
         },
         "claude-opus-4-1": {

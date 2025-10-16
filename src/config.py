@@ -135,6 +135,7 @@ Here is the passage:
         #     "temperature": 0.0,
         #   }
         # ),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
@@ -446,7 +447,7 @@ Here is the passage:
         # ),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "temperature": 0.0}),
-        ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
       ]
     }
   ),
@@ -483,31 +484,7 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        # IBMGraniteConfig(**
-        #   {
-        #     "model_name": "granite-4.0-h-small", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-        #     "temperature": 0.01, # Cant be 0.0 has to be positive
-        #   }
-        # ),
-        # IBMGraniteConfig(**
-        #   {
-        #     "model_name": "granite-4.0-h-tiny", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-        #     "temperature": 0.01, # Cant be 0.0 has to be positive
-        #   }
-        # ),
-        # IBMGraniteConfig(**
-        #   {
-        #     "model_name": "granite-4.0-h-micro", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-        #     "temperature": -1,
-        #   }
-        # ),
-        # IBMGraniteConfig(**
-        #   {
-        #     "model_name": "granite-4.0-micro", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-        #     "temperature": -1,
-        #   }
-        # ),
-        ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0, "min_throttle_time": 4.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
       ]
     }
   ),
