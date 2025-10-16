@@ -63,6 +63,7 @@ def compile_results_for_all_llms(eval_config: EvalConfig) -> None:
 def main(eval_config: EvalConfig) -> None:
 
     article_df = pd.read_csv(eval_config.source_article_path)
+    article_df = article_df[[SourceArticle.Keys.ARTICLE_ID, SourceArticle.Keys.TEXT]]
     
     # Type check: ensure every row is a valid SourceArticle
     try:

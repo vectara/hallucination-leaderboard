@@ -15,12 +15,12 @@ class SourceArticle(BaseModel):
     """
     article_id: int
     text: str
-    dataset: str
+    # dataset: str
 
     class Keys:
         ARTICLE_ID = "article_id"
         TEXT = "text"
-        DATASET = "dataset"
+        # DATASET = "dataset"
 
 class BasicJudgment(BaseModel):
     """
