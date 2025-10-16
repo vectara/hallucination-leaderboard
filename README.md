@@ -19,7 +19,7 @@ If you are interested in the previous leaderboard, which was based on HHEM-1.0, 
 </table>
 
 
-Last updated on October 07, 2025
+Last updated on October 16, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_with_logo_2025-08-11.png)
 
@@ -106,6 +106,7 @@ Last updated on October 07, 2025
 |ZhipuAI GLM-4.6|4.3 %|95.7 %|98.3 %|64.0|
 |Qwen3-1.7B|4.4 %|95.6 %|100.0 %|69.0|
 |Claude-3.7-Sonnet|4.4 %|95.6 %|100.0 %|97.8|
+|Claude-Haiku-4-5|4.5 %|95.5 %|99.7 %|83.9|
 |Claude-4-Sonnet|4.5 %|95.5 %|100.0 %|116.0|
 |Claude-3.7-Sonnet-Think|4.5 %|95.5 %|99.8 %|99.9|
 |Cohere Command-A|4.5 %|95.5 %|100.0 %|77.3|
