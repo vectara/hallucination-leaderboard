@@ -526,6 +526,57 @@ Here is the passage:
   ),
   EvalConfig(**
     {
+      "eval_name": "v0_set",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.3",
+      # "pipeline": ["summarize", "judge", "aggregate"],
+      # "pipeline": ["judge", "aggregate"],
+      "pipeline": ["summarize"],
+      "output_dir": "output_v0",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/final_set_v0.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 1.0, 
+            "max_tokens": 8192, 
+            "prompt": """
+You are a concise and factual summarizer and your job is to summarize the given passage.
+Do not infer or invent information, only focus on the passage and its contents.
+Do not use external knowledge.
+Think about the answer as much as needed to do your job.
+The text will vary in length significantly
+
+Rules
+1. Do not provide a preamble or explanation, output only the summary.
+2. Summaries should never exceed 20 percent of the original texts length.
+3. For shorter texts provide a paragraph or paragraphs as needed.
+4. For longer texts outline the major sections and provide a paragraph summary for each one respectively
+5. Maintain the tone of the source material.
+6. Write in an objective manner.
+
+If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
+
+"I am unable to summarize this text."
+  
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+      ]
+    }
+  ),
+  EvalConfig(**
+    {
       "eval_name": "beta_set",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
