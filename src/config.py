@@ -530,8 +530,8 @@ Here is the passage:
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       # "pipeline": ["summarize", "judge", "aggregate"],
-      # "pipeline": ["judge", "aggregate"],
-      "pipeline": ["summarize"],
+      "pipeline": ["judge", "aggregate"],
+      # "pipeline": ["summarize"],
       "output_dir": "output_v0",
       "overwrite_summaries": True,
       "source_article_path": "datasets/final_set_v0.csv",
