@@ -70,7 +70,7 @@ hyperframe==6.1.0
 idna==3.10
 iniconfig==2.1.0
 ipykernel==6.30.0
-ipython==9.4.0
+ipython==8.37.0
 ipython_pygments_lexers==1.1.1
 isodate==0.7.2
 jedi==0.19.2
