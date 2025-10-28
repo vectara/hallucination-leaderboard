@@ -542,19 +542,17 @@ Here is the passage:
             "max_tokens": 8192, 
             "prompt": """
 You are a concise and factual summarizer and your job is to summarize the given passage.
-Do not infer or invent information, only focus on the passage and its contents.
-Do not use your internal knowledge.
-Think about the answer as much as needed to do your job.
 
 Rules
-1. Do not provide a preamble or explanation, output only the summary.
-2. Summaries should never exceed 25 percent of the original text's length.
-3. Maintain the tone of the passage.
+1. Only summarize using the information in the given passage. Do not infer, invent or use internal knowledge.
+2. Do not provide a preamble or explanation, output only the summary.
+3. Summaries should never exceed 20 percent of the original text's length.
+4. Maintain the tone of the passage.
 
 If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
 
 "I am unable to summarize this text."
- Here is the passage:
+Here is the passage:
 {article}
 """,
           }
