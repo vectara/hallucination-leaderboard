@@ -467,6 +467,18 @@ Here is the passage:
             "temperature": 1.0, 
             "max_tokens": 8192, 
             "prompt": """
+Your task is to provide a concise and factual summary for the given passage.
+
+Rules
+1. Summarize using only the information in the given passage. Do not infer. Do not use your internal knowledge.
+2. Do not provide a preamble or explanation, output only the summary.
+3. Summaries should never exceed 20 percent of the passage's length.
+4. Maintain a neutral tone.
+
+If you are unable to summarize the passage due to missing, unreadable, irrelevant or insufficient content, respond only with:
+"I am unable to summarize this passage."
+Here is the passage:
+{article}
 """,
           }
         ),
