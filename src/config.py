@@ -485,19 +485,19 @@ Here is the passage:
       "per_LLM_configs": [
 
         # # CPU 1 # # NEEDS NEW ENV FILE
+        # AI21LabsConfig(**
+        #   {
+        #     "company": "ai21labs",
+        #     "model_name": "jamba-mini-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0
+        #   }
+        # ),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
         # AI21LabsConfig(**
         #   {
         #     "company": "ai21labs",
         #     "model_name": "jamba-large-1.7",
-        #     "date_code": "2025-07",
-        #     "temperature": 0.0
-        #   }
-        # ),
-        # AI21LabsConfig(**
-        #   {
-        #     "company": "ai21labs",
-        #     "model_name": "jamba-mini-1.7",
         #     "date_code": "2025-07",
         #     "temperature": 0.0
         #   }
