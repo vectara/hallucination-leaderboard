@@ -530,8 +530,8 @@ Here is the passage:
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       # "pipeline": ["summarize", "judge", "aggregate"],
-      # "pipeline": ["judge", "aggregate"],
-      "pipeline": ["summarize"],
+      "pipeline": ["judge", "aggregate"],
+      # "pipeline": ["summarize"],
       "output_dir": "output_v1",
       "overwrite_summaries": True,
       "source_article_path": "datasets/final_set_v1.csv",
@@ -550,7 +550,6 @@ Rules
 4. Maintain the tone of the passage.
 
 If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
-
 "I am unable to summarize this text."
 Here is the passage:
 {article}
@@ -563,7 +562,7 @@ Here is the passage:
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
-        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
       ]
     }

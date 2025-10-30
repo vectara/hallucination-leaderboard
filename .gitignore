@@ -16,6 +16,7 @@ test_config.json
 
 leaderboard_dataset_revised.csv
 leaderboard_dataset.csv
+leaderboard_dataset_v2.csv
 temp.py
 hhem_leaderboard.egg-info/
 

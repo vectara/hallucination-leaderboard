@@ -243,7 +243,7 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = chat_package.output[1].content[0].text
-                case 11: # gpt-5-high
+                case 11: # gpt-5-high, TODO: add reponse data at end from usage
                     chat_package = self.client.responses.create(
                         model="gpt-5-2025-08-07", # need to talk about this case
                         input=prepared_text,
