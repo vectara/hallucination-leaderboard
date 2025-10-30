@@ -105,7 +105,7 @@ class XAILLM(AbstractLLM):
     def setup(self):
         if self.execution_mode == "api":
             if self.model_name in self.client_mode_group:
-                api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                api_key = os.getenv(f"XAI_API_KEY")
                 assert api_key is not None, (
                     f"{COMPANY} API key not found in environment variable "
                     f"{COMPANY.upper()}_API_KEY"

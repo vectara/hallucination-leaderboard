@@ -64,7 +64,7 @@ Just provide your answer without any prompt like "Here is the summary:" or any e
 
 If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
 
-"I am unable to summarize this text."
+"I am unable to summarize this passage."
   
 Here is the passage:
 {article}
@@ -135,10 +135,10 @@ Here is the passage:
         #     "temperature": 0.0,
         #   }
         # ),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-2.0", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-haiku", "max_tokens": 2345, "date_code": "20241022"}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-5-sonnet", "date_code": "20241022", "temperature": 0.0}),
@@ -147,22 +147,22 @@ Here is the passage:
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-3-sonnet", "date_code": "20240229", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
-        CohereConfig(**{"company": "cohere", "model_name": "c4ai-aya-expanse-32b", "temperature": 0.0}),
-        CohereConfig(**{"company": "cohere", "model_name": "c4ai-aya-expanse-8b", "temperature": 0.0}),
-        CohereConfig(**{"company": "cohere", "model_name": "command-a", "date_code": "03-2025", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
+        # CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0}),
+        # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0}),
+        # CohereConfig(**{"model_name": "command-a", "date_code": "03-2025", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "command-r", "date_code": "08-2024", "temperature": 0.0}),
-        CohereConfig(**{"company": "cohere", "model_name": "command-r-plus", "date_code": "04-2024", "temperature": 0.0}),
+        # CohereConfig(**{"model_name": "command-r-plus", "date_code": "08-2024", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "command-r7b", "date_code": "12-2024", "temperature": 0.0}),
         # CohereConfig(**{"company": "cohere", "model_name": "command-a-reasoning", "date_code": "08-2025", "temperature": 0.0, "max_tokens": 4096, "min_throttle_time": 5.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "date_code": "0324", "temperature": 0.0, "min_throttle_time": 4.0}),
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1-Terminus", "temperature": 0.0, "min_throttle_time": 4.0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-flash", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-flash-002", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-pro", "temperature": 0.0}),
@@ -172,7 +172,7 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-exp", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-lite", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-preview", "date_code": "05-20", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite-instinct", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite-think", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "temperature": 0.0}),
@@ -244,20 +244,20 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-4-Scout-17B-16E-Instruct",
-            "temperature": 0.0
-          }
-        ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-4-Scout-17B-16E-Instruct",
+        #     "temperature": 0.0
+        #   }
+        # ),
         # MetaLlamaConfig(**
         #   {
         #     "company": "meta-llama",
@@ -265,13 +265,13 @@ Here is the passage:
         #     "temperature": 0.0
         #   }
         # ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-3.3-70B-Instruct-Turbo",
-            "temperature": 0.0
-          }
-        ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-3.3-70B-Instruct-Turbo",
+        #     "temperature": 0.0
+        #   }
+        # ),
         # MetaLlamaConfig(**
         #   {
         #     "company": "meta-llama",
@@ -350,59 +350,59 @@ Here is the passage:
         #     "endpoint": "response"
         #   }
         # ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "Phi-4-mini-instruct",
-            "model_key": os.getenv("PHI_4_MINI_INSTRUCT_API_KEY"),
-            "azure_endpoint": "https://hhem-lb-phi-4-mini-inst-resource.services.ai.azure.com/models",
-            "temperature": 0.0,
-          }
-        ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "Phi-4",
-            "model_key": os.getenv("PHI_4_API_KEY"),
-            "azure_endpoint": "https://hhem-lb-phi-4-resource.services.ai.azure.com/models",
-            "temperature": 0.0,
-          }
-        ),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2410", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2410", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-large", "date_code": "2411", "temperature": 0.0}),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "Phi-4-mini-instruct",
+        #     "model_key": os.getenv("PHI_4_MINI_INSTRUCT_API_KEY"),
+        #     "azure_endpoint": "https://hhem-lb-phi-4-mini-inst-resource.services.ai.azure.com/models",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "company": "microsoft",
+        #     "model_name": "Phi-4",
+        #     "model_key": os.getenv("PHI_4_API_KEY"),
+        #     "azure_endpoint": "https://hhem-lb-phi-4-resource.services.ai.azure.com/models",
+        #     "temperature": 0.0,
+        #   }
+        # ),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2410", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2410", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-large", "date_code": "2411", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2407", "temperature": 0.0}), # Invalid model? code 1500
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2407", "temperature": 0.0}), # Invalidmodel? code 1500
-        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2501", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2501", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "open-mistral-nemo", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-12b", "date_code": "2409", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-large", "date_code": "2411", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-nano", "date_code": "2025-08-07", "reasoning_effort":"minimal", "temperature": -1.0}),
+        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-nano", "date_code": "2025-08-07", "reasoning_effort":"minimal", "temperature": -1.0}),
         # OpenAIConfig(**{"company": "openai", "execution_mode": "gpu", "model_name": "gpt-oss-20b", "date_code": "", "temperature": 0.01}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-3.5-turbo", "date_code": "0125", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4", "date_code": "0613", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4-turbo", "date_code": "2024-04-09", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1-mini", "date_code": "2025-04-14", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1-nano"}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o", "date_code": "2024-08-06", "temperature": 0.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o", "date_code": "2024-08-06", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o-mini", "date_code": "2024-07-18", "temperature": 0.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o1", "date_code": "2024-12-17", "temperature": -1, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o1-mini", "date_code": "2024-09-12", "temperature": 1.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o1-pro", "date_code": "2025-03-19", "temperature": -1, "endpoint": "response", "reasoning_effort": "low"}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low"}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low"}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-30b-a3b-thinking", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-omni-30b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
         # QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
@@ -414,7 +414,7 @@ Here is the passage:
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
@@ -433,11 +433,11 @@ Here is the passage:
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-max-preview", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-2-vision", "temperature": 0.0, "date_code": "1212"}),
-        XAIConfig(**{"company": "xai", "model_name": "grok-3", "temperature": 0.0}),
+        # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-fast", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini-fast", "temperature": 0.0}),
-        XAIConfig(**{"company": "xai", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
+        # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
         # _01AIConfig(**
         #   {
         #     "company": "01-ai",
@@ -445,9 +445,9 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "temperature": 0.0}),
-        ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
       ]
     }
   ),
@@ -483,6 +483,92 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
+        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
+
+        CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0}),
+        CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0}),
+        CohereConfig(**{"model_name": "command-a", "date_code": "03-2025", "temperature": 0.0}),
+        CohereConfig(**{"model_name": "command-r-plus", "date_code": "08-2024", "temperature": 0.0}),
+
+        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
+        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
+        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
+
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
+
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-4-Scout-17B-16E-Instruct",
+            "temperature": 0.0
+          }
+        ),
+        MetaLlamaConfig(**
+          {
+            "company": "meta-llama",
+            "model_name": "Llama-3.3-70B-Instruct-Turbo",
+            "temperature": 0.0
+          }
+        ),
+
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "Phi-4-mini-instruct",
+            "model_key": os.getenv("PHI_4_MINI_INSTRUCT_API_KEY"),
+            "azure_endpoint": "https://hhem-lb-phi-4-mini-inst-resource.services.ai.azure.com/models",
+            "temperature": 0.0,
+          }
+        ),
+        MicrosoftConfig(**
+          {
+            "company": "microsoft",
+            "model_name": "Phi-4",
+            "model_key": os.getenv("PHI_4_API_KEY"),
+            "azure_endpoint": "https://hhem-lb-phi-4-resource.services.ai.azure.com/models",
+            "temperature": 0.0,
+          }
+        ),
+
+        MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2410", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2410", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-large", "date_code": "2411", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2501", "temperature": 0.0}),
+        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
+
+        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
+
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-nano", "date_code": "2025-08-07", "reasoning_effort":"minimal", "temperature": -1.0}),
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.0}),
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o", "date_code": "2024-08-06", "temperature": 0.0}),
+        OpenAIConfig(**{"company": "openai", "model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low"}),
+        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
+        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
+
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+
+        XAIConfig(**{"model_name": "grok-3", "temperature": 0.0}),
+        XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
+        ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
+        ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
       ]
     }
   ),
