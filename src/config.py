@@ -79,38 +79,38 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        AI21LabsConfig(**
-          {
-            "company": "ai21labs",
-            "model_name": "jamba-large-1.7",
-            "date_code": "2025-07",
-            "temperature": 0.0
-          }
-        ),
-        AI21LabsConfig(**
-          {
-            "company": "ai21labs",
-            "model_name": "jamba-mini-1.7",
-            "date_code": "2025-07",
-            "temperature": 0.0
-          }
-        ),
-        AI21LabsConfig(**
-          {
-            "company": "ai21labs",
-            "model_name": "jamba-large-1.6",
-            "date_code": "2025-03",
-            "temperature": 0.0
-          }
-        ),
-        AI21LabsConfig(**
-          {
-            "company": "ai21labs",
-            "model_name": "jamba-mini-1.6",
-            "date_code": "2025-03",
-            "temperature": 0.0
-          }
-        ),
+        # AI21LabsConfig(**
+        #   {
+        #     "company": "ai21labs",
+        #     "model_name": "jamba-large-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AI21LabsConfig(**
+        #   {
+        #     "company": "ai21labs",
+        #     "model_name": "jamba-mini-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AI21LabsConfig(**
+        #   {
+        #     "company": "ai21labs",
+        #     "model_name": "jamba-large-1.6",
+        #     "date_code": "2025-03",
+        #     "temperature": 0.0
+        #   }
+        # ),
+        # AI21LabsConfig(**
+        #   {
+        #     "company": "ai21labs",
+        #     "model_name": "jamba-mini-1.6",
+        #     "date_code": "2025-03",
+        #     "temperature": 0.0
+        #   }
+        # ),
         # AllenAIConfig(**
         #   {
         #     "company": "allenai",
@@ -483,6 +483,23 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        AI21LabsConfig(**
+          {
+            "company": "ai21labs",
+            "model_name": "jamba-large-1.7",
+            "date_code": "2025-07",
+            "temperature": 0.0
+          }
+        ),
+        AI21LabsConfig(**
+          {
+            "company": "ai21labs",
+            "model_name": "jamba-mini-1.7",
+            "date_code": "2025-07",
+            "temperature": 0.0
+          }
+        ),
+
         AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
         AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
