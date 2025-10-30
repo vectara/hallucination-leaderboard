@@ -484,7 +484,7 @@ Here is the passage:
         ),
       "per_LLM_configs": [
 
-        # # CPU 1
+        # # CPU 1 # # NEEDS NEW ENV FILE
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
         # AI21LabsConfig(**
         #   {
@@ -503,12 +503,12 @@ Here is the passage:
         #   }
         # ),
 
-        # # CPU 2
+        # # CPU 2 # #
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
 
-        # # CPU 3
+        # # CPU 3 # #
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
@@ -516,7 +516,7 @@ Here is the passage:
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0}),
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0}),
 
-        # # CPU 4
+        # # CPU 4 # #
         # CohereConfig(**{"model_name": "command-a", "date_code": "03-2025", "temperature": 0.0}),
         # CohereConfig(**{"model_name": "command-r-plus", "date_code": "08-2024", "temperature": 0.0}),
 
@@ -524,12 +524,12 @@ Here is the passage:
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
 
-        # # CPU 5
+        # # CPU 5 # #
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
 
-        # # CPU 6
+        # # CPU 6 # #
         # MetaLlamaConfig(**
         #   {
         #     "company": "meta-llama",
@@ -571,14 +571,14 @@ Here is the passage:
         #   }
         # ),
 
-        # # CPU 7
+        # # CPU 7 # #
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2410", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2410", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-large", "date_code": "2411", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2501", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
 
-        # # CPU 8
+        # # CPU 8 # #
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
 
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
@@ -586,14 +586,14 @@ Here is the passage:
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-nano", "date_code": "2025-08-07", "reasoning_effort":"minimal", "temperature": -1.0}),
 
-        # # CPU 9
+        # # CPU 9 # #
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o", "date_code": "2024-08-06", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
 
-        # # CPU 10
+        # # CPU 10 # #
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
 
         # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0}),
