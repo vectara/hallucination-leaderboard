@@ -57,7 +57,7 @@ class AppleLLM(AbstractLLM):
                 case 1:
                     summary = None
         elif self.local_model: 
-            print("Enter local model")
+            print("#####################################################################")
             match self.local_mode_group[self.model_name]:
                 case 1: # Uses chat template
                     print("Case 1")
