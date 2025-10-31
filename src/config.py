@@ -211,13 +211,13 @@ Here is the passage:
         #   }
         # ),
 
-        IBMGraniteConfig(**
-          {
-            "company": "ibm-granite",
-            "model_name": "granite-3.2-8b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-            "temperature": 0.01, # Cant be 0.0 has to be positive
-          }
-        ),
+        # IBMGraniteConfig(**
+        #   {
+        #     "company": "ibm-granite",
+        #     "model_name": "granite-3.2-8b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
+        #     "temperature": 0.01, # Cant be 0.0 has to be positive
+        #   }
+        # ),
         
         # IBMGraniteConfig(**
         #   {
@@ -390,7 +390,7 @@ Here is the passage:
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-nano", "date_code": "2025-08-07", "reasoning_effort":"minimal", "temperature": -1.0}),
 
-        OpenAIConfig(**{"company": "openai", "execution_mode": "gpu", "model_name": "gpt-oss-20b", "date_code": "", "temperature": 0.01}),
+        # OpenAIConfig(**{"company": "openai", "execution_mode": "gpu", "model_name": "gpt-oss-20b", "date_code": "", "temperature": 0.01}),
 
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-3.5-turbo", "date_code": "0125", "temperature": 0.0}),
@@ -488,6 +488,16 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        # # GPU # #
+        OpenAIConfig(**{"company": "openai", "execution_mode": "gpu", "model_name": "gpt-oss-20b", "date_code": "", "temperature": 0.01}),
+        IBMGraniteConfig(**
+          {
+            "company": "ibm-granite",
+            "model_name": "granite-3.2-8b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
+            "temperature": 0.01, # Cant be 0.0 has to be positive
+          }
+        ),
+
 
         # # CPU 1 # # NEEDS NEW ENV FILE
         # AI21LabsConfig(**
