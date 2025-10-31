@@ -57,8 +57,10 @@ class AppleLLM(AbstractLLM):
                 case 1:
                     summary = None
         elif self.local_model: 
+            print("Enter local model")
             match self.local_mode_group[self.model_name]:
                 case 1: # Uses chat template
+                    print("Case 1")
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
                     input_tensor = tokenizer.apply_chat_template(
@@ -79,6 +81,7 @@ class AppleLLM(AbstractLLM):
 
                     summary = result
                 case 2: # Uses direct text input
+                    print("Case 2")
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
                     inputs = tokenizer(prepared_text, return_tensors="pt")
