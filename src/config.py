@@ -52,20 +52,18 @@ eval_configs = [
         BasicLLMConfig(**
           {
             "temperature": 1.0, 
-            "max_tokens": 1024, 
+            "max_tokens": 8192, 
             "prompt": """
-You are a chat bot answering questions using data.
-You must stick to the answers provided solely by the text in the 
-passage provided. You are asked the question 'Provide a concise 
-summary of the following passage, covering the core pieces of 
-information described.'
+Your task is to provide a concise and factual summary for the given passage.
 
-Just provide your answer without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
+Rules
+1. Summarize using only the information in the given passage. Do not infer. Do not use your internal knowledge.
+2. Do not provide a preamble or explanation, output only the summary.
+3. Summaries should never exceed 20 percent of the passage's length.
+4. Maintain a neutral tone.
 
-If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
-
+If you are unable to summarize the passage due to missing, unreadable, irrelevant or insufficient content, respond only with:
 "I am unable to summarize this passage."
-  
 Here is the passage:
 {article}
 """,
