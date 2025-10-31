@@ -173,10 +173,10 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-preview", "date_code": "05-20", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite-think", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-        GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0}),
         # IBMGraniteConfig(**
         #   {
         #     "model_name": "granite-4.0-h-small", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
@@ -599,6 +599,14 @@ Here is the passage:
         # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
         # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
+
+        # # CPU 11 # #
+        # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
+        # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0}),
       ]
     }
   ),
