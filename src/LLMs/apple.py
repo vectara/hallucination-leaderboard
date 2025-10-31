@@ -45,6 +45,7 @@ class AppleLLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.full_config = config
+        self.model_fullname = f"{COMPANY}/{self.model_name}"
 
     def summarize(self, prepared_text: str) -> str:
         # Use self.model_fullname when referring to the model
