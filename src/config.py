@@ -608,9 +608,9 @@ Here is the passage:
 
         # # CPU 11 # #
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),
-        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "temperature": 0.0}, "min_throttle_time": 4.0),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),
-        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0}, "min_throttle_time": 4.0),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),
       ]
     }
   ),
