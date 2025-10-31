@@ -607,6 +607,8 @@ Here is the passage:
         # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
 
         # # CPU 11 # #
+        # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),

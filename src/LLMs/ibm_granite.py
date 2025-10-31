@@ -235,51 +235,56 @@ class IBMGraniteLLM(AbstractLLM):
                 #     load_in_8bit=True,                       # ← Enable 8-bit loading
                 #     load_in_8bit_fp32_cpu_offload=True       # ← Offload some weights to CPU
                 # )
-
                 # self.local_model = AutoModelForCausalLM.from_pretrained(
                 #     self.model_fullname,
                 #     device_map="auto",
                 #     dtype="auto",               # Still used for compute, required by transformers
                 #     quantization_config=bnb_config           # ← Pass quantization config
                 # ).eval()
-                if self.local_mode_group[self.model_name]["multi-gpu"]:
-                    model = AutoModelForCausalLM.from_pretrained(
-                        self.model_fullname,
-                        torch_dtype="auto"
-                    )
-                    
-                    n_gpus = torch.cuda.device_count()
-                    device_ids = [f'cuda:{i}' for i in range(n_gpus)]
 
-                    # Example assumes model.transformer.h holds layers
-                    num_layers = len(model.transformer.h)
-                    layers_per_gpu = num_layers // n_gpus
+                self.local_model = AutoModelForCausalLM.from_pretrained(
+                    self.model_fullname,
+                    device_map="auto",
+                    dtype="auto",               # Still used for compute, required by transformers
+                ).eval()
+                # if self.local_mode_group[self.model_name]["multi-gpu"]:
+                #     model = AutoModelForCausalLM.from_pretrained(
+                #         self.model_fullname,
+                #         torch_dtype="auto"
+                #     )
+                #     
+                #     n_gpus = torch.cuda.device_count()
+                #     device_ids = [f'cuda:{i}' for i in range(n_gpus)]
 
-                    # Move embeddings to first GPU
-                    model.transformer.wte.to(device_ids[0])
-                    model.transformer.wpe.to(device_ids[0])
-                    model.lm_head.to(device_ids[-1])  # Output head on last GPU
+                #     # Example assumes model.transformer.h holds layers
+                #     num_layers = len(model.transformer.h)
+                #     layers_per_gpu = num_layers // n_gpus
 
-                    # Move layers to GPUs manually
-                    for i in range(n_gpus):
-                        start = i * layers_per_gpu
-                        end = (i + 1) * layers_per_gpu if i != n_gpus - 1 else num_layers
-                        for layer in model.transformer.h[start:end]:
-                            layer.to(device_ids[i])
+                #     # Move embeddings to first GPU
+                #     model.transformer.wte.to(device_ids[0])
+                #     model.transformer.wpe.to(device_ids[0])
+                #     model.lm_head.to(device_ids[-1])  # Output head on last GPU
 
-                    self.local_model = model.eval()
+                #     # Move layers to GPUs manually
+                #     for i in range(n_gpus):
+                #         start = i * layers_per_gpu
+                #         end = (i + 1) * layers_per_gpu if i != n_gpus - 1 else num_layers
+                #         for layer in model.transformer.h[start:end]:
+                #             layer.to(device_ids[i])
 
-                else:
-                    max_memory = {0: "70GiB", "cpu": "200GiB"}
-                    self.local_model = AutoModelForCausalLM.from_pretrained(
-                        self.model_fullname,
-                        device_map="auto",
-                        # dtype="auto",
-                        dtype=torch.bfloat16,
-                        max_memory=max_memory,
-                        offload_folder="./offload",
-                        low_cpu_mem_usage=True
-                    ).to(self.device).eval()
+                #     self.local_model = model.eval()
+
+                # else:
+                #     max_memory = {0: "70GiB", "cpu": "200GiB"}
+                #     self.local_model = AutoModelForCausalLM.from_pretrained(
+                #         self.model_fullname,
+                #         device_map="auto",
+                #         # dtype="auto",
+                #         dtype=torch.bfloat16,
+                #         max_memory=max_memory,
+                #         offload_folder="./offload",
+                #         low_cpu_mem_usage=True
+                #     ).to(self.device).eval()
 
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
