@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+import torch
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -46,6 +47,7 @@ class AppleLLM(AbstractLLM):
         self.execution_mode = config.execution_mode
         self.full_config = config
         self.model_fullname = f"{COMPANY}/{self.model_name}"
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     def summarize(self, prepared_text: str) -> str:
         # Use self.model_fullname when referring to the model
