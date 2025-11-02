@@ -500,7 +500,7 @@ Here is the passage:
 
 
         # # CPU 1 # # NEEDS NEW ENV FILE
-        # AI21LabsConfig(**
+        # AI21LabsConfig(** # Failde but un resolvable
         #   {
         #     "company": "ai21labs",
         #     "model_name": "jamba-mini-1.7",
@@ -508,8 +508,8 @@ Here is the passage:
         #     "temperature": 0.0
         #   }
         # ),
-        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
-        # AI21LabsConfig(**
+        # failed but unsure why OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
+        # AI21LabsConfig(** # failed but unresolvable
         #   {
         #     "company": "ai21labs",
         #     "model_name": "jamba-large-1.7",
@@ -610,16 +610,13 @@ Here is the passage:
 
         # # CPU 10 # #
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-
-        # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0}),
-        # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
-        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}), #failed need money
 
         # # CPU 11 # #
-        # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0, "min_throttle_time": 4.0}),
-        # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
-        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0, "min_throttle_time": 4.0}), # failed need money
+        # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}), # failed need money
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}), # all gemma thrtottle
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0, "min_throttle_time": 4.0}),
