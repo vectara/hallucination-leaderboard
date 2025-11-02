@@ -147,7 +147,7 @@ Here is the passage:
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
 
-        AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
+        # AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
         
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0}),
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0}),
@@ -438,11 +438,11 @@ Here is the passage:
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-max-preview", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-2-vision", "temperature": 0.0, "date_code": "1212"}),
-        # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-fast", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini-fast", "temperature": 0.0}),
-        # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
+        XAIConfig(**{"model_name": "grok-3", "temperature": 0.0}),
+        XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
         # _01AIConfig(**
         #   {
         #     "company": "01-ai",
@@ -528,12 +528,12 @@ Here is the passage:
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
 
-        # CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0}),
-        # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0}),
+        # CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0, "max_tokens": 4096}),
+        # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0, "max_tokens": 4096}),
 
         # # CPU 4 # #
         # CohereConfig(**{"model_name": "command-a", "date_code": "03-2025", "temperature": 0.0}),
-        # CohereConfig(**{"model_name": "command-r-plus", "date_code": "08-2024", "temperature": 0.0}),
+        # CohereConfig(**{"model_name": "command-r-plus", "date_code": "08-2024", "temperature": 0.0, "max_tokens": 4096}),
 
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
