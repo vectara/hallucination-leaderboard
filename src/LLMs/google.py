@@ -262,8 +262,7 @@ class GoogleLLM(AbstractLLM):
         if self.client:
             self.close_client()
         elif self.local_model:
-            # self.default_local_model_teardown()
-            pass # Google models cannot be run locally.
+            self.default_local_model_teardown()
 
     def close_client(self):
         pass
