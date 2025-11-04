@@ -168,6 +168,8 @@ class GoogleLLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.thinking_budget = config.thinking_budget
+        print("#################################")
+        print(self.model_name)
         if self.model_name in self.local_mode_group:
             print("ADJUSTING MODEL NAME")
             self.model_fullname == f"{COMPANY}/{self.model_name}"
