@@ -3,12 +3,13 @@ from typing import Literal
 
 from google import genai
 from google.genai import types
-from transformers import pipeline
 import torch
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+
+from transformers import pipeline
 
 COMPANY = "google"
 
