@@ -5,7 +5,7 @@ from google import genai
 from google.genai import types
 import torch
 
-from . AbstractLLM import AbstractLLM
+from .AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
