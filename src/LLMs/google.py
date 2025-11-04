@@ -219,21 +219,23 @@ class GoogleLLM(AbstractLLM):
                     )
                     summary = response.text
         elif self.local_model:
-            messages = [
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": prepared_text}
+            match self.local_mode_group[self.model_name][self.endpoint]:
+                case 1: # Uses chat template
+                    messages = [
+                        {
+                            "role": "user",
+                            "content": [
+                                {"type": "text", "text": prepared_text}
+                            ]
+                        }
                     ]
-                }
-            ]
 
-            output = self.local_model(
-                text=messages,
-                max_new_tokens=self.max_tokens,
-                temperature=self.temperature
-            )
-            print(output[0]["generated_text"][-1]["content"])
+                    output = self.local_model(
+                        text=messages,
+                        max_new_tokens=self.max_tokens,
+                        temperature=self.temperature
+                    )
+                    summary = output[0]["generated_text"][-1]["content"]
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
