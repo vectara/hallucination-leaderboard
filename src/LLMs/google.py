@@ -168,12 +168,8 @@ class GoogleLLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.thinking_budget = config.thinking_budget
-        print("#################################")
-        print(self.model_name)
         if self.model_name in self.local_mode_group:
-            print("ADJUSTING MODEL NAME")
-            self.model_fullname == f"{COMPANY}/{self.model_name}"
-            print(self.model_fullname)
+            self.model_fullname = f"{COMPANY}/{self.model_name}"
 
 
     def summarize(self, prepared_text: str) -> str:
@@ -255,7 +251,6 @@ class GoogleLLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode in ["gpu", "cpu"]:
-            print(self.model_fullname)
             self.local_mode = pipeline(
                 "text-to-text",
                 model=self.model_fullname,
