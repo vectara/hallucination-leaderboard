@@ -173,6 +173,7 @@ class GoogleLLM(AbstractLLM):
         if self.model_name in self.local_mode_group:
             print("ADJUSTING MODEL NAME")
             self.model_fullname == f"{COMPANY}/{self.model_name}"
+            print(self.model_fullname)
 
 
     def summarize(self, prepared_text: str) -> str:

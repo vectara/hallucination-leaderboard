@@ -156,7 +156,7 @@ Here is the passage:
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
 
-        AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
+        # AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
         
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0}),
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0}),
