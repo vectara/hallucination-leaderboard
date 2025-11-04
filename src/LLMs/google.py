@@ -222,6 +222,7 @@ class GoogleLLM(AbstractLLM):
         elif self.local_model:
             match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
+                    print("ATTEMPTING TO REQUEST")
                     messages = [
                         {
                             "role": "user",
