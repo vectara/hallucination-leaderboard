@@ -142,7 +142,8 @@ class AppleLLM(AbstractLLM):
                 self.local_model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
                     device_map="auto",
-                    dtype="autp"
+                    dtype="auto",
+                    trust_remote_code=True
                 ).eval()
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
