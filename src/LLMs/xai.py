@@ -12,6 +12,8 @@ class XAIConfig(BasicLLMConfig):
     """Extended config for x-ai-specific properties"""
     company: Literal["xai-org"] = "xai-org" 
     model_name: Literal[
+        "grok-4-fast-reasoning",
+        "grok-4-fast-non-reasoning",
         "grok-4",
         "grok-3",
         "grok-3-mini",
@@ -37,6 +39,12 @@ class XAILLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
+        "grok-4-fast-reasoning":{
+            "chat": 1
+        },
+        "grok-4-fast-non-reasoning":{
+            "chat": 1
+        },
         "grok-4":{
             "chat": 1
         },

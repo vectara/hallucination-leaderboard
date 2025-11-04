@@ -128,11 +128,20 @@ Here is the passage:
         # AntGroupMIConfig(**
         #   {
         #     "company": "antgroup",
-        #     "model_name": "antfinix-a1",
+        #     "model_name": "finix_s1_32b",
         #     "date_code": "",
         #     "temperature": 0.0,
         #   }
         # ),
+        AntGroupMIConfig(**
+          {
+            "company": "antgroup",
+            "model_name": "antfinix-a1",
+            "date_code": "",
+            "temperature": 0.01,
+            "max_tokens": 2048
+          }
+        ),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
@@ -441,8 +450,10 @@ Here is the passage:
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-fast", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini-fast", "temperature": 0.0}),
-        XAIConfig(**{"model_name": "grok-3", "temperature": 0.0}),
-        XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
+        # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0}),
+        # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
+        # XAIConfig(**{"model_name": "grok-4-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
+        # XAIConfig(**{"model_name": "grok-4-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
         # _01AIConfig(**
         #   {
         #     "company": "01-ai",
@@ -488,6 +499,7 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        # Not Assigned
         # # GPU # #
         # OpenAIConfig(**{"company": "openai", "execution_mode": "gpu", "model_name": "gpt-oss-20b", "date_code": "", "temperature": 0.01}),
         # IBMGraniteConfig(**
@@ -518,10 +530,16 @@ Here is the passage:
         #   }
         # ),
 
+        # CPU1 R2
+        # XAIConfig(**{"model_name": "grok-4-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
+
         # # CPU 2 # #
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
+
+        # CPU2 R2
+        # XAIConfig(**{"model_name": "grok-4-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # # CPU 3 # #
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
@@ -529,6 +547,8 @@ Here is the passage:
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
 
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0, "max_tokens": 4096}),
+
+        # CPU3 R2
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0, "max_tokens": 4096}),
 
         # # CPU 4 # #
