@@ -60,7 +60,7 @@ class AppleLLM(AbstractLLM):
             match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
                     print("Case 1")
-                    tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
+                    tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf", add_bos_token=True)
 
                     messages = [
                         {"role": "user", "content": prepared_text}

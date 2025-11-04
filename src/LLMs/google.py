@@ -254,6 +254,7 @@ class GoogleLLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode in ["gpu", "cpu"]:
+            print(self.model_fullname)
             self.local_mode = pipeline(
                 "text-to-text",
                 model=self.model_fullname,
