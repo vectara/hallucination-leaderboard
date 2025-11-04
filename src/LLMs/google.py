@@ -252,7 +252,7 @@ class GoogleLLM(AbstractLLM):
                 ))
         elif self.execution_mode in ["gpu", "cpu"]:
             self.local_mode = pipeline(
-                "text-to-text",
+                "text-generation",
                 model=self.model_fullname,
                 device="cuda",
                 torch_dtype=torch.bfloat16
