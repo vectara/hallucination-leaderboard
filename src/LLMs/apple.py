@@ -57,7 +57,7 @@ class AppleLLM(AbstractLLM):
                 case 1:
                     summary = None
         elif self.local_model: 
-            match self.local_mode_group[self.model_name]:
+            match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
                     print("Case 1")
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
