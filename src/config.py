@@ -189,8 +189,8 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0}),
         GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "execution_mode": "gpu", "temperature": 0.01}),
-        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "execution_mode": "gpu","temperature": 0.01}),
-        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "execution_mode": "gpu","temperature": 0.01}),
+        GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "execution_mode": "gpu","temperature": 0.01}),
+        GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "execution_mode": "gpu","temperature": 0.01}),
         # IBMGraniteConfig(**
         #   {
         #     "model_name": "granite-4.0-h-small", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
