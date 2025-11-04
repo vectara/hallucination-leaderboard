@@ -3,6 +3,8 @@ from typing import Literal
 
 from google import genai
 from google.genai import types
+from transformers import pipeline
+import torch
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -49,7 +51,7 @@ class GoogleConfig(BasicLLMConfig):
 
     ] # Only model names manually added to this list are supported.
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
-    execution_mode: Literal["api"] = "api" # Google models can only be run via web api.
+    execution_mode: Literal["api", "gpu", "cpu"] = "api" # Google models can only be run via web api.
     date_code: str = "", # You must specify a date code for Google models.
     thinking_budget: Literal[-1, 0] = 0 # -1 is dynamic thinking, 0 thinking is off
 
@@ -74,15 +76,15 @@ class GoogleLLM(AbstractLLM):
         "gemini-2.5-flash-preview": {
             "chat": 1
         }, # 05-20
-        "gemma-3-1b-it": {
-            "chat": 1
-        },
-        "gemma-3-4b-it": {
-            "chat": 1
-        },
-        "gemma-3-12b-it": {
-            "chat": 1
-        },
+        # "gemma-3-1b-it": {
+        #     "chat": 1
+        # },
+        # "gemma-3-4b-it": {
+        #     "chat": 1
+        # },
+        # "gemma-3-12b-it": {
+        #     "chat": 1
+        # },
         "gemma-3-27b-it": {
             "chat": 1
         },
@@ -146,7 +148,17 @@ class GoogleLLM(AbstractLLM):
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
-    local_mode_group = {} # Empty for Google models because they cannot be run locally.
+    local_mode_group = {
+        "gemma-3-1b-it": {
+            "chat": 1
+        },
+        "gemma-3-4b-it": {
+            "chat": 1
+        },
+        "gemma-3-12b-it": {
+            "chat": 1
+        },
+    }
 
     def __init__(self, config: GoogleConfig):
         # Ensure that the parameters passed into the constructor are of the type GoogleConfig.
@@ -156,6 +168,9 @@ class GoogleLLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.thinking_budget = config.thinking_budget
+        if self.model_name in self.local_mode_group:
+            self.model_fullname == f"{COMPANY}/{self.model_name}"
+
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
@@ -204,7 +219,21 @@ class GoogleLLM(AbstractLLM):
                     )
                     summary = response.text
         elif self.local_model:
-            pass # Google models cannot be run locally.
+            messages = [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prepared_text}
+                    ]
+                }
+            ]
+
+            output = self.local_model(
+                text=messages,
+                max_new_tokens=self.max_tokens,
+                temperature=self.temperature
+            )
+            print(output[0]["generated_text"][-1]["content"])
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
@@ -221,8 +250,13 @@ class GoogleLLM(AbstractLLM):
                     company=self.company,
                     execution_mode=self.execution_mode
                 ))
-        elif self.execution_mode == "local":
-            pass # Google models cannot be run locally.
+        elif self.execution_mode in ["gpu", "cpu"]:
+            self.local_mode = pipeline(
+                "text-to-text",
+                model=self.model_fullname,
+                device="cuda",
+                torch_dtype=torch.bfloat16
+            )
 
     def teardown(self):
         if self.client:

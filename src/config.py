@@ -133,15 +133,15 @@ Here is the passage:
         #     "temperature": 0.0,
         #   }
         # ),
-        AntGroupMIConfig(**
-          {
-            "company": "antgroup",
-            "model_name": "antfinix-a1",
-            "date_code": "",
-            "temperature": 0.01,
-            "max_tokens": 2048
-          }
-        ),
+        # AntGroupMIConfig(**
+        #   {
+        #     "company": "antgroup",
+        #     "model_name": "antfinix-a1",
+        #     "date_code": "",
+        #     "temperature": 0.01,
+        #     "max_tokens": 2048
+        #   }
+        # ),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
@@ -156,7 +156,7 @@ Here is the passage:
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
 
-        # AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
+        AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
         
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0}),
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0}),
@@ -188,6 +188,9 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0}),
+        GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "execution_mode": "gpu", "temperature": 0.01}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "execution_mode": "gpu","temperature": 0.01}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "execution_mode": "gpu","temperature": 0.01}),
         # IBMGraniteConfig(**
         #   {
         #     "model_name": "granite-4.0-h-small", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results

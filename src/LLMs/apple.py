@@ -37,7 +37,7 @@ class AppleLLM(AbstractLLM):
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
         "OpenELM-3B-Instruct": {
-            "chat": 2
+            "chat": 1
         }
     }
 
@@ -57,29 +57,45 @@ class AppleLLM(AbstractLLM):
                 case 1:
                     summary = None
         elif self.local_model: 
-            print("#####################################################################")
             match self.local_mode_group[self.model_name]:
                 case 1: # Uses chat template
                     print("Case 1")
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
-                    input_tensor = tokenizer.apply_chat_template(
-                        {"role": "user", "content": prepared_text},
-                        add_generation_prompt=True,
-                        return_tensors="pt"
-                    )
+                    messages = [
+                        {"role": "user", "content": prepared_text}
+                    ]
 
-                    outputs = self.local_model.generate(
-                        input_tensor.to(self.local_model.device),
-                        max_new_tokens=self.max_tokens
+                    input_ids = tokenizer.apply_chat_template(conversation=messages, tokenize=True, return_tensors='pt')
+                    output_ids = self.local_model.generate(
+                        input_ids.to(self.device),
+                        do_sample=True,
+                        eos_token_id=tokenizer.eos_token_id,
+                        max_new_tokens=self.max_tokens,
+                        temperature=self.temperature,
+                        use_cache=False
                     )
+                    response = tokenizer.decode(output_ids[0][input_ids.shape[1]:], skip_special_tokens=True)
 
-                    result = tokenizer.decode(
-                        outputs[0][input_tensor.shape[1]:],
-                        skip_special_tokens=True
-                    )
+                    summary = response
 
-                    summary = result
+                    # input_tensor = tokenizer.apply_chat_template(
+                    #     {"role": "user", "content": prepared_text},
+                    #     add_generation_prompt=True,
+                    #     return_tensors="pt"
+                    # )
+
+                    # outputs = self.local_model.generate(
+                    #     input_tensor.to(self.local_model.device),
+                    #     max_new_tokens=self.max_tokens
+                    # )
+
+                    # result = tokenizer.decode(
+                    #     outputs[0][input_tensor.shape[1]:],
+                    #     skip_special_tokens=True
+                    # )
+
+                    # summary = result
                 case 2: # Uses direct text input
                     print("Case 2")
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
@@ -125,7 +141,9 @@ class AppleLLM(AbstractLLM):
             if self.model_name in self.local_mode_group:
                 self.local_model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
-                ).to(self.device)
+                    device_map="auto",
+                    dtype="autp"
+                ).eval()
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,
