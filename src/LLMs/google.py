@@ -251,12 +251,19 @@ class GoogleLLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode in ["gpu", "cpu"]:
-            self.local_mode = pipeline(
-                "text-generation",
-                model=self.model_fullname,
-                device="cuda",
-                torch_dtype=torch.bfloat16
-            )
+            if self.model_name in self.local_mode_group:
+                self.local_mode = pipeline(
+                    "text-generation",
+                    model=self.model_fullname,
+                    device="cuda",
+                    torch_dtype=torch.bfloat16
+                )
+            else:
+                raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
+                    model_name=self.model_name,
+                    company=self.company,
+                    execution_mode=self.execution_mode
+                ))
 
     def teardown(self):
         if self.client:
