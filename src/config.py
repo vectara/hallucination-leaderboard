@@ -133,15 +133,14 @@ Here is the passage:
         #     "temperature": 0.0,
         #   }
         # ),
-        # AntGroupMIConfig(**
-        #   {
-        #     "company": "antgroup",
-        #     "model_name": "antfinix-a1",
-        #     "date_code": "",
-        #     "temperature": 0.01,
-        #     "max_tokens": 2048
-        #   }
-        # ),
+        AntGroupMIConfig(**
+          {
+            "company": "antgroup",
+            "model_name": "antfinix-a1",
+            "date_code": "",
+            "temperature": 0.01,
+          }
+        ),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
@@ -396,7 +395,7 @@ Here is the passage:
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
-        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
+        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
@@ -467,7 +466,7 @@ Here is the passage:
         # ),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "temperature": 0.0}),
-        ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
       ]
     }
   ),
@@ -546,6 +545,16 @@ Here is the passage:
 
         # CPU 3
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
+
+        # CPU 4
+        # AntGroupMIConfig(**
+        #   {
+        #     "company": "antgroup",
+        #     "model_name": "antfinix-a1",
+        #     "date_code": "",
+        #     "temperature": 0.01,
+        #   }
+        # ),
 
         # # Completed Models
         # XAIConfig(**{"model_name": "grok-4-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
