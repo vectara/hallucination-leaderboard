@@ -9,6 +9,7 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 from huggingface_hub import InferenceClient
 from together import Together
+from openai import OpenAI
 
 """
 Unique Notes:
@@ -19,7 +20,8 @@ class MoonshotAIConfig(BasicLLMConfig):
     """Extended config for moonshotai-specific properties"""
     company: Literal["moonshotai"] 
     model_name: Literal[
-        "Kimi-K2-Instruct"
+        "Kimi-K2-Instruct",
+        "kimi-k2-thinking"
     ] # Only model names manually added to this list are supported.
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
@@ -38,6 +40,9 @@ class MoonshotAILLM(AbstractLLM):
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
         "Kimi-K2-Instruct": {
+            "chat": 2
+        },
+        "kimi-k2-thinking": {
             "chat": 1
         },
     }
@@ -56,6 +61,18 @@ class MoonshotAILLM(AbstractLLM):
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Default
+                    completion = self.client.chat.completions.create(
+                        model = self.model_fullname,
+                        messages = [
+                            {"role": "user", "content": prepared_text}
+                        ],
+                        temperature = self.temperature,
+                        max_tokens = self.max_tokens
+                    )
+                    
+                    summary = completion.choices[0].message.content
+
+                case 2:
                     if self.date_code == "0905":
                         client = Together()
                         response = client.chat.completions.create(
@@ -94,8 +111,15 @@ class MoonshotAILLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
+            # if self.model_name in self.client_mode_group:
+            #     self.client = InferenceClient(model=self.huggingface_name)
+            api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+            assert api_key is not None, f"{COMPANY.upper()} API key not found in environment variable {COMPANY.upper()}_GEMINI_API_KEY"
             if self.model_name in self.client_mode_group:
-                self.client = InferenceClient(model=self.huggingface_name)
+                self.client = OpenAI(
+                    api_key = api_key,
+                    base_url = "https://api.moonshot.ai/v1",
+                )
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
