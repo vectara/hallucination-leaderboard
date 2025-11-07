@@ -133,14 +133,14 @@ Here is the passage:
         #     "temperature": 0.0,
         #   }
         # ),
-        AntGroupMIConfig(**
-          {
-            "company": "antgroup",
-            "model_name": "antfinix-a1",
-            "date_code": "",
-            "temperature": 0.01,
-          }
-        ),
+        # AntGroupMIConfig(**
+        #   {
+        #     "company": "antgroup",
+        #     "model_name": "antfinix-a1",
+        #     "date_code": "",
+        #     "temperature": 0.01,
+        #   }
+        # ),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
@@ -449,6 +449,7 @@ Here is the passage:
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-max-preview", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # TngTechConfig(**{"company": "tngtech", "model_name": "DeepSeek-TNG-R1T2-Chimera", "temperature": 0.0}),
+        VectaraConfig(**{"model_name": "mockingbird-2.0"}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-2-vision", "temperature": 0.0, "date_code": "1212"}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-fast", "temperature": 0.0}),
         # XAIConfig(**{"company": "xai", "model_name": "grok-3-mini", "temperature": 0.0}),
@@ -557,7 +558,7 @@ Here is the passage:
         # ),
 
         # CPU 5
-        # Mockingbird
+        # VectaraConfig(**{"model_name": "mockingbird-2.0"}),
 
         # Below are verifiction runs
         # CPU 6

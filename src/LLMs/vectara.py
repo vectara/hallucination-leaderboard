@@ -5,13 +5,84 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
+import http.client
+import json
+
 COMPANY = "vectara"
+
+
+class VectaraClient:
+    def __init__(self, api_key: str, corpus_key: str):
+        self.api_key = api_key
+        self.corpus_key = corpus_key
+        self.conn = http.client.HTTPSConnection("api.vectara.io")
+        self.headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'x-api-key': self.api_key
+        }
+
+    def summarize(self, prompt: str) -> str:
+        payload = json.dumps({
+            "query": prompt,
+            "search": {
+                # "metadata_filter": "doc.topic = 'authentication' and doc.platform = 'kubernetes'",
+                "lexical_interpolation": 0.005,
+                "limit": 50,
+                "context_configuration": {
+                    "sentences_before": 2,
+                    "sentences_after": 2,
+                    "start_tag": "<em>",
+                    "end_tag": "</em>"
+                },
+                "reranker": {
+                    "type": "customer_reranker",
+                    "reranker_name": "Rerank_Multilingual_v1",
+                    "limit": 50,
+                    "include_context": True
+                }
+            },
+            "generation": {
+                "generation_preset_name": "mockingbird-2.0",
+                # "max_used_search_results": 10,
+                # "citations": {
+                #     "style": "markdown",
+                #     "url_pattern": "https://vectara.com/documents/{doc.id}",
+                #     "text_pattern": "{doc.title}"
+                # }
+            },
+            "save_history": True,
+            "intelligent_query_rewriting": True
+        })
+
+        self.conn.request(
+            "POST",
+            f"/v2/corpora/{self.corpus_key}/query",
+            payload,
+            self.headers
+        )
+        res = self.conn.getresponse()
+        data = res.read()
+        result = json.loads(data.decode("utf-8"))
+
+        # Extract the summary
+        summary = result.get("summary", "No Summary Returned.")
+        return summary
+
+        # Extract generated summary text
+        # try:
+        #     summary = result['response']['results'][0]['generated_text']
+        #     return summary
+        # except (KeyError, IndexError):
+        #     return "No summary returned."
+
 class VectaraConfig(BasicLLMConfig):
     """Extended config for vectara-specific properties"""
     company: Literal["vectara"] = "vectara" 
     model_name: Literal[
         "manual_short_summary",
         "manual_long_summary",
+        "mockingbird-2.0"
     ] # Only model names manually added to this list are supported.
     date_code: str = "" # do we need date code?
     execution_mode: Literal["api"] = "api" # only API based?
@@ -36,6 +107,9 @@ class VectaraLLM(AbstractLLM):
         "manual_long_summary":{
             "chat": 0
         },
+        "mockingbird-2.0":{
+            "chat": 1
+        }
     }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
@@ -45,15 +119,15 @@ class VectaraLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
-        self.reasoning_effort = config.reasoning_effort
+        # self.reasoning_effort = config.reasoning_effort
         self.full_config = config
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
-                case 0:
-                    pass
+                case 1:
+                    summary = self.client.summarize(prepared_text)
         elif self.local_model: 
             pass
         else:
@@ -72,7 +146,7 @@ class VectaraLLM(AbstractLLM):
                     f"{COMPANY} API key not found in environment variable "
                     f"{COMPANY.upper()}_API_KEY"
                 )
-                self.client = None
+                self.client = VectaraClient(api_key=api_key, corpus_key="my-corpus")
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
