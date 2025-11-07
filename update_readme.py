@@ -24,9 +24,12 @@ df["Average Summary Length (Words)"] = df["avg_word_count"].round(1)
 df["Model"] = df["model_name"]
 
 # Sort by hallucination rate
+# df_sorted = df.sort_values("Hallucination Rate", ascending=True).reset_index(drop=True)
+# df_top10 = df_sorted.head(10)
+# df_top25 = df_sorted.head(25)
 df_sorted = df.sort_values("Hallucination Rate", ascending=True).reset_index(drop=True)
+df_top25 = df_sorted[df_sorted["Answer Rate"] > 95].head(25)
 df_top10 = df_sorted.head(10)
-df_top25 = df_sorted.head(25)
 
 # === Generate Markdown Table ===
 table_md = "|Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|\n"
