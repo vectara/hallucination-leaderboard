@@ -539,10 +539,10 @@ Here is the passage:
 
 
         # CPU 1
-        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
 
         # CPU 2
-        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}), #failed need money
+        ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}), #failed need money
 
         # CPU 3
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
@@ -558,23 +558,23 @@ Here is the passage:
         # ),
 
         # CPU 5
-        # VectaraConfig(**{"model_name": "mockingbird-2.0"}),
+        VectaraConfig(**{"model_name": "mockingbird-2.0"}),
 
         # Below are verifiction runs
         # CPU 6
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
 
         # CPU 7
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
 
         # CPU 8
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 9
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
 
         # CPU 10
-        XAIConfig(**{"model_name": "grok-4-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
+        # XAIConfig(**{"model_name": "grok-4-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
 
 
         # # Completed Models
