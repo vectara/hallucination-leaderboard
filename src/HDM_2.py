@@ -7,6 +7,10 @@ from transformers import pipeline
 
 from hdm2 import HallucinationDetectionModel
 
+import sys
+import io
+from contextlib import redirect_stdout
+
 # idk if right
 class HDM2Output(BaseModel):
     score: float # we need score for ROC curve
@@ -38,7 +42,10 @@ class HDM2():
     def predict(self, premise: str, hypothesis: str) -> HDM2Output:
         texts_prompted: List[str] = [self.prompt]
 
-        results = self.classifier.apply(self.prompt, premise, hypothesis, is_include_spans=False)
+        f = io.StringIO()  # buffer to catch prints
+
+        with redirect_stdout(f):
+            results = self.classifier.apply(self.prompt, premise, hypothesis)
 
         simple_score = 1.0 - results['adjusted_hallucination_severity']
 
