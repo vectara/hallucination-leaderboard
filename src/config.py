@@ -978,6 +978,53 @@ Here is the passage:
   ),
   EvalConfig(**
     {
+      "eval_name": "hhem_prod_test",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.3-PROD",
+      # "pipeline": ["summarize"],
+      # "pipeline": ["judge"],
+      # "pipeline": ["aggregate"],
+      "pipeline": ["judge", "aggregate"],
+      "output_dir": "output_hhem_prod_test",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/leaderboard_dataset_v2.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 1.0, 
+            "max_tokens": 8192, 
+            "prompt": """
+Your task is to provide a concise and factual summary for the given passage.
+
+Rules
+1. Summarize using only the information in the given passage. Do not infer. Do not use your internal knowledge.
+2. Do not provide a preamble or explanation, output only the summary.
+3. Summaries should never exceed 20 percent of the passage's length.
+4. Maintain a neutral tone.
+
+If you are unable to summarize the passage due to missing, unreadable, irrelevant or insufficient content, respond only with:
+"I am unable to summarize this passage."
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+        AntGroupMIConfig(**
+          {
+            "company": "antgroup",
+            "model_name": "antfinix-a1",
+            "date_code": "",
+            "temperature": 0.01,
+          }
+        ),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+      ]
+    }
+  ),
+  EvalConfig(**
+    {
       "eval_name": "future_ofer_test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
