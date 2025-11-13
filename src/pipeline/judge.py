@@ -7,10 +7,12 @@ from tqdm import tqdm
 from .. analytics import is_valid_summary
 from .. data_model import BasicJudgment, SourceArticle, EvalConfig, BasicSummary
 from .. HHEM_2_x import HHEM_2_1_open, HHEM_2_3, HHEMOutput
+from .. HDM_2 import HDM2
 from .. json_utils import append_record_to_jsonl
 from .. Logger import logger
 
-def get_hhem_model(hhem_version: Literal["2.1-open", "2.3"]):
+# TODO: Update to make it model name agnostic?
+def get_hhem_model(hhem_version: Literal["2.1-open", "2.3", "HDM-2"]):
     """
     Returns the appropriate HHEM model based on the version string.
     
@@ -24,6 +26,8 @@ def get_hhem_model(hhem_version: Literal["2.1-open", "2.3"]):
         return HHEM_2_1_open()
     elif hhem_version == "2.3":
         return HHEM_2_3()
+    elif hhem_version == "HDM-2":
+        return HDM_2()
     else:
         raise ValueError(f"Unsupported HHEM version: {hhem_version}. Supported versions: 2.1-open, 2.3")
 
