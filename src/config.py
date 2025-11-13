@@ -6,6 +6,7 @@ from . data_model import EvalConfig, BasicLLMConfig
 from . LLMs import (
   AnthropicConfig,
   AppleConfig,
+  BaiduConfig,
   OpenAIConfig,
   QwenConfig,
   XAIConfig,
@@ -41,11 +42,11 @@ eval_configs = [
     {
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      # "hhem_version": "2.3",
-      "hhem_version": "HDM-2",
-      "pipeline": ["summarize", "judge", "aggregate"],
+      "hhem_version": "2.3",
+      # "hhem_version": "HDM-2",
+      # "pipeline": ["summarize", "judge", "aggregate"],
       # "pipeline": ["aggregate"],
-      # "pipeline": ["summarize"],
+      "pipeline": ["summarize"],
       "output_dir": "output_test",
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
@@ -157,6 +158,8 @@ Here is the passage:
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
 
         # AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
+
+        BaiduConfig(**{"model_name": "ERNIE-4.5-VL-28B-A3B-Thinking", "temperature": 0.01, "min_throttle_time": 4.0}),
         
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0}),
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0}),
@@ -182,7 +185,7 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-exp", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash-lite", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-preview", "date_code": "05-20", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite-think", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-1b-it", "date_code": "", "temperature": 0.0}),

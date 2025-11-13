@@ -28,6 +28,7 @@ from . amazon import AmazonLLM, AmazonConfig, AmazonSummary
 from . antgroup_mi import AntGroupMILLM, AntGroupMIConfig, AntGroupMISummary
 from . anthropic import AnthropicLLM, AnthropicConfig, AnthropicSummary
 from . apple import AppleLLM, AppleConfig, AppleSummary
+from . baidu import BaiduLLM, BaiduConfig, BaiduSummary
 from . cohere import CohereLLM, CohereConfig,CohereSummary
 from . databricks import DatabricksLLM, DatabricksConfig, DatabricksSummary
 from . deepseek_ai import DeepSeekAILLM, DeepSeekAIConfig, DeepSeekAISummary
@@ -49,6 +50,7 @@ from . tngtech import TngTechLLM, TngTechConfig, TngTechSummary
 from . vectara import VectaraLLM, VectaraConfig, VectaraSummary
 from . xai import XAILLM, XAIConfig, XAISummary
 from . zai_org import ZhipuAILLM, ZhipuAIConfig, ZhipuAISummary
+
 
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "01-ai": {
@@ -85,6 +87,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": AppleLLM,
         "config_class": AppleConfig,
         "summary_class": AppleSummary,
+    },
+    "baidu": {
+        "LLM_class": BaiduLLM,
+        "config_class": BaiduConfig,
+        "summary_class": BaiduSummary,
     },
     "CohereLabs": {
         "LLM_class": CohereLLM,
