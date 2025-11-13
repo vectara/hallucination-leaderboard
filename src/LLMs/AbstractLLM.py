@@ -139,6 +139,9 @@ class AbstractLLM(ABC):
         if remaining_time > 0:
             time.sleep(remaining_time)
 
+        if llm_summary == "":
+            llm_summary = "EMPTY SUMMARY GIVEN BY MODEL"
+
         return llm_summary
 
     def remove_thinking_text(self, raw_summary: str) -> str:

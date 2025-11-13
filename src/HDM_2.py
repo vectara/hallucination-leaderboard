@@ -40,6 +40,8 @@ class HDM2():
         return "HDM-2"
 
     def predict(self, premise: str, hypothesis: str) -> HDM2Output:
+        if hypothesis == "":
+            hypothesis = "EMPTY SUMMARY GIVEN BY MODEL"
         # texts_prompted: List[str] = [self.prompt]
 
         f = io.StringIO()  # buffer to catch prints
