@@ -114,7 +114,7 @@ class HHEM_2_3_PROD():
             }
         }
         self.tokenizer = AutoTokenizer.from_pretrained(self.FOUNDATION)
-        self.model = AutoModelForSequenceClassification.from_pretrained(self.CHECKPOINT, local_files_only=True, **model_load_options[self.DEVICE])
+        self.model = AutoModelForSequenceClassification.from_pretrained(self.CHECKPOINT, **model_load_options[self.DEVICE])
         self.model.eval()
 
     def __str__(self):
