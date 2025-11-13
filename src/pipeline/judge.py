@@ -27,7 +27,7 @@ def get_hhem_model(hhem_version: Literal["2.1-open", "2.3", "HDM-2"]):
     elif hhem_version == "2.3":
         return HHEM_2_3()
     elif hhem_version == "HDM-2":
-        return HDM_2()
+        return HDM2()
     else:
         raise ValueError(f"Unsupported HHEM version: {hhem_version}. Supported versions: 2.1-open, 2.3")
 

@@ -1,4 +1,4 @@
-from typing import List, Literal, String, Tuple
+from typing import List, Literal, Tuple
 
 import torch
 from pydantic import BaseModel
@@ -38,7 +38,7 @@ class HDM2():
     def predict(self, premise: str, hypothesis: str) -> HDM2Output:
         texts_prompted: List[str] = [self.prompt]
 
-        results = self.classifier(self.prompt, premise, hypothesis) # List[List[Dict[str, float]]]
+        results = self.classifier.apply(self.prompt, premise, hypothesis) # List[List[Dict[str, float]]]
 
         simple_score = 1.0 - results['adjusted_hallucination_severity']
 
@@ -58,7 +58,11 @@ class HDM2():
             hallucinated_sentences = [("No hallucinated sentences detected.", 0.0)]
 
         threshold = 0.5
-        pred = [0 if s < threshold else 1 for s in simple_score]
+        if simple_score < threshold:
+            pred = 0
+        else:
+            pred = 1
+        # pred = 0 if s < threshold else 1 for s in simple_score
 
         return HDM2Output(score=simple_score, label=pred, reason=hallucinated_sentences)
 
