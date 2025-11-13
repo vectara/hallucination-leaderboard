@@ -764,7 +764,8 @@ Here is the passage:
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "HDM-2",
       # "pipeline": ["summarize"],
-      "pipeline": ["judge", "aggregate"],
+      "pipeline": ["judge"],
+      # "pipeline": ["judge", "aggregate"],
       "output_dir": "output_future_hdm",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",
@@ -913,13 +914,13 @@ Here is the passage:
         ##     "temperature": 0.0
         ##   }
         ## ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-3.3-70B-Instruct-Turbo",
-            "temperature": 0.0
-          }
-        ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "company": "meta-llama",
+        #     "model_name": "Llama-3.3-70B-Instruct-Turbo",
+        #     "temperature": 0.0
+        #   }
+        # ),
 
         ## MicrosoftConfig(**
         ##   {
