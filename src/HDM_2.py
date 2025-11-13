@@ -38,7 +38,7 @@ class HDM2():
     def predict(self, premise: str, hypothesis: str) -> HDM2Output:
         texts_prompted: List[str] = [self.prompt]
 
-        results = self.classifier.apply(self.prompt, premise, hypothesis) # List[List[Dict[str, float]]]
+        results = self.classifier.apply(self.prompt, premise, hypothesis, is_include_spans=False)
 
         simple_score = 1.0 - results['adjusted_hallucination_severity']
 
