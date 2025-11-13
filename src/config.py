@@ -899,20 +899,20 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
 
         # # # CPU 6 # #
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
-            "temperature": 0.0
-          }
-        ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-4-Scout-17B-16E-Instruct",
-            "temperature": 0.0
-          }
-        ),
+        ## MetaLlamaConfig(**
+        ##   {
+        ##     "company": "meta-llama",
+        ##     "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
+        ##     "temperature": 0.0
+        ##   }
+        ## ),
+        ## MetaLlamaConfig(**
+        ##   {
+        ##     "company": "meta-llama",
+        ##     "model_name": "Llama-4-Scout-17B-16E-Instruct",
+        ##     "temperature": 0.0
+        ##   }
+        ## ),
         MetaLlamaConfig(**
           {
             "company": "meta-llama",
@@ -921,15 +921,15 @@ Here is the passage:
           }
         ),
 
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "Phi-4-mini-instruct",
-            "model_key": os.getenv("PHI_4_MINI_INSTRUCT_API_KEY"),
-            "azure_endpoint": "https://hhem-lb-phi-4-mini-inst-resource.services.ai.azure.com/models",
-            "temperature": 0.0,
-          }
-        ),
+        ## MicrosoftConfig(**
+        ##   {
+        ##     "company": "microsoft",
+        ##     "model_name": "Phi-4-mini-instruct",
+        ##     "model_key": os.getenv("PHI_4_MINI_INSTRUCT_API_KEY"),
+        ##     "azure_endpoint": "https://hhem-lb-phi-4-mini-inst-resource.services.ai.azure.com/models",
+        ##     "temperature": 0.0,
+        ##   }
+        ## ),
         MicrosoftConfig(**
           {
             "company": "microsoft",
@@ -952,7 +952,7 @@ Here is the passage:
 
         OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
         OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
+        ## OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
         ## OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-nano", "date_code": "2025-08-07", "reasoning_effort":"minimal", "temperature": -1.0}),
 
         # # # CPU 9 # #
@@ -960,7 +960,7 @@ Here is the passage:
         ## OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o", "date_code": "2024-08-06", "temperature": 0.0}),
         ## OpenAIConfig(**{"company": "openai", "model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low"}),
         ## OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
-        OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
+        ## OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
 
         # # # CPU 10 # #
         QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
