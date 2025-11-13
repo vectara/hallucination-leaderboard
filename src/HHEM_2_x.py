@@ -1,4 +1,5 @@
 from typing import List, Literal
+from analytics import clean_string
 
 import torch
 from pydantic import BaseModel
@@ -62,7 +63,7 @@ class HHEM_2_3():
         return "HHEM-2.3"
 
     def predict(self, premise: str, hypothesis: str) -> HHEMOutput:
-        texts_prompted: List[str] = [self.PROMPT_TEMPLATE.format(text1=premise, text2=hypothesis)]
+        texts_prompted: List[str] = [self.PROMPT_TEMPLATE.format(text1=premise, text2=clean_string(hypothesis))]
 
         full_scores = self.classifier(texts_prompted, top_k=None) # List[List[Dict[str, float]]]
 

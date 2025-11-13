@@ -1,4 +1,6 @@
 import pandas as pd
+import re
+import string
 
 from . data_model import BasicJudgment, SummaryError
 
@@ -138,3 +140,23 @@ def compute_avg_word_count(metrics_df: pd.DataFrame) -> float:
         return -1.0
     avg_word_count = valid_summs_df[BasicJudgment.Keys.WORD_COUNT].mean()
     return avg_word_count
+
+def clean_string(s: str) -> str:
+    """
+    Clean up the string to improve HHEM's performance.
+    """
+    s = s.strip()
+    # remove citations in the form of [1], [2], etc.
+    # s = re.sub(r'\[\d+\]', '', s)
+    # for any square brackets, remove the brackets but keep the content
+    # s = re.sub(r'\[(.*?)\]', r'\1', s)
+    # remove special characters
+    # s = re.sub(r'[^\w\s]', '', s)
+    # remove extra whitespace
+    s = re.sub(r'\s+', ' ', s)
+    # remove spaces before any punctuation
+    s = re.sub(r'\s([.,!?])', r'\1', s)
+    # if the string does not end with a punctuation, add a period
+    if not any([s.endswith(p) for p in string.punctuation]):
+        s = s + '.'
+    return s
