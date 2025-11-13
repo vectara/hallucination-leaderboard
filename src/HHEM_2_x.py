@@ -1,10 +1,29 @@
 from typing import List, Literal
-from analytics import clean_string
 
 import torch
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from transformers import pipeline
+
+def clean_string(s: str) -> str:
+    """
+    Clean up the string to improve HHEM's performance.
+    """
+    s = s.strip()
+    # remove citations in the form of [1], [2], etc.
+    # s = re.sub(r'\[\d+\]', '', s)
+    # for any square brackets, remove the brackets but keep the content
+    # s = re.sub(r'\[(.*?)\]', r'\1', s)
+    # remove special characters
+    # s = re.sub(r'[^\w\s]', '', s)
+    # remove extra whitespace
+    s = re.sub(r'\s+', ' ', s)
+    # remove spaces before any punctuation
+    s = re.sub(r'\s([.,!?])', r'\1', s)
+    # if the string does not end with a punctuation, add a period
+    if not any([s.endswith(p) for p in string.punctuation]):
+        s = s + '.'
+    return s
 
 class HHEMOutput(BaseModel):
     score: float # we need score for ROC curve
