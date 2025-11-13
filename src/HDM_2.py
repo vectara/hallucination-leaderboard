@@ -9,7 +9,7 @@ from hdm2 import HallucinationDetectionModel
 
 import sys
 import io
-from contextlib import redirect_stdout
+from contextlib import redirect_stdout, redirect_stderr
 
 # idk if right
 class HDM2Output(BaseModel):
@@ -40,11 +40,11 @@ class HDM2():
         return "HDM-2"
 
     def predict(self, premise: str, hypothesis: str) -> HDM2Output:
-        texts_prompted: List[str] = [self.prompt]
+        # texts_prompted: List[str] = [self.prompt]
 
         f = io.StringIO()  # buffer to catch prints
 
-        with redirect_stdout(f):
+        with redirect_stdout(f), redirect_stderr(f):
             results = self.classifier.apply(self.prompt, premise, hypothesis)
 
         simple_score = 1.0 - results['adjusted_hallucination_severity']
