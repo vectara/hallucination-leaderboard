@@ -106,11 +106,13 @@ class HHEM_2_3_PROD():
         model_load_options = {
             "cpu": {
                 "torch_dtype": torch.float32, 
-                "use_flash_attention_2": False, 
+                "attn_implementation": "flash_attention_2",
+                "device_map": "auto"
             },
             "cuda": {
                 "torch_dtype": torch.bfloat16, 
-                "use_flash_attention_2": True, 
+                "attn_implementation": "flash_attention_2",
+                "device_map": "auto"
             }
         }
         self.tokenizer = AutoTokenizer.from_pretrained(self.FOUNDATION)
