@@ -42,7 +42,7 @@ eval_configs = [
     {
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3",
+      "hhem_version": "2.3-PROD",
       # "hhem_version": "HDM-2",
       # "pipeline": ["summarize", "judge", "aggregate"],
       # "pipeline": ["aggregate"],
