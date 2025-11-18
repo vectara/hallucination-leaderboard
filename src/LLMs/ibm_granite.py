@@ -7,6 +7,7 @@ from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 import re
 import gc
+import replicate
 
 # Import the Python package for the specific provider.
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
@@ -21,6 +22,7 @@ class IBMGraniteConfig(BasicLLMConfig):
         "granite-4.0-h-tiny",
         "granite-4.0-h-micro",
         "granite-4.0-micro",
+        "granite-3.3-8b-instruct",
         "granite-3.2-8b-instruct",
         "granite-3.2-2b-instruct",
         "granite-3.1-8b-instruct",
@@ -29,7 +31,7 @@ class IBMGraniteConfig(BasicLLMConfig):
         "granite-3.0-2b-instruct"
     ] # Only model names manually added to this list are supported.
     endpoint: Literal["chat", "response"] = "chat"
-    execution_mode: Literal["gpu", "cpu"] = "gpu"
+    execution_mode: Literal["api", "gpu", "cpu"] = "api"
 
 class IBMGraniteSummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
@@ -47,7 +49,18 @@ class IBMGraniteLLM(AbstractLLM):
     """
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution.
-    client_mode_group = {} # Empty for Rednote models because they cannot be run via web api.
+    client_mode_group = {
+        "granite-4.0-h-small": {
+            "chat": 1,
+        },
+        "granite-3.3-8b-instruct": {
+            "chat": 1
+        },
+        "granite-3.2-8b-instruct": {
+            "chat": 1
+        },
+
+    } # Empty for Rednote models because they cannot be run via web api.
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
@@ -141,7 +154,18 @@ class IBMGraniteLLM(AbstractLLM):
             return "FAILED TO FIND TEXT"
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            pass
+            match self.client_mode_group[self.model_name][self.endpoint]:
+                case 1: # Default
+                    input = {
+                        "prompt": prepared_text,
+                        "temperature": self.temperature,
+                        "max_new_tokens": self.max_tokens,
+                    }
+                    raw_out = replicate.run(
+                        f"{self.model_fullname}",
+                        input=input
+                    )
+                    summary = raw_out[0]
         elif self.local_model:
             match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
@@ -228,7 +252,7 @@ class IBMGraniteLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            pass
+            self.client = "replicate doesnt have a client"
         elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in self.local_mode_group:
                 # bnb_config = BitsAndBytesConfig(

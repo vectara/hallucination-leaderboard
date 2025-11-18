@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+import replicate
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -29,7 +30,7 @@ class SnowflakeLLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
-        "MODEL_NAME": {
+        "snowflake-arctic-instruct": {
             "chat": 1
         }
     }
@@ -42,6 +43,7 @@ class SnowflakeLLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.full_config = config
+        self.model_fullname = f"{COMPANY}/{self.model_name}"
 
     def summarize(self, prepared_text: str) -> str:
         # Use self.model_fullname when referring to the model
@@ -49,7 +51,16 @@ class SnowflakeLLM(AbstractLLM):
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1:
-                    summary = None
+                    input = {
+                        "prompt": prepared_text,
+                        "temperature": self.temperature,
+                        "max_new_tokens": self.max_tokens,
+                    }
+                    raw_out = replicate.run(
+                        f"{self.model_fullname}",
+                        input=input
+                    )
+                    summary=raw_out[0]
         elif self.local_model: 
             pass
         else:
@@ -62,21 +73,22 @@ class SnowflakeLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
-                api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-                assert api_key is not None, (
-                    f"{COMPANY} API key not found in environment variable "
-                    f"{COMPANY.upper()}_API_KEY"
-                )
-                self.client = None
-            else:
-                raise Exception(
-                    ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
-                        model_name=self.model_name,
-                        company=self.company,
-                        execution_mode=self.execution_mode
-                    )
-                )
+            self.client = "Replicate doesn't have a client"
+            # if self.model_name in self.client_mode_group:
+            #     api_key = os.getenv(f"REPLICATE_API_TOKEN")
+            #     assert api_key is not None, (
+            #         f"{COMPANY} API key not found in environment variable "
+            #         f"{COMPANY.upper()}_API_KEY"
+            #     )
+            #     self.client = "Replicate doesn't have a client"
+            # else:
+            #     raise Exception(
+            #         ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
+            #             model_name=self.model_name,
+            #             company=self.company,
+            #             execution_mode=self.execution_mode
+            #         )
+            #     )
         elif self.execution_mode == "local":
             pass
 
