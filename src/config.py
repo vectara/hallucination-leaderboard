@@ -174,6 +174,7 @@ Here is the passage:
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1-Terminus", "temperature": 0.0, "min_throttle_time": 4.0}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-flash", "temperature": 0.0}),
@@ -553,6 +554,7 @@ Here is the passage:
 
         # CPU 1
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        # GoogleConfig(**{"company": "google", "model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
 
         # CPU 2
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0}),

@@ -28,6 +28,7 @@ class GoogleConfig(BasicLLMConfig):
         "gemini-2.5-pro-exp",
         "text-bison-001",
 
+        "gemini-3-pro-preview",
         "gemini-2.5-flash-lite",
         "gemini-2.5-flash",
         "gemini-2.5-pro-preview",
@@ -76,6 +77,9 @@ class GoogleLLM(AbstractLLM):
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution.
     client_mode_group = {
+        "gemini-3-pro-preview": {
+            "chat": 1
+        }, # 05-20
         "gemini-2.5-flash-preview": {
             "chat": 1
         }, # 05-20
