@@ -141,6 +141,10 @@ class OpenAILLM(AbstractLLM):
             "chat": 8,
             "api_type": "together"
         },
+        "gpt-oss-20b": {
+            "chat": 12,
+            "api_type": "together"
+        },
         "gpt-4o-mini": {
             "chat": 1,
             "api_type": "openai",
@@ -256,6 +260,15 @@ class OpenAILLM(AbstractLLM):
                     summary = chat_package.output[1].content[0].text
                 case 8: # gpt-oss-120b not supported on open ai and too big to run locally, using together
                     together_name = f"openai/{self.model_fullname}"
+                    response = self.client.chat.completions.create(
+                        model=together_name,
+                        messages=[{"role": "user", "content": prepared_text}],
+                        max_tokens = self.max_tokens,
+                        temperature = self.temperature
+                    )
+                    summary = response.choices[0].message.content
+                case 12: # manual 20b
+                    together_name = f"openai/gpt-oss-20B"
                     response = self.client.chat.completions.create(
                         model=together_name,
                         messages=[{"role": "user", "content": prepared_text}],
