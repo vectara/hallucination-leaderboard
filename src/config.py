@@ -552,7 +552,7 @@ Here is the passage:
 
 
         # CPU 1
-        # Open for grok-4.1?
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
 
         # CPU 2
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0}),
@@ -562,7 +562,6 @@ Here is the passage:
 
         # CPU 4
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
 
         # CPU 5
         # IBMGraniteConfig(**
