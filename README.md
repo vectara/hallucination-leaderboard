@@ -20,23 +20,26 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on November 18, 2025
+Last updated on November 19, 2025
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-11-18.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-11-19.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
 |google/gemini-2.5-flash-lite|3.3 %|96.7 %|99.5 %|95.7|
 |microsoft/Phi-4|3.7 %|96.3 %|80.7 %|120.9|
 |meta-llama/Llama-3.3-70B-Instruct-Turbo|4.1 %|95.9 %|99.5 %|64.6|
+|snowflake/snowflake-arctic-instruct|4.3 %|95.7 %|62.7 %|81.4|
 |mistralai/mistral-large-2411|4.5 %|95.5 %|99.9 %|85.0|
+|qwen/qwen3-8b|4.8 %|95.2 %|99.9 %|83.6|
 |mistralai/mistral-small-2501|5.1 %|94.9 %|97.9 %|98.8|
+|ibm-granite/granite-4.0-h-small|5.2 %|94.8 %|100.0 %|107.4|
 |deepseek-ai/DeepSeek-V3.2-Exp|5.3 %|94.7 %|96.6 %|64.6|
+|qwen/qwen3-14b|5.4 %|94.6 %|99.9 %|111.1|
 |deepseek-ai/DeepSeek-V3.1|5.5 %|94.5 %|94.5 %|63.7|
-|qwen/qwen3-14b|5.5 %|94.5 %|100 %|111|
 |openai/gpt-4.1-2025-04-14|5.6 %|94.4 %|99.9 %|91.7|
+|qwen/qwen3-4b|5.7 %|94.3 %|99.9 %|104.7|
 |xai-org/grok-3|5.8 %|94.2 %|93.0 %|95.9|
-|qwen/qwen3-4b|5.8 %|94.2 %|99.9 %|104.7|
 |qwen/qwen3-32b|5.9 %|94.1 %|99.9 %|115.8|
 |deepseek-ai/DeepSeek-V3|6.1 %|93.9 %|97.5 %|81.7|
 |CohereLabs/command-r-plus-08-2024|6.9 %|93.1 %|95.0 %|91.5|
@@ -55,10 +58,11 @@ Last updated on November 18, 2025
 |anthropic/claude-haiku-4-5-20251001|9.8 %|90.2 %|99.5 %|115.1|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
+|ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
 |anthropic/claude-opus-4-1-20250805|11.8 %|88.2 %|92.4 %|129.1|
-|anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
 |anthropic/claude-opus-4-20250514|12.0 %|88.0 %|91.0 %|123.2|
+|anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
 |openai/gpt-5-mini-2025-08-07|12.9 %|87.1 %|99.9 %|169.7|
 |openai/gpt-oss-120b|14.2 %|85.8 %|99.9 %|135.2|
 |openai/gpt-5-minimal-2025-08-07|14.7 %|85.3 %|99.9 %|109.7|
@@ -148,7 +152,7 @@ For more information about Cohere's models, refer to their [website](https://doc
 ### Google Closed-Source Models via Vertex AI
 - **Gemini 2.5 pro, Gemini 2.5 flash and Gemini 2.5 Flash lite**: Accessed using model `gemini-2.5-pro`, `gemini-2.5-flash` and `gemini-2.5-flash-lite` on Vertex AI. 
 
-  For an in-depth understanding of each model's version and lifecycle, especially those offered by Google, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versioning) on Vertex AI.
+For an in-depth understanding of each model's version and lifecycle, especially those offered by Google, please refer to [Model Versions and Lifecycles](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/model-versioning) on Vertex AI.
 
 ### IBM Models
 - **Granite-3.3-Instruct 8B**: The model is accessed via Replicate API.
@@ -188,9 +192,11 @@ For more information about Cohere's models, refer to their [website](https://doc
 - **o4-Mini-Low 2025-04-16**: Accessed via OpenAI API.
 
 ### Qwen Models
-- **Qwen3-8b, Qwen3-14b, Qwen3-32b**: accessed through dashscope API with model names qwen-8b, qwen-14b.
-- **Qwen3-80b-a3b-thinking**: accessed through dashscope API with model name qwen3-next-80b-a3b-thinking.
-  
+- **Qwen3-4b, Qwen3-8b, Qwen3-14b, Qwen3-32b**: Accessed through dashscope API
+- **Qwen3-80b-a3b-thinking**: Accessed through dashscope API
+
+### Snowflake Models
+- **Snowflake-Arctic-Instruct**: The model is accessed via Replicate API.
 
 ### XAI Model
 - **Grok-3**: Accessed via xAI's API.
