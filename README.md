@@ -50,8 +50,8 @@ Last updated on November 19, 2025
 |google/gemini-2.5-flash|7.8 %|92.2 %|99.0 %|101.5|
 |meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8|8.2 %|91.8 %|100.0 %|106.0|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
-|qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
+|qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
 |CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
 |zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
 |openai/gpt-4o-2024-08-06|9.6 %|90.4 %|93.8 %|86.6|
@@ -60,6 +60,7 @@ Last updated on November 19, 2025
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
+|deepseek-ai/DeepSeek-R1|11.3 %|88.7 %|97.0 %|93.5|
 |anthropic/claude-opus-4-1-20250805|11.8 %|88.2 %|92.4 %|129.1|
 |anthropic/claude-opus-4-20250514|12.0 %|88.0 %|91.0 %|123.2|
 |anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
@@ -67,8 +68,8 @@ Last updated on November 19, 2025
 |openai/gpt-oss-120b|14.2 %|85.8 %|99.9 %|135.2|
 |openai/gpt-5-minimal-2025-08-07|14.7 %|85.3 %|99.9 %|109.7|
 |moonshotai/Kimi-K2-Instruct-0905|17.9 %|82.1 %|98.6 %|59.2|
-|openai/o4-mini-high-2025-04-16|18.6 %|81.4 %|99.2 %|127.7|
 |openai/o4-mini-low-2025-04-16|18.6 %|81.4 %|98.7 %|130.9|
+|openai/o4-mini-high-2025-04-16|18.6 %|81.4 %|99.2 %|127.7|
 |openai/gpt-5-high-2025-08-07|19.2 %|80.8 %|52.3 %|176.0|
 |xai-org/grok-4-fast-non-reasoning|19.7 %|80.3 %|99.2 %|141.9|
 |xai-org/grok-4-fast-reasoning|20.2 %|79.8 %|99.5 %|173.9|
@@ -148,6 +149,7 @@ For more information about Cohere's models, refer to their [website](https://doc
 - **DeepSeek V3**: Accessed via huggingface inference provider.
 - **DeepSeek V3.1**: Accessed via huggingface inference provider.
 - **DeepSeek V3.2-Exp**: Accessed via huggingface inference provider.
+- **DeepSeek R1**: Accessed via huggingface inference provider.
 
 ### Google Closed-Source Models via Vertex AI
 - **Gemini 2.5 pro, Gemini 2.5 flash and Gemini 2.5 Flash lite**: Accessed using model `gemini-2.5-pro`, `gemini-2.5-flash` and `gemini-2.5-flash-lite` on Vertex AI. 
