@@ -24,7 +24,7 @@ def is_valid_summary(summary: str) -> bool:
     # For example, Anthropic may say: "I cannot provide a summary of the passage because no actual content was provided. The text only contains the phrase \"Dummy article with no content,\" which indicates there is no substantive information to summarize. To provide a meaningful summary, I would need a passage that contains actual content and information."
     # As another example, OpenAI may say: ""The passage does not contain any information to summarize."
 
-    summary = clean_string(summary)
+    # summary = clean_string(summary)
 
     
     if summary.strip() in error_values:
@@ -155,10 +155,10 @@ def clean_string(s: str) -> str:
     # remove special characters
     # s = re.sub(r'[^\w\s]', '', s)
     # remove extra whitespace
-    s = re.sub(r'\s+', ' ', s)
+    # s = re.sub(r'\s+', ' ', s)
     # remove spaces before any punctuation
-    s = re.sub(r'\s([.,!?])', r'\1', s)
+    # s = re.sub(r'\s([.,!?])', r'\1', s)
     # if the string does not end with a punctuation, add a period
-    if not any([s.endswith(p) for p in string.punctuation]):
-        s = s + '.'
+    # if not any([s.endswith(p) for p in string.punctuation]):
+    #    s = s + '.'
     return s

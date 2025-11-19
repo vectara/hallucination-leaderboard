@@ -4,6 +4,7 @@ from typing import Literal
 from openai import OpenAI
 from transformers import pipeline
 from together import Together
+import replicate
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -143,7 +144,7 @@ class OpenAILLM(AbstractLLM):
         },
         "gpt-oss-20b": {
             "chat": 12,
-            "api_type": "together"
+            "api_type": "replicate"
         },
         "gpt-4o-mini": {
             "chat": 1,
@@ -268,14 +269,16 @@ class OpenAILLM(AbstractLLM):
                     )
                     summary = response.choices[0].message.content
                 case 12: # manual 20b
-                    together_name = f"openai/gpt-oss-20B"
-                    response = self.client.chat.completions.create(
-                        model=together_name,
-                        messages=[{"role": "user", "content": prepared_text}],
-                        max_tokens = self.max_tokens,
-                        temperature = self.temperature
+                    input = {
+                        "prompt": prepared_text,
+                        "temperature": self.temperature,
+                        "max_new_tokens": self.max_tokens,
+                    }
+                    summary = replicate.run(
+                        f"{COMPANY}/{self.model_name}",
+                        input=input
                     )
-                    summary = response.choices[0].message.content
+                    summary = summary[0]
                 case 3: # Use OpenAI's Response API
                     chat_package = self.client.responses.create(
                         model=self.model_fullname,
@@ -333,6 +336,10 @@ class OpenAILLM(AbstractLLM):
                     api_key = os.getenv(f"TOGETHER_API_KEY")
                     assert api_key is not None, f"TOGETHER API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = Together(api_key=api_key)
+                if self.client_mode_group[self.model_name]["api_type"] == "replicate":
+                    api_key = os.getenv(f"REPLICATE_API_TOKEN")
+                    assert api_key is not None, f"REPLICATE API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    self.client = "replicate has no client"
                 else:
                     api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                     assert api_key is not None, f"OpenAI API key not found in environment variable {COMPANY.upper()}_API_KEY"
