@@ -10,6 +10,7 @@ models/
 output_test/
 old_output/
 staging_output/
+live_staging/
 
 config.json
 test_config.json
