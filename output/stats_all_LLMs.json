@@ -128,6 +128,22 @@
     "avg_word_count": 106.4
   },
   {
+    "model_name": "google/gemini-3-pro-preview",
+    "date_code": "",
+    "hallucination_rate": 13.6,
+    "confidence_interval": -1,
+    "answer_rate": 99.4,
+    "avg_word_count": 101.9
+  },
+  {
+    "model_name": "google/gemma-3-4b-it",
+    "date_code": "",
+    "hallucination_rate": 6.4,
+    "confidence_interval": -1,
+    "answer_rate": 67.3,
+    "avg_word_count": 77.4
+  },
+  {
     "model_name": "ibm-granite/granite-3.3-8b-instruct",
     "date_code": "",
     "hallucination_rate": 10.6,
