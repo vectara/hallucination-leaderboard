@@ -491,12 +491,12 @@ Here is the passage:
   ),
   EvalConfig(**
     {
-      "eval_name": "future",
+      "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
       # "pipeline": ["summarize"],
       "pipeline": ["judge", "aggregate"],
-      "output_dir": "output_future",
+      "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",
       "common_LLM_config": 
@@ -554,10 +554,10 @@ Here is the passage:
 
         # CPU 1
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # GoogleConfig(**{"company": "google", "model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
 
         # CPU 2
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 3
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
@@ -592,7 +592,7 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0, "mini_throttle_time": 2.0}),
 
         # CPU 9
-        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0, "mini_throttle_time": 2.0}),
+        GoogleConfig(**{"company": "google", "model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0, "mini_throttle_time": 2.0}),
 
         # CPU 10
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.01, "mini_throttle_time": 2.0}),
@@ -735,7 +735,7 @@ Here is the passage:
   ),
   EvalConfig(**
     {
-      "eval_name": "live",
+      "eval_name": "v1_dataset_live", #aka old_dataset
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["summarize", "judge", "aggregate"],
