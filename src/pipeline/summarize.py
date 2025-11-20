@@ -36,6 +36,16 @@ Functions:
 class TooManyRequestsError(Exception):
     pass
 
+# General purpose check for 429 errors
+def is_rate_limit_error(exception):
+    # If the exception has a `status_code` attribute
+    if hasattr(exception, "status_code") and exception.status_code == 429:
+        return True
+    # If the exception has a string message containing 429 or rate limit
+    if "429" in str(exception) or "rate limit" in str(exception).lower():
+        return True
+    return False
+
 def prepare_llm(
     eval_config: EvalConfig, # The config for this evaluation run
     llm_config: BasicLLMConfig,  # an LLM-specific config in the eval_config. It should be of any class inherited from BasicLLMConfig
@@ -217,9 +227,16 @@ def generate_summaries_for_one_llm_multithreaded(
 
     # WORKER FUNCTION
     def worker(article_text, article_id):
-        llm = llm_factory(eval_config, llm_config)   # NEW instance per thread
+        llm = llm_factory(eval_config, llm_config)
         with llm as m:
-            summary = m.try_to_summarize_one_article(article_text)
+            @retry(
+                retry=retry_if_exception_type(is_rate_limit_error),
+                wait=wait_exponential(multiplier=1, min=2, max=60),
+                stop=stop_after_attempt(10)
+            )
+            def summarize_with_retry(text):
+                return m.try_to_summarize_one_article(text)
+            summary = summarize_with_retry(article_text)
 
             summary_uid = generate_summary_uid(
                 m.model_fullname,
