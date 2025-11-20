@@ -121,6 +121,7 @@ class BasicLLMConfig(BaseModel):
     # model_fullname: str | None = None # Model name if date_code is None or model name + date code otherwise.
     date_code: str = ""  # some models have date codes, some don't. 
     prompt: str = default_prompt
+    threads: int = 1
 
     temperature: float = 0.0
     max_tokens: int = 4096

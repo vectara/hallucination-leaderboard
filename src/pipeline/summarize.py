@@ -4,6 +4,11 @@ import os
 from datetime import datetime, timezone
 from typing import List, Literal, Tuple, Any
 
+import threading
+from queue import Queue, Empty
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
+
 import pandas as pd
 from tqdm import tqdm
 
@@ -11,6 +16,7 @@ from .. data_model import SourceArticle, ModelInstantiationError, BasicLLMConfig
 from .. json_utils import append_record_to_jsonl
 from .. LLMs import AbstractLLM, MODEL_REGISTRY
 from .. Logger import logger
+
 
 
 """
@@ -25,6 +31,10 @@ Functions:
     generate_and_save_summaries(model, article_df, json_path)
     generate_summary_uid(model_name, date_code, summary_text, date)
 """
+
+# Define a custom exception class if your LLM doesn't already raise one
+class TooManyRequestsError(Exception):
+    pass
 
 def prepare_llm(
     eval_config: EvalConfig, # The config for this evaluation run
@@ -110,20 +120,137 @@ def get_summaries(
             llm_alias = f"{llm_config.model_name}-{llm_config.date_code}"
 
         logger.info(f"Generating summaries for LLM {llm_alias} and saving to jsonl file {summaries_jsonl_path}")
+        
+        if llm_config.threads == 1:
+            generate_summaries_for_one_llm(
+                llm, 
+                article_df, 
+                eval_config.eval_name,
+                eval_config.eval_date,
+                summaries_jsonl_path,
+                LLM_SUMMARY_CLASS
+            )
+        elif llm_config.threads > 1:
+            def llm_factory(eval_config, llm_config):
+                try:
+                    llm_registry = MODEL_REGISTRY.get(llm_config.company)
+                    LLM_CLASS = llm_registry["LLM_class"]
+                    
+                    if LLM_CLASS is None:
+                        raise Exception(ModelInstantiationError.NOT_REGISTERED.format(
+                            model_name=llm_config.model_name,
+                            company=llm_config.company,
+                        ))
 
-        generate_summaries_for_one_llm(
-            llm, 
-            article_df, 
-            eval_config.eval_name,
-            eval_config.eval_date,
-            summaries_jsonl_path,
-            LLM_SUMMARY_CLASS
-        )
+                    # Replace fields that are not set in per-llm config with those set (not default) in common-llm config
+                    for common_key in eval_config.common_LLM_config.model_fields_set:
+                        if common_key not in llm_config.model_fields_set:
+                            llm_config = llm_config.model_copy(update={common_key: getattr(eval_config.common_LLM_config, common_key)})
+                    llm = LLM_CLASS(llm_config) # instantiate the LLM
+                    return llm
+                
+                except Exception as e:
+                    logger.error(f"Failed to prepare LLM {llm_config.company}/{llm_config.model_name}: {e}")
+                    raise
+
+            generate_summaries_for_one_llm_multithreaded(
+                llm_factory=llm_factory,
+                article_df=article_df,
+                eval_config=eval_config,
+                llm_config=llm_config,
+                summaries_jsonl_path=summaries_jsonl_path,
+                LLM_SUMMARY_CLASS=LLM_SUMMARY_CLASS,
+                max_workers=llm_config.threads
+            )
+        else:
+            raise Exception("Improper Thread Number. Aborting.")
         logger.info(f"Finished generating and saving summaries for LLM {llm_alias} into {summary_file}.")
         
         logger.info("Moving on to next LLM")
     
     logger.info(f"Finished generating and saving summaries for the following LLMs: {LLMs_to_be_processed}")
+
+# TODO: Docs
+def generate_summaries_for_one_llm_multithreaded(
+        llm_factory,
+        article_df,
+        eval_config,
+        llm_config,
+        summaries_jsonl_path,
+        LLM_SUMMARY_CLASS,
+        max_workers: int
+    ):
+    
+    current_date = datetime.now(timezone.utc).date().isoformat()
+    article_texts = article_df[SourceArticle.Keys.TEXT].tolist()
+    article_ids   = article_df[SourceArticle.Keys.ARTICLE_ID].tolist()
+    eval_name=eval_config.eval_name
+    eval_date=eval_config.eval_date
+
+    # WRITER THREAD
+    q = Queue()
+    writer_done = threading.Event()
+
+    def writer():
+        with open(summaries_jsonl_path, "a", encoding="utf8") as f:
+            while not (writer_done.is_set() and q.empty()):
+                # try:
+                #     record = q.get(timeout=0.1)
+                # except:
+                #     continue
+                # f.write(json.dumps(record) + "\n")
+                # q.task_done()
+                try:
+                    record = q.get(timeout=0.1)
+                except Empty:
+                    continue
+
+                try:
+                    f.write(json.dumps(record) + "\n")
+                except Exception as e:
+                    logger.error(f"Failed to write record: {e}")
+                q.task_done()
+
+    # wt = threading.Thread(target=writer, daemon=True)
+    wt = threading.Thread(target=writer)
+    wt.start()
+
+    # WORKER FUNCTION
+    def worker(article_text, article_id):
+        llm = llm_factory(eval_config, llm_config)   # NEW instance per thread
+        with llm as m:
+            summary = m.try_to_summarize_one_article(article_text)
+
+            summary_uid = generate_summary_uid(
+                m.model_fullname,
+                summary,
+                current_date
+            )
+
+            record_data = {
+                "article_id": article_id,
+                "summary_uid": summary_uid,
+                "summary": summary,
+                "eval_name": eval_name,
+                "summary_date": eval_date,
+                **m.__dict__
+            }
+            record_data.pop("prompt", None)
+
+            record = LLM_SUMMARY_CLASS(**record_data)
+            q.put(record.model_dump())
+
+    # THREAD EXECUTOR
+    futures = []
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        for text, aid in zip(article_texts, article_ids):
+            futures.append(ex.submit(worker, text, aid))
+
+        for _ in tqdm(as_completed(futures), total=len(futures), desc="Summaries"):
+            pass
+
+    writer_done.set()
+    wt.join()
 
 def generate_summaries_for_one_llm(
         llm: AbstractLLM,
@@ -170,7 +297,6 @@ def generate_summaries_for_one_llm(
             
             record = LLM_SUMMARY_CLASS(**record_data)
             append_record_to_jsonl(summaries_jsonl_path, record)
-
 
 def generate_summary_uid(
         model_name: str, summary_text: str, date: str
