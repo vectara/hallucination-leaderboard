@@ -78,6 +78,9 @@ class QwenLLM(AbstractLLM):
     """
     # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
+        "Qwen3-235B-A22B": {
+            "chat": 2
+        },
         "qwen3-30b-a3b-thinking": {
             "chat": 2
         },

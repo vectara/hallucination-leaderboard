@@ -136,6 +136,22 @@
     "avg_word_count": 101.9
   },
   {
+    "model_name": "google/gemma-3-12b-it",
+    "date_code": "",
+    "hallucination_rate": 4.4,
+    "confidence_interval": -1,
+    "answer_rate": 97.4,
+    "avg_word_count": 89.7
+  },
+  {
+    "model_name": "google/gemma-3-27b-it",
+    "date_code": "",
+    "hallucination_rate": 7.4,
+    "confidence_interval": -1,
+    "answer_rate": 98.8,
+    "avg_word_count": 96.4
+  },
+  {
     "model_name": "google/gemma-3-4b-it",
     "date_code": "",
     "hallucination_rate": 6.4,
@@ -296,6 +312,22 @@
     "avg_word_count": 105.7
   },
   {
+    "model_name": "openai/gpt-5.1-high-2025-11-13",
+    "date_code": "2025-11-13",
+    "hallucination_rate": 12.1,
+    "confidence_interval": -1,
+    "answer_rate": 100,
+    "avg_word_count": 254.4
+  },
+  {
+    "model_name": "openai/gpt-5.1-low-2025-11-13",
+    "date_code": "2025-11-13",
+    "hallucination_rate": 10.9,
+    "confidence_interval": -1,
+    "answer_rate": 100,
+    "avg_word_count": 165.5
+  },
+  {
     "model_name": "openai/gpt-oss-120b",
     "date_code": "",
     "hallucination_rate": 14.2,
@@ -382,6 +414,22 @@
     "confidence_interval": -1,
     "answer_rate": 93,
     "avg_word_count": 95.9
+  },
+  {
+    "model_name": "xai-org/grok-4-1-fast-non-reasoning",
+    "date_code": "",
+    "hallucination_rate": 17.8,
+    "confidence_interval": -1,
+    "answer_rate": 98.5,
+    "avg_word_count": 87.5
+  },
+  {
+    "model_name": "xai-org/grok-4-1-fast-reasoning",
+    "date_code": "",
+    "hallucination_rate": 19.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.7,
+    "avg_word_count": 99.5
   },
   {
     "model_name": "xai-org/grok-4-fast-non-reasoning",
