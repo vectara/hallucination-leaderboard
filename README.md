@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on November 20, 2025
+Last updated on November 21, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-11-21.png)
 
