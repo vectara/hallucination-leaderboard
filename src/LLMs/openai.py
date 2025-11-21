@@ -20,6 +20,8 @@ class OpenAIConfig(BasicLLMConfig):
         "gpt-4.5-preview",
         "o1-preview",
 
+        "gpt-5.1-high",
+        "gpt-5.1-low",
         "gpt-5-high",
         "gpt-5-minimal",
         "gpt-5",
@@ -46,11 +48,11 @@ class OpenAIConfig(BasicLLMConfig):
     ] # Only model names manually added to this list are supported.
     execution_mode: Literal["api", "cpu", "gpu"] = "api" # OpenAI models can only be run via web api.
     endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
-    reasoning_effort: Literal["minimal", "low", "medium", "high"] = None
+    reasoning_effort: Literal["none", "minimal", "low", "medium", "high"] = None
 
 class OpenAISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
-    reasoning_effort: Literal["minimal", "low", "medium", "high"] | None = None
+    reasoning_effort: Literal["none", "minimal", "low", "medium", "high"] | None = None
 
     class Config:
         extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
@@ -69,6 +71,14 @@ class OpenAILLM(AbstractLLM):
     # Mode 2: Chat without temperature
     # Mode 3: Use OpenAI's Response API
     client_mode_group = {
+        "gpt-5.1-low": {
+            "chat": 13,
+            "api_type": "openai"
+        },
+        "gpt-5.1-high": {
+            "chat": 14,
+            "api_type": "openai"
+        },
         "gpt-5-minimal": {
             "chat": 10,
             "api_type": "openai"
@@ -243,7 +253,7 @@ class OpenAILLM(AbstractLLM):
                         input=prepared_text,
                         max_output_tokens=self.max_tokens,
                         reasoning={
-                            "effort": self.reasoning_effort
+                            "effort": "minimal"
                         }
                     )
                     self.temperature = chat_package.temperature
@@ -254,7 +264,29 @@ class OpenAILLM(AbstractLLM):
                         input=prepared_text,
                         max_output_tokens=self.max_tokens,
                         reasoning={
-                            "effort": self.reasoning_effort
+                            "effort": "high"
+                        }
+                    )
+                    self.temperature = chat_package.temperature
+                    summary = chat_package.output[1].content[0].text
+                case 13: # gpt-5.1-low
+                    chat_package = self.client.responses.create(
+                        model="gpt-5.1-2025-11-13", # need to talk about this case
+                        input=prepared_text,
+                        max_output_tokens=self.max_tokens,
+                        reasoning={
+                            "effort": "low"
+                        }
+                    )
+                    self.temperature = chat_package.temperature
+                    summary = chat_package.output[1].content[0].text
+                case 14: # gpt-5.1-high
+                    chat_package = self.client.responses.create(
+                        model="gpt-5.1-2025-11-13", # need to talk about this case
+                        input=prepared_text,
+                        max_output_tokens=self.max_tokens,
+                        reasoning={
+                            "effort": "high"
                         }
                     )
                     self.temperature = chat_package.temperature

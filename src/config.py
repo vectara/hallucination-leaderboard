@@ -411,6 +411,8 @@ Here is the passage:
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
+        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-low", "date_code": "2025-11-13", "reasoning_effort": "low", "temperature": -1.0, "max_tokens": 32768}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
         # OpenAIConfig(**{"threads": 3, "company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32000}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-nano", "date_code": "2025-08-07", "reasoning_effort":"minimal", "temperature": -1.0}),
@@ -475,8 +477,8 @@ Here is the passage:
         # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}),
         # XAIConfig(**{"model_name": "grok-4-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
         # XAIConfig(**{"model_name": "grok-4-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
-        XAIConfig(**{"model_name": "grok-4-1-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
-        XAIConfig(**{"model_name": "grok-4-1-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
+        XAIConfig(**{"model_name": "grok-4-1-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
+        XAIConfig(**{"model_name": "grok-4-1-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
         # _01AIConfig(**
         #   {
         #     "company": "01-ai",
@@ -554,17 +556,19 @@ Here is the passage:
 
 
         # CPU 1
-        OpenAIConfig(**{"threads": 32, "company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
+        # OpenAIConfig(**{"threads": 16, "company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
 
         # CPU 2
-        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
+        # OpenAIConfig(**{"threads": 16, "company": "openai", "model_name": "gpt-5.1-low", "date_code": "2025-11-13", "reasoning_effort": "low", "temperature": -1.0, "max_tokens": 32768}),
 
         # CPU 3
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
 
         # CPU 4
+        # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
 
         # CPU 5
+        # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
 
         # CPU 6
 
@@ -666,7 +670,7 @@ Here is the passage:
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2501", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
-        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
+        # OpenAIConfig(**{"threads": 32, "company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
