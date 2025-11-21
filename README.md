@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on November 20, 2025
+Last updated on November 21, 2025
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-11-20.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-11-21.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -69,10 +69,10 @@ Last updated on November 20, 2025
 |google/gemini-3-pro-preview|13.6 %|86.4 %|99.4 %|101.9|
 |openai/gpt-oss-120b|14.2 %|85.8 %|99.9 %|135.2|
 |openai/gpt-5-minimal-2025-08-07|14.7 %|85.3 %|99.9 %|109.7|
+|openai/gpt-5-high-2025-08-07|15.1 %|84.9 %|99.9 %|162.7|
 |moonshotai/Kimi-K2-Instruct-0905|17.9 %|82.1 %|98.6 %|59.2|
 |openai/o4-mini-high-2025-04-16|18.6 %|81.4 %|99.2 %|127.7|
 |openai/o4-mini-low-2025-04-16|18.6 %|81.4 %|98.7 %|130.9|
-|openai/gpt-5-high-2025-08-07|19.2 %|80.8 %|52.3 %|176.0|
 |xai-org/grok-4-fast-non-reasoning|19.7 %|80.3 %|99.2 %|141.9|
 |xai-org/grok-4-fast-reasoning|20.2 %|79.8 %|99.5 %|173.9|
 |mistralai/mistral-medium-2508|22.7 %|77.3 %|99.7 %|142.9|
