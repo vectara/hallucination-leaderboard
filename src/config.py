@@ -497,8 +497,8 @@ Here is the passage:
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
-      "pipeline": ["summarize"],
-      # "pipeline": ["judge", "aggregate"],
+      # "pipeline": ["summarize"],
+      "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",
@@ -556,31 +556,31 @@ Here is the passage:
 
 
         # CPU 1
-        # OpenAIConfig(**{"threads": 16, "company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
+        OpenAIConfig(**{"threads": 16, "company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
 
         # CPU 2
-        # OpenAIConfig(**{"threads": 16, "company": "openai", "model_name": "gpt-5.1-low", "date_code": "2025-11-13", "reasoning_effort": "low", "temperature": -1.0, "max_tokens": 32768}),
+        OpenAIConfig(**{"threads": 16, "company": "openai", "model_name": "gpt-5.1-low", "date_code": "2025-11-13", "reasoning_effort": "low", "temperature": -1.0, "max_tokens": 32768}),
 
         # CPU 3
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
 
         # CPU 4
-        # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
+        XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
 
         # CPU 5
-        # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
+        XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
 
         # CPU 6
 
         # CPU 7
 
         # CPU 8
-        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0, "mini_throttle_time": 2.0}),
+        GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0, "mini_throttle_time": 2.0}),
 
         # CPU 9
 
         # CPU 10
-        # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.01, "mini_throttle_time": 2.0}),
+        GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.01, "mini_throttle_time": 2.0}),
 
 
         # # Completed Models
