@@ -266,10 +266,10 @@
   {
     "model_name": "openai/gpt-5-high-2025-08-07",
     "date_code": "2025-08-07",
-    "hallucination_rate": 19.2,
+    "hallucination_rate": 15.1,
     "confidence_interval": -1,
-    "answer_rate": 52.3,
-    "avg_word_count": 176.0
+    "answer_rate": 99.9,
+    "avg_word_count": 162.7
   },
   {
     "model_name": "openai/gpt-5-mini-2025-08-07",
