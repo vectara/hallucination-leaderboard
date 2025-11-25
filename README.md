@@ -26,6 +26,7 @@ Last updated on November 25, 2025
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
+|google/gemini-2.5-flash-lite|3.3 %|96.7 %|99.5 %|95.7|
 |microsoft/Phi-4|3.7 %|96.3 %|80.7 %|120.9|
 |meta-llama/Llama-3.3-70B-Instruct-Turbo|4.1 %|95.9 %|99.5 %|64.6|
 |snowflake/snowflake-arctic-instruct|4.3 %|95.7 %|62.7 %|81.4|
@@ -37,35 +38,52 @@ Last updated on November 25, 2025
 |deepseek-ai/DeepSeek-V3.2-Exp|5.3 %|94.7 %|96.6 %|64.6|
 |qwen/qwen3-14b|5.4 %|94.6 %|99.9 %|111.1|
 |deepseek-ai/DeepSeek-V3.1|5.5 %|94.5 %|94.5 %|63.7|
+|openai/gpt-4.1-2025-04-14|5.6 %|94.4 %|99.9 %|91.7|
 |qwen/qwen3-4b|5.7 %|94.3 %|99.9 %|104.7|
+|xai-org/grok-3|5.8 %|94.2 %|93.0 %|95.9|
 |qwen/qwen3-32b|5.9 %|94.1 %|99.9 %|115.8|
 |deepseek-ai/DeepSeek-V3|6.1 %|93.9 %|97.5 %|81.7|
+|google/gemma-3-4b-it|6.4 %|93.6 %|67.3 %|77.4|
 |CohereLabs/command-r-plus-08-2024|6.9 %|93.1 %|95.0 %|91.5|
+|google/gemini-2.5-pro|7.0 %|93.0 %|99.1 %|106.4|
 |mistralai/ministral-3b-2410|7.3 %|92.7 %|99.9 %|167.9|
-|mistralai/ministral-8b-2410|7.4 %|92.6 %|99.9 %|196.0|
 |google/gemma-3-27b-it|7.4 %|92.6 %|98.8 %|96.4|
+|mistralai/ministral-8b-2410|7.4 %|92.6 %|99.9 %|196.0|
 |meta-llama/Llama-4-Scout-17B-16E-Instruct|7.7 %|92.3 %|99.0 %|137.3|
+|google/gemini-2.5-flash|7.8 %|92.2 %|99.0 %|101.5|
 |meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8|8.2 %|91.8 %|100.0 %|106.0|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
-|qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
-|CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
+|qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
 |zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
+|CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
+|openai/gpt-4o-2024-08-06|9.6 %|90.4 %|93.8 %|86.6|
 |anthropic/claude-haiku-4-5-20251001|9.8 %|90.2 %|99.5 %|115.1|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
+|openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
-|CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
 |anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
+|CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
 |deepseek-ai/DeepSeek-R1|11.3 %|88.7 %|97.0 %|93.5|
 |anthropic/claude-opus-4-1-20250805|11.8 %|88.2 %|92.4 %|129.1|
-|anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
 |anthropic/claude-opus-4-20250514|12.0 %|88.0 %|91.0 %|123.2|
+|anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
 |openai/gpt-5.1-high-2025-11-13|12.1 %|87.9 %|100.0 %|254.4|
+|openai/gpt-5-mini-2025-08-07|12.9 %|87.1 %|99.9 %|169.7|
+|google/gemini-3-pro-preview|13.6 %|86.4 %|99.4 %|101.9|
+|openai/gpt-oss-120b|14.2 %|85.8 %|99.9 %|135.2|
+|openai/gpt-5-minimal-2025-08-07|14.7 %|85.3 %|99.9 %|109.7|
+|openai/gpt-5-high-2025-08-07|15.1 %|84.9 %|99.9 %|162.7|
 |xai-org/grok-4-1-fast-non-reasoning|17.8 %|82.2 %|98.5 %|87.5|
 |moonshotai/Kimi-K2-Instruct-0905|17.9 %|82.1 %|98.6 %|59.2|
+|openai/o4-mini-low-2025-04-16|18.6 %|81.4 %|98.7 %|130.9|
+|openai/o4-mini-high-2025-04-16|18.6 %|81.4 %|99.2 %|127.7|
 |xai-org/grok-4-1-fast-reasoning|19.2 %|80.8 %|99.7 %|99.5|
+|xai-org/grok-4-fast-non-reasoning|19.7 %|80.3 %|99.2 %|141.9|
+|xai-org/grok-4-fast-reasoning|20.2 %|79.8 %|99.5 %|173.9|
 |mistralai/mistral-medium-2508|22.7 %|77.3 %|99.7 %|142.9|
+|openai/o3-pro|23.3 %|76.7 %|100.0 %|127.4|
 |microsoft/Phi-4-mini-instruct|23.5 %|76.5 %|92.5 %|420.2|
 
 
