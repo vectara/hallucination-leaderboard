@@ -31,13 +31,14 @@ from . LLMs import (
   InternLmConfig,
   TiiuaeConfig,
   SnowflakeConfig,
+  PrimeIntellectConfig
 )
 
 # Please only append so we can always know how previous evaluations were done.
 # To select between configs, use the --eval_name flag in `main.py`
 
 # `eval_configs` is a list of dictionaries. Each dictionary is a config for an evaluation that can be instantiated as an EvalConfig object.
-eval_configs = [
+eval_configs = [ # lets opus4.5, grok4.1 think, gemini 3, kimi k2 thinking
   EvalConfig(**
     {
       "eval_name": "test",
@@ -54,7 +55,7 @@ eval_configs = [
         BasicLLMConfig(**
           {
             "temperature": 1.0, 
-            "max_tokens": 8192, 
+            "max_tokens": 32768, 
             "prompt": """
 Your task is to provide a concise and factual summary for the given passage.
 
@@ -119,6 +120,7 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
+        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
         # AntGroupMIConfig(**
         #   {
         #     "company": "antgroup",
@@ -143,7 +145,7 @@ Here is the passage:
         #     "temperature": 0.01,
         #   }
         # ),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-5", "date_code": "20251101", "temperature": 0.0}),
+        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-5", "date_code": "20251101", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
@@ -174,6 +176,7 @@ Here is the passage:
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
+        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1-Terminus", "temperature": 0.0, "min_throttle_time": 4.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
@@ -437,6 +440,7 @@ Here is the passage:
         # OpenAIConfig(**{"company": "openai", "model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
+        PrimeIntellectConfig(**{"model_name": "INTELLECT-3", "temperature": 0.0, "min_throttle_time": 4.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-235B-A22V", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-30b-a3b-thinking", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
@@ -499,8 +503,8 @@ Here is the passage:
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
-      # "pipeline": ["summarize"],
-      "pipeline": ["judge", "aggregate"],
+      "pipeline": ["summarize"],
+      # "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",
@@ -508,7 +512,7 @@ Here is the passage:
         BasicLLMConfig(**
           {
             "temperature": 1.0, 
-            "max_tokens": 8192, 
+            "max_tokens": 32768, 
             "prompt": """
 Your task is to provide a concise and factual summary for the given passage.
 
@@ -558,9 +562,17 @@ Here is the passage:
 
 
         # CPU 1
-        AnthropicConfig(**{"threads": 4, "company": "anthropic", "model_name": "claude-opus-4-5", "date_code": "20251101", "temperature": 0.0, "min_throttle_time": 2.0}),
+        # AntGroupMIConfig(**
+        #   {
+        #     "company": "antgroup",
+        #     "model_name": "finix_s1_32b",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
 
         # CPU 2
+        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 3
 
@@ -585,6 +597,7 @@ Here is the passage:
 
 
         # # Completed Models
+        # AnthropicConfig(**{"threads": 4, "company": "anthropic", "model_name": "claude-opus-4-5", "date_code": "20251101", "temperature": 0.0, "min_throttle_time": 2.0}),
         # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.01, "mini_throttle_time": 2.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0, "mini_throttle_time": 2.0}),

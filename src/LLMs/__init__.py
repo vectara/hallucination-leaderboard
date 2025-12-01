@@ -41,6 +41,7 @@ from . microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
 from . mistralai import MistralAILLM, MistralAIConfig, MistralAISummary
 from . moonshotai import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
 from . openai import OpenAILLM, OpenAIConfig, OpenAISummary
+from . primeintellect import PrimeIntellectLLM, PrimeIntellectConfig, PrimeIntellectSummary
 from . qcri import QCRILLM, QCRIConfig, QCRISummary
 from . qwen import QwenLLM, QwenConfig, QwenSummary
 from . rednote_hilab import RednoteHilabLLM, RednoteHilabConfig, RednoteHilabSummary
@@ -152,6 +153,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": OpenAILLM,
         "config_class": OpenAIConfig,
         "summary_class": OpenAISummary,
+    },
+    "PrimeIntellect": {
+        "LLM_class": PrimeIntellectLLM,
+        "config_class": PrimeIntellectConfig,
+        "summary_class": PrimeIntellectSummary,
     },
     "qcri": {
         "LLM_class": QCRILLM,

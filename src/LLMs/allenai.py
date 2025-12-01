@@ -8,6 +8,7 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 # Import the Python package for the specific provider.
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+from huggingface_hub import InferenceClient
 
 COMPANY = "allenai"
 
@@ -16,6 +17,7 @@ class AllenAIConfig(BasicLLMConfig):
     company: Literal["allenai"] = "allenai"
         # "OLMo-2-1124-13B-Instruct"
     model_name: Literal[
+        "Olmo-3-32B-Think",
         "OLMo-2-7B-Instruct", #1124
         "OLMo-2-13B-Instruct",
         "OLMo-2-0325-32B-Instruct",
@@ -24,7 +26,7 @@ class AllenAIConfig(BasicLLMConfig):
     ] # Only model names manually added to this list are supported.
     date_code: str = ""
     endpoint: Literal["chat", "response"] = "chat"
-    execution_mode: Literal["gpu", "cpu"] = "gpu"
+    execution_mode: Literal["api", "gpu", "cpu"] = "api"
 
 class AllenAISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
@@ -42,7 +44,11 @@ class AllenAILLM(AbstractLLM):
     """
 
     # In which way to run the model via web api. Empty dict means not supported for web api execution.
-    client_mode_group = {} # Empty for Rednote models because they cannot be run via web api.
+    client_mode_group = { # Empty for Rednote models because they cannot be run via web api.
+        "Olmo-3-32B-Think": {
+            "chat": 1
+        },
+    }
 
     # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
@@ -70,7 +76,15 @@ class AllenAILLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            pass
+            match self.client_mode_group[self.model_name][self.endpoint]:
+                case 1: # Standard chat completion
+                    messages = [{"role": "user", "content":prepared_text}]
+                    client_package = self.client.chat_completion(
+                        messages,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens
+                    )
+                    summary = client_package.choices[0].message.content
         elif self.local_model:
             match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
@@ -97,7 +111,14 @@ class AllenAILLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            pass
+            if self.model_name in self.client_mode_group:
+                self.client = InferenceClient(model=self.model_fullname)
+            else:
+                raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
+                    model_name=self.model_name,
+                    company=self.company,
+                    execution_mode=self.execution_mode
+                ))
         elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in self.local_mode_group:
                 # bnb_config = BitsAndBytesConfig(
