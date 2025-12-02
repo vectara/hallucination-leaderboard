@@ -114,7 +114,7 @@ class MoonshotAILLM(AbstractLLM):
             # if self.model_name in self.client_mode_group:
             #     self.client = InferenceClient(model=self.huggingface_name)
             api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-            assert api_key is not None, f"{COMPANY.upper()} API key not found in environment variable {COMPANY.upper()}_GEMINI_API_KEY"
+            assert api_key is not None, f"{COMPANY.upper()} API key not found in environment variable {COMPANY.upper()}_API_KEY"
             if self.model_name in self.client_mode_group:
                 self.client = OpenAI(
                     api_key = api_key,
