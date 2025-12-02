@@ -510,8 +510,8 @@ Here is the passage:
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
-      "pipeline": ["summarize"],
-      # "pipeline": ["judge", "aggregate"],
+      # "pipeline": ["summarize"],
+      "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",
@@ -577,13 +577,13 @@ Here is the passage:
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
 
         # CPU 3
-        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-3b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
+        MistralAIConfig(**{"threads": 2, "model_name": "ministral-3b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 4
-        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-8b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
+        MistralAIConfig(**{"threads": 2, "model_name": "ministral-8b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 5
-        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-14b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
+        MistralAIConfig(**{"threads": 2, "model_name": "ministral-14b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 6
         # MistralAIConfig(**{"threads": 2, "model_name": "mistral-large", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
