@@ -120,7 +120,7 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
+        AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
         # AntGroupMIConfig(**
         #   {
         #     "company": "antgroup",
@@ -572,6 +572,7 @@ Here is the passage:
         # ),
 
         # CPU 2
+        # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
         # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 3
