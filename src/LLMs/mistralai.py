@@ -43,6 +43,7 @@ class MistralAIConfig(BasicLLMConfig):
         "mistral-large",
         "ministral-3b",
         "ministral-8b",
+        "ministral-14b",
         "pixtral-large",
         "pixtral-12b",
         "open-mistral-nemo"
@@ -84,6 +85,9 @@ class MistralAILLM(AbstractLLM):
             "chat": 1
         },
         "ministral-8b": {
+            "chat": 1
+        },
+        "ministral-14b": {
             "chat": 1
         },
         "pixtral-large": {

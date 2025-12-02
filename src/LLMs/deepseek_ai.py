@@ -49,7 +49,7 @@ class DeepSeekAILLM(AbstractLLM):
     # In which way to run the model via web api. Empty dict means not supported for web api execution.
     client_mode_group = {
         "DeepSeek-V3.2": {
-            "chat": 3
+            "chat": 1
         },
         "DeepSeek-R1": {
             "chat": 1
@@ -103,10 +103,11 @@ class DeepSeekAILLM(AbstractLLM):
                     )
                     summary = client_package.choices[0].message.content
                 case 3:
-                    summary = self.client.text_generation(
-                        prompt=prepared_text,
+                    client_package = self.client.conversational(
+                        messages=prepared_text,
                         temperature=self.temperature
                     )
+                    summary=client_package["generated_text"]
         elif self.local_model:
             pass # DeepSeekAI models cannot be run locally.
         else:

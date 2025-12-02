@@ -120,7 +120,9 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
+
+        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
+
         # AntGroupMIConfig(**
         #   {
         #     "company": "antgroup",
@@ -176,7 +178,7 @@ Here is the passage:
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1-Terminus", "temperature": 0.0, "min_throttle_time": 4.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
@@ -401,6 +403,11 @@ Here is the passage:
         #     "temperature": 0.0,
         #   }
         # ),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2512", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2512", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-14b", "date_code": "2512", "temperature": 0.0}),
+        # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-large", "date_code": "2512", "temperature": 0.0}),
+
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2410", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2410", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-large", "date_code": "2411", "temperature": 0.0}),
@@ -440,7 +447,7 @@ Here is the passage:
         # OpenAIConfig(**{"company": "openai", "model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
-        PrimeIntellectConfig(**{"model_name": "INTELLECT-3", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # PrimeIntellectConfig(**{"model_name": "INTELLECT-3", "temperature": 0.0, "min_throttle_time": 4.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-235B-A22V", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-30b-a3b-thinking", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
@@ -560,28 +567,25 @@ Here is the passage:
         # ),
         # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}), # failed need money
 
-
+        # Not assigned yet
+        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
         # CPU 1
-        # AntGroupMIConfig(**
-        #   {
-        #     "company": "antgroup",
-        #     "model_name": "finix_s1_32b",
-        #     "date_code": "",
-        #     "temperature": 0.0,
-        #   }
-        # ),
+        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 2
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
-        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 3
+        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-3b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 4
+        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-8b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 5
+        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-14b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 6
+        # MistralAIConfig(**{"threads": 2, "model_name": "mistral-large", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 7
 
@@ -590,6 +594,16 @@ Here is the passage:
         # CPU 9
 
         # CPU 10
+
+        # Need Eval
+        # AntGroupMIConfig(**
+        #   {
+        #     "company": "antgroup",
+        #     "model_name": "finix_s1_32b",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
 
         # Done But Review
         # OpenAIConfig(**{"threads": 16, "company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
