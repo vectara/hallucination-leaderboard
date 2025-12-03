@@ -121,7 +121,7 @@ Here is the passage:
         #   }
         # ),
 
-        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
+        AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
 
         # AntGroupMIConfig(**
         #   {

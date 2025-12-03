@@ -104,6 +104,14 @@
     "avg_word_count": 63.7
   },
   {
+    "model_name": "deepseek-ai/DeepSeek-V3.2",
+    "date_code": "",
+    "hallucination_rate": 6.3,
+    "confidence_interval": -1,
+    "answer_rate": 92.6,
+    "avg_word_count": 62.0
+  },
+  {
     "model_name": "deepseek-ai/DeepSeek-V3.2-Exp",
     "date_code": "",
     "hallucination_rate": 5.3,
@@ -270,6 +278,14 @@
     "confidence_interval": -1,
     "answer_rate": 99.9,
     "avg_word_count": 85.0
+  },
+  {
+    "model_name": "mistralai/mistral-large-2512",
+    "date_code": "2512",
+    "hallucination_rate": 14.5,
+    "confidence_interval": -1,
+    "answer_rate": 98.8,
+    "avg_word_count": 112.7
   },
   {
     "model_name": "mistralai/mistral-medium-2508",
