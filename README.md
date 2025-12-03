@@ -80,14 +80,14 @@ Last updated on December 2, 2025
 |openai/o4-mini-low-2025-04-16|18.6 %|81.4 %|98.7 %|130.9|
 |openai/o4-mini-high-2025-04-16|18.6 %|81.4 %|99.2 %|127.7|
 |xai-org/grok-4-1-fast-reasoning|19.2 %|80.8 %|99.7 %|99.5|
-|mistralai/ministral-14b-2512|19.4 %|80.6 %|99.6 %|135.8|
+|mistralai/ministral-3-14b-2512|19.4 %|80.6 %|99.6 %|135.8|
 |xai-org/grok-4-fast-non-reasoning|19.7 %|80.3 %|99.2 %|141.9|
 |xai-org/grok-4-fast-reasoning|20.2 %|79.8 %|99.5 %|173.9|
-|mistralai/ministral-8b-2512|21.7 %|78.3 %|99.1 %|139.4|
+|mistralai/ministral-3-8b-2512|21.7 %|78.3 %|99.1 %|139.4|
 |mistralai/mistral-medium-2508|22.7 %|77.3 %|99.7 %|142.9|
 |openai/o3-pro|23.3 %|76.7 %|100.0 %|127.4|
 |microsoft/Phi-4-mini-instruct|23.5 %|76.5 %|92.5 %|420.2|
-|mistralai/ministral-3b-2512|24.2 %|75.8 %|74.3 %|119.4|
+|mistralai/ministral-3-3b-2512|24.2 %|75.8 %|74.3 %|119.4|
 
 <!-- LEADERBOARD_END -->
 
