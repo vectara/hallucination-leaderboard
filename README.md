@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on December 2, 2025
+Last updated on December 3, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-11-21.png)
 
@@ -43,6 +43,7 @@ Last updated on December 2, 2025
 |xai-org/grok-3|5.8 %|94.2 %|93.0 %|95.9|
 |qwen/qwen3-32b|5.9 %|94.1 %|99.9 %|115.8|
 |deepseek-ai/DeepSeek-V3|6.1 %|93.9 %|97.5 %|81.7|
+|deepseek-ai/DeepSeek-V3.2|6.3 %|93.7 %|92.6 %|62.0|
 |google/gemma-3-4b-it|6.4 %|93.6 %|67.3 %|77.4|
 |CohereLabs/command-r-plus-08-2024|6.9 %|93.1 %|95.0 %|91.5|
 |google/gemini-2.5-pro|7.0 %|93.0 %|99.1 %|106.4|
@@ -73,6 +74,7 @@ Last updated on December 2, 2025
 |openai/gpt-5-mini-2025-08-07|12.9 %|87.1 %|99.9 %|169.7|
 |google/gemini-3-pro-preview|13.6 %|86.4 %|99.4 %|101.9|
 |openai/gpt-oss-120b|14.2 %|85.8 %|99.9 %|135.2|
+|mistralai/mistral-3-large-2512|14.5 %|85.5 %|98.8 %|112.7|
 |openai/gpt-5-minimal-2025-08-07|14.7 %|85.3 %|99.9 %|109.7|
 |openai/gpt-5-high-2025-08-07|15.1 %|84.9 %|99.9 %|162.7|
 |xai-org/grok-4-1-fast-non-reasoning|17.8 %|82.2 %|98.5 %|87.5|
