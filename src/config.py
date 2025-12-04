@@ -510,8 +510,8 @@ Here is the passage:
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
-      # "pipeline": ["summarize"],
-      "pipeline": ["judge", "aggregate"],
+      "pipeline": ["summarize"],
+      # "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",
@@ -568,25 +568,19 @@ Here is the passage:
         # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}), # failed need money
 
         # Not assigned yet
-        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 1
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 2
-        # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
 
         # CPU 3
-        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-3b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 4
-        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-8b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 5
-        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-14b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 6
-        MistralAIConfig(**{"threads": 2, "model_name": "mistral-large", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 7
 
@@ -618,6 +612,12 @@ Here is the passage:
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.01, "mini_throttle_time": 2.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0, "mini_throttle_time": 2.0}),
         # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
+        # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
+        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-3b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
+        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-8b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
+        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-14b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
+        # MistralAIConfig(**{"threads": 2, "model_name": "mistral-large", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0}),
 
 
         # AntGroupMIConfig(**
