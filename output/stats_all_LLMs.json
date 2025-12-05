@@ -32,14 +32,6 @@
     "avg_word_count": 91.5
   },
   {
-    "model_name": "allenai/Olmo-3-32B-Think",
-    "date_code": "",
-    "hallucination_rate": 10.3,
-    "confidence_interval": -1,
-    "answer_rate": 6,
-    "avg_word_count": 75.2
-  },
-  {
     "model_name": "amazon/nova-2-lite-v1:0",
     "date_code": "",
     "hallucination_rate": 5.1,
