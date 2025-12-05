@@ -32,6 +32,46 @@
     "avg_word_count": 91.5
   },
   {
+    "model_name": "allenai/Olmo-3-32B-Think",
+    "date_code": "",
+    "hallucination_rate": 10.3,
+    "confidence_interval": -1,
+    "answer_rate": 6,
+    "avg_word_count": 75.2
+  },
+  {
+    "model_name": "amazon/nova-2-lite-v1:0",
+    "date_code": "",
+    "hallucination_rate": 5.1,
+    "confidence_interval": -1,
+    "answer_rate": 99.6,
+    "avg_word_count": 94.1
+  },
+  {
+    "model_name": "amazon/nova-lite-v1:0",
+    "date_code": "",
+    "hallucination_rate": 6.1,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 91.8
+  },
+  {
+    "model_name": "amazon/nova-micro-v1:0",
+    "date_code": "",
+    "hallucination_rate": 5.5,
+    "confidence_interval": -1,
+    "answer_rate": 100,
+    "avg_word_count": 100.0
+  },
+  {
+    "model_name": "amazon/nova-pro-v1:0",
+    "date_code": "",
+    "hallucination_rate": 5.1,
+    "confidence_interval": -1,
+    "answer_rate": 99.3,
+    "avg_word_count": 66.2
+  },
+  {
     "model_name": "anthropic/claude-haiku-4-5-20251001",
     "date_code": "20251001",
     "hallucination_rate": 9.8,
