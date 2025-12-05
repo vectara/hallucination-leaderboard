@@ -515,8 +515,8 @@ Here is the passage:
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
-      "pipeline": ["summarize"],
-      # "pipeline": ["judge", "aggregate"],
+      # "pipeline": ["summarize"],
+      "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",
@@ -575,22 +575,22 @@ Here is the passage:
         # Not assigned yet
 
         # CPU 1
-        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
+        AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 2
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
 
         # CPU 3
-        # AmazonConfig(**{"model_name": "nova-pro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
+        AmazonConfig(**{"model_name": "nova-pro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
 
         # CPU 4
-        # AmazonConfig(**{"model_name": "nova-micro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
+        AmazonConfig(**{"model_name": "nova-micro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
 
         # CPU 5
-        # AmazonConfig(**{"model_name": "nova-2-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0}),
+        AmazonConfig(**{"model_name": "nova-2-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0}),
 
         # CPU 6
-        # AmazonConfig(**{"model_name": "nova-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # Capped at 1024
+        AmazonConfig(**{"model_name": "nova-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # Capped at 1024
 
         # CPU 7
 
