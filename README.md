@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on December 3, 2025
+Last updated on December 5, 2025
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-11-21.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-05.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -33,15 +33,19 @@ Last updated on December 3, 2025
 |google/gemma-3-12b-it|4.4 %|95.6 %|97.4 %|89.7|
 |mistralai/mistral-large-2411|4.5 %|95.5 %|99.9 %|85.0|
 |qwen/qwen3-8b|4.8 %|95.2 %|99.9 %|83.6|
+|amazon/nova-pro-v1:0|5.1 %|94.9 %|99.3 %|66.2|
+|amazon/nova-2-lite-v1:0|5.1 %|94.9 %|99.6 %|94.1|
 |mistralai/mistral-small-2501|5.1 %|94.9 %|97.9 %|98.8|
 |ibm-granite/granite-4.0-h-small|5.2 %|94.8 %|100.0 %|107.4|
 |deepseek-ai/DeepSeek-V3.2-Exp|5.3 %|94.7 %|96.6 %|64.6|
 |qwen/qwen3-14b|5.4 %|94.6 %|99.9 %|111.1|
+|amazon/nova-micro-v1:0|5.5 %|94.5 %|100.0 %|100.0|
 |deepseek-ai/DeepSeek-V3.1|5.5 %|94.5 %|94.5 %|63.7|
 |openai/gpt-4.1-2025-04-14|5.6 %|94.4 %|99.9 %|91.7|
 |qwen/qwen3-4b|5.7 %|94.3 %|99.9 %|104.7|
 |xai-org/grok-3|5.8 %|94.2 %|93.0 %|95.9|
 |qwen/qwen3-32b|5.9 %|94.1 %|99.9 %|115.8|
+|amazon/nova-lite-v1:0|6.1 %|93.9 %|99.9 %|91.8|
 |deepseek-ai/DeepSeek-V3|6.1 %|93.9 %|97.5 %|81.7|
 |deepseek-ai/DeepSeek-V3.2|6.3 %|93.7 %|92.6 %|62.0|
 |google/gemma-3-4b-it|6.4 %|93.6 %|67.3 %|77.4|
