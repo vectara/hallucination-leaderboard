@@ -20,12 +20,13 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on December 5, 2025
+Last updated on December 9, 2025
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-05.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-09.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
+|antgroup/finix_s1_32b|1.8 %|98.2 %|99.5 %|172.4|
 |google/gemini-2.5-flash-lite|3.3 %|96.7 %|99.5 %|95.7|
 |microsoft/Phi-4|3.7 %|96.3 %|80.7 %|120.9|
 |meta-llama/Llama-3.3-70B-Instruct-Turbo|4.1 %|95.9 %|99.5 %|64.6|
