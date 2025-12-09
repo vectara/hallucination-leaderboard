@@ -7,23 +7,9 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-"""
-Notes:
-Mistral Small 3.2: 2506
-Mistral Small 3.1: 2503
-Mistral Small 3: 2501
-Mistral Small 2: 2407 | Doesnt work as of 7/16/2025. Reports invalid model
-Mistral Large 2.1: 2411
-Ministral 3B: 2410
-Ministral 8b: 2410
-Pixtral Large: 2411
-Pixtral 12b: 2409
-"""
-
 COMPANY = "mistralai"
 
 class MistralAIConfig(BasicLLMConfig):
-    """Extended config for MistralAI-specific properties"""
     company: Literal["mistralai"] = "mistralai"
     model_name: Literal[
         "Ministral-8B-Instruct",
@@ -47,10 +33,10 @@ class MistralAIConfig(BasicLLMConfig):
         "pixtral-large",
         "pixtral-12b",
         "open-mistral-nemo"
-    ] # Only model names manually added to this list are supported.
-    execution_mode: Literal["api"] = "api" # MistralAI models can only be run via web api.
-    date_code: str = "" # You must specify a date code for MistralAI models.
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    ]
+    execution_mode: Literal["api"] = "api"
+    date_code: str = ""
+    endpoint: Literal["chat", "response"] = "chat"
 
 class MistralAISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
@@ -61,13 +47,8 @@ class MistralAISummary(BasicSummary):
 class MistralAILLM(AbstractLLM):
     """
     Class for models from MistralAI
-
-    Attributes:
-        client (Mistral): client associated with api calls
-        model_name (str): MistralAI style model name
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution.
     client_mode_group = {
         "magistral-medium":{
             "chat": 1
@@ -101,13 +82,9 @@ class MistralAILLM(AbstractLLM):
         }
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
-    local_mode_group = {} # Empty for MistralAI models because they cannot be run locally.
+    local_mode_group = {}
 
     def __init__(self, config: MistralAIConfig):
-        # Ensure that the parameters passed into the constructor are of the type MistralAIConfig.
-        
-        # Call parent constructor to inherit all parent properties
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
@@ -125,7 +102,7 @@ class MistralAILLM(AbstractLLM):
                     )
                     summary = chat_package.choices[0].message.content
         elif self.local_model:
-            pass # MistralAI models cannot be run locally.
+            pass
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
@@ -143,14 +120,13 @@ class MistralAILLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode == "local":
-            pass # MistralAI models cannot be run locally.
+            pass
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
-            pass # MistralAI models cannot be run locally.
+            pass
 
     def close_client(self):
         pass
