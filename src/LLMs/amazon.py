@@ -7,7 +7,7 @@ from .. data_model import ModelInstantiationError, SummaryError
 import json
 import boto3
 
-COMPANY = "amazon" #Official company name on huggingface
+COMPANY = "amazon"
 class AmazonConfig(BasicLLMConfig):
     """Extended config for amazon-specific properties"""
     company: Literal["amazon"] = "amazon"
@@ -17,23 +17,22 @@ class AmazonConfig(BasicLLMConfig):
         "nova-lite-v1:0",
         "nova-micro-v1:0",
         "nova-pro-v1:0",
-    ] # Only model names manually added to this list are supported.
+    ]
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
 
 class AmazonSummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
 
     class Config:
         extra = "ignore" 
 
 class AmazonLLM(AbstractLLM):
     """
-    Class for models from company_name
+    Class for models from amazon
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
         "nova-pro-v2": {
             "chat": 1
@@ -52,7 +51,6 @@ class AmazonLLM(AbstractLLM):
         },
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: AmazonConfig):
@@ -63,7 +61,6 @@ class AmazonLLM(AbstractLLM):
         self.model_fullname = f"us.amazon.{self.model_name}"
 
     def summarize(self, prepared_text: str) -> str:
-        # Use self.model_fullname when referring to the model
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
@@ -124,9 +121,8 @@ class AmazonLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
