@@ -9,7 +9,6 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "xai-org"
 class XAIConfig(BasicLLMConfig):
-    """Extended config for x-ai-specific properties"""
     company: Literal["xai-org"] = "xai-org" 
     model_name: Literal[
         "grok-4-1-fast-reasoning",
@@ -22,24 +21,23 @@ class XAIConfig(BasicLLMConfig):
         "grok-3-fast",
         "grok-3-mini-fast",
         "grok-2-vision"
-    ] # Only model names manually added to this list are supported.
-    date_code: str = "" # do we need date code?
-    execution_mode: Literal["api"] = "api" # only API based?
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    ]
+    date_code: str = ""
+    execution_mode: Literal["api"] = "api"
+    endpoint: Literal["chat", "response"] = "chat"
     reasoning_effort: Literal["NA", "low", "high"] = "NA"
 
 class XAISummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
 
     class Config:
-        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
+        extra = "ignore"
 
 class XAILLM(AbstractLLM):
     """
     Class for models from x-ai
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
         "grok-4-1-fast-reasoning":{
             "chat": 1
@@ -76,7 +74,6 @@ class XAILLM(AbstractLLM):
         },
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: XAIConfig):
@@ -146,9 +143,8 @@ class XAILLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
