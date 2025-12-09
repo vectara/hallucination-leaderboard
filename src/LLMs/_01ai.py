@@ -18,7 +18,7 @@ class _01AIConfig(BasicLLMConfig):
         "Yi-1.5-6B-Chat",
         "Yi-1.5-9B-Chat",
         "Yi-1.5-34B-Chat",
-    ] # Only model names manually added to this list are supported.
+    ]
     date_code: str = "",
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["gpu", "cpu"] = "gpu"
@@ -34,16 +34,13 @@ class _01AILLM(AbstractLLM):
     Class for models from 01-AI
 
     Attributes:
-        local_model (AutoModelForCausalLM): local model for inference
-        model_name (str): Rednote style model name
+
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution.
-    client_mode_group = {} # Empty for Rednote models because they cannot be run via web api.
+    client_mode_group = {} 
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
-        "Yi-1.5-6B-Chat": { # Needs a real summary case in the future
+        "Yi-1.5-6B-Chat": { 
             "chat": 100
         },
         "Yi-1.5-9B-Chat": {
@@ -58,15 +55,12 @@ class _01AILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model_fullname = f"{COMPANY}/{self.model_fullname}"
-
-        # self.model_path = config.model_path
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            pass # Rednote models cannot be run via web api.
+            pass
         elif self.local_model:
             match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template

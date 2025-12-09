@@ -67,7 +67,7 @@ class AbstractLLM(ABC):
 
         self.client: Any | None = None # in case the model can be called via web api
         self.local_model: Any | None = None # in case the model can be run locally
-
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         # self.summary_file: str | None = None # won't be set until after instantiation in summarize.py
 
     def __enter__(self):
