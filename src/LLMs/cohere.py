@@ -9,7 +9,6 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "CohereLabs"
 class CohereConfig(BasicLLMConfig):
-    """Extended config for cohere-specific properties"""
     company: Literal["CohereLabs"] = "CohereLabs"
     model_name: Literal[
         "aya-expanse-8b",
@@ -17,30 +16,29 @@ class CohereConfig(BasicLLMConfig):
         "c4ai-command-r-plus",
         "command",
         "command-chat",
-        "command-a", #03-2025
+        "command-a",
         "command-a-reasoning",
         "c4ai-aya-expanse-32b",
         "c4ai-aya-expanse-8b",
-        "command-r-plus", #04-2024
-        "command-r", #08-2024
-        "command-r7b" #12-2024
-    ] # Only model names manually added to this list are supported.
-    date_code: str = "" # do we need date code?
-    execution_mode: Literal["api"] = "api" # only API based?
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+        "command-r-plus",
+        "command-r", 
+        "command-r7b"
+    ]
+    date_code: str = ""
+    execution_mode: Literal["api"] = "api"
+    endpoint: Literal["chat", "response"] = "chat"
 
 class CohereSummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
 
     class Config:
-        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
+        extra = "ignore"
 
 class CohereLLM(AbstractLLM):
     """
     Class for models from cohere
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
         "command-a": {
             "chat": 1
@@ -65,7 +63,6 @@ class CohereLLM(AbstractLLM):
         },
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: CohereConfig):
@@ -129,9 +126,8 @@ class CohereLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
