@@ -130,7 +130,6 @@ Here is the passage:
         AmazonConfig(**{"model_name": "nova-pro-v2", "temperature": 0.0, "min_throttle_time": 2.0}),
         # AntGroupMIConfig(**
         #   {
-        #     "company": "antgroup",
         #     "model_name": "antfinix-ir1",
         #     "date_code": "",
         #     "temperature": 0.0,
@@ -138,7 +137,6 @@ Here is the passage:
         # ),
         # AntGroupMIConfig(**
         #   {
-        #     "company": "antgroup",
         #     "model_name": "finix_s1_32b",
         #     "date_code": "",
         #     "temperature": 0.0,
@@ -146,7 +144,6 @@ Here is the passage:
         # ),
         # AntGroupMIConfig(**
         #   {
-        #     "company": "antgroup",
         #     "model_name": "antfinix-a1",
         #     "date_code": "",
         #     "temperature": 0.01,
@@ -515,8 +512,8 @@ Here is the passage:
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
-      "pipeline": ["summarize"],
-      # "pipeline": ["judge", "aggregate"],
+      # "pipeline": ["summarize"],
+      "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",
@@ -576,14 +573,13 @@ Here is the passage:
         # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 1
-        # AntGroupMIConfig(**
-        #   {
-        #     "company": "antgroup",
-        #     "model_name": "finix_s1_32b",
-        #     "date_code": "",
-        #     "temperature": 0.0,
-        #   }
-        # ),
+        AntGroupMIConfig(**
+          {
+            "model_name": "finix_s1_32b",
+            "date_code": "",
+            "temperature": 0.0,
+          }
+        ),
 
         # CPU 2
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
