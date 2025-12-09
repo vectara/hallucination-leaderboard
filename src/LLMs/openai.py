@@ -13,7 +13,6 @@ from .. data_model import ModelInstantiationError, SummaryError
 COMPANY = "openai"
 
 class OpenAIConfig(BasicLLMConfig):
-    """Extended config for OpenAI-specific properties"""
     company: Literal["openai"]
     model_name: Literal[
         "chatgpt-4o",
@@ -45,31 +44,23 @@ class OpenAIConfig(BasicLLMConfig):
         "gpt-4-turbo",
         "gpt-3.5-turbo",
         "gpt-4"
-    ] # Only model names manually added to this list are supported.
-    execution_mode: Literal["api", "cpu", "gpu"] = "api" # OpenAI models can only be run via web api.
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    ]
+    execution_mode: Literal["api", "cpu", "gpu"] = "api"
+    endpoint: Literal["chat", "response"] = "chat"
     reasoning_effort: Literal["none", "minimal", "low", "medium", "high"] = None
 
 class OpenAISummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
     reasoning_effort: Literal["none", "minimal", "low", "medium", "high"] | None = None
 
     class Config:
-        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
+        extra = "ignore"
 
 class OpenAILLM(AbstractLLM):
     """
     Class for models from OpenAI
-
-    Attributes:
-        client (OpenAI): client associated with api calls
-        model_name (str): OpenAI style model name
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution.
-    # Mode 1: Chat with temperature (default)
-    # Mode 2: Chat without temperature
-    # Mode 3: Use OpenAI's Response API
     client_mode_group = {
         "gpt-5.1-low": {
             "chat": 13,
@@ -178,7 +169,6 @@ class OpenAILLM(AbstractLLM):
         }
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
         "gpt-oss-20b": {
             "chat": 1
@@ -186,19 +176,12 @@ class OpenAILLM(AbstractLLM):
     }
 
     def __init__(self, config: OpenAIConfig):
-
-        # Call parent constructor to inherit all parent properties
         super().__init__(config)
-
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.reasoning_effort = config.reasoning_effort
         if self.model_name in self.local_mode_group:
             self.model_fullname = f"openai/{self.model_fullname}"
-
-        # Set default values for optional attributes
-        # self.endpoint = config.endpoint if config.endpoint is not None else "chat" 
-        # self.execution_mode = config.execution_mode if config.execution_mode is not None else "api"
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
@@ -399,10 +382,9 @@ class OpenAILLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
             pass
-            # self.default_local_model_teardown()
 
     def close_client(self):
         pass
