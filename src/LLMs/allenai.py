@@ -15,15 +15,14 @@ COMPANY = "allenai"
 class AllenAIConfig(BasicLLMConfig):
     """Extended config for AllenAI-specific properties"""
     company: Literal["allenai"] = "allenai"
-        # "OLMo-2-1124-13B-Instruct"
     model_name: Literal[
         "Olmo-3-32B-Think",
-        "OLMo-2-7B-Instruct", #1124
+        "OLMo-2-7B-Instruct",
         "OLMo-2-13B-Instruct",
         "OLMo-2-0325-32B-Instruct",
         "OLMo-2-1124-7b-instruct",
         "OLMo-2-1124-13b-instruct",
-    ] # Only model names manually added to this list are supported.
+    ]
     date_code: str = ""
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["api", "gpu", "cpu"] = "api"
@@ -39,18 +38,14 @@ class AllenAILLM(AbstractLLM):
     Class for models from AllenAI
 
     Attributes:
-        local_model (AutoModelForCausalLM): local model for inference
-        model_name (str): Rednote style model name
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution.
-    client_mode_group = { # Empty for Rednote models because they cannot be run via web api.
+    client_mode_group = {
         "Olmo-3-32B-Think": {
             "chat": 1
         },
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
         "OLMo-2-7B-Instruct": {
             "chat": 1
@@ -70,8 +65,6 @@ class AllenAILLM(AbstractLLM):
         if self.date_code is not "":
             self.model_fullname = f"{self.model_name[0:6]}-{config.date_code}{self.model_name[6:]}"
         self.model_fullname = f"{COMPANY}/{self.model_fullname}"
-
-        # self.model_path = config.model_path
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
@@ -139,9 +132,9 @@ class AllenAILLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            self.default_local_model_teardown()
+            pass
 
     def close_client(self):
         pass
