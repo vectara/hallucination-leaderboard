@@ -17,10 +17,10 @@ class AntGroupMIConfig(BasicLLMConfig):
     model_name: Literal[
         "finix_s1_32b",
         "antfinix-a1"
-    ] # Only model names manually added to this list are supported.
-    execution_mode: Literal["api"] = "api" # MistralAI models can only be run via web api.
-    date_code: str = "" # You must specify a date code for MistralAI models.
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    ]
+    execution_mode: Literal["api"] = "api"
+    date_code: str = ""
+    endpoint: Literal["chat", "response"] = "chat"
 
 class AntGroupMISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
@@ -31,13 +31,8 @@ class AntGroupMISummary(BasicSummary):
 class AntGroupMILLM(AbstractLLM):
     """
     Class for models from AntGroup-MI
-
-    Attributes:
-        client (): client associated with api calls
-        model_name (str): MistralAI style model name
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution.
     client_mode_group = {
         "finix_s1_32b":{
             "chat": 1
@@ -47,13 +42,9 @@ class AntGroupMILLM(AbstractLLM):
         }
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
-    local_mode_group = {} # Empty for MistralAI models because they cannot be run locally.
+    local_mode_group = {} 
 
     def __init__(self, config: AntGroupMIConfig):
-        # Ensure that the parameters passed into the constructor are of the type MistralAIConfig.
-        
-        # Call parent constructor to inherit all parent properties
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
@@ -110,10 +101,9 @@ class AntGroupMILLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
-            pass # MistralAI models cannot be run locally.
+            pass
 
     def close_client(self):
         pass
