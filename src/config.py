@@ -34,19 +34,26 @@ from . LLMs import (
   PrimeIntellectConfig
 )
 
-# Please only append so we can always know how previous evaluations were done.
-# To select between configs, use the --eval_name flag in `main.py`
+"""
+eval_names that are essential for the HHEM LB
 
-# `eval_configs` is a list of dictionaries. Each dictionary is a config for an evaluation that can be instantiated as an EvalConfig object.
-eval_configs = [ # lets opus4.5, grok4.1 think, gemini 3, kimi k2 thinking
+  eval_name = "test": Used for testing models summaries on test cases
+    Only need to check if summarize works
+    On succesful comment out LLM config for future reference
+    Place LLM configs in alphabetical order for ease of search
+
+
+  eval_name = "live": Used for generating and evaluating summaries for the LB
+    Upon succesfully adding to LB comment out LLM config just like in test
+    Place completed LLM configs in alphabetical order for future reference
+"""
+
+eval_configs = [
   EvalConfig(**
     {
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
-      # "hhem_version": "HDM-2",
-      # "pipeline": ["summarize", "judge", "aggregate"],
-      # "pipeline": ["aggregate"],
       "pipeline": ["summarize"],
       "output_dir": "output_test",
       "overwrite_summaries": True,
@@ -540,7 +547,6 @@ Here is the passage:
         ),
       "per_LLM_configs": [ #TODO: Multithreading doesnt support automatic deletion atm, manually delete
         # Not Assigned
-        # # GPU # #
         # OpenAIConfig(**{"company": "openai", "execution_mode": "gpu", "model_name": "gpt-oss-20b", "date_code": "", "temperature": 0.01}),
         # IBMGraniteConfig(**
         #   {
@@ -572,14 +578,9 @@ Here is the passage:
         # Not assigned yet
         # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
 
+        # # GPU # #
+
         # CPU 1
-        AntGroupMIConfig(**
-          {
-            "model_name": "finix_s1_32b",
-            "date_code": "",
-            "temperature": 0.0,
-          }
-        ),
 
         # CPU 2
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
@@ -601,14 +602,6 @@ Here is the passage:
         # CPU 10
 
         # Need Eval
-        # AntGroupMIConfig(**
-        #   {
-        #     "company": "antgroup",
-        #     "model_name": "finix_s1_32b",
-        #     "date_code": "",
-        #     "temperature": 0.0,
-        #   }
-        # ),
 
         # Done But Review
         # OpenAIConfig(**{"threads": 16, "company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
@@ -617,6 +610,13 @@ Here is the passage:
 
 
         # # Completed Models
+        # AntGroupMIConfig(**
+        #   {
+        #     "model_name": "finix_s1_32b",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #   }
+        # ),
         # AnthropicConfig(**{"threads": 4, "company": "anthropic", "model_name": "claude-opus-4-5", "date_code": "20251101", "temperature": 0.0, "min_throttle_time": 2.0}),
         # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
         # GoogleConfig(**{"company": "google", "model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.01, "mini_throttle_time": 2.0}),
@@ -746,6 +746,42 @@ Here is the passage:
   ),
   EvalConfig(**
     {
+      "eval_name": "all_stats",
+      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
+      "hhem_version": "2.3",
+      "pipeline": ["aggregate"],
+      "output_dir": "output",
+      "overwrite_summaries": True,
+      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
+      "common_LLM_config": 
+        BasicLLMConfig(**
+          {
+            "temperature": 1.0, 
+            "max_tokens": 1024, 
+            "prompt": """
+You are a chat bot answering questions using data.
+You must stick to the answers provided solely by the text in the 
+passage provided. You are asked the question 'Provide a concise 
+summary of the following passage, covering the core pieces of 
+information described.'
+
+Just provide your answer without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
+
+If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
+
+"I am unable to summarize this text."
+  
+Here is the passage:
+{article}
+""",
+          }
+        ),
+      "per_LLM_configs": [
+      ]
+    }
+  ),
+  EvalConfig(**
+    {
       "eval_name": "fact_prompt",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
@@ -791,7 +827,7 @@ Here is the passage:
   ),
   EvalConfig(**
     {
-      "eval_name": "v1_dataset_live", #aka old_dataset
+      "eval_name": "v1_dataset_live", #Reference of the v1 dataset settings
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["summarize", "judge", "aggregate"],
@@ -822,530 +858,10 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
       ]
     }
   ),
-  EvalConfig(**
-    {
-      "eval_name": "all_stats",
-      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3",
-      "pipeline": ["aggregate"],
-      "output_dir": "output",
-      "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
-      "common_LLM_config": 
-        BasicLLMConfig(**
-          {
-            "temperature": 1.0, 
-            "max_tokens": 1024, 
-            "prompt": """
-You are a chat bot answering questions using data.
-You must stick to the answers provided solely by the text in the 
-passage provided. You are asked the question 'Provide a concise 
-summary of the following passage, covering the core pieces of 
-information described.'
-
-Just provide your answer without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
-
-If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
-
-"I am unable to summarize this text."
-  
-Here is the passage:
-{article}
-""",
-          }
-        ),
-      "per_LLM_configs": [
-      ]
-    }
-  ),
-  EvalConfig(**
-    {
-      "eval_name": "future_hdm",
-      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "HDM-2",
-      "pipeline": ["summarize"],
-      # "pipeline": ["judge"],
-      # "pipeline": ["aggregate"],
-      # "pipeline": ["judge", "aggregate"],
-      "output_dir": "output_future_hdm",
-      "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_v2.csv",
-      "common_LLM_config": 
-        BasicLLMConfig(**
-          {
-            "temperature": 1.0, 
-            "max_tokens": 8192, 
-            "prompt": """
-Your task is to provide a concise and factual summary for the given passage.
-
-Rules
-1. Summarize using only the information in the given passage. Do not infer. Do not use your internal knowledge.
-2. Do not provide a preamble or explanation, output only the summary.
-3. Summaries should never exceed 20 percent of the passage's length.
-4. Maintain a neutral tone.
-
-If you are unable to summarize the passage due to missing, unreadable, irrelevant or insufficient content, respond only with:
-"I am unable to summarize this passage."
-Here is the passage:
-{article}
-""",
-          }
-        ),
-      "per_LLM_configs": [
-        # Not Assigned
-        # # GPU # #
-        # OpenAIConfig(**{"company": "openai", "execution_mode": "gpu", "model_name": "gpt-oss-20b", "date_code": "", "temperature": 0.01}),
-        # IBMGraniteConfig(**
-        #   {
-        #     "company": "ibm-granite",
-        #     "model_name": "granite-3.2-8b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
-        #     "temperature": 0.01, # Cant be 0.0 has to be positive
-        #   }
-        # ),
-
-        # Incomplete API models
-        # AI21LabsConfig(** # Failde but un resolvable
-        #   {
-        #     "company": "ai21labs",
-        #     "model_name": "jamba-mini-1.7",
-        #     "date_code": "2025-07",
-        #     "temperature": 0.0
-        #   }
-        # ),
-        # AI21LabsConfig(** # failed but unresolvable
-        #   {
-        #     "company": "ai21labs",
-        #     "model_name": "jamba-large-1.7",
-        #     "date_code": "2025-07",
-        #     "temperature": 0.0
-        #   }
-        # ),
-        # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}), # failed need money
-
-
-        # CPU 1
-
-        # CPU 2
-
-        # CPU 3
-        ### MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
-
-        # CPU 4
-
-        # CPU 5
-
-        # CPU 6
-
-        # CPU 7
-
-        # CPU 8
-
-        # CPU 9
-
-        # CPU 10
-
-
-        # # Completed Models
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
-        ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
-        AntGroupMIConfig(**
-          {
-            "company": "antgroup",
-            "model_name": "antfinix-a1",
-            "date_code": "",
-            "temperature": 0.01,
-          }
-        ),
-        XAIConfig(**{"model_name": "grok-4-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
-
-        # # # CPU 2 # #
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
-        ## AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-
-        # # CPU2 R2
-        XAIConfig(**{"model_name": "grok-4-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
-
-        # # # CPU 3 # #
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
-
-        CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0, "max_tokens": 4096}),
-
-        # # CPU3 R2
-        ## CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0, "max_tokens": 4096}),
-
-        # # # CPU 4 # #
-        CohereConfig(**{"model_name": "command-a", "date_code": "03-2025", "temperature": 0.0}),
-        ## CohereConfig(**{"model_name": "command-r-plus", "date_code": "08-2024", "temperature": 0.0, "max_tokens": 4096}),
-
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0}),
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0}),
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
-
-        # # # CPU 5 # #
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0}),
-
-        # # # CPU 6 # #
-        ## MetaLlamaConfig(**
-        ##   {
-        ##     "company": "meta-llama",
-        ##     "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
-        ##     "temperature": 0.0
-        ##   }
-        ## ),
-        ## MetaLlamaConfig(**
-        ##   {
-        ##     "company": "meta-llama",
-        ##     "model_name": "Llama-4-Scout-17B-16E-Instruct",
-        ##     "temperature": 0.0
-        ##   }
-        ## ),
-        MetaLlamaConfig(**
-          {
-            "company": "meta-llama",
-            "model_name": "Llama-3.3-70B-Instruct-Turbo",
-            "temperature": 0.0
-          }
-        ),
-
-        ## MicrosoftConfig(**
-        ##   {
-        ##     "company": "microsoft",
-        ##     "model_name": "Phi-4-mini-instruct",
-        ##     "model_key": os.getenv("PHI_4_MINI_INSTRUCT_API_KEY"),
-        ##     "azure_endpoint": "https://hhem-lb-phi-4-mini-inst-resource.services.ai.azure.com/models",
-        ##     "temperature": 0.0,
-        ##   }
-        ## ),
-        MicrosoftConfig(**
-          {
-            "company": "microsoft",
-            "model_name": "Phi-4",
-            "model_key": os.getenv("PHI_4_API_KEY"),
-            "azure_endpoint": "https://hhem-lb-phi-4-resource.services.ai.azure.com/models",
-            "temperature": 0.0,
-          }
-        ),
-
-        # # # CPU 7 # #
-        ## MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2410", "temperature": 0.0}),
-        ## MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2410", "temperature": 0.0}),
-        MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-large", "date_code": "2411", "temperature": 0.0}),
-        ## MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-small", "date_code": "2501", "temperature": 0.0}),
-        ## MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
-
-        # # # CPU 8 # #
-        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
-
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
-        ## OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0}),
-        ## OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-nano", "date_code": "2025-08-07", "reasoning_effort":"minimal", "temperature": -1.0}),
-
-        # # # CPU 9 # #
-        ## OpenAIConfig(**{"company": "openai", "model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.0}),
-        ## OpenAIConfig(**{"company": "openai", "model_name": "gpt-4o", "date_code": "2024-08-06", "temperature": 0.0}),
-        ## OpenAIConfig(**{"company": "openai", "model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low"}),
-        ## OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
-        ## OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
-
-        # # # CPU 10 # #
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        ## ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
-
-        # # # CPU 11 # #
-        ## XAIConfig(**{"model_name": "grok-3", "temperature": 0.0, "min_throttle_time": 4.0}), # failed need money
-      ]
-    }
-  ),
-  EvalConfig(**
-    {
-      "eval_name": "hhem_prod_test",
-      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3-PROD",
-      # "pipeline": ["summarize"],
-      # "pipeline": ["judge"],
-      # "pipeline": ["aggregate"],
-      "pipeline": ["judge", "aggregate"],
-      "output_dir": "output_hhem_prod_test",
-      "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_v2.csv",
-      "common_LLM_config": 
-        BasicLLMConfig(**
-          {
-            "temperature": 1.0, 
-            "max_tokens": 8192, 
-            "prompt": """
-Your task is to provide a concise and factual summary for the given passage.
-
-Rules
-1. Summarize using only the information in the given passage. Do not infer. Do not use your internal knowledge.
-2. Do not provide a preamble or explanation, output only the summary.
-3. Summaries should never exceed 20 percent of the passage's length.
-4. Maintain a neutral tone.
-
-If you are unable to summarize the passage due to missing, unreadable, irrelevant or insufficient content, respond only with:
-"I am unable to summarize this passage."
-Here is the passage:
-{article}
-""",
-          }
-        ),
-      "per_LLM_configs": [
-        AntGroupMIConfig(**
-          {
-            "company": "antgroup",
-            "model_name": "antfinix-a1",
-            "date_code": "",
-            "temperature": 0.01,
-          }
-        ),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-      ]
-    }
-  ),
-  EvalConfig(**
-    {
-      "eval_name": "future_ofer_test",
-      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3",
-      # "pipeline": ["summarize"],
-      # "pipeline": ["judge"],
-      # "pipeline": ["aggregate"],
-      "pipeline": ["judge", "aggregate"],
-      "output_dir": "output_future_ofer_test",
-      "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_v2.csv",
-      "common_LLM_config": 
-        BasicLLMConfig(**
-          {
-            "temperature": 1.0, 
-            "max_tokens": 8192, 
-            "prompt": """
-Your task is to provide a concise and factual summary for the given passage.
-
-Rules
-1. Summarize using only the information in the given passage. Do not infer. Do not use your internal knowledge.
-2. Do not provide a preamble or explanation, output only the summary.
-3. Summaries should never exceed 20 percent of the passage's length.
-4. Maintain a neutral tone.
-
-If you are unable to summarize the passage due to missing, unreadable, irrelevant or insufficient content, respond only with:
-"I am unable to summarize this passage."
-Here is the passage:
-{article}
-""",
-          }
-        ),
-      "per_LLM_configs": [
-        AntGroupMIConfig(**
-          {
-            "company": "antgroup",
-            "model_name": "antfinix-a1",
-            "date_code": "",
-            "temperature": 0.01,
-          }
-        ),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-      ]
-    }
-  ),
-  EvalConfig(**
-    {
-      "eval_name": "v1_set",
-      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3",
-      # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["judge", "aggregate"],
-      # "pipeline": ["summarize"],
-      "output_dir": "output_v1",
-      "overwrite_summaries": True,
-      "source_article_path": "datasets/final_set_v1.csv",
-      "common_LLM_config": 
-        BasicLLMConfig(**
-          {
-            "temperature": 1.0, 
-            "max_tokens": 8192, 
-            "prompt": """
-You are a concise and factual summarizer and your job is to summarize the given passage.
-
-Rules
-1. Only summarize using the information in the given passage. Do not infer, invent or use internal knowledge.
-2. Do not provide a preamble or explanation, output only the summary.
-3. Summaries should never exceed 20 percent of the original text's length.
-4. Maintain the tone of the passage.
-
-If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
-"I am unable to summarize this text."
-Here is the passage:
-{article}
-""",
-          }
-        ),
-      "per_LLM_configs": [
-        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
-        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-      ]
-    }
-  ),
-  EvalConfig(**
-    {
-      "eval_name": "v0_set",
-      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3",
-      # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["judge", "aggregate"],
-      # "pipeline": ["summarize"],
-      "output_dir": "output_v0",
-      "overwrite_summaries": True,
-      "source_article_path": "datasets/final_set_v0.csv",
-      "common_LLM_config": 
-        BasicLLMConfig(**
-          {
-            "temperature": 1.0, 
-            "max_tokens": 8192, 
-            "prompt": """
-You are a concise and factual summarizer and your job is to summarize the given passage.
-Do not infer or invent information, only focus on the passage and its contents.
-Do not use external knowledge.
-Think about the answer as much as needed to do your job.
-The text will vary in length significantly
-
-Rules
-1. Do not provide a preamble or explanation, output only the summary.
-2. Summaries should never exceed 20 percent of the original texts length.
-3. For shorter texts provide a paragraph or paragraphs as needed.
-4. For longer texts outline the major sections and provide a paragraph summary for each one respectively
-5. Maintain the tone of the source material.
-6. Write in an objective manner.
-
-If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
-
-"I am unable to summarize this text."
-  
-Here is the passage:
-{article}
-""",
-          }
-        ),
-      "per_LLM_configs": [
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-      ]
-    }
-  ),
-  EvalConfig(**
-    {
-      "eval_name": "beta_set",
-      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3",
-      # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["judge", "aggregate"],
-      # "pipeline": ["summarize"],
-      "output_dir": "output_beta",
-      "overwrite_summaries": True,
-      "source_article_path": "datasets/beta_set.csv",
-      "common_LLM_config": 
-        BasicLLMConfig(**
-          {
-            "temperature": 1.0, 
-            "max_tokens": 2048, 
-            "prompt": """
-You are a chat bot answering questions using data.
-You must stick to the answers provided solely by the text in the 
-passage provided. You are asked the question 'Provide a concise 
-summary of the following passage, covering the core pieces of 
-information described.'
-
-Just provide your answer without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
-
-If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
-
-"I am unable to summarize this text."
-  
-Here is the passage:
-{article}
-""",
-          }
-        ),
-      "per_LLM_configs": [
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-minimal", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-      ]
-    }
-  ),
-  EvalConfig(**
-    {
-      "eval_name": "alpha_set",
-      "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3",
-      "pipeline": ["summarize", "judge", "aggregate"],
-      "output_dir": "output_alpha",
-      "overwrite_summaries": True,
-      "source_article_path": "datasets/alpha_set.csv",
-      "common_LLM_config": 
-        BasicLLMConfig(**
-          {
-            "temperature": 1.0, 
-            "max_tokens": 2048, 
-            "prompt": """
-You are a chat bot answering questions using data.
-You must stick to the answers provided solely by the text in the 
-passage provided. You are asked the question 'Provide a concise 
-summary of the following passage, covering the core pieces of 
-information described.'
-
-Just provide your answer without any prompt like "Here is the summary:" or any endings like "I hope I have answered your question."
-
-If you are unable to summarize the text due to missing, unreadable, irrelevant or insufficient content, respond only with:
-
-"I am unable to summarize this text."
-  
-Here is the passage:
-{article}
-""",
-          }
-        ),
-      "per_LLM_configs": [
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0}),
-        DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1-Terminus", "temperature": 0.0, "min_throttle_time": 4.0}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-      ]
-    }
-  ),
-  EvalConfig(**
+  EvalConfig(** # Migration Eval of previous old data on v1 dataset
     {
       "eval_name": "pre_2025-07",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
@@ -1859,7 +1375,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
       ]
     }
   ),
@@ -1895,7 +1410,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
       ]
     }
   ),
@@ -1929,7 +1443,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
       ]
     }
   ),
@@ -1965,7 +1478,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
       ]
     }
   ),
@@ -2044,23 +1556,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -2096,23 +1591,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -2148,23 +1626,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -2200,23 +1661,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -2252,23 +1696,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -2300,23 +1727,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -2347,23 +1757,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -2396,23 +1789,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -2443,23 +1819,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-        QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -2509,23 +1868,6 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-        # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-        # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
       ]
     }
   ),
@@ -2562,55 +1904,7 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        AnthropicConfig(**{"company": "anthropic", "model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0}),
       ]
     }
   ),
-#   EvalConfig(** # Not completed yet
-#     {
-#       "eval_name": "mask_predict_summs_eval",
-#       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-#       "hhem_version": "2.3",
-#       "pipeline": ["judge", "aggregate"],
-#       "output_dir": "output_mask_predict",
-#       "overwrite_summaries": True,
-#       "source_article_path": "datasets/leaderboard_dataset_revised_masked.csv",
-#       "common_LLM_config": 
-#         BasicLLMConfig(**
-#           {
-#             "temperature": 1.0, 
-#             "max_tokens": 8192, 
-#             "prompt": """
-# Continue the passage starting at the very next character after the given incomplete passage below. Write the next part as it would appear in the same document; it may span a couple words, multiple sentences, or paragraphs. Stop when it feels natural to conclude the passage.
-# 
-# Just provide your answer without any prompt like "Here is the answer:" or any endings like "I hope I have answered your question." Do not repeat the provided passage and do not add commentary, headings, quotes, or anything else.
-# 
-# If you cannot finish the passage, just say 'I cannot do it' and do not say anything else. 
-# 
-# Here is the passage:
-# {article}
-# """,
-#           }
-#         ),
-#       "per_LLM_configs": [
-#         GoogleConfig(**{"company": "google", "model_name": "gemini-2.0-flash", "date_code":"", "temperature": 0.0, "thinking_budget": -1}), #Odd bug with date code if its not set here?
-#         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0}),
-#         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0}),
-#         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen-max", "date_code": "2025-01-25", "temperature": 0.0}), # AKA Qwen2.5-Max
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen-plus", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen-turbo", "date_code": "2025-04-28", "enable_thinking": False, "temperature": 0.0}), # AKA Qwen2.5-Max
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-14b-instruct", "temperature": 0.0}),
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-32b-instruct", "temperature": 0.0}),
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-7b-instruct", "temperature": 0.0}),
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen2.5-72b-instruct", "temperature": 0.0}),
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-0.6b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-1.7b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-#         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
-#       ]
-#     }
-#   ),
 ]

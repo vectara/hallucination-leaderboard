@@ -11,7 +11,6 @@ from .. HDM_2 import HDM2
 from .. json_utils import append_record_to_jsonl
 from .. Logger import logger
 
-# TODO: Update to make it model name agnostic?
 def get_hhem_model(hhem_version: Literal["2.1-open", "2.3", "HDM-2"]):
     """
     Returns the appropriate HHEM model based on the version string.
