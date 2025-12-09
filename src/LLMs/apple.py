@@ -8,19 +8,19 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
-COMPANY = "apple" #Official company name on huggingface
+COMPANY = "apple"
 class AppleConfig(BasicLLMConfig):
     """Extended config for apple-specific properties"""
     company: Literal["apple"] = "apple"
     model_name: Literal[
         "OpenELM-3B-Instruct",
-    ] # Only model names manually added to this list are supported.
+    ]
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "gpu"
     endpoint: Literal["chat", "response"] = "chat"
 
 class AppleSummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
 
     class Config:
         extra = "ignore"
@@ -30,11 +30,9 @@ class AppleLLM(AbstractLLM):
     Class for models from apple
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
         "OpenELM-3B-Instruct": {
             "chat": 1
@@ -50,7 +48,6 @@ class AppleLLM(AbstractLLM):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     def summarize(self, prepared_text: str) -> str:
-        # Use self.model_fullname when referring to the model
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
@@ -59,7 +56,6 @@ class AppleLLM(AbstractLLM):
         elif self.local_model: 
             match self.local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
-                    print("Case 1")
                     tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf", add_bos_token=True)
 
                     messages = [
@@ -79,25 +75,7 @@ class AppleLLM(AbstractLLM):
 
                     summary = response
 
-                    # input_tensor = tokenizer.apply_chat_template(
-                    #     {"role": "user", "content": prepared_text},
-                    #     add_generation_prompt=True,
-                    #     return_tensors="pt"
-                    # )
-
-                    # outputs = self.local_model.generate(
-                    #     input_tensor.to(self.local_model.device),
-                    #     max_new_tokens=self.max_tokens
-                    # )
-
-                    # result = tokenizer.decode(
-                    #     outputs[0][input_tensor.shape[1]:],
-                    #     skip_special_tokens=True
-                    # )
-
-                    # summary = result
                 case 2: # Uses direct text input
-                    print("Case 2")
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
                     inputs = tokenizer(prepared_text, return_tensors="pt")
@@ -154,9 +132,8 @@ class AppleLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
