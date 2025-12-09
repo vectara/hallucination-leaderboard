@@ -64,6 +64,14 @@
     "avg_word_count": 66.2
   },
   {
+    "model_name": "antgroup/finix_s1_32b",
+    "date_code": "",
+    "hallucination_rate": 1.8,
+    "confidence_interval": -1,
+    "answer_rate": 99.5,
+    "avg_word_count": 172.4
+  },
+  {
     "model_name": "anthropic/claude-haiku-4-5-20251001",
     "date_code": "20251001",
     "hallucination_rate": 9.8,
