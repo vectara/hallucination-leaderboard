@@ -6,50 +6,39 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-# Import the Python package for the specific provider.
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 
 COMPANY = "rednote-hilab"
 
 class RednoteHilabConfig(BasicLLMConfig):
-    """Extended config for Rednote-specific properties"""
     company: Literal["rednote-hilab"] = "rednote-hilab"
-    model_name: Literal["rednote-model"] # Only model names manually added to this list are supported.
-    execution_mode: Literal["api"] = "api" # Rednote models can only be run via web api.
-    date_code: str # You must specify a date code for Rednote models.
+    model_name: Literal["rednote-model"]
+    execution_mode: Literal["api"] = "api"
+    date_code: str
 
 class RednoteHilabSummary(BasicSummary):
-    pass # Nothing additional to the BasicSummary class.
+    pass
 
 class RednoteHilabLLM(AbstractLLM):
     """
     Class for models from Rednote
-
-    Attributes:
-        local_model (AutoModelForCausalLM): local model for inference
-        model_name (str): Rednote style model name
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution.
-    client_mode_group = {} # Empty for Rednote models because they cannot be run via web api.
+    client_mode_group = {}
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
         "rednote-hilab/dots.llm1.inst": 1, # Uses chat template
         "rednote-hilab/dots.llm1.base": 2 # Uses direct text input
     }
 
     def __init__(self, config: RednoteHilabConfig):
-        # Ensure that the parameters passed into the constructor are of the type RednoteConfig.
-        
-        # Call parent constructor to inherit all parent properties
         super().__init__(config)
 
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            pass # Rednote models cannot be run via web api.
+            pass
         elif self.local_model:
             match self.local_mode_group[self.model_name]:
                 case 1: # Uses chat template
@@ -93,7 +82,7 @@ class RednoteHilabLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            pass # Rednote models cannot be run via web api.
+            pass
         elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in self.local_mode_group:
                 bnb_config = BitsAndBytesConfig(
@@ -112,9 +101,9 @@ class RednoteHilabLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            self.default_local_model_teardown()
+            pass
 
     def close_client(self):
         pass
