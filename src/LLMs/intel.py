@@ -5,19 +5,19 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-COMPANY = "Intel" #Official company name on huggingface
+COMPANY = "Intel"
 class IntelConfig(BasicLLMConfig):
     """Extended config for Intel-specific properties"""
     company: Literal["Intel"] = "Intel"
     model_name: Literal[
         "neural-chat-7b-v3-3",
-    ] # Only model names manually added to this list are supported.
+    ]
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
 
 class IntelSummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
 
     class Config:
         extra = "ignore"
@@ -27,14 +27,12 @@ class IntelLLM(AbstractLLM):
     Class for models from Intel
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
         "MODEL_NAME": {
             "chat": 1
         }
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: IntelConfig):
@@ -44,12 +42,11 @@ class IntelLLM(AbstractLLM):
         self.full_config = config
 
     def summarize(self, prepared_text: str) -> str:
-        # Use self.model_fullname when referring to the model
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match self.client_mode_group[self.model_name][self.endpoint]:
                 case 1:
-                    summary = None
+                    pass
         elif self.local_model: 
             pass
         else:
@@ -82,9 +79,8 @@ class IntelLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
