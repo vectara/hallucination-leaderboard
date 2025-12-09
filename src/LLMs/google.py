@@ -16,7 +16,6 @@ import replicate
 COMPANY = "google"
 
 class GoogleConfig(BasicLLMConfig):
-    """Extended config for Google-specific properties"""
     company: Literal["google"] = "google"
     model_name: Literal[
         "chat-bison-001",
@@ -53,39 +52,32 @@ class GoogleConfig(BasicLLMConfig):
         "gemma-2-9b-it", # Try local
         "google/flan-t5-large" # Use through huggingface
 
-    ] # Only model names manually added to this list are supported.
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
-    execution_mode: Literal["api", "gpu", "cpu"] = "api" # Google models can only be run via web api.
-    date_code: str = "", # You must specify a date code for Google models.
+    ]
+    endpoint: Literal["chat", "response"] = "chat"
+    execution_mode: Literal["api", "gpu", "cpu"] = "api"
+    date_code: str = "",
     thinking_budget: Literal[-1, 0] = 0 # -1 is dynamic thinking, 0 thinking is off
 
 class GoogleSummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
     thinking_budget: Literal[-1, 0] | None = None # -1 is dynamic thinking, 0 thinking is off
 
     class Config:
-        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
+        extra = "ignore"
 
 class GoogleLLM(AbstractLLM):
     """
     Class for models from Google
 
-    Attributes:
-        client (genai.Client): client associated with api calls
-        model_name (str): Google style model name
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution.
     client_mode_group = {
         "gemini-3-pro-preview": {
             "chat": 1
-        }, # 05-20
+        },
         "gemini-2.5-flash-preview": {
             "chat": 1
-        }, # 05-20
-        # "gemma-3-1b-it": {
-        #     "chat": 1
-        # },
+        },
         "gemma-3-4b-it": {
             "chat": 7
         },
@@ -97,7 +89,7 @@ class GoogleLLM(AbstractLLM):
         },
         "gemini-2.0-pro-exp": {
             "chat": 1
-        }, # 02-05
+        },
         "gemini-2.0-flash-001": {
             "chat": 1
         },
@@ -154,7 +146,6 @@ class GoogleLLM(AbstractLLM):
         },
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {
         "gemma-3-1b-it": {
             "chat": 1
@@ -168,9 +159,6 @@ class GoogleLLM(AbstractLLM):
     }
 
     def __init__(self, config: GoogleConfig):
-        # Ensure that the parameters passed into the constructor are of the type GoogleConfig.
-        
-        # Call parent constructor to inherit all parent properties
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
@@ -311,9 +299,9 @@ class GoogleLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            self.default_local_model_teardown()
+            pass
 
     def close_client(self):
         pass
