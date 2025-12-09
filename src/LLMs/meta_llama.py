@@ -9,7 +9,6 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "meta-llama"
 class MetaLlamaConfig(BasicLLMConfig):
-    """Extended config for Meta-specific properties"""
     company: Literal["meta-llama"] = "meta-llama" 
     model_name: Literal[
         "Llama-2-7b-chat-hf",
@@ -40,9 +39,9 @@ class MetaLlamaConfig(BasicLLMConfig):
         "Llama-3-8b-chat-hf*",
         "Llama-3-70b-chat-hf",
         "Llama-2-70b-hf" # Completion?
-    ] # Only model names manually added to this list are supported.
-    date_code: str = "" # do we need date code?
-    execution_mode: Literal["api"] = "api" # Is this company only API based?
+    ]
+    date_code: str = ""
+    execution_mode: Literal["api"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
 
 class MetaLlamaSummary(BasicSummary):
@@ -56,7 +55,6 @@ class MetaLlamaLLM(AbstractLLM):
     Class for models from Meta
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
         "Llama-4-Maverick-17B-128E-Instruct-FP8": {
             "chat": 1
@@ -105,7 +103,6 @@ class MetaLlamaLLM(AbstractLLM):
         } # Completion?
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: MetaLlamaConfig):
@@ -165,9 +162,8 @@ class MetaLlamaLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
