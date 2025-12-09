@@ -10,30 +10,28 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "zai-org"
 class ZhipuAIConfig(BasicLLMConfig):
-    """Extended config for z.ai-specific properties"""
     company: Literal["zai-org"] = "zai-org" 
     model_name: Literal[
         "GLM-4.5-AIR-FP8", # Together
         "glm-4p5", # Fireworks but using OpenAI
         "glm-4-9b-chat",
         "GLM-4.6"
-    ] # Only model names manually added to this list are supported.
-    date_code: str = "" # do we need date code?
-    execution_mode: Literal["api"] = "api" # only API based?
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    ]
+    date_code: str = ""
+    execution_mode: Literal["api"] = "api"
+    endpoint: Literal["chat", "response"] = "chat"
 
 class ZhipuAISummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
 
     class Config:
-        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
+        extra = "ignore"
 
 class ZhipuAILLM(AbstractLLM):
     """
     Class for models from z.ai
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
         "GLM-4.5-AIR-FP8":{
             "chat": 1,
@@ -49,7 +47,6 @@ class ZhipuAILLM(AbstractLLM):
         }
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: ZhipuAIConfig):
@@ -139,9 +136,8 @@ class ZhipuAILLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
