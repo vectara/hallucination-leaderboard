@@ -20,12 +20,13 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on December 05, 2025
+Last updated on December 09, 2025
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-05.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-09.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
+|antgroup/finix_s1_32b|1.8 %|98.2 %|99.5 %|172.4|
 |google/gemini-2.5-flash-lite|3.3 %|96.7 %|99.5 %|95.7|
 |microsoft/Phi-4|3.7 %|96.3 %|80.7 %|120.9|
 |meta-llama/Llama-3.3-70B-Instruct-Turbo|4.1 %|95.9 %|99.5 %|64.6|
@@ -33,20 +34,20 @@ Last updated on December 05, 2025
 |google/gemma-3-12b-it|4.4 %|95.6 %|97.4 %|89.7|
 |mistralai/mistral-large-2411|4.5 %|95.5 %|99.9 %|85.0|
 |qwen/qwen3-8b|4.8 %|95.2 %|99.9 %|83.6|
+|amazon/nova-2-lite-v1:0|5.1 %|94.9 %|99.6 %|94.1|
 |amazon/nova-pro-v1:0|5.1 %|94.9 %|99.3 %|66.2|
 |mistralai/mistral-small-2501|5.1 %|94.9 %|97.9 %|98.8|
-|amazon/nova-2-lite-v1:0|5.1 %|94.9 %|99.6 %|94.1|
 |ibm-granite/granite-4.0-h-small|5.2 %|94.8 %|100.0 %|107.4|
 |deepseek-ai/DeepSeek-V3.2-Exp|5.3 %|94.7 %|96.6 %|64.6|
 |qwen/qwen3-14b|5.4 %|94.6 %|99.9 %|111.1|
-|amazon/nova-micro-v1:0|5.5 %|94.5 %|100.0 %|100.0|
 |deepseek-ai/DeepSeek-V3.1|5.5 %|94.5 %|94.5 %|63.7|
+|amazon/nova-micro-v1:0|5.5 %|94.5 %|100.0 %|100.0|
 |openai/gpt-4.1-2025-04-14|5.6 %|94.4 %|99.9 %|91.7|
 |qwen/qwen3-4b|5.7 %|94.3 %|99.9 %|104.7|
 |xai-org/grok-3|5.8 %|94.2 %|93.0 %|95.9|
 |qwen/qwen3-32b|5.9 %|94.1 %|99.9 %|115.8|
-|deepseek-ai/DeepSeek-V3|6.1 %|93.9 %|97.5 %|81.7|
 |amazon/nova-lite-v1:0|6.1 %|93.9 %|99.9 %|91.8|
+|deepseek-ai/DeepSeek-V3|6.1 %|93.9 %|97.5 %|81.7|
 |deepseek-ai/DeepSeek-V3.2|6.3 %|93.7 %|92.6 %|62.0|
 |google/gemma-3-4b-it|6.4 %|93.6 %|67.3 %|77.4|
 |CohereLabs/command-r-plus-08-2024|6.9 %|93.1 %|95.0 %|91.5|
@@ -57,19 +58,19 @@ Last updated on December 05, 2025
 |meta-llama/Llama-4-Scout-17B-16E-Instruct|7.7 %|92.3 %|99.0 %|137.3|
 |google/gemini-2.5-flash|7.8 %|92.2 %|99.0 %|101.5|
 |meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8|8.2 %|91.8 %|100.0 %|106.0|
-|CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
+|CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
-|zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
 |CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
+|zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
 |openai/gpt-4o-2024-08-06|9.6 %|90.4 %|93.8 %|86.6|
 |anthropic/claude-haiku-4-5-20251001|9.8 %|90.2 %|99.5 %|115.1|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
+|CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
 |anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
-|CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
 |deepseek-ai/DeepSeek-R1|11.3 %|88.7 %|97.0 %|93.5|
 |anthropic/claude-opus-4-1-20250805|11.8 %|88.2 %|92.4 %|129.1|
 |anthropic/claude-opus-4-20250514|12.0 %|88.0 %|91.0 %|123.2|
@@ -83,8 +84,8 @@ Last updated on December 05, 2025
 |openai/gpt-5-high-2025-08-07|15.1 %|84.9 %|99.9 %|162.7|
 |xai-org/grok-4-1-fast-non-reasoning|17.8 %|82.2 %|98.5 %|87.5|
 |moonshotai/Kimi-K2-Instruct-0905|17.9 %|82.1 %|98.6 %|59.2|
-|openai/o4-mini-high-2025-04-16|18.6 %|81.4 %|99.2 %|127.7|
 |openai/o4-mini-low-2025-04-16|18.6 %|81.4 %|98.7 %|130.9|
+|openai/o4-mini-high-2025-04-16|18.6 %|81.4 %|99.2 %|127.7|
 |xai-org/grok-4-1-fast-reasoning|19.2 %|80.8 %|99.7 %|99.5|
 |mistralai/ministral-14b-2512|19.4 %|80.6 %|99.6 %|135.8|
 |xai-org/grok-4-fast-non-reasoning|19.7 %|80.3 %|99.2 %|141.9|
