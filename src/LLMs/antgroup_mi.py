@@ -12,7 +12,6 @@ import requests
 COMPANY = "antgroup"
 
 class AntGroupMIConfig(BasicLLMConfig):
-    """Extended config for AntGroup-MI-specific properties"""
     company: Literal["antgroup"] = "antgroup"
     model_name: Literal[
         "finix_s1_32b",
@@ -133,7 +132,6 @@ class AntGroupMILLM(AbstractLLM):
             completion = ""
             for line in response.iter_lines():
                 if line:
-                    # remove "data: " prefix and parse JSON
                     line_text = line.decode("utf-8")
                     if line_text.startswith("data: "):
                         json_str = line_text[6:]
@@ -179,8 +177,6 @@ class AntGroupMILLM(AbstractLLM):
             result = ""
             for line in response.iter_lines():
                 if line:
-                    # remove "data: " prefix and parse JSON
-                    # line_text = line.decode("utf-8")
                     if line.startswith(b"data: "):
                         json_str = line[5:]
                         if json_str.strip() == b"[DONE]":
@@ -190,7 +186,6 @@ class AntGroupMILLM(AbstractLLM):
                             if "choices" in chunk and chunk["choices"] and "delta" in chunk["choices"][0]:
                                 delta = chunk["choices"][0]["delta"]
                                 if "reasoning_content" in delta and delta["reasoning_content"]:
-                                    # skipping reasoning content for now
                                     pass
                                 elif "content" in delta and delta["content"]:
                                     result += delta["content"]

@@ -10,7 +10,6 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 COMPANY = "apple"
 class AppleConfig(BasicLLMConfig):
-    """Extended config for apple-specific properties"""
     company: Literal["apple"] = "apple"
     model_name: Literal[
         "OpenELM-3B-Instruct",

@@ -9,7 +9,6 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "anthropic"
 class AnthropicConfig(BasicLLMConfig):
-    """Extended config for Anthropic-specific properties"""
     company: Literal["anthropic"] = "anthropic"
     model_name: Literal[
         "claude-opus-4-5",

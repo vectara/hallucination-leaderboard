@@ -6,14 +6,12 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-# Import the Python package for the specific provider.
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from huggingface_hub import InferenceClient
 
 COMPANY = "allenai"
 
 class AllenAIConfig(BasicLLMConfig):
-    """Extended config for AllenAI-specific properties"""
     company: Literal["allenai"] = "allenai"
     model_name: Literal[
         "Olmo-3-32B-Think",

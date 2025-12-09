@@ -9,7 +9,6 @@ import boto3
 
 COMPANY = "amazon"
 class AmazonConfig(BasicLLMConfig):
-    """Extended config for amazon-specific properties"""
     company: Literal["amazon"] = "amazon"
     model_name: Literal[
         "nova-pro-v2",

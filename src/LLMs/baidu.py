@@ -10,7 +10,6 @@ from huggingface_hub import InferenceClient
 COMPANY = "baidu"
 
 class BaiduConfig(BasicLLMConfig):
-    """Extended config for baidu-specific properties"""
     company: Literal["baidu"] = "baidu"
     model_name: Literal[
         "ERNIE-4.5-VL-28B-A3B-Thinking"

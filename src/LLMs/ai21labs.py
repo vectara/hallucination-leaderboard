@@ -10,7 +10,6 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "ai21labs"
 class AI21LabsConfig(BasicLLMConfig):
-    """Extended config for AI21-specific properties"""
     company: Literal["ai21labs"] = "ai21labs"
     model_name: Literal[
         "AI21-Jamba-Mini-1.5",
