@@ -10,7 +10,6 @@ import json
 
 COMPANY = "vectara"
 
-
 class VectaraClient:
     def __init__(self, api_key: str, corpus_key: str):
         self.api_key = api_key
@@ -65,16 +64,8 @@ class VectaraClient:
         data = res.read()
         result = json.loads(data.decode("utf-8"))
 
-        # Extract the summary
         summary = result.get("summary", "No Summary Returned.")
         return summary
-
-        # Extract generated summary text
-        # try:
-        #     summary = result['response']['results'][0]['generated_text']
-        #     return summary
-        # except (KeyError, IndexError):
-        #     return "No summary returned."
 
 class VectaraConfig(BasicLLMConfig):
     """Extended config for vectara-specific properties"""
@@ -83,43 +74,34 @@ class VectaraConfig(BasicLLMConfig):
         "manual_short_summary",
         "manual_long_summary",
         "mockingbird-2.0"
-    ] # Only model names manually added to this list are supported.
-    date_code: str = "" # do we need date code?
-    execution_mode: Literal["api"] = "api" # only API based?
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    ]
+    date_code: str = ""
+    execution_mode: Literal["api"] = "api"
+    endpoint: Literal["chat", "response"] = "chat"
 
 class VectaraSummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
 
     class Config:
-        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
+        extra = "ignore"
 
 class VectaraLLM(AbstractLLM):
     """
     Class for models from vectara
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
-        "manual_short_summary":{
-            "chat": 0
-        },
-        "manual_long_summary":{
-            "chat": 0
-        },
         "mockingbird-2.0":{
             "chat": 1
         }
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: VectaraConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
-        # self.reasoning_effort = config.reasoning_effort
         self.full_config = config
 
     def summarize(self, prepared_text: str) -> str:
@@ -160,9 +142,8 @@ class VectaraLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
