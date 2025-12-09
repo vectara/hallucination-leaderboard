@@ -11,33 +11,28 @@ from huggingface_hub import InferenceClient
 from together import Together
 from openai import OpenAI
 
-"""
-Unique Notes:
-"""
-
 COMPANY = "moonshotai"
 class MoonshotAIConfig(BasicLLMConfig):
-    """Extended config for moonshotai-specific properties"""
     company: Literal["moonshotai"] 
     model_name: Literal[
         "Kimi-K2-Instruct",
         "kimi-k2-thinking"
-    ] # Only model names manually added to this list are supported.
+    ]
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    endpoint: Literal["chat", "response"] = "chat"
 
 class MoonshotAISummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
 
     class Config:
-        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
+        extra = "ignore"
 
 class MoonshotAILLM(AbstractLLM):
     """
     Class for models from moonshotai
     """
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
+
     client_mode_group = {
         "Kimi-K2-Instruct": {
             "chat": 2
@@ -47,7 +42,6 @@ class MoonshotAILLM(AbstractLLM):
         },
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: MoonshotAIConfig):
@@ -111,8 +105,6 @@ class MoonshotAILLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            # if self.model_name in self.client_mode_group:
-            #     self.client = InferenceClient(model=self.huggingface_name)
             api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
             assert api_key is not None, f"{COMPANY.upper()} API key not found in environment variable {COMPANY.upper()}_API_KEY"
             if self.model_name in self.client_mode_group:
@@ -133,9 +125,8 @@ class MoonshotAILLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
