@@ -11,7 +11,6 @@ from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "microsoft"
 class MicrosoftConfig(BasicLLMConfig):
-    """Extended config for Microsoft-specific properties"""
     company: Literal["microsoft"] 
     model_name: Literal[
         "Orca-2-13b",
@@ -28,10 +27,10 @@ class MicrosoftConfig(BasicLLMConfig):
         "Phi-4",
         "microsoft-phi-2", # Resource not active
         "microsoft-Orca-2-13b" # Resource not active
-    ] # Only model names manually added to this list are supported.
+    ]
     model_key: str = "NoneGiven"
-    date_code: str = "" # do we need date code?
-    execution_mode: Literal["api"] = "api" # Is this company only API based?
+    date_code: str = ""
+    execution_mode: Literal["api"] = "api"
     azure_endpoint: str = "NoneGiven"
     endpoint: Literal["chat", "response"] = "chat"
 
@@ -46,7 +45,6 @@ class MicrosoftLLM(AbstractLLM):
     Class for models from Meta
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
         "Phi-4-mini-instruct": {
             "chat": 1
@@ -62,7 +60,6 @@ class MicrosoftLLM(AbstractLLM):
         }
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: MicrosoftConfig):
@@ -123,9 +120,8 @@ class MicrosoftLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
