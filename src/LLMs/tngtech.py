@@ -10,7 +10,6 @@ from .. data_model import ModelInstantiationError, SummaryError
 COMPANY = "tngtech"
 
 class TngTechConfig(BasicLLMConfig):
-    """Extended config for tngtech-specific properties"""
     company: Literal["tngtech"]
     model_name: Literal[
         "DeepSeek-TNG-R1T2-Chimera"
@@ -28,10 +27,6 @@ class TngTechSummary(BasicSummary):
 class TngTechLLM(AbstractLLM):
     """
     Class for models from TngTech
-
-    Attributes:
-        client (OpenAI): client associated with api calls
-        model_name (str): TngTech style model name
     """
 
     client_mode_group = {
@@ -40,14 +35,10 @@ class TngTechLLM(AbstractLLM):
         }
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: TngTechConfig):
-
-        # Call parent constructor to inherit all parent properties
         super().__init__(config)
-
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.model_fullname = f"{COMPANY}/{self.model_name}"
@@ -88,14 +79,13 @@ class TngTechLLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode == "local":
-            pass # OpenAI models cannot be run locally.
+            pass
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
-            pass # OpenAI models cannot be run locally.
+            pass
 
     def close_client(self):
         pass
