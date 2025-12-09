@@ -5,47 +5,35 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-#TODO: Rename  qcri
-
-# Import the Python package for the specific provider.
 from openai import OpenAI
 
-COMPANY = "qcri" # previously fanar
+COMPANY = "qcri"
 
 class QCRIConfig(BasicLLMConfig):
     """Extended config for Fanar-specific properties"""
     company: Literal["qcri"] = "qcri"
-    model_name: Literal["fanar-model"] # Only model names manually added to this list are supported.
-    execution_mode: Literal["api"] = "api" # Fanar models can only be run via web api.
-    date_code: str # You must specify a date code for Fanar models.
+    model_name: Literal["fanar-model"]
+    execution_mode: Literal["api"] = "api"
+    date_code: str
 
 class QCRISummary(BasicSummary):
-    pass # Nothing additional to the BasicSummary class.
+    pass
 
 class QCRIJudgment(BasicJudgment):
-    pass # Fanar does not have fields beyond BasicJudgment.
+    pass
 
 class QCRILLM(AbstractLLM):
     """
     Class for models from Fanar
-
-    Attributes:
-        client (OpenAI): client associated with api calls
-        model_name (str): Fanar style model name
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution.
     client_mode_group = {
         "Fanar": 1
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
-    local_mode_group = {} # Empty for Fanar models because they cannot be run locally.
+    local_mode_group = {}
 
     def __init__(self, config: QCRIConfig):
-        # Ensure that the parameters passed into the constructor are of the type FanarConfig.
-        
-        # Call parent constructor to inherit all parent properties
         super().__init__(config)
 
     def summarize(self, prepared_text: str) -> str:
@@ -60,7 +48,7 @@ class QCRILLM(AbstractLLM):
                     )
                     summary = chat_package.choices[0].message.content
         elif self.local_model:
-            pass # Fanar models cannot be run locally.
+            pass
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
@@ -81,14 +69,13 @@ class QCRILLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode == "local":
-            pass # Fanar models cannot be run locally.
+            pass
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
-            pass # Fanar models cannot be run locally.
+            pass
 
     def close_client(self):
         pass
