@@ -7,17 +7,8 @@ from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
-"""
-Unique Notes:
-
-qwen-max
-"""
-
-#TODO: Rename Qwen
-
-COMPANY = "qwen" # Previously alibaba
+COMPANY = "qwen"
 class QwenConfig(BasicLLMConfig):
-    """Extended config for Alibaba-specific properties"""
     company: Literal["qwen"] 
     model_name: Literal[
         "Qwen2-72B-Instruct",
@@ -58,25 +49,22 @@ class QwenConfig(BasicLLMConfig):
         "qwen2.5-32b-instruct", 
         "qwen2.5-14b-instruct", 
         "qwen2.5-7b-instruct", 
-    ] # Only model names manually added to this list are supported.
-    date_code: str = "" # do we need date code for ali baba?
-    execution_mode: Literal["api"] = "api" # Is Alibaba only API based?
-    endpoint: Literal["chat", "response"] = "chat" # The endpoint to use for the OpenAI API. Chat means chat.completions.create(), response means responses.create().
+    ]
+    date_code: str = ""
+    execution_mode: Literal["api"] = "api"
+    endpoint: Literal["chat", "response"] = "chat"
     thinking_tokens: bool = None
     enable_thinking: bool = None
 
 class QwenSummary(BasicSummary):
-    endpoint: Literal["chat", "response"] | None = None # No default. Needs to be set from from LLM config.
+    endpoint: Literal["chat", "response"] | None = None
     enable_thinking: bool | None = None
 
     class Config:
-        extra = "ignore" # fields that are not in OpenAISummary nor BasicSummary are ignored.
+        extra = "ignore"
 
 class QwenLLM(AbstractLLM):
-    """
-    Class for models from Alibaba
-    """
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
+
     client_mode_group = {
         "Qwen3-235B-A22B": {
             "chat": 2
@@ -137,7 +125,6 @@ class QwenLLM(AbstractLLM):
         }
     }
 
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
     local_mode_group = {}
 
     def __init__(self, config: QwenConfig):
@@ -204,9 +191,8 @@ class QwenLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):
