@@ -18,7 +18,7 @@ class AI21LabsConfig(BasicLLMConfig):
         "jamba-mini-1.7",
         "jamba-large-1.6", # Deprecated
         "jamba-mini-1.6", # Deprecated
-    ] # Only model names manually added to this list are supported.
+    ]
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
@@ -36,7 +36,6 @@ class AI21LabsLLM(AbstractLLM):
     Class for models from AI21
     """
 
-    # In which way to run the model via web api. Empty dict means not supported for web api execution. 
     client_mode_group = {
         "jamba-large-1.7": {
             "chat": 1
@@ -49,9 +48,6 @@ class AI21LabsLLM(AbstractLLM):
         },
         "jamba-mini-1.6": {
             "chat": 1
-        },
-        "AI21-Jamba-Mini-1.5": { # No defined summary logic
-            "chat": 100
         },
     }
 
@@ -94,13 +90,6 @@ class AI21LabsLLM(AbstractLLM):
         #     raise ClientOrLocalNotInitializedError(self.model_name)
         return summary
 
-    # def setup(self):
-    #     if self.valid_client_model():
-    #         api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-    #         self.client = anthropic.Client(api_key=api_key)
-    #     elif self.valid_local_model():
-    #         pass
-
     def setup(self):
         if self.execution_mode == "api":
             if self.model_name in self.client_mode_group:
@@ -118,9 +107,8 @@ class AI21LabsLLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            # self.default_local_model_teardown()
             pass
 
     def close_client(self):

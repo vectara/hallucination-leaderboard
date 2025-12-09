@@ -108,9 +108,9 @@ class _01AILLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            self.close_client()
+            pass
         elif self.local_model:
-            self.default_local_model_teardown()
+            pass
 
     def close_client(self):
         pass
