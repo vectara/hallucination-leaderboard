@@ -153,7 +153,7 @@ class HHEM_2_3_API():
     def __str__(self):
         return "HHEM-2.3-API"
 
-    def evaluate_factual_consistency(summary: str, article: str) -> dict[str, Any]:
+    def evaluate_factual_consistency(self, article: str, summary: str) -> dict[str, Any]:
         """Evaluate factual consistency using HHEM"""
         api_key = os.getenv(f"VECTARA_HHEM_API_KEY")
         
@@ -184,11 +184,11 @@ class HHEM_2_3_API():
             raise RuntimeError(f"Failed to parse HHEM response: {e}")
 
     def predict(self, premise: str, hypothesis: str) -> HHEMOutput:
+        # TODO: Ensure we get a response for every judgement, if not log a critical error.
         premise = clean_string(premise)
         hypothesis = clean_string(hypothesis)
         threshold = 0.5
-        # TODO: Verify correct otder, should be summary, article
-        hhem_score = self.evaluate_factual_consistency(premise, hypothesis)
+        hhem_score = self.evaluate_factual_consistency(premise, hypothesis)['score']
         hhem_pred = 0 if hhem_score < threshold else 1
 
         return HHEMOutput(score=hhem_score, label=hhem_pred)
