@@ -1,6 +1,10 @@
 from typing import List, Literal, Dict
 import re
 import string
+import requests
+import os
+import json
+from typing import Any
 
 import torch
 from pydantic import BaseModel
@@ -97,6 +101,7 @@ class HHEM_2_3():
         return HHEMOutput(score=simple_scores[0], label=preds[0])
 
 class HHEM_2_3_PROD():
+    """GPU ran but using identical logic as production environment"""
     def __init__(self):
         self.PROMPT_TEMPLATE = "Determine if the hypothesis is true given the premise?\n\nPremise: {text1}\n\nHypothesis: {text2}"
 
@@ -137,6 +142,54 @@ class HHEM_2_3_PROD():
         logits = torch.softmax(logits, dim=-1)
         hhem_pred = logits.argmax(dim=-1).item()
         hhem_score = logits[1].item()
+
+        return HHEMOutput(score=hhem_score, label=hhem_pred)
+
+class HHEM_2_3_API():
+    """Get HHEM results from Vectara API"""
+    def __init__(self):
+        self.PROMPT_TEMPLATE = "Determine if the hypothesis is true given the premise?\n\nPremise: {text1}\n\nHypothesis: {text2}"
+
+    def __str__(self):
+        return "HHEM-2.3-API"
+
+    def evaluate_factual_consistency(summary: str, article: str) -> dict[str, Any]:
+        """Evaluate factual consistency using HHEM"""
+        api_key = os.getenv(f"VECTARA_HHEM_API_KEY")
+        
+        payload = {
+            "generated_text": summary,
+            "source_texts": [article]
+        }
+        
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "x-api-key": api_key
+        }
+        
+        try:
+            response = requests.post(
+                "https://api.vectara.io/v2/evaluate_factual_consistency",
+                json=payload,
+                headers=headers,
+                timeout=30
+            )
+            response.raise_for_status()
+            return response.json()
+            
+        except requests.exceptions.RequestException as e:
+            raise RuntimeError(f"HHEM API request failed: {e}")
+        except json.JSONDecodeError as e:
+            raise RuntimeError(f"Failed to parse HHEM response: {e}")
+
+    def predict(self, premise: str, hypothesis: str) -> HHEMOutput:
+        premise = clean_string(premise)
+        hypothesis = clean_string(hypothesis)
+        threshold = 0.5
+        # TODO: Verify correct otder, should be summary, article
+        hhem_score = self.evaluate_factual_consistency(premise, hypothesis)
+        hhem_pred = 0 if hhem_score < threshold else 1
 
         return HHEMOutput(score=hhem_score, label=hhem_pred)
 
