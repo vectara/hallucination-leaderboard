@@ -13,12 +13,14 @@ from .. data_model import ModelInstantiationError, SummaryError
 COMPANY = "openai"
 
 class OpenAIConfig(BasicLLMConfig):
-    company: Literal["openai"]
+    company: Literal["openai"] = "openai"
     model_name: Literal[
         "chatgpt-4o",
         "gpt-4.5-preview",
         "o1-preview",
 
+        "gpt-5.2-high",
+        "gpt-5.2-low",
         "gpt-5.1-high",
         "gpt-5.1-low",
         "gpt-5-high",
@@ -62,6 +64,14 @@ class OpenAILLM(AbstractLLM):
     """
 
     client_mode_group = {
+        "gpt-5.2-low": {
+            "chat": 15,
+            "api_type": "openai"
+        },
+        "gpt-5.2-high": {
+            "chat": 16,
+            "api_type": "openai"
+        },
         "gpt-5.1-low": {
             "chat": 13,
             "api_type": "openai"
@@ -183,6 +193,15 @@ class OpenAILLM(AbstractLLM):
         if self.model_name in self.local_mode_group:
             self.model_fullname = f"openai/{self.model_fullname}"
 
+    def extract_summary(self, resp):
+        for item in resp.output:
+            if getattr(item, "type", None) == "message":
+                if getattr(item, "content", None):
+                    for c in item.content:
+                        if getattr(c, "text", None):
+                            return c.text
+        return ""
+
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
@@ -274,6 +293,28 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = chat_package.output[1].content[0].text
+                case 15: # gpt-5.2-low
+                    chat_package = self.client.responses.create(
+                        model="gpt-5.2-2025-12-11", # need to talk about this case
+                        input=prepared_text,
+                        max_output_tokens=self.max_tokens,
+                        reasoning={
+                            "effort": "low"
+                        }
+                    )
+                    self.temperature = chat_package.temperature
+                    summary = self.extract_summary(chat_package)
+                case 16: # gpt-5.2-high
+                    chat_package = self.client.responses.create(
+                        model="gpt-5.2-2025-12-11", # need to talk about this case
+                        input=prepared_text,
+                        max_output_tokens=self.max_tokens,
+                        reasoning={
+                            "effort": "high"
+                        }
+                    )
+                    self.temperature = chat_package.temperature
+                    summary = self.extract_summary(chat_package)
                 case 8: # gpt-oss-120b not supported on open ai and too big to run locally, using together
                     together_name = f"openai/{self.model_fullname}"
                     response = self.client.chat.completions.create(

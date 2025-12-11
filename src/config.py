@@ -134,7 +134,7 @@ Here is the passage:
         # AmazonConfig(**{"model_name": "nova-pro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
         # AmazonConfig(**{"model_name": "nova-micro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
         # AmazonConfig(**{"model_name": "nova-2-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0}),
-        AmazonConfig(**{"model_name": "nova-pro-v2", "temperature": 0.0, "min_throttle_time": 2.0}),
+        # AmazonConfig(**{"model_name": "nova-pro-v2", "temperature": 0.0, "min_throttle_time": 2.0}),
         # AntGroupMIConfig(**
         #   {
         #     "model_name": "antfinix-ir1",
@@ -431,6 +431,8 @@ Here is the passage:
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
+        OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
+        OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-low", "date_code": "2025-11-13", "reasoning_effort": "low", "temperature": -1.0, "max_tokens": 32768}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
@@ -519,8 +521,8 @@ Here is the passage:
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
-      # "pipeline": ["summarize"],
-      "pipeline": ["judge", "aggregate"],
+      "pipeline": ["summarize"],
+      # "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",
@@ -581,11 +583,13 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
+        # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
 
         # CPU 2
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
 
         # CPU 3
+        # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0}),
 
         # CPU 4
 

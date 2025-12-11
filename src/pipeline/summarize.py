@@ -225,37 +225,91 @@ def generate_summaries_for_one_llm_multithreaded(
     wt = threading.Thread(target=writer)
     wt.start()
 
-    # WORKER FUNCTION
+    
     def worker(article_text, article_id):
-        llm = llm_factory(eval_config, llm_config)
-        with llm as m:
-            @retry(
-                retry=retry_if_exception_type(is_rate_limit_error),
-                wait=wait_exponential(multiplier=1, min=2, max=60),
-                stop=stop_after_attempt(10)
-            )
-            def summarize_with_retry(text):
-                return m.try_to_summarize_one_article(text)
-            summary = summarize_with_retry(article_text)
-
+        try:
+            llm = llm_factory(eval_config, llm_config)
+            with llm as m:
+                @retry(
+                    retry=retry_if_exception_type(is_rate_limit_error),
+                    wait=wait_exponential(multiplier=1, min=2, max=60),
+                    stop=stop_after_attempt(10)
+                )
+                def summarize_with_retry(text):
+                    return m.try_to_summarize_one_article(text)
+    
+                summary = summarize_with_retry(article_text)
+    
+                summary_uid = generate_summary_uid(
+                    m.model_fullname,
+                    summary,
+                    current_date
+                )
+    
+                record_data = {
+                    "article_id": article_id,
+                    "summary_uid": summary_uid,
+                    "summary": summary,
+                    "eval_name": eval_name,
+                    "summary_date": eval_date,
+                    **m.__dict__
+                }
+                record_data.pop("prompt", None)
+    
+                record = LLM_SUMMARY_CLASS(**record_data)
+                q.put(record.model_dump())
+    
+        except Exception as e:
+            # ALWAYS RECORD AN ERROR, NEVER DROP
             summary_uid = generate_summary_uid(
                 m.model_fullname,
-                summary,
+                "THREAD ERROR",
                 current_date
             )
-
-            record_data = {
+            error_record = {
                 "article_id": article_id,
                 "summary_uid": summary_uid,
-                "summary": summary,
+                "summary": f"THREAD ERROR",
                 "eval_name": eval_name,
                 "summary_date": eval_date,
                 **m.__dict__
             }
-            record_data.pop("prompt", None)
+            error_record.pop("prompt", None)
+            error_record = LLM_SUMMARY_CLASS(**error_record)
+            q.put(error_record)
+            logger.error(f"Worker failed for article_id={article_id}: {e}")
 
-            record = LLM_SUMMARY_CLASS(**record_data)
-            q.put(record.model_dump())
+    # # WORKER FUNCTION
+    # def worker(article_text, article_id):
+    #     llm = llm_factory(eval_config, llm_config)
+    #     with llm as m:
+    #         @retry(
+    #             retry=retry_if_exception_type(is_rate_limit_error),
+    #             wait=wait_exponential(multiplier=1, min=2, max=60),
+    #             stop=stop_after_attempt(10)
+    #         )
+    #         def summarize_with_retry(text):
+    #             return m.try_to_summarize_one_article(text)
+    #         summary = summarize_with_retry(article_text)
+
+    #         summary_uid = generate_summary_uid(
+    #             m.model_fullname,
+    #             summary,
+    #             current_date
+    #         )
+
+    #         record_data = {
+    #             "article_id": article_id,
+    #             "summary_uid": summary_uid,
+    #             "summary": summary,
+    #             "eval_name": eval_name,
+    #             "summary_date": eval_date,
+    #             **m.__dict__
+    #         }
+    #         record_data.pop("prompt", None)
+
+    #         record = LLM_SUMMARY_CLASS(**record_data)
+    #         q.put(record.model_dump())
 
     # THREAD EXECUTOR
     futures = []
