@@ -584,13 +584,13 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
+        # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
 
         # CPU 2
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
 
         # CPU 3
-        OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0}),
+        # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0}),
 
         # CPU 4
 
@@ -636,6 +636,8 @@ Here is the passage:
         # AmazonConfig(**{"model_name": "nova-micro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
         # AmazonConfig(**{"model_name": "nova-2-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0}),
         # AmazonConfig(**{"model_name": "nova-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # Capped at 1024
+        # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
+        # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0}),
 
 
         # AntGroupMIConfig(**
