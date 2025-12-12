@@ -54,8 +54,8 @@ eval_configs = [
       "eval_name": "test",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-API",
-      # "pipeline": ["summarize", "judge", "aggregate"],
-      "pipeline": ["judge", "aggregate"],
+      "pipeline": ["summarize"],
+      # "pipeline": ["judge", "aggregate"],
       "output_dir": "output_test",
       "overwrite_summaries": True,
       "source_article_path": "datasets/test_articles.csv",
@@ -129,7 +129,8 @@ Here is the passage:
         #   }
         # ),
 
-        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
+        # AllenAIConfig(**{"threads": 3, "model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
+        AllenAIConfig(**{"model_name": "Olmo-3-7B-Think", "temperature": 0.0, "execution_mode": "gpu"}),
 
         # AmazonConfig(**{"model_name": "nova-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # Capped at 1024
         # AmazonConfig(**{"model_name": "nova-pro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
@@ -434,7 +435,7 @@ Here is the passage:
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
         # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
         # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0}),
-        OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
+        # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-low", "date_code": "2025-11-13", "reasoning_effort": "low", "temperature": -1.0, "max_tokens": 32768}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 4096}),
         # OpenAIConfig(**{"threads": 3, "company": "openai", "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32000}),
