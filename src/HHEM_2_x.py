@@ -6,7 +6,7 @@ import os
 import json
 from typing import Any
 import time
-from Logger import logger
+from . Logger import logger
 
 import torch
 from pydantic import BaseModel
