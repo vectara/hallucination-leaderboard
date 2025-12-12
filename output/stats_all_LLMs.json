@@ -416,6 +416,22 @@
     "avg_word_count": 165.5
   },
   {
+    "model_name": "openai/gpt-5.2-high-2025-12-11",
+    "date_code": "2025-12-11",
+    "hallucination_rate": 10.8,
+    "confidence_interval": -1,
+    "answer_rate": 100,
+    "avg_word_count": 186.3
+  },
+  {
+    "model_name": "openai/gpt-5.2-low-2025-12-11",
+    "date_code": "2025-12-11",
+    "hallucination_rate": 8.4,
+    "confidence_interval": -1,
+    "answer_rate": 100,
+    "avg_word_count": 126.5
+  },
+  {
     "model_name": "openai/gpt-oss-120b",
     "date_code": "",
     "hallucination_rate": 14.2,
