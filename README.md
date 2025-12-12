@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on December 9, 2025
+Last updated on December 11, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-09.png)
 
@@ -58,6 +58,7 @@ Last updated on December 9, 2025
 |meta-llama/Llama-4-Scout-17B-16E-Instruct|7.7 %|92.3 %|99.0 %|137.3|
 |google/gemini-2.5-flash|7.8 %|92.2 %|99.0 %|101.5|
 |meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8|8.2 %|91.8 %|100.0 %|106.0|
+|openai/gpt-5.2-low-2025-12-11|8.4 %|91.6 %|100.0 %|126.5|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
@@ -68,6 +69,7 @@ Last updated on December 9, 2025
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
+|openai/gpt-5.2-high-2025-12-11|10.8 %|89.2 %|100.0 %|186.3|
 |anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
 |openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
