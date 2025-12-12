@@ -184,6 +184,9 @@ class HHEM_2_3_API():
 
     def get_hhem_score(self, article: str, summary: str) -> dict[str, Any]:
         api_key = os.getenv(f"VECTARA_HHEM_API_KEY")
+        assert api_key is not None, (
+            f"VECTARA_HHEM_API_KEY not found in environment variable "
+        )
         
         payload = {
             "generated_text": summary,
