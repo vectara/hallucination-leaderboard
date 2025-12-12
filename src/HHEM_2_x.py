@@ -5,6 +5,8 @@ import requests
 import os
 import json
 from typing import Any
+import time
+from Logger import logger
 
 import torch
 from pydantic import BaseModel
@@ -149,12 +151,38 @@ class HHEM_2_3_API():
     """Get HHEM results from Vectara API"""
     def __init__(self):
         self.PROMPT_TEMPLATE = "Determine if the hypothesis is true given the premise?\n\nPremise: {text1}\n\nHypothesis: {text2}"
+        self.max_retries = 6
+        self.retry_delay = 1
 
     def __str__(self):
         return "HHEM-2.3-API"
 
-    def evaluate_factual_consistency(self, article: str, summary: str) -> dict[str, Any]:
-        """Evaluate factual consistency using HHEM"""
+    def try_to_get_hhem_score(self, article: str, summary: str) -> dict[str, Any]:
+        last_exception = None
+
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                return self.get_hhem_score(article, summary)
+
+            except Exception as e:
+                last_exception = e
+                print(f"[HHEM Score] Attempt {attempt}/{self.max_retries} failed: {e}")
+                logger.warning(
+                    f"HHEM Score attempt {attempt}/{self.max_retries} failed: {e}"
+                )
+
+                if attempt < self.max_retries:
+                    backoff = self.retry_delay * (2 ** (attempt - 1))
+                    time.sleep(backoff)
+
+        logger.critical(
+            f"Failed to get HHEM score after {self.max_retries} attempts: {last_exception}"
+        )
+        raise RuntimeError(
+            f"Failed to get HHEM score after {self.max_retries} attempts: {last_exception}"
+        )
+
+    def get_hhem_score(self, article: str, summary: str) -> dict[str, Any]:
         api_key = os.getenv(f"VECTARA_HHEM_API_KEY")
         
         payload = {
@@ -176,7 +204,7 @@ class HHEM_2_3_API():
                 timeout=30
             )
             response.raise_for_status()
-            return response.json()
+            return response.json()['score']
             
         except requests.exceptions.RequestException as e:
             raise RuntimeError(f"HHEM API request failed: {e}")
@@ -184,11 +212,10 @@ class HHEM_2_3_API():
             raise RuntimeError(f"Failed to parse HHEM response: {e}")
 
     def predict(self, premise: str, hypothesis: str) -> HHEMOutput:
-        # TODO: Ensure we get a response for every judgement, if not log a critical error.
         premise = clean_string(premise)
         hypothesis = clean_string(hypothesis)
         threshold = 0.5
-        hhem_score = self.evaluate_factual_consistency(premise, hypothesis)['score']
+        hhem_score = self.try_to_get_hhem_score(premise, hypothesis)
         hhem_pred = 0 if hhem_score < threshold else 1
 
         return HHEMOutput(score=hhem_score, label=hhem_pred)
