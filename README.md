@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on December 09, 2025
+Last updated on December 12, 2025
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-09.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-12.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -46,8 +46,8 @@ Last updated on December 09, 2025
 |qwen/qwen3-4b|5.7 %|94.3 %|99.9 %|104.7|
 |xai-org/grok-3|5.8 %|94.2 %|93.0 %|95.9|
 |qwen/qwen3-32b|5.9 %|94.1 %|99.9 %|115.8|
-|amazon/nova-lite-v1:0|6.1 %|93.9 %|99.9 %|91.8|
 |deepseek-ai/DeepSeek-V3|6.1 %|93.9 %|97.5 %|81.7|
+|amazon/nova-lite-v1:0|6.1 %|93.9 %|99.9 %|91.8|
 |deepseek-ai/DeepSeek-V3.2|6.3 %|93.7 %|92.6 %|62.0|
 |google/gemma-3-4b-it|6.4 %|93.6 %|67.3 %|77.4|
 |CohereLabs/command-r-plus-08-2024|6.9 %|93.1 %|95.0 %|91.5|
@@ -58,9 +58,10 @@ Last updated on December 09, 2025
 |meta-llama/Llama-4-Scout-17B-16E-Instruct|7.7 %|92.3 %|99.0 %|137.3|
 |google/gemini-2.5-flash|7.8 %|92.2 %|99.0 %|101.5|
 |meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8|8.2 %|91.8 %|100.0 %|106.0|
+|openai/gpt-5.2-low-2025-12-11|8.4 %|91.6 %|100.0 %|126.5|
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
-|CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
+|CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
 |CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
 |zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
 |openai/gpt-4o-2024-08-06|9.6 %|90.4 %|93.8 %|86.6|
@@ -68,9 +69,10 @@ Last updated on December 09, 2025
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
+|openai/gpt-5.2-high-2025-12-11|10.8 %|89.2 %|100.0 %|186.3|
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
-|anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
+|anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |deepseek-ai/DeepSeek-R1|11.3 %|88.7 %|97.0 %|93.5|
 |anthropic/claude-opus-4-1-20250805|11.8 %|88.2 %|92.4 %|129.1|
 |anthropic/claude-opus-4-20250514|12.0 %|88.0 %|91.0 %|123.2|
