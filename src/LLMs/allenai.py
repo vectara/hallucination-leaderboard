@@ -48,6 +48,9 @@ class AllenAILLM(AbstractLLM):
     }
 
     local_mode_group = {
+        "Olmo-3-32B-Think": {
+            "chat": 2,
+        },
         "Olmo-3-7B-Think": {
             "chat": 2,
         },

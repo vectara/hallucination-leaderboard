@@ -129,8 +129,9 @@ Here is the passage:
         #   }
         # ),
 
-        # AllenAIConfig(**{"threads": 3, "model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
         AllenAIConfig(**{"model_name": "Olmo-3-7B-Think", "temperature": 0.0, "execution_mode": "gpu"}),
+        AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "execution_mode": "gpu"}),
+        # AllenAIConfig(**{"threads": 3, "model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
 
         # AmazonConfig(**{"model_name": "nova-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # Capped at 1024
         # AmazonConfig(**{"model_name": "nova-pro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
