@@ -192,9 +192,9 @@ class AllenAILLM(AbstractLLM):
 
     def teardown(self):
         if self.client:
-            pass
+            return
         elif self.local_model:
-            pass
+            return
 
     def close_client(self):
         pass
