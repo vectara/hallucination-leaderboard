@@ -160,7 +160,7 @@ class AllenAILLM(AbstractLLM):
         elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in self.local_mode_group:
                 max_memory = {
-                    i: "19GiB" for i in range(torch.cuda.device_count())
+                    i: "64GiB" for i in range(torch.cuda.device_count())
                 }
 
                 model = AutoModelForCausalLM.from_pretrained(
