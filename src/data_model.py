@@ -125,7 +125,7 @@ class BasicLLMConfig(BaseModel):
 
     temperature: float = 0.0
     max_tokens: int = 4096
-    min_throttle_time: float = 0.1  # number of seconds to wait before sending another request. Useful for web API calling that may have rate limits.
+    min_throttle_time: float = 2.0  # number of seconds to wait before sending another request. Useful for web API calling that may have rate limits.
 
     # Below are attributes that are not applicable to all models but are common in many models. We keep them here to establish a naming convention.
     thinking_tokens: int | None = None  # Number of tokens allocated for thinking. Only applicable to models that support thinking.
