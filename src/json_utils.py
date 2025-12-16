@@ -82,19 +82,3 @@ def save_to_json(json_path: str, data: Any):
     with open(json_path, "w") as f:
         json.dump(json_data, f, indent=4)
     logger.info("JSON file saved")
-
-# Commented out because it does not save the code and the Python-native way is more readable. -- Forrest, 2025-07-04
-# def file_exists(file_path: str) -> bool:
-#     """
-#     Checks if file exists, returns True if so else False
-
-#     Args:
-#         file_path (str): Path to file
-
-#     Returns:
-#         (bool): State of file existing
-#     """
-#     if os.path.isfile(file_path):
-#         return True
-#     else:
-#         return False

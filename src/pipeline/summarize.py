@@ -32,7 +32,6 @@ Functions:
     generate_summary_uid(model_name, date_code, summary_text, date)
 """
 
-# Define a custom exception class if your LLM doesn't already raise one
 class TooManyRequestsError(Exception):
     pass
 
@@ -47,14 +46,13 @@ def is_rate_limit_error(exception):
     return False
 
 def prepare_llm(
-    eval_config: EvalConfig, # The config for this evaluation run
-    llm_config: BasicLLMConfig,  # an LLM-specific config in the eval_config. It should be of any class inherited from BasicLLMConfig
+    eval_config: EvalConfig,
+    llm_config: BasicLLMConfig,
 ) -> Tuple[AbstractLLM, type, str]: 
 
     try:
         llm_registry = MODEL_REGISTRY.get(llm_config.company)
         LLM_CLASS = llm_registry["LLM_class"]
-        # LLM_CONFIG_CLASS = llm_registry["config_class"]
         LLM_SUMMARY_CLASS = llm_registry["summary_class"]
         
         if LLM_CLASS is None:
@@ -63,19 +61,12 @@ def prepare_llm(
                 company=llm_config.company,
             ))
         
-        # print ("eval_config.common_LLM_config: ", eval_config.common_LLM_config.model_dump_json(indent=2))
-        # print ("llm_config: ", llm_config.model_dump_json(indent=2))
-
-        # Replace fields that are not set in per-llm config with those set (not default) in common-llm config
         for common_key in eval_config.common_LLM_config.model_fields_set:
             if common_key not in llm_config.model_fields_set:
                 llm_config = llm_config.model_copy(update={common_key: getattr(eval_config.common_LLM_config, common_key)})
 
-        # print ("llm_config after brushing using per_LLM_config: ", llm_config.model_dump_json(indent=2))
+        llm = LLM_CLASS(llm_config)
 
-        llm = LLM_CLASS(llm_config) # instantiate the LLM
-
-        # Create output directory 
         full_output_dir = ""
         if llm_config.date_code == "" or llm_config.date_code == None:
             full_output_dir = f"{eval_config.output_dir}/{llm_config.company}/{llm_config.model_name}"
@@ -89,7 +80,6 @@ def prepare_llm(
             logger.info(f"Summary file {summaries_jsonl_path} does not exist, creating...")
             open(summaries_jsonl_path, 'w').close()
         elif os.path.isfile(summaries_jsonl_path) and eval_config.overwrite_summaries:
-            # warning that we do not recommend overwriting summaries. Type YES is your wanna continue 
             if not input(f"Are you sure you want to overwrite previous summaries in {summaries_jsonl_path}? (upper case YES to continue)").upper() == "YES":
                 raise Exception("User chose not to overwrite previous summaries. Abort to avoid data loss.")
             else: 
@@ -117,11 +107,7 @@ def get_summaries(
 
     for llm_config in tqdm(eval_config.per_LLM_configs, desc="LLM Loop"):
 
-        # Instantiate the LLM
         llm, LLM_SUMMARY_CLASS, summaries_jsonl_path = prepare_llm(eval_config, llm_config)
-
-        # print all attributes of llm
-        # logger.info(f"LLM attributes: {json.dumps(llm.__dict__, indent=2)}")
 
         llm_alias = ""
         if llm_config.date_code == "" or llm_config.date_code == None:
@@ -152,11 +138,10 @@ def get_summaries(
                             company=llm_config.company,
                         ))
 
-                    # Replace fields that are not set in per-llm config with those set (not default) in common-llm config
                     for common_key in eval_config.common_LLM_config.model_fields_set:
                         if common_key not in llm_config.model_fields_set:
                             llm_config = llm_config.model_copy(update={common_key: getattr(eval_config.common_LLM_config, common_key)})
-                    llm = LLM_CLASS(llm_config) # instantiate the LLM
+                    llm = LLM_CLASS(llm_config)
                     return llm
                 
                 except Exception as e:
@@ -204,12 +189,6 @@ def generate_summaries_for_one_llm_multithreaded(
     def writer():
         with open(summaries_jsonl_path, "a", encoding="utf8") as f:
             while not (writer_done.is_set() and q.empty()):
-                # try:
-                #     record = q.get(timeout=0.1)
-                # except:
-                #     continue
-                # f.write(json.dumps(record) + "\n")
-                # q.task_done()
                 try:
                     record = q.get(timeout=0.1)
                 except Empty:
@@ -221,7 +200,6 @@ def generate_summaries_for_one_llm_multithreaded(
                     logger.error(f"Failed to write record: {e}")
                 q.task_done()
 
-    # wt = threading.Thread(target=writer, daemon=True)
     wt = threading.Thread(target=writer)
     wt.start()
 
@@ -260,7 +238,6 @@ def generate_summaries_for_one_llm_multithreaded(
                 q.put(record.model_dump())
     
         except Exception as e:
-            # ALWAYS RECORD AN ERROR, NEVER DROP
             summary_uid = generate_summary_uid(
                 m.model_fullname,
                 "THREAD ERROR",
@@ -278,38 +255,6 @@ def generate_summaries_for_one_llm_multithreaded(
             error_record = LLM_SUMMARY_CLASS(**error_record)
             q.put(error_record)
             logger.error(f"Worker failed for article_id={article_id}: {e}")
-
-    # # WORKER FUNCTION
-    # def worker(article_text, article_id):
-    #     llm = llm_factory(eval_config, llm_config)
-    #     with llm as m:
-    #         @retry(
-    #             retry=retry_if_exception_type(is_rate_limit_error),
-    #             wait=wait_exponential(multiplier=1, min=2, max=60),
-    #             stop=stop_after_attempt(10)
-    #         )
-    #         def summarize_with_retry(text):
-    #             return m.try_to_summarize_one_article(text)
-    #         summary = summarize_with_retry(article_text)
-
-    #         summary_uid = generate_summary_uid(
-    #             m.model_fullname,
-    #             summary,
-    #             current_date
-    #         )
-
-    #         record_data = {
-    #             "article_id": article_id,
-    #             "summary_uid": summary_uid,
-    #             "summary": summary,
-    #             "eval_name": eval_name,
-    #             "summary_date": eval_date,
-    #             **m.__dict__
-    #         }
-    #         record_data.pop("prompt", None)
-
-    #         record = LLM_SUMMARY_CLASS(**record_data)
-    #         q.put(record.model_dump())
 
     # THREAD EXECUTOR
     futures = []

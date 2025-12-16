@@ -218,14 +218,6 @@ class EvalConfig(BaseModel):
     class Config:
         extra = "ignore" # TODO: maybe we shall set to forbid to warn users of extra fields. 
 
-    # TODO: Can we remove the function below?
-    # def model_post_init(self, __context):
-        # for model_config in self.LLM_Configs:
-        #     if model_config.temperature is None:
-        #         model_config.temperature = self.temperature
-        #     if model_config.max_tokens is None:
-        #         model_config.max_tokens = self.max_tokens
-
     class Keys:
         PIPELINE = "pipeline"
         OVERWRITE = "overwrite"

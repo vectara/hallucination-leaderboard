@@ -11,9 +11,8 @@ import sys
 import io
 from contextlib import redirect_stdout, redirect_stderr
 
-# idk if right
 class HDM2Output(BaseModel):
-    score: float # we need score for ROC curve
+    score: float
     label: Literal[0,1]
     reason: List[Tuple[str, float]]
 
@@ -42,9 +41,8 @@ class HDM2():
     def predict(self, premise: str, hypothesis: str) -> HDM2Output:
         if hypothesis == "":
             hypothesis = "EMPTY SUMMARY GIVEN BY MODEL"
-        # texts_prompted: List[str] = [self.prompt]
 
-        f = io.StringIO()  # buffer to catch prints
+        f = io.StringIO()
 
         with redirect_stdout(f), redirect_stderr(f):
             results = self.classifier.apply(self.prompt, premise, hypothesis)
@@ -71,21 +69,8 @@ class HDM2():
             pred = 0
         else:
             pred = 1
-        # pred = 0 if s < threshold else 1 for s in simple_score
 
         return HDM2Output(score=simple_score, label=pred, reason=hallucinated_sentences)
-
-    # def predict(self, premise: str, hypothesis: str) -> HDM2Output:
-    #     texts_prompted: List[str] = [self.PROMPT_TEMPLATE.format(text1=premise, text2=hypothesis)]
-
-    #     full_scores = self.classifier(self.prompt, premise, hypothesis) # List[List[Dict[str, float]]]
-
-    #     simple_scores = [score_dict['score'] for score_for_both_labels in full_scores for score_dict in score_for_both_labels if score_dict['label'] == 'LABEL_1']
-
-    #     threshold = 0.5
-    #     preds = [0 if s < threshold else 1 for s in simple_scores]
-
-    #     return HDM2Output(score=simple_scores[0], label=preds[0], reason=?)
 
 if __name__ == "__main__":
 

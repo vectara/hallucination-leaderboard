@@ -66,7 +66,6 @@ def get_judgments(eval_config: EvalConfig, article_df: pd.DataFrame):
         else:
             llm_alias = f"{llm_config.model_name}-{llm_config.date_code}"
         
-        # Construct model output directory path
         model_out_dir = ""
         if llm_config.date_code == "" or llm_config.date_code == None:
             model_out_dir = os.path.join(
@@ -87,11 +86,9 @@ def get_judgments(eval_config: EvalConfig, article_df: pd.DataFrame):
         if os.path.isfile(summaries_jsonl_path):
             summaries_df = pd.read_json(summaries_jsonl_path, lines=True)
             
-            # Create judgment file
             judgments_jsonl_path = os.path.join(model_out_dir, judgment_file)
             open(judgments_jsonl_path, 'w').close()
             
-            # Generate judgments
             hhem_model = get_hhem_model(eval_config.hhem_version)
             article_summary_df = pd.merge(
                 article_df, summaries_df,

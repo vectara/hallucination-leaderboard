@@ -10,17 +10,8 @@ Key functions in the AbstractLLM class:
 - summarize(): Summarize a given text
 """
 
-# Disabled because it is dangerous. -- Forrest, 2025-07-03
-# LLM_dir = os.path.dirname(__file__)
-# for file in os.listdir(LLM_dir):
-#     if file.endswith(".py") and file != "__init__.py":
-#         file_name = file[:-3]
-#         importlib.import_module(f"src.LLMs.{file_name}")
-
-
 from . AbstractLLM import AbstractLLM
 
-# All vendor classes are called _{Vendor}_Class below to avoid name conflicts. -- Forrest, 2025-07-03
 from . _01ai import _01AILLM, _01AIConfig, _01AISummary
 from . ai21labs import AI21LabsLLM, AI21LabsConfig, AI21LabsSummary
 from . allenai import AllenAILLM, AllenAIConfig, AllenAISummary
