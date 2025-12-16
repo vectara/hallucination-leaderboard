@@ -40,6 +40,7 @@ from . meta_llama import MetaLlamaLLM, MetaLlamaConfig, MetaLlamaSummary
 from . microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
 from . mistralai import MistralAILLM, MistralAIConfig, MistralAISummary
 from . moonshotai import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
+from . nvidia import NvidiaLLM, NvidiaConfig, NvidiaSummary
 from . openai import OpenAILLM, OpenAIConfig, OpenAISummary
 from . primeintellect import PrimeIntellectLLM, PrimeIntellectConfig, PrimeIntellectSummary
 from . qcri import QCRILLM, QCRIConfig, QCRISummary
@@ -148,6 +149,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": MoonshotAILLM,
         "config_class": MoonshotAIConfig,
         "summary_class": MoonshotAISummary
+    },
+    "nvidia": {
+        "LLM_class": NvidiaLLM,
+        "config_class": NvidiaConfig,
+        "summary_class": NvidiaSummary
     },
     "openai": {
         "LLM_class": OpenAILLM,
