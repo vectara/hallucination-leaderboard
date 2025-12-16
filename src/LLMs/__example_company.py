@@ -4,6 +4,7 @@ from typing import Literal
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+from enum import Enum, auto
 
 # TODO: IMPORTS IF NEEDED
 
@@ -24,26 +25,31 @@ class COMPANY_NAMESummary(BasicSummary): # TODO: Update object name
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+# TODO: Add API models here to specify what logic path to run that model from
+client_mode_group = {
+    "MODEL_NAME": { 
+        "chat": ClientMode.DEFAULT
+    }
+}
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+# TODO: Add local models here and specify what logic path to run that model
+local_mode_group = {
+    "MODEL_NAME": {
+        "chat": LocalMode.DEFAULT
+    }
+} 
+
 class COMPANY_NAMELLM(AbstractLLM): # TODO: Update object name
     """
     """
-
-    # TODO: Add API models here to specify what logic path to run that model from
-    CLIENT_DEFAULT = 1
-    client_mode_group = {
-        "MODEL_NAME": { 
-            "chat": CLIENT_DEFAULT
-        }
-    }
-
-    # TODO: Add local models here and specify what logic path to run that model
-    LOCAL_DEFAULT = 1
-    local_mode_group = {
-        "MODEL_NAME": {
-            "chat": LOCAL_DEFAULT
-        }
-    } 
-
     def __init__(self, config: COMPANY_NAMEConfig): # TODO: Update config name
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -53,14 +59,14 @@ class COMPANY_NAMELLM(AbstractLLM): # TODO: Update object name
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
-                # TODO Define how the case 1 model will run
-                case 1:
+            match client_mode_group[self.model_name][self.endpoint]:
+                # TODO Define how the default case model will run
+                case ClientMode.DEFAULT:
                     pass
         elif self.local_model: 
-            match self.local_mode_group[self.model_name][self.endpoint]:
-                # TODO Define how the case 1 model will run
-                case 1:
+            match local_mode_group[self.model_name][self.endpoint]:
+                # TODO Define how the default case model will run
+                case LocalMode.DEFAULT:
                     pass
         else:
             raise Exception(
