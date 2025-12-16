@@ -28,7 +28,7 @@
     "date_code": "08-2024",
     "hallucination_rate": 6.9,
     "confidence_interval": -1,
-    "answer_rate": 95,
+    "answer_rate": 95.0,
     "avg_word_count": 91.5
   },
   {
@@ -52,7 +52,7 @@
     "date_code": "",
     "hallucination_rate": 5.5,
     "confidence_interval": -1,
-    "answer_rate": 100,
+    "answer_rate": 100.0,
     "avg_word_count": 100.0
   },
   {
@@ -92,7 +92,7 @@
     "date_code": "20250514",
     "hallucination_rate": 12.0,
     "confidence_interval": -1,
-    "answer_rate": 91,
+    "answer_rate": 91.0,
     "avg_word_count": 123.2
   },
   {
@@ -124,7 +124,7 @@
     "date_code": "",
     "hallucination_rate": 11.3,
     "confidence_interval": -1,
-    "answer_rate": 97,
+    "answer_rate": 97.0,
     "avg_word_count": 93.5
   },
   {
@@ -164,7 +164,7 @@
     "date_code": "",
     "hallucination_rate": 7.8,
     "confidence_interval": -1,
-    "answer_rate": 99,
+    "answer_rate": 99.0,
     "avg_word_count": 101.5
   },
   {
@@ -220,7 +220,7 @@
     "date_code": "",
     "hallucination_rate": 10.6,
     "confidence_interval": -1,
-    "answer_rate": 100,
+    "answer_rate": 100.0,
     "avg_word_count": 131.4
   },
   {
@@ -228,7 +228,7 @@
     "date_code": "",
     "hallucination_rate": 5.2,
     "confidence_interval": -1,
-    "answer_rate": 100,
+    "answer_rate": 100.0,
     "avg_word_count": 107.4
   },
   {
@@ -244,7 +244,7 @@
     "date_code": "",
     "hallucination_rate": 8.2,
     "confidence_interval": -1,
-    "answer_rate": 100,
+    "answer_rate": 100.0,
     "avg_word_count": 106.0
   },
   {
@@ -252,7 +252,7 @@
     "date_code": "",
     "hallucination_rate": 7.7,
     "confidence_interval": -1,
-    "answer_rate": 99,
+    "answer_rate": 99.0,
     "avg_word_count": 137.3
   },
   {
@@ -352,6 +352,14 @@
     "avg_word_count": 59.2
   },
   {
+    "model_name": "nvidia/Nemotron-3-Nano-30B-A3B",
+    "date_code": "",
+    "hallucination_rate": 9.6,
+    "confidence_interval": -1,
+    "answer_rate": 99.6,
+    "avg_word_count": 104.2
+  },
+  {
     "model_name": "openai/gpt-4.1-2025-04-14",
     "date_code": "2025-04-14",
     "hallucination_rate": 5.6,
@@ -396,7 +404,7 @@
     "date_code": "2025-08-07",
     "hallucination_rate": 10.5,
     "confidence_interval": -1,
-    "answer_rate": 100,
+    "answer_rate": 100.0,
     "avg_word_count": 105.7
   },
   {
@@ -404,7 +412,7 @@
     "date_code": "2025-11-13",
     "hallucination_rate": 12.1,
     "confidence_interval": -1,
-    "answer_rate": 100,
+    "answer_rate": 100.0,
     "avg_word_count": 254.4
   },
   {
@@ -412,7 +420,7 @@
     "date_code": "2025-11-13",
     "hallucination_rate": 10.9,
     "confidence_interval": -1,
-    "answer_rate": 100,
+    "answer_rate": 100.0,
     "avg_word_count": 165.5
   },
   {
@@ -420,7 +428,7 @@
     "date_code": "2025-12-11",
     "hallucination_rate": 10.8,
     "confidence_interval": -1,
-    "answer_rate": 100,
+    "answer_rate": 100.0,
     "avg_word_count": 186.3
   },
   {
@@ -428,7 +436,7 @@
     "date_code": "2025-12-11",
     "hallucination_rate": 8.4,
     "confidence_interval": -1,
-    "answer_rate": 100,
+    "answer_rate": 100.0,
     "avg_word_count": 126.5
   },
   {
@@ -444,7 +452,7 @@
     "date_code": "",
     "hallucination_rate": 23.3,
     "confidence_interval": -1,
-    "answer_rate": 100,
+    "answer_rate": 100.0,
     "avg_word_count": 127.4
   },
   {
@@ -516,7 +524,7 @@
     "date_code": "",
     "hallucination_rate": 5.8,
     "confidence_interval": -1,
-    "answer_rate": 93,
+    "answer_rate": 93.0,
     "avg_word_count": 95.9
   },
   {

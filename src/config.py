@@ -775,13 +775,13 @@ Here is the passage:
   ),
   EvalConfig(**
     {
-      "eval_name": "all_stats",
+      "eval_name": "update_stats_all",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3",
       "pipeline": ["aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
-      "source_article_path": "datasets/leaderboard_dataset_revised.csv",
+      "source_article_path": "datasets/leaderboard_dataset_v2.csv",
       "common_LLM_config": 
         BasicLLMConfig(**
           {
