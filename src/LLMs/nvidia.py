@@ -7,12 +7,13 @@ from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 import replicate
+from openai import OpenAI
 
 COMPANY = "nvidia"
 class NvidiaConfig(BasicLLMConfig):
     company: Literal["nvidia"] = "nvidia"
     model_name: Literal[
-        "nemotron-3-nano-30b-a3b",
+        "Nemotron-3-Nano-30B-A3B",
     ]
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
@@ -30,8 +31,8 @@ class NvidiaLLM(AbstractLLM):
     """
 
     client_mode_group = {
-        "nemotron-3-nano-30b-a3b": { 
-            "chat": 1
+        "Nemotron-3-Nano-30B-A3B": { 
+            "chat": 2
         }
     }
 
@@ -76,6 +77,15 @@ class NvidiaLLM(AbstractLLM):
 
                     raw_text = "".join(chunks)
                     summary = strip_thinking(raw_text)
+                case 2:
+                    deep_infra_name = f"{COMPANY}/{self.model_fullname}"
+                    chat_completion = self.client.chat.completions.create(
+                        model=deep_infra_name,
+                        messages=[{"role": "user", "content": prepared_text}],
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens
+                    )
+                    summary = chat_completion.choices[0].message.content.lstrip()
         elif self.local_model: 
             match self.local_mode_group[self.model_name][self.endpoint]:
                 # TODO Define how the case 1 model will run
@@ -92,7 +102,15 @@ class NvidiaLLM(AbstractLLM):
     def setup(self):
         if self.execution_mode == "api":
             if self.model_name in self.client_mode_group:
-                self.client = "Replicate doesn't have a client"
+                api_key = os.getenv(f"DEEPINFRA_API_KEY")
+                assert api_key is not None, (
+                    f"{COMPANY} API key not found in environment variable "
+                )
+
+                self.client = OpenAI(
+                    api_key=api_key,
+                    base_url="https://api.deepinfra.com/v1/openai",
+                )
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

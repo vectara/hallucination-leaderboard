@@ -436,7 +436,7 @@ Here is the passage:
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
-        NvidiaConfig(**{"threads": 1, "model_name": "nemotron-3-nano-30b-a3b", "date_code": "","temperature": 0.01, "max_tokens": 8192}),
+        NvidiaConfig(**{"threads": 1, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01}),
         
         # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
         # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0}),
@@ -528,8 +528,8 @@ Here is the passage:
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-PROD",
-      # "pipeline": ["summarize"],
-      "pipeline": ["judge", "aggregate"],
+      "pipeline": ["summarize"],
+      # "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",
@@ -590,7 +590,7 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # NvidiaConfig(**{"threads": 8, "model_name": "nemotron-3-nano-30b-a3b", "date_code": "","temperature": 0.01, "max_tokens": 8192}),
+        # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01}),
 
         # CPU 2
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
