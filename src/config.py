@@ -590,7 +590,7 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # NvidiaConfig(**{"threads": 4, "model_name": "nemotron-3-nano-30b-a3b", "date_code": "","temperature": 0.01, "max_tokens": 8192}),
+        # NvidiaConfig(**{"threads": 8, "model_name": "nemotron-3-nano-30b-a3b", "date_code": "","temperature": 0.01, "max_tokens": 8192}),
 
         # CPU 2
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
