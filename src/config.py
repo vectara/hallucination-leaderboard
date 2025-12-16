@@ -89,22 +89,22 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # AI21LabsConfig(**
-        #   {
-        #     "company": "ai21labs",
-        #     "model_name": "jamba-large-1.7",
-        #     "date_code": "2025-07",
-        #     "temperature": 0.0
-        #   }
-        # ),
-        # AI21LabsConfig(**
-        #   {
-        #     "company": "ai21labs",
-        #     "model_name": "jamba-mini-1.7",
-        #     "date_code": "2025-07",
-        #     "temperature": 0.0
-        #   }
-        # ),
+        AI21LabsConfig(**
+          {
+            "model_name": "jamba-large-1.7",
+            "date_code": "2025-07",
+            "temperature": 0.0,
+            "max_tokens": 4096
+          }
+        ),
+        AI21LabsConfig(**
+          {
+            "model_name": "jamba-mini-1.7",
+            "date_code": "2025-07",
+            "temperature": 0.0,
+            "max_tokens": 4096
+          }
+        ),
         # AI21LabsConfig(**
         #   {
         #     "company": "ai21labs",
@@ -436,7 +436,7 @@ Here is the passage:
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
-        NvidiaConfig(**{"threads": 1, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01}),
+        # NvidiaConfig(**{"threads": 1, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01}),
         
         # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
         # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0}),
@@ -527,8 +527,9 @@ Here is the passage:
     {
       "eval_name": "live",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3-PROD",
-      "pipeline": ["summarize"],
+      "hhem_version": "2.3-API",
+      "pipeline": ["summarize", "judge", "aggregate"],
+      # "pipeline": ["summarize"],
       # "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
@@ -586,6 +587,7 @@ Here is the passage:
 
         # Not assigned yet
         # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
 
         # # GPU # #
 
@@ -593,9 +595,26 @@ Here is the passage:
         # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
 
         # CPU 2
-        # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
+        # AI21LabsConfig(**
+        #   {
+        #     "threads": 4,
+        #     "model_name": "jamba-large-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0,
+        #     "max_tokens": 4096
+        #   }
+        # ),
 
         # CPU 3
+        # AI21LabsConfig(**
+        #   {
+        #     "threads": 4,
+        #     "model_name": "jamba-mini-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0,
+        #     "max_tokens": 4096
+        #   }
+        # ),
 
         # CPU 4
 

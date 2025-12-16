@@ -29,16 +29,18 @@ class COMPANY_NAMELLM(AbstractLLM): # TODO: Update object name
     """
 
     # TODO: Add API models here to specify what logic path to run that model from
+    CLIENT_DEFAULT = 1
     client_mode_group = {
         "MODEL_NAME": { 
-            "chat": 1
+            "chat": CLIENT_DEFAULT
         }
     }
 
     # TODO: Add local models here and specify what logic path to run that model
+    LOCAL_DEFAULT = 1
     local_mode_group = {
         "MODEL_NAME": {
-            "chat": 1
+            "chat": LOCAL_DEFAULT
         }
     } 
 
