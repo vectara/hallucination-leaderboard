@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on December 11, 2025
+Last updated on December 16, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-09.png)
 
@@ -64,6 +64,7 @@ Last updated on December 11, 2025
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
 |CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
 |zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
+|nvidia/Nemotron-3-Nano-30B-A3B|9.6 %|90.4 %|99.6 %|104.2|
 |openai/gpt-4o-2024-08-06|9.6 %|90.4 %|93.8 %|86.6|
 |anthropic/claude-haiku-4-5-20251001|9.8 %|90.2 %|99.5 %|115.1|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
