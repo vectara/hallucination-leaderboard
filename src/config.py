@@ -131,7 +131,7 @@ Here is the passage:
         # ),
 
         AllenAIConfig(**{"model_name": "Olmo-3-7B-Think", "temperature": 0.01, "execution_mode": "vllm"}),
-        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.01, "execution_mode": "gpu"}),
+        AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.01, "execution_mode": "vllm"}),
 
         # AllenAIConfig(**{"threads": 3, "model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
 
