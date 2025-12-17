@@ -163,7 +163,7 @@ class AllenAILLM(AbstractLLM):
                     i: "64GiB" for i in range(torch.cuda.device_count())
                 }
 
-                model = AutoModelForCausalLM.from_pretrained(
+                self.model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
                     torch_dtype=torch.float16,
                     device_map="auto",
