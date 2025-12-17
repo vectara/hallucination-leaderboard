@@ -89,22 +89,22 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        AI21LabsConfig(**
-          {
-            "model_name": "jamba-large-1.7",
-            "date_code": "2025-07",
-            "temperature": 0.0,
-            "max_tokens": 4096
-          }
-        ),
-        AI21LabsConfig(**
-          {
-            "model_name": "jamba-mini-1.7",
-            "date_code": "2025-07",
-            "temperature": 0.0,
-            "max_tokens": 4096
-          }
-        ),
+        # AI21LabsConfig(**
+        #   {
+        #     "model_name": "jamba-large-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0,
+        #     "max_tokens": 4096
+        #   }
+        # ),
+        # AI21LabsConfig(**
+        #   {
+        #     "model_name": "jamba-mini-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0,
+        #     "max_tokens": 4096
+        #   }
+        # ),
         # AI21LabsConfig(**
         #   {
         #     "company": "ai21labs",
@@ -194,6 +194,7 @@ Here is the passage:
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1-Terminus", "temperature": 0.0, "min_throttle_time": 4.0}),
+        GoogleConfig(**{"threads": 3, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
@@ -592,7 +593,7 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
+        GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
 
         # CPU 2
         # AI21LabsConfig(**
@@ -647,6 +648,8 @@ Here is the passage:
 
 
         # # Completed Models
+        # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
+
         # AmazonConfig(**{"model_name": "nova-pro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
         # AmazonConfig(**{"model_name": "nova-micro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
         # AmazonConfig(**{"model_name": "nova-2-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0}),

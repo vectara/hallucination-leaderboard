@@ -27,6 +27,7 @@ class GoogleConfig(BasicLLMConfig):
         "gemini-2.5-pro-exp",
         "text-bison-001",
 
+        "gemini-3-flash-preview",
         "gemini-3-pro-preview",
         "gemini-2.5-flash-lite",
         "gemini-2.5-flash",
@@ -72,6 +73,9 @@ class GoogleLLM(AbstractLLM):
     """
 
     client_mode_group = {
+        "gemini-3-flash-preview": {
+            "chat": 1
+        },
         "gemini-3-pro-preview": {
             "chat": 1
         },
