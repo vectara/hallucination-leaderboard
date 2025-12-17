@@ -9,6 +9,8 @@ from .. data_model import ModelInstantiationError, SummaryError
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from huggingface_hub import InferenceClient
 from openai import OpenAI
+from vllm import SamplingParams
+from vllm import LLM
 
 COMPANY = "allenai"
 
@@ -25,7 +27,7 @@ class AllenAIConfig(BasicLLMConfig):
     ]
     date_code: str = ""
     endpoint: Literal["chat", "response"] = "chat"
-    execution_mode: Literal["api", "gpu", "cpu"] = "api"
+    execution_mode: Literal["api", "gpu", "cpu", "vllm"] = "api"
 
 class AllenAISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
@@ -49,10 +51,10 @@ class AllenAILLM(AbstractLLM):
 
     local_mode_group = {
         "Olmo-3-32B-Think": {
-            "chat": 2,
+            "chat": 3,
         },
         "Olmo-3-7B-Think": {
-            "chat": 2,
+            "chat": 3,
         },
         "OLMo-2-7B-Instruct": {
             "chat": 1
@@ -133,6 +135,18 @@ class AllenAILLM(AbstractLLM):
                     )
 
                     summary = tokenizer.decode(output[0], skip_special_tokens=True)
+                case 3:  # vllm
+                    sampling_params = SamplingParams(
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens,
+                    )
+
+                    outputs = self.local_model.generate(
+                        prepared_text,
+                        sampling_params,
+                    )
+
+                    summary = outputs[0].outputs[0].text
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))
         return summary
@@ -157,6 +171,13 @@ class AllenAILLM(AbstractLLM):
                     company=self.company,
                     execution_mode=self.execution_mode
                 ))
+        elif self.execution_mode == "vllm":
+            self.local_model = LLM(
+                model=self.model_fullname,
+                tensor_parallel_size=8,   # A100-80G x8
+                dtype="float16",
+                max_model_len=self.max_tokens,
+            )
         elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in self.local_mode_group:
                 max_memory = {
