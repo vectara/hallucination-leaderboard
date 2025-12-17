@@ -31,6 +31,7 @@ class AllenAIConfig(BasicLLMConfig):
 
 class AllenAISummary(BasicSummary):
     endpoint: Literal["chat", "response"] | None = None
+    execution_mode: Literal["api", "gpu", "cpu", "vllm"] | None = None
 
     class Config:
         extra = "ignore"
