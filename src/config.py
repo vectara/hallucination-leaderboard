@@ -130,7 +130,7 @@ Here is the passage:
         #   }
         # ),
 
-        # AllenAIConfig(**{"model_name": "Olmo-3-7B-Think", "temperature": 0.01, "execution_mode": "gpu"}),
+        AllenAIConfig(**{"model_name": "Olmo-3-7B-Think", "temperature": 0.01, "execution_mode": "gpu"}),
         # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.01, "execution_mode": "gpu"}),
 
         # AllenAIConfig(**{"threads": 3, "model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
@@ -194,7 +194,7 @@ Here is the passage:
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1-Terminus", "temperature": 0.0, "min_throttle_time": 4.0}),
-        GoogleConfig(**{"threads": 3, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        # GoogleConfig(**{"threads": 3, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
@@ -593,7 +593,7 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        # GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
 
         # CPU 2
         # AI21LabsConfig(**

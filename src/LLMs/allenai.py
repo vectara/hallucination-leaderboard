@@ -125,7 +125,7 @@ class AllenAILLM(AbstractLLM):
                         max_length=self.max_tokens
                     ).to(self.local_model.device)
 
-                    output = self.model.generate(
+                    output = self.local_model.generate(
                         **inputs,
                         max_new_tokens=self.max_tokens,
                         num_beams=1,
@@ -163,7 +163,7 @@ class AllenAILLM(AbstractLLM):
                     i: "64GiB" for i in range(torch.cuda.device_count())
                 }
 
-                self.model = AutoModelForCausalLM.from_pretrained(
+                self.local_model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
                     torch_dtype=torch.float16,
                     device_map="auto",
