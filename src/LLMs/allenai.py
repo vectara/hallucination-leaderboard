@@ -174,6 +174,7 @@ class AllenAILLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode == "vllm":
+            torch.cuda.empty_cache()
             self.local_model = LLM(
                 model=self.model_fullname,
                 tensor_parallel_size=8,   # A100-80G x8
@@ -222,6 +223,7 @@ class AllenAILLM(AbstractLLM):
         if self.client:
             return
         elif self.local_model:
+            torch.cuda.empty_cache()
             return
 
     def close_client(self):
