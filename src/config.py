@@ -780,7 +780,7 @@ Here is the passage:
     {
       "eval_name": "update_stats_all",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
-      "hhem_version": "2.3",
+      "hhem_version": "2.3-API",
       "pipeline": ["aggregate"],
       "output_dir": "output",
       "overwrite_summaries": True,
@@ -789,7 +789,7 @@ Here is the passage:
         BasicLLMConfig(**
           {
             "temperature": 1.0, 
-            "max_tokens": 1024, 
+            "max_tokens": 32768, 
             "prompt": """
 You are a chat bot answering questions using data.
 You must stick to the answers provided solely by the text in the 
