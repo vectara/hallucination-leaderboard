@@ -11,6 +11,7 @@ from huggingface_hub import InferenceClient
 from openai import OpenAI
 from vllm import SamplingParams
 from vllm import LLM
+from vllm.config import CompilationConfig, CompilationMode
 
 COMPANY = "allenai"
 
@@ -177,6 +178,11 @@ class AllenAILLM(AbstractLLM):
                 model=self.model_fullname,
                 tensor_parallel_size=8,   # A100-80G x8
                 max_model_len=self.max_tokens,
+                compilation_config=CompilationConfig( # customize graph capturing
+                    mode=CompilationMode.VLLM_COMPILE,
+                    # By default, it goes up to max_num_seqs
+                    cudagraph_capture_sizes=[1, 2, 4, 8, 16],
+                ),
                 # enforce_eager=True, # Disables graph capturing
             )
         elif self.execution_mode in ["gpu", "cpu"]:
