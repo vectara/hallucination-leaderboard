@@ -176,8 +176,8 @@ class AllenAILLM(AbstractLLM):
             self.local_model = LLM(
                 model=self.model_fullname,
                 tensor_parallel_size=8,   # A100-80G x8
-                dtype="float16",
                 max_model_len=self.max_tokens,
+                enforce_eager=True, # Disables graph capturing
             )
         elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in self.local_mode_group:
