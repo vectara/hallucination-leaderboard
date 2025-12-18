@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on December 16, 2025
+Last updated on December 18, 2025
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-09.png)
 
@@ -66,6 +66,7 @@ Last updated on December 16, 2025
 |zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
 |nvidia/Nemotron-3-Nano-30B-A3B|9.6 %|90.4 %|99.6 %|104.2|
 |openai/gpt-4o-2024-08-06|9.6 %|90.4 %|93.8 %|86.6|
+|ai21labs/jamba-large-1.7-2025-07|9.7 %|90.3 %|98.9 %|124.8|
 |anthropic/claude-haiku-4-5-20251001|9.8 %|90.2 %|99.5 %|115.1|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
@@ -80,9 +81,11 @@ Last updated on December 16, 2025
 |anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
 |openai/gpt-5.1-high-2025-11-13|12.1 %|87.9 %|100.0 %|254.4|
 |openai/gpt-5-mini-2025-08-07|12.9 %|87.1 %|99.9 %|169.7|
+|google/gemini-3-flash-preview|13.5 %|86.5 %|99.8 %|90.2|
 |google/gemini-3-pro-preview|13.6 %|86.4 %|99.4 %|101.9|
 |openai/gpt-oss-120b|14.2 %|85.8 %|99.9 %|135.2|
 |mistralai/mistral-3-large-2512|14.5 %|85.5 %|98.8 %|112.7|
+|ai21labs/jamba-mini-1.7-2025-07|14.7 %|85.3 %|99.1 %|136.4|
 |openai/gpt-5-minimal-2025-08-07|14.7 %|85.3 %|99.9 %|109.7|
 |openai/gpt-5-high-2025-08-07|15.1 %|84.9 %|99.9 %|162.7|
 |xai-org/grok-4-1-fast-non-reasoning|17.8 %|82.2 %|98.5 %|87.5|
