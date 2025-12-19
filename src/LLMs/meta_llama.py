@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 from together import Together
 
@@ -50,61 +51,68 @@ class MetaLlamaSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "Llama-4-Maverick-17B-128E-Instruct-FP8": {
+        "chat": 1
+    },
+    "Llama-4-Scout-17B-16E-Instruct": {
+        "chat": 1
+    },
+    "Meta-Llama-3.1-8B-Instruct-Turbo": {
+        "chat": 1
+    },
+    "Llama-3.3-70B-Instruct-Turbo": {
+        "chat": 1
+    },
+    "Llama-3.3-70B-Instruct-Turbo-Free": {
+        "chat": 1
+    },
+    "Meta-Llama-3.1-405B-Instruct-Turbo": {
+        "chat": 1
+    },
+    "Llama-3.2-3B-Instruct-Turbo": {
+        "chat": 1
+    },
+    "Llama-3.2-11B-Vision-Instruct-Turbo*": { # Unable to access model atm
+        "chat": 0
+    },
+    "Llama-3.2-90B-Vision-Instruct-Turbo*": { # Unable to access model atm
+        "chat": 0
+    },
+    "Meta-Llama-3.1-405B-Instruct-Turbo": {
+        "chat": 1
+    },
+    "Meta-Llama-3.1-8B-Instruct-Turbo": {
+        "chat": 1
+    },
+    "Meta-Llama-3-8B-Instruct-Lite": {
+        "chat": 1
+    },
+    "Llama-3-8b-chat-hf*": {
+        "chat": 1
+    },
+    "Llama-3-70b-chat-hf": {
+        "chat": 1
+    },
+    "Llama-2-70b-hf": {
+        "response": 2
+    } # Completion?
+}
+
+local_mode_group = {}
+
 class MetaLlamaLLM(AbstractLLM):
     """
     Class for models from Meta
     """
-
-    client_mode_group = {
-        "Llama-4-Maverick-17B-128E-Instruct-FP8": {
-            "chat": 1
-        },
-        "Llama-4-Scout-17B-16E-Instruct": {
-            "chat": 1
-        },
-        "Meta-Llama-3.1-8B-Instruct-Turbo": {
-            "chat": 1
-        },
-        "Llama-3.3-70B-Instruct-Turbo": {
-            "chat": 1
-        },
-        "Llama-3.3-70B-Instruct-Turbo-Free": {
-            "chat": 1
-        },
-        "Meta-Llama-3.1-405B-Instruct-Turbo": {
-            "chat": 1
-        },
-        "Llama-3.2-3B-Instruct-Turbo": {
-            "chat": 1
-        },
-        "Llama-3.2-11B-Vision-Instruct-Turbo*": { # Unable to access model atm
-            "chat": 0
-        },
-        "Llama-3.2-90B-Vision-Instruct-Turbo*": { # Unable to access model atm
-            "chat": 0
-        },
-        "Meta-Llama-3.1-405B-Instruct-Turbo": {
-            "chat": 1
-        },
-        "Meta-Llama-3.1-8B-Instruct-Turbo": {
-            "chat": 1
-        },
-        "Meta-Llama-3-8B-Instruct-Lite": {
-            "chat": 1
-        },
-        "Llama-3-8b-chat-hf*": {
-            "chat": 1
-        },
-        "Llama-3-70b-chat-hf": {
-            "chat": 1
-        },
-        "Llama-2-70b-hf": {
-            "response": 2
-        } # Completion?
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: MetaLlamaConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -113,7 +121,7 @@ class MetaLlamaLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Default chat
                     together_name = f"meta-llama/{self.model_fullname}"
                     response = self.client.chat.completions.create(
@@ -145,7 +153,7 @@ class MetaLlamaLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"TOGETHER_API_KEY")
                 assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
                 self.client = Together(api_key=api_key)

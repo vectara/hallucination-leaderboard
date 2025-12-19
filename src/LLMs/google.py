@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 from google import genai
 from google.genai import types
@@ -66,102 +67,109 @@ class GoogleSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "gemini-3-flash-preview": {
+        "chat": 1
+    },
+    "gemini-3-pro-preview": {
+        "chat": 1
+    },
+    "gemini-2.5-flash-preview": {
+        "chat": 1
+    },
+    "gemma-3-4b-it": {
+        "chat": 7
+    },
+    "gemma-3-12b-it": {
+        "chat": 6
+    },
+    "gemma-3-27b-it": {
+        "chat": 5
+    },
+    "gemini-2.0-pro-exp": {
+        "chat": 1
+    },
+    "gemini-2.0-flash-001": {
+        "chat": 1
+    },
+    "gemini-2.0-flash": {
+        "chat": 1
+    },
+    "gemini-2.0-flash-exp": {
+        "chat": 1
+    },
+    "gemini-2.0-flash-lite": {
+        "chat": 1
+    },
+    "gemini-1.5-flash-002": {
+        "chat": 1
+    },
+    "gemini-1.5-pro-002": {
+        "chat": 1
+    },
+    "gemini-1.5-flash": {
+        "chat": 1
+    },
+    "gemini-1.5-pro": {
+        "chat": 1
+    },
+    "gemini-pro": {
+        "chat": 1
+    }, # Prob does not work
+    "gemma-7n-it": {
+        "chat": 1
+    }, # Not officially listed
+    "gemma-1.1-2b-it": {
+        "chat": 1
+    }, # Not officially listed
+    "gemma-1.1-7b-it": {
+        "chat": 1
+    }, # Not officially listed
+    "gemma-2-2b-it": {
+        "chat": 1
+    }, # Not officially listed
+    "gemma-2-9b-it": {
+        "chat": 1
+    }, # Not officially listed
+    "gemini-2.5-pro": {
+        "chat": 2
+    },
+    "gemini-2.5-pro-preview": {
+        "chat": 3
+    },
+    "gemini-2.5-flash-lite": {
+        "chat": 4
+    },
+    "gemini-2.5-flash": {
+        "chat": 4
+    },
+}
+
+local_mode_group = {
+    "gemma-3-1b-it": {
+        "chat": 1
+    },
+    "gemma-3-4b-it": {
+        "chat": 1
+    },
+    "gemma-3-12b-it": {
+        "chat": 1
+    },
+}
+
 class GoogleLLM(AbstractLLM):
     """
     Class for models from Google
 
     """
-
-    client_mode_group = {
-        "gemini-3-flash-preview": {
-            "chat": 1
-        },
-        "gemini-3-pro-preview": {
-            "chat": 1
-        },
-        "gemini-2.5-flash-preview": {
-            "chat": 1
-        },
-        "gemma-3-4b-it": {
-            "chat": 7
-        },
-        "gemma-3-12b-it": {
-            "chat": 6
-        },
-        "gemma-3-27b-it": {
-            "chat": 5
-        },
-        "gemini-2.0-pro-exp": {
-            "chat": 1
-        },
-        "gemini-2.0-flash-001": {
-            "chat": 1
-        },
-        "gemini-2.0-flash": {
-            "chat": 1
-        },
-        "gemini-2.0-flash-exp": {
-            "chat": 1
-        },
-        "gemini-2.0-flash-lite": {
-            "chat": 1
-        },
-        "gemini-1.5-flash-002": {
-            "chat": 1
-        },
-        "gemini-1.5-pro-002": {
-            "chat": 1
-        },
-        "gemini-1.5-flash": {
-            "chat": 1
-        },
-        "gemini-1.5-pro": {
-            "chat": 1
-        },
-        "gemini-pro": {
-            "chat": 1
-        }, # Prob does not work
-        "gemma-7n-it": {
-            "chat": 1
-        }, # Not officially listed
-        "gemma-1.1-2b-it": {
-            "chat": 1
-        }, # Not officially listed
-        "gemma-1.1-7b-it": {
-            "chat": 1
-        }, # Not officially listed
-        "gemma-2-2b-it": {
-            "chat": 1
-        }, # Not officially listed
-        "gemma-2-9b-it": {
-            "chat": 1
-        }, # Not officially listed
-        "gemini-2.5-pro": {
-            "chat": 2
-        },
-        "gemini-2.5-pro-preview": {
-            "chat": 3
-        },
-        "gemini-2.5-flash-lite": {
-            "chat": 4
-        },
-        "gemini-2.5-flash": {
-            "chat": 4
-        },
-    }
-
-    local_mode_group = {
-        "gemma-3-1b-it": {
-            "chat": 1
-        },
-        "gemma-3-4b-it": {
-            "chat": 1
-        },
-        "gemma-3-12b-it": {
-            "chat": 1
-        },
-    }
-
     def __init__(self, config: GoogleConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -174,7 +182,7 @@ class GoogleLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Default
                     response = self.client.models.generate_content(
                         model=self.model_fullname,
@@ -252,7 +260,7 @@ class GoogleLLM(AbstractLLM):
                     )
                     summary = summary.replace("<end_of_turn>", "")
         elif self.local_model:
-            match self.local_mode_group[self.model_name][self.endpoint]:
+            match local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
                     print("ATTEMPTING TO REQUEST")
                     messages = [
@@ -276,7 +284,7 @@ class GoogleLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_GEMINI_API_KEY")
                 assert api_key is not None, f"Google Gemini API key not found in environment variable {COMPANY.upper()}_GEMINI_API_KEY"
                 self.client = genai.Client(api_key=api_key)
@@ -287,7 +295,7 @@ class GoogleLLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode in ["gpu", "cpu"]:
-            if self.model_name in self.local_mode_group:
+            if self.model_name in local_mode_group:
                 self.local_mode = pipeline(
                     "text-generation",
                     model=self.model_fullname,

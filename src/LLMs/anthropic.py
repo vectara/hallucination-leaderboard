@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 import anthropic
 
@@ -36,52 +37,59 @@ class AnthropicSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "claude-opus-4-5": {
+        "chat": 1
+    },
+    "claude-3-5-haiku": {
+        "chat": 1
+    },
+    "claude-sonnet-4-5": {
+        "chat": 1
+    },
+    "claude-haiku-4-5": {
+        "chat": 1
+    },
+    "claude-opus-4-1": {
+        "chat": 1
+    },
+    "claude-opus-4": {
+        "chat": 1
+    },
+    "claude-sonnet-4": {
+        "chat": 1
+    },
+    "claude-3-7-sonnet": {
+        "chat": 1
+    },
+    "claude-3-5-sonnet": {
+        "chat": 1
+    },
+    "claude-3-sonnet": {
+        "chat": 1
+    },
+    "claude-3-opus": {
+        "chat": 1
+    },
+    "claude-2.0": {
+        "chat": 1
+    }
+}
+
+local_mode_group = {}
+
 class AnthropicLLM(AbstractLLM):
     """
     Class for models from Anthropic
     """
-
-    client_mode_group = {
-        "claude-opus-4-5": {
-            "chat": 1
-        },
-        "claude-3-5-haiku": {
-            "chat": 1
-        },
-        "claude-sonnet-4-5": {
-            "chat": 1
-        },
-        "claude-haiku-4-5": {
-            "chat": 1
-        },
-        "claude-opus-4-1": {
-            "chat": 1
-        },
-        "claude-opus-4": {
-            "chat": 1
-        },
-        "claude-sonnet-4": {
-            "chat": 1
-        },
-        "claude-3-7-sonnet": {
-            "chat": 1
-        },
-        "claude-3-5-sonnet": {
-            "chat": 1
-        },
-        "claude-3-sonnet": {
-            "chat": 1
-        },
-        "claude-3-opus": {
-            "chat": 1
-        },
-        "claude-2.0": {
-            "chat": 1
-        }
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: AnthropicConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -90,7 +98,7 @@ class AnthropicLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1:
                     chat_package = self.client.messages.create(
                         model=self.model_fullname,
@@ -107,7 +115,7 @@ class AnthropicLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                 assert api_key is not None, f"Anthropic API key not found in environment variable {COMPANY.upper()}_API_KEY"
                 self.client = anthropic.Anthropic(api_key=api_key)

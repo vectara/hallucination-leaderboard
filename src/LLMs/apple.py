@@ -1,6 +1,7 @@
 import os
 from typing import Literal
 import torch
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -24,20 +25,27 @@ class AppleSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+}
+
+local_mode_group = {
+    "OpenELM-3B-Instruct": {
+        "chat": 1
+    }
+}
+
 class AppleLLM(AbstractLLM):
     """
     Class for models from apple
     """
-
-    client_mode_group = {
-    }
-
-    local_mode_group = {
-        "OpenELM-3B-Instruct": {
-            "chat": 1
-        }
-    }
-
     def __init__(self, config: AppleConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -49,11 +57,11 @@ class AppleLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1:
                     summary = None
         elif self.local_model: 
-            match self.local_mode_group[self.model_name][self.endpoint]:
+            match local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
                     tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf", add_bos_token=True)
 
@@ -99,7 +107,7 @@ class AppleLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                 assert api_key is not None, (
                     f"{COMPANY} API key not found in environment variable "
@@ -115,7 +123,7 @@ class AppleLLM(AbstractLLM):
                     )
                 )
         elif self.execution_mode in ["gpu", "cpu"]:
-            if self.model_name in self.local_mode_group:
+            if self.model_name in local_mode_group:
                 self.local_model = AutoModelForCausalLM.from_pretrained(
                     self.model_fullname,
                     device_map="auto",

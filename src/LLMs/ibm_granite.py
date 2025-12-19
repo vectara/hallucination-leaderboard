@@ -1,6 +1,7 @@
 import os
 import torch
 from typing import Literal
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -37,57 +38,64 @@ class IBMGraniteSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "granite-4.0-h-small": {
+        "chat": 1,
+    },
+    "granite-3.3-8b-instruct": {
+        "chat": 1
+    },
+    "granite-3.2-8b-instruct": {
+        "chat": 1
+    },
+
+}
+
+local_mode_group = {
+    "granite-4.0-h-small": {
+        "chat": 1,
+    },
+    "granite-4.0-h-tiny": {
+        "chat": 1,
+    },
+    "granite-4.0-h-micro": {
+        "chat": 2,
+    },
+    "granite-4.0-micro": {
+        "chat": 2,
+    },
+    "granite-3.2-8b-instruct": {
+        "chat": 1
+    },
+    "granite-3.2-2b-instruct": {
+        "chat": 1
+    },
+    "granite-3.1-8b-instruct": {
+        "chat": 1
+    },
+    "granite-3.1-2b-instruct": {
+        "chat": 1
+    },
+    "granite-3.0-8b-instruct": {
+        "chat": 1
+    },
+    "granite-3.0-2b-instruct": {
+        "chat": 1
+    }
+}
+
 class IBMGraniteLLM(AbstractLLM):
     """
     Class for models from IBM
     """
-
-    client_mode_group = {
-        "granite-4.0-h-small": {
-            "chat": 1,
-        },
-        "granite-3.3-8b-instruct": {
-            "chat": 1
-        },
-        "granite-3.2-8b-instruct": {
-            "chat": 1
-        },
-
-    }
-
-    local_mode_group = {
-        "granite-4.0-h-small": {
-            "chat": 1,
-        },
-        "granite-4.0-h-tiny": {
-            "chat": 1,
-        },
-        "granite-4.0-h-micro": {
-            "chat": 2,
-        },
-        "granite-4.0-micro": {
-            "chat": 2,
-        },
-        "granite-3.2-8b-instruct": {
-            "chat": 1
-        },
-        "granite-3.2-2b-instruct": {
-            "chat": 1
-        },
-        "granite-3.1-8b-instruct": {
-            "chat": 1
-        },
-        "granite-3.1-2b-instruct": {
-            "chat": 1
-        },
-        "granite-3.0-8b-instruct": {
-            "chat": 1
-        },
-        "granite-3.0-2b-instruct": {
-            "chat": 1
-        }
-    }
-
     def __init__(self, config: IBMGraniteConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -98,7 +106,7 @@ class IBMGraniteLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Default
                     input = {
                         "prompt": prepared_text,
@@ -111,7 +119,7 @@ class IBMGraniteLLM(AbstractLLM):
                     )
                     summary = raw_out[0]
         elif self.local_model:
-            match self.local_mode_group[self.model_name][self.endpoint]:
+            match local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
                     pass
         else:
@@ -122,7 +130,7 @@ class IBMGraniteLLM(AbstractLLM):
         if self.execution_mode == "api":
             self.client = "replicate doesnt have a client"
         elif self.execution_mode in ["gpu", "cpu"]:
-            if self.model_name in self.local_mode_group:
+            if self.model_name in local_mode_group:
                 pass
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

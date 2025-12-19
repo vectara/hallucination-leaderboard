@@ -1,6 +1,7 @@
 import os
 from typing import Literal
 import re
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -25,24 +26,31 @@ class NvidiaSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "Nemotron-3-Nano-30B-A3B": { 
+        "chat": 2
+    }
+}
+
+# TODO: Add local models here and specify what logic path to run that model
+local_mode_group = {
+    "MODEL_NAME": {
+        "chat": 1
+    }
+} 
+
 class NvidiaLLM(AbstractLLM):
     """
     Class for models from Nvidia
     """
-
-    client_mode_group = {
-        "Nemotron-3-Nano-30B-A3B": { 
-            "chat": 2
-        }
-    }
-
-    # TODO: Add local models here and specify what logic path to run that model
-    local_mode_group = {
-        "MODEL_NAME": {
-            "chat": 1
-        }
-    } 
-
     def __init__(self, config: NvidiaConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -58,7 +66,7 @@ class NvidiaLLM(AbstractLLM):
             return text.strip()
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1:
                     replicate_name = f"{COMPANY}/{self.model_fullname}:135b4a9c545002830563436c88ea56b401d135faa59da6773bc5934d2ae56344"
                     output = replicate.run(
@@ -87,7 +95,7 @@ class NvidiaLLM(AbstractLLM):
                     )
                     summary = chat_completion.choices[0].message.content.lstrip()
         elif self.local_model: 
-            match self.local_mode_group[self.model_name][self.endpoint]:
+            match local_mode_group[self.model_name][self.endpoint]:
                 # TODO Define how the case 1 model will run
                 case 1:
                     pass
@@ -101,7 +109,7 @@ class NvidiaLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"DEEPINFRA_API_KEY")
                 assert api_key is not None, (
                     f"{COMPANY} API key not found in environment variable "
@@ -120,7 +128,7 @@ class NvidiaLLM(AbstractLLM):
                     )
                 )
         elif self.execution_mode == "local":
-            if self.model_name in self.local_mode_group:
+            if self.model_name in local_mode_group:
                 # TODO: Assign a local model if using a local model
                 self.local_model = None
             else:

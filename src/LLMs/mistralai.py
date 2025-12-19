@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 from mistralai import Mistral
 
@@ -44,46 +45,53 @@ class MistralAISummary(BasicSummary):
     class Config:
         extra = "ignore" 
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "magistral-medium":{
+        "chat": 1
+    }, # Doesn't look like magistral can disable thinking
+    "mistral-medium":{
+        "chat": 1
+    },
+    "mistral-small": {
+        "chat": 1
+    },
+    "mistral-large": {
+        "chat": 1
+    },
+    "ministral-3b": {
+        "chat": 1
+    },
+    "ministral-8b": {
+        "chat": 1
+    },
+    "ministral-14b": {
+        "chat": 1
+    },
+    "pixtral-large": {
+        "chat": 1
+    },
+    "pixtral-12b": {
+        "chat": 1
+    },
+    "open-mistral-nemo": {
+        "chat": 1
+    }
+}
+
+local_mode_group = {}
+
 class MistralAILLM(AbstractLLM):
     """
     Class for models from MistralAI
     """
-
-    client_mode_group = {
-        "magistral-medium":{
-            "chat": 1
-        }, # Doesn't look like magistral can disable thinking
-        "mistral-medium":{
-            "chat": 1
-        },
-        "mistral-small": {
-            "chat": 1
-        },
-        "mistral-large": {
-            "chat": 1
-        },
-        "ministral-3b": {
-            "chat": 1
-        },
-        "ministral-8b": {
-            "chat": 1
-        },
-        "ministral-14b": {
-            "chat": 1
-        },
-        "pixtral-large": {
-            "chat": 1
-        },
-        "pixtral-12b": {
-            "chat": 1
-        },
-        "open-mistral-nemo": {
-            "chat": 1
-        }
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: MistralAIConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -92,7 +100,7 @@ class MistralAILLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Standard chat completion
                     chat_package = self.client.chat.complete(
                         model=self.model_fullname,
@@ -109,7 +117,7 @@ class MistralAILLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                 assert api_key is not None, f"MistralAI API key not found in environment variable {COMPANY.upper()}_API_KEY"
                 self.client = Mistral(api_key=api_key)

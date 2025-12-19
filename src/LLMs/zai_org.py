@@ -2,6 +2,7 @@ import os
 from typing import Literal
 from together import Together
 from openai import OpenAI
+from enum import Enum, auto
 
 
 from . AbstractLLM import AbstractLLM
@@ -27,28 +28,35 @@ class ZhipuAISummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "GLM-4.5-AIR-FP8":{
+        "chat": 1,
+        "api_type": "together"
+    },
+    "glm-4p5":{
+        "chat": 2,
+        "api_type": "fireworks"
+    },
+    "GLM-4.6": {
+        "chat": 3,
+        "api_type": "deepinfra"
+    }
+}
+
+local_mode_group = {}
+
 class ZhipuAILLM(AbstractLLM):
     """
     Class for models from z.ai
     """
-
-    client_mode_group = {
-        "GLM-4.5-AIR-FP8":{
-            "chat": 1,
-            "api_type": "together"
-        },
-        "glm-4p5":{
-            "chat": 2,
-            "api_type": "fireworks"
-        },
-        "GLM-4.6": {
-            "chat": 3,
-            "api_type": "deepinfra"
-        }
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: ZhipuAIConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -58,7 +66,7 @@ class ZhipuAILLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Together API
                     together_name = f"zai-org/{self.model_fullname}"
                     response = self.client.chat.completions.create(
@@ -102,19 +110,19 @@ class ZhipuAILLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 if self.client_mode_group[self.model_name]["api_type"] == "together":
                     api_key = os.getenv(f"TOGETHER_API_KEY")
                     assert api_key is not None, f"TOGETHER API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = Together(api_key=api_key)
-                elif self.client_mode_group[self.model_name]["api_type"] == "fireworks":
+                elif client_mode_group[self.model_name]["api_type"] == "fireworks":
                     api_key = os.getenv(f"FIREWORKS_API_KEY")
                     assert api_key is not None, f"FIREWORKS API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = OpenAI(
                         api_key=api_key,
                         base_url="https://api.fireworks.ai/inference/v1"
                     )
-                elif self.client_mode_group[self.model_name]["api_type"] == "deepinfra":
+                elif client_mode_group[self.model_name]["api_type"] == "deepinfra":
                     api_key = os.getenv(f"DEEPINFRA_API_KEY")
                     assert api_key is not None, f"DEEPINFRA API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = OpenAI(

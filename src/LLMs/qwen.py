@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 from openai import OpenAI
 
@@ -63,70 +64,77 @@ class QwenSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
-class QwenLLM(AbstractLLM):
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
 
-    client_mode_group = {
-        "Qwen3-235B-A22B": {
-            "chat": 2
-        },
-        "qwen3-30b-a3b-thinking": {
-            "chat": 2
-        },
-        "qwen3-next-80b-a3b-thinking": {
-            "chat": 2
-        },
-        "qwen3-omni-30b-a3b-thinking": {
-            "chat": 2
-        },
-        "qwen3-max-preview": {
-            "chat": 2
-        },
-        "qwen3-32b": {
-            "chat": 2
-        },
-        "qwen3-14b": {
-            "chat": 2
-        },
-        "qwen3-8b": {
-            "chat": 2
-        },
-        "qwen3-4b": {
-            "chat": 2
-        },
-        "qwen3-1.7b": {
-            "chat": 2
-        },
-        "qwen3-0.6b": {
-            "chat": 2
-        },
-        "qwen-plus": {
-            "chat": 2
-        }, # 2025-04-28
-        "qwen-turbo": {
-            "chat": 2
-        }, # 2025-04-28
-        "Qwen2.5-Max": {
-            "chat": 1
-        },
-        "qwen-max": {
-            "chat": 1
-        },
-        "qwen2.5-72b-instruct": {
-            "chat": 1
-        },
-        "qwen2.5-32b-instruct": {
-            "chat": 1
-        },
-        "qwen2.5-14b-instruct": {
-            "chat": 1
-        },
-        "qwen2.5-7b-instruct": {
-            "chat": 1
-        }
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "Qwen3-235B-A22B": {
+        "chat": 2
+    },
+    "qwen3-30b-a3b-thinking": {
+        "chat": 2
+    },
+    "qwen3-next-80b-a3b-thinking": {
+        "chat": 2
+    },
+    "qwen3-omni-30b-a3b-thinking": {
+        "chat": 2
+    },
+    "qwen3-max-preview": {
+        "chat": 2
+    },
+    "qwen3-32b": {
+        "chat": 2
+    },
+    "qwen3-14b": {
+        "chat": 2
+    },
+    "qwen3-8b": {
+        "chat": 2
+    },
+    "qwen3-4b": {
+        "chat": 2
+    },
+    "qwen3-1.7b": {
+        "chat": 2
+    },
+    "qwen3-0.6b": {
+        "chat": 2
+    },
+    "qwen-plus": {
+        "chat": 2
+    }, # 2025-04-28
+    "qwen-turbo": {
+        "chat": 2
+    }, # 2025-04-28
+    "Qwen2.5-Max": {
+        "chat": 1
+    },
+    "qwen-max": {
+        "chat": 1
+    },
+    "qwen2.5-72b-instruct": {
+        "chat": 1
+    },
+    "qwen2.5-32b-instruct": {
+        "chat": 1
+    },
+    "qwen2.5-14b-instruct": {
+        "chat": 1
+    },
+    "qwen2.5-7b-instruct": {
+        "chat": 1
     }
+}
 
-    local_mode_group = {}
+local_mode_group = {}
 
+class QwenLLM(AbstractLLM):
     def __init__(self, config: QwenConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -136,7 +144,7 @@ class QwenLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Default
                     completion = self.client.chat.completions.create(
                         model=self.model_fullname,
@@ -168,7 +176,7 @@ class QwenLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                 assert api_key is not None, (
                     f"{COMPANY} API key not found in environment variable "

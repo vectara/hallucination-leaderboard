@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -24,19 +25,26 @@ class PrimeIntellectSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "INTELLECT-3": {
+        "chat": 1
+    },
+}
+
+local_mode_group = {}
+
 class PrimeIntellectLLM(AbstractLLM):
     """
     Class for models from company
     """
-
-    client_mode_group = {
-        "INTELLECT-3": {
-            "chat": 1
-        },
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: PrimeIntellectConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -46,7 +54,7 @@ class PrimeIntellectLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Standard chat completion
                     messages = [{"role": "user", "content":prepared_text}]
                     client_package = self.client.chat_completion(
@@ -63,7 +71,7 @@ class PrimeIntellectLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 self.client = InferenceClient(model=self.model_fullname)
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

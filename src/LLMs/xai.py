@@ -2,6 +2,7 @@ import os
 from typing import Literal
 from xai_sdk import Client
 from xai_sdk.chat import user, system
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -33,49 +34,56 @@ class XAISummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "grok-4-1-fast-reasoning":{
+        "chat": 1
+    },
+    "grok-4-1-fast-non-reasoning":{
+        "chat": 1
+    },
+    "grok-4-fast-non-reasoning":{
+        "chat": 1
+    },
+    "grok-4-fast-reasoning":{
+        "chat": 1
+    },
+    "grok-4-fast-non-reasoning":{
+        "chat": 1
+    },
+    "grok-4":{
+        "chat": 1
+    },
+    "grok-3":{
+        "chat": 2
+    },
+    "grok-3-mini":{
+        "chat": 2
+    },
+    "grok-3-fast":{
+        "chat": 2
+    },
+    "grok-3-mini-fast":{
+        "chat": 2
+    },
+    "grok-2-vision":{
+        "chat": 2
+    },
+}
+
+local_mode_group = {}
+
 class XAILLM(AbstractLLM):
     """
     Class for models from x-ai
     """
-
-    client_mode_group = {
-        "grok-4-1-fast-reasoning":{
-            "chat": 1
-        },
-        "grok-4-1-fast-non-reasoning":{
-            "chat": 1
-        },
-        "grok-4-fast-non-reasoning":{
-            "chat": 1
-        },
-        "grok-4-fast-reasoning":{
-            "chat": 1
-        },
-        "grok-4-fast-non-reasoning":{
-            "chat": 1
-        },
-        "grok-4":{
-            "chat": 1
-        },
-        "grok-3":{
-            "chat": 2
-        },
-        "grok-3-mini":{
-            "chat": 2
-        },
-        "grok-3-fast":{
-            "chat": 2
-        },
-        "grok-3-mini-fast":{
-            "chat": 2
-        },
-        "grok-2-vision":{
-            "chat": 2
-        },
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: XAIConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -86,7 +94,7 @@ class XAILLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Reasoning Model
                     chat = self.client.chat.create(
                         model=self.model_fullname,
@@ -120,7 +128,7 @@ class XAILLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"XAI_API_KEY")
                 assert api_key is not None, (
                     f"{COMPANY} API key not found in environment variable "

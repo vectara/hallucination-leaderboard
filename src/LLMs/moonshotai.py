@@ -1,6 +1,7 @@
 
 import os
 from typing import Literal
+from enum import Enum, auto
 
 
 from . AbstractLLM import AbstractLLM
@@ -28,22 +29,29 @@ class MoonshotAISummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "Kimi-K2-Instruct": {
+        "chat": 2
+    },
+    "kimi-k2-thinking": {
+        "chat": 1
+    },
+}
+
+local_mode_group = {}
+
 class MoonshotAILLM(AbstractLLM):
     """
     Class for models from moonshotai
     """
-
-    client_mode_group = {
-        "Kimi-K2-Instruct": {
-            "chat": 2
-        },
-        "kimi-k2-thinking": {
-            "chat": 1
-        },
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: MoonshotAIConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -53,7 +61,7 @@ class MoonshotAILLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Default
                     completion = self.client.chat.completions.create(
                         model = self.model_fullname,
@@ -107,7 +115,7 @@ class MoonshotAILLM(AbstractLLM):
         if self.execution_mode == "api":
             api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
             assert api_key is not None, f"{COMPANY.upper()} API key not found in environment variable {COMPANY.upper()}_API_KEY"
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 self.client = OpenAI(
                     api_key = api_key,
                     base_url = "https://api.moonshot.ai/v1",

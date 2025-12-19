@@ -1,6 +1,7 @@
 import os
 import torch
 from typing import Literal
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -37,35 +38,42 @@ class AllenAISummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "Olmo-3-32B-Think": {
+        "chat": 2,
+        "provider": "openrouter"
+    },
+}
+
+local_mode_group = {
+    "Olmo-3-32B-Think": {
+        "chat": 3,
+    },
+    "Olmo-3-7B-Think": {
+        "chat": 3,
+    },
+    "OLMo-2-7B-Instruct": {
+        "chat": 1
+    },
+    "OLMo-2-13B-Instruct": {
+        "chat": 1
+    }
+}
+
 class AllenAILLM(AbstractLLM):
     """
     Class for models from AllenAI
 
     Attributes:
     """
-
-    client_mode_group = {
-        "Olmo-3-32B-Think": {
-            "chat": 2,
-            "provider": "openrouter"
-        },
-    }
-
-    local_mode_group = {
-        "Olmo-3-32B-Think": {
-            "chat": 3,
-        },
-        "Olmo-3-7B-Think": {
-            "chat": 3,
-        },
-        "OLMo-2-7B-Instruct": {
-            "chat": 1
-        },
-        "OLMo-2-13B-Instruct": {
-            "chat": 1
-        }
-    }
-
     def __init__(self, config: AllenAIConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -80,7 +88,7 @@ class AllenAILLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Standard chat completion
                     messages = [{"role": "user", "content":prepared_text}]
                     client_package = self.client.chat_completion(
@@ -100,7 +108,7 @@ class AllenAILLM(AbstractLLM):
                     summary = response.choices[0].message.content
                     print(summary)
         elif self.local_model:
-            match self.local_mode_group[self.model_name][self.endpoint]:
+            match local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname, use_fast=False)
 
@@ -155,10 +163,10 @@ class AllenAILLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 if self.client_mode_group[self.model_name]["provider"] == "hf":
                     self.client = InferenceClient(model=self.model_fullname)
-                elif self.client_mode_group[self.model_name]["provider"] == "openrouter":
+                elif client_mode_group[self.model_name]["provider"] == "openrouter":
                     api_key = os.getenv(f"OPENROUTER_API_KEY")
                     assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = OpenAI(
@@ -174,19 +182,26 @@ class AllenAILLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode == "vllm":
-            self.local_model = LLM(
-                model=self.model_fullname,
-                tensor_parallel_size=8,   # A100-80G x8
-                max_model_len=self.max_tokens,
-                # compilation_config=CompilationConfig( # customize graph capturing
-                #     mode=CompilationMode.VLLM_COMPILE,
-                #     # By default, it goes up to max_num_seqs
-                #     cudagraph_capture_sizes=[1, 2, 4, 8, 16],
-                # ),
-                enforce_eager=True, # Disables graph capturing
-            )
+            if self.model_name in local_mode_group:
+                self.local_model = LLM(
+                    model=self.model_fullname,
+                    tensor_parallel_size=8,   # A100-80G x8
+                    max_model_len=self.max_tokens,
+                    # compilation_config=CompilationConfig( # customize graph capturing
+                    #     mode=CompilationMode.VLLM_COMPILE,
+                    #     # By default, it goes up to max_num_seqs
+                    #     cudagraph_capture_sizes=[1, 2, 4, 8, 16],
+                    # ),
+                    enforce_eager=True, # Disables graph capturing
+                )
+            else:
+                raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
+                    model_name=self.model_name,
+                    company=self.company,
+                    execution_mode=self.execution_mode
+                ))
         elif self.execution_mode in ["gpu", "cpu"]:
-            if self.model_name in self.local_mode_group:
+            if self.model_name in local_mode_group:
                 max_memory = {
                     i: "64GiB" for i in range(torch.cuda.device_count())
                 }

@@ -1,6 +1,7 @@
 import os
 from typing import Literal
 import replicate
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -22,19 +23,26 @@ class SnowflakeSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "snowflake-arctic-instruct": {
+        "chat": 1
+    }
+}
+
+local_mode_group = {}
+
 class SnowflakeLLM(AbstractLLM):
     """
     Class for models from snowflake
     """
-
-    client_mode_group = {
-        "snowflake-arctic-instruct": {
-            "chat": 1
-        }
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: SnowflakeConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -45,7 +53,7 @@ class SnowflakeLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1:
                     input = {
                         "prompt": prepared_text,

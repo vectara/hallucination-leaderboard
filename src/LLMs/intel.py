@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -22,19 +23,26 @@ class IntelSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "MODEL_NAME": {
+        "chat": 1
+    }
+}
+
+local_mode_group = {}
+
 class IntelLLM(AbstractLLM):
     """
     Class for models from Intel
     """
-
-    client_mode_group = {
-        "MODEL_NAME": {
-            "chat": 1
-        }
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: IntelConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -44,7 +52,7 @@ class IntelLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1:
                     pass
         elif self.local_model: 
@@ -59,7 +67,7 @@ class IntelLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                 assert api_key is not None, (
                     f"{COMPANY} API key not found in environment variable "

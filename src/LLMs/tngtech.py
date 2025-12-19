@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 from openai import OpenAI
 
@@ -24,19 +25,26 @@ class TngTechSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "DeepSeek-TNG-R1T2-Chimera": {
+        "chat": 1,
+    }
+}
+
+local_mode_group = {}
+
 class TngTechLLM(AbstractLLM):
     """
     Class for models from TngTech
     """
-
-    client_mode_group = {
-        "DeepSeek-TNG-R1T2-Chimera": {
-            "chat": 1,
-        }
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: TngTechConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -46,7 +54,7 @@ class TngTechLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1:
                     chat_package = self.client.chat.completions.create(
                         model=self.model_fullname,
@@ -65,7 +73,7 @@ class TngTechLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                 assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
                 self.client = OpenAI(

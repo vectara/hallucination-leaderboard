@@ -3,6 +3,7 @@ from typing import Literal
 
 from ai21 import AI21Client
 from ai21.models.chat import ChatMessage
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -30,29 +31,36 @@ class AI21LabsSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "jamba-large-1.7": {
+        "chat": 1
+    },
+    "jamba-mini-1.7": {
+        "chat": 1
+    },
+    "jamba-large-1.6": {
+        "chat": 1
+    },
+    "jamba-mini-1.6": {
+        "chat": 1
+    },
+}
+
+# In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
+local_mode_group = {}
+
 class AI21LabsLLM(AbstractLLM):
     """
     Class for models from AI21
     """
-
-    client_mode_group = {
-        "jamba-large-1.7": {
-            "chat": 1
-        },
-        "jamba-mini-1.7": {
-            "chat": 1
-        },
-        "jamba-large-1.6": {
-            "chat": 1
-        },
-        "jamba-mini-1.6": {
-            "chat": 1
-        },
-    }
-
-    # In which way to run the model on local GPU. Empty dict means not supported for local GPU execution
-    local_mode_group = {}
-
     def __init__(self, config: AI21LabsConfig):
         
         # Call parent constructor to inherit all parent properties
@@ -63,7 +71,7 @@ class AI21LabsLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1:
                     messages = [
                         ChatMessage(role="user", content=prepared_text),
@@ -91,7 +99,7 @@ class AI21LabsLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                 assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
                 self.client = AI21Client(api_key=api_key)

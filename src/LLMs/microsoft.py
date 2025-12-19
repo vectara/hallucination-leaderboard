@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
@@ -40,28 +41,35 @@ class MicrosoftSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "Phi-4-mini-instruct": {
+        "chat": 1
+    },
+    "Phi-4": {
+        "chat": 1
+    },
+    "microsoft-phi-2": {
+        "chat": 1
+    },
+    "microsoft-Orca-2-13b": {
+        "chat": 1
+    }
+}
+
+local_mode_group = {}
+
 class MicrosoftLLM(AbstractLLM):
     """
     Class for models from Meta
     """
-
-    client_mode_group = {
-        "Phi-4-mini-instruct": {
-            "chat": 1
-        },
-        "Phi-4": {
-            "chat": 1
-        },
-        "microsoft-phi-2": {
-            "chat": 1
-        },
-        "microsoft-Orca-2-13b": {
-            "chat": 1
-        }
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: MicrosoftConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -72,7 +80,7 @@ class MicrosoftLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1:
                     response = self.client.complete(
                         messages=[
@@ -98,7 +106,7 @@ class MicrosoftLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = self.model_key
                 assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
                 self.client = ChatCompletionsClient(

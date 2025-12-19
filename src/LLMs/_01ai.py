@@ -1,6 +1,7 @@
 import os
 import torch
 from typing import Literal
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -27,6 +28,29 @@ class _01AISummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {} 
+
+local_mode_group = {
+    "Yi-1.5-6B-Chat": { 
+        "chat": 100
+    },
+    "Yi-1.5-9B-Chat": {
+        "chat": 1
+    },
+    "Yi-1.5-34B-Chat": {
+        "chat": 1
+    }
+}
+
+
 class _01AILLM(AbstractLLM):
     """
     Class for models from 01-AI
@@ -34,21 +58,6 @@ class _01AILLM(AbstractLLM):
     Attributes:
 
     """
-
-    client_mode_group = {} 
-
-    local_mode_group = {
-        "Yi-1.5-6B-Chat": { 
-            "chat": 100
-        },
-        "Yi-1.5-9B-Chat": {
-            "chat": 1
-        },
-        "Yi-1.5-34B-Chat": {
-            "chat": 1
-        }
-    }
-
     def __init__(self, config: _01AIConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -60,7 +69,7 @@ class _01AILLM(AbstractLLM):
         if self.client:
             pass
         elif self.local_model:
-            match self.local_mode_group[self.model_name][self.endpoint]:
+            match local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Uses chat template
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname, use_fast=False)
 
@@ -87,7 +96,7 @@ class _01AILLM(AbstractLLM):
         if self.execution_mode == "api":
             pass
         elif self.execution_mode in ["gpu", "cpu"]:
-            if self.model_name in self.local_mode_group:
+            if self.model_name in local_mode_group:
                 # bnb_config = BitsAndBytesConfig(
                 #     load_in_4bit=True,
                 # )

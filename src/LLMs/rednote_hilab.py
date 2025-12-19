@@ -1,6 +1,7 @@
 import os
 import torch
 from typing import Literal
+from enum import Enum, auto
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -20,18 +21,25 @@ class RednoteHilabConfig(BasicLLMConfig):
 class RednoteHilabSummary(BasicSummary):
     pass
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {}
+
+local_mode_group = {
+    "rednote-hilab/dots.llm1.inst": 1, # Uses chat template
+    "rednote-hilab/dots.llm1.base": 2 # Uses direct text input
+}
+
 class RednoteHilabLLM(AbstractLLM):
     """
     Class for models from Rednote
     """
-
-    client_mode_group = {}
-
-    local_mode_group = {
-        "rednote-hilab/dots.llm1.inst": 1, # Uses chat template
-        "rednote-hilab/dots.llm1.base": 2 # Uses direct text input
-    }
-
     def __init__(self, config: RednoteHilabConfig):
         super().__init__(config)
 
@@ -40,7 +48,7 @@ class RednoteHilabLLM(AbstractLLM):
         if self.client:
             pass
         elif self.local_model:
-            match self.local_mode_group[self.model_name]:
+            match local_mode_group[self.model_name]:
                 case 1: # Uses chat template
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
@@ -84,7 +92,7 @@ class RednoteHilabLLM(AbstractLLM):
         if self.execution_mode == "api":
             pass
         elif self.execution_mode in ["gpu", "cpu"]:
-            if self.model_name in self.local_mode_group:
+            if self.model_name in local_mode_group:
                 bnb_config = BitsAndBytesConfig(
                     load_in_4bit=True,
                 )

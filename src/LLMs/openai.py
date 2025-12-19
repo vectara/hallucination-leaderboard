@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 from openai import OpenAI
 from transformers import pipeline
@@ -58,133 +59,140 @@ class OpenAISummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "gpt-5.2-low": {
+        "chat": 15,
+        "api_type": "openai"
+    },
+    "gpt-5.2-high": {
+        "chat": 16,
+        "api_type": "openai"
+    },
+    "gpt-5.1-low": {
+        "chat": 13,
+        "api_type": "openai"
+    },
+    "gpt-5.1-high": {
+        "chat": 14,
+        "api_type": "openai"
+    },
+    "gpt-5-minimal": {
+        "chat": 10,
+        "api_type": "openai"
+    },
+    "gpt-5-high": {
+        "chat": 11,
+        "api_type": "openai"
+    },
+    "gpt-5": {
+        "chat": 9,
+        "api_type": "openai"
+    },
+    "gpt-5-mini": {
+        "chat": 9,
+        "api_type": "openai"
+    },
+    "gpt-5-nano": {
+        "chat": 9,
+        "api_type": "openai",
+    },
+    "gpt-4.1": {
+        "chat": 1,
+        "api_type": "openai",
+        "response": 3
+    },
+    "gpt-4.1-nano": {
+        "chat": 1,
+        "api_type": "openai",
+        "response": 3
+    },
+    "o3": {  # o3 does not support temperature
+        "chat": 2,
+        "api_type": "openai",
+        "response": 3
+    },
+    "o3-pro": { # o3-pro doesn't support chatting protocol or temperature
+        "chat": None, 
+        "api_type": "openai",
+        "response": 4
+    },
+    "o4-mini": {
+        "chat": 2,
+        "api_type": "openai",
+    },
+    "o4-mini-low": {
+        "chat": 6,
+        "api_type": "openai",
+    },
+    "o4-mini-high": {
+        "chat": 7,
+        "api_type": "openai",
+    },
+    "o1-pro": { # doesn't support chatting or temperature
+        "chat": None,
+        "api_type": "openai",
+        "response": 4
+    },
+    "gpt-4.1-mini": {
+        "chat": 1,
+        "api_type": "openai",
+    },
+    "o1": {
+        "chat": 2,
+        "api_type": "openai",
+    },
+    "o1-mini": { # Doesn't support reasoning effort or temperature
+        "chat": 5,
+        "api_type": "openai",
+    },
+    "gpt-oss-120b": {
+        "chat": 8,
+        "api_type": "together"
+    },
+    "gpt-oss-20b": {
+        "chat": 12,
+        "api_type": "replicate"
+    },
+    "gpt-4o-mini": {
+        "chat": 1,
+        "api_type": "openai",
+    },
+    "gpt-4o": {
+        "chat": 1,
+        "api_type": "openai",
+    },
+    "gpt-4-turbo": {
+        "chat": 1,
+        "api_type": "openai",
+    },
+    "gpt-3.5-turbo": {
+        "chat": 1,
+        "api_type": "openai",
+    },
+    "gpt-4": {
+        "chat": 1,
+        "api_type": "openai",
+    }
+}
+
+local_mode_group = {
+    "gpt-oss-20b": {
+        "chat": 1
+    },
+}
+
 class OpenAILLM(AbstractLLM):
     """
     Class for models from OpenAI
     """
-
-    client_mode_group = {
-        "gpt-5.2-low": {
-            "chat": 15,
-            "api_type": "openai"
-        },
-        "gpt-5.2-high": {
-            "chat": 16,
-            "api_type": "openai"
-        },
-        "gpt-5.1-low": {
-            "chat": 13,
-            "api_type": "openai"
-        },
-        "gpt-5.1-high": {
-            "chat": 14,
-            "api_type": "openai"
-        },
-        "gpt-5-minimal": {
-            "chat": 10,
-            "api_type": "openai"
-        },
-        "gpt-5-high": {
-            "chat": 11,
-            "api_type": "openai"
-        },
-        "gpt-5": {
-            "chat": 9,
-            "api_type": "openai"
-        },
-        "gpt-5-mini": {
-            "chat": 9,
-            "api_type": "openai"
-        },
-        "gpt-5-nano": {
-            "chat": 9,
-            "api_type": "openai",
-        },
-        "gpt-4.1": {
-            "chat": 1,
-            "api_type": "openai",
-            "response": 3
-        },
-        "gpt-4.1-nano": {
-            "chat": 1,
-            "api_type": "openai",
-            "response": 3
-        },
-        "o3": {  # o3 does not support temperature
-            "chat": 2,
-            "api_type": "openai",
-            "response": 3
-        },
-        "o3-pro": { # o3-pro doesn't support chatting protocol or temperature
-            "chat": None, 
-            "api_type": "openai",
-            "response": 4
-        },
-        "o4-mini": {
-            "chat": 2,
-            "api_type": "openai",
-        },
-        "o4-mini-low": {
-            "chat": 6,
-            "api_type": "openai",
-        },
-        "o4-mini-high": {
-            "chat": 7,
-            "api_type": "openai",
-        },
-        "o1-pro": { # doesn't support chatting or temperature
-            "chat": None,
-            "api_type": "openai",
-            "response": 4
-        },
-        "gpt-4.1-mini": {
-            "chat": 1,
-            "api_type": "openai",
-        },
-        "o1": {
-            "chat": 2,
-            "api_type": "openai",
-        },
-        "o1-mini": { # Doesn't support reasoning effort or temperature
-            "chat": 5,
-            "api_type": "openai",
-        },
-        "gpt-oss-120b": {
-            "chat": 8,
-            "api_type": "together"
-        },
-        "gpt-oss-20b": {
-            "chat": 12,
-            "api_type": "replicate"
-        },
-        "gpt-4o-mini": {
-            "chat": 1,
-            "api_type": "openai",
-        },
-        "gpt-4o": {
-            "chat": 1,
-            "api_type": "openai",
-        },
-        "gpt-4-turbo": {
-            "chat": 1,
-            "api_type": "openai",
-        },
-        "gpt-3.5-turbo": {
-            "chat": 1,
-            "api_type": "openai",
-        },
-        "gpt-4": {
-            "chat": 1,
-            "api_type": "openai",
-        }
-    }
-
-    local_mode_group = {
-        "gpt-oss-20b": {
-            "chat": 1
-        },
-    }
-
     def __init__(self, config: OpenAIConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -205,7 +213,7 @@ class OpenAILLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1: # Chat with temperature and max_tokens
                     chat_package = self.client.chat.completions.create(
                         model=self.model_fullname,
@@ -362,7 +370,7 @@ class OpenAILLM(AbstractLLM):
                 case None:
                     raise Exception(f"Model `{self.model_name}` cannot be run from `{self.endpoint}` endpoint")
         elif self.local_model:
-            match self.local_mode_group[self.model_name][self.endpoint]:
+            match local_mode_group[self.model_name][self.endpoint]:
                 case 1: # Chat with temperature and max_tokens
                     def extract_after_assistant_final(text):
                         keyword = "assistantfinal"
@@ -387,12 +395,12 @@ class OpenAILLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
-                if self.client_mode_group[self.model_name]["api_type"] == "together":
+            if self.model_name in client_mode_group:
+                if client_mode_group[self.model_name]["api_type"] == "together":
                     api_key = os.getenv(f"TOGETHER_API_KEY")
                     assert api_key is not None, f"TOGETHER API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = Together(api_key=api_key)
-                if self.client_mode_group[self.model_name]["api_type"] == "replicate":
+                if client_mode_group[self.model_name]["api_type"] == "replicate":
                     api_key = os.getenv(f"REPLICATE_API_TOKEN")
                     assert api_key is not None, f"REPLICATE API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = "replicate has no client"
@@ -407,7 +415,7 @@ class OpenAILLM(AbstractLLM):
                     execution_mode=self.execution_mode
                 ))
         elif self.execution_mode in ["gpu", "cpu"]:
-            if self.model_name in self.local_mode_group:
+            if self.model_name in local_mode_group:
                 self.local_model = pipeline(
                     "text-generation",
                     model=self.model_fullname,

@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+from enum import Enum, auto
 
 import cohere
 
@@ -34,37 +35,44 @@ class CohereSummary(BasicSummary):
     class Config:
         extra = "ignore"
 
+class ClientMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    DEFAULT = auto()
+    # TODO: Add more as needed, make the term descriptive
+
+client_mode_group = {
+    "command-a": {
+        "chat": 1
+    },
+    "command-a-reasoning": {
+        "chat": 2
+    },
+    "c4ai-aya-expanse-32b": {
+        "chat": 1
+    },
+    "c4ai-aya-expanse-8b": {
+        "chat": 1
+    },
+    "command-r-plus": {
+        "chat": 1
+    },
+    "command-r": {
+        "chat": 1
+    },
+    "command-r7b": {
+        "chat": 1
+    },
+}
+
+local_mode_group = {}
+
 class CohereLLM(AbstractLLM):
     """
     Class for models from cohere
     """
-
-    client_mode_group = {
-        "command-a": {
-            "chat": 1
-        },
-        "command-a-reasoning": {
-            "chat": 2
-        },
-        "c4ai-aya-expanse-32b": {
-            "chat": 1
-        },
-        "c4ai-aya-expanse-8b": {
-            "chat": 1
-        },
-        "command-r-plus": {
-            "chat": 1
-        },
-        "command-r": {
-            "chat": 1
-        },
-        "command-r7b": {
-            "chat": 1
-        },
-    }
-
-    local_mode_group = {}
-
     def __init__(self, config: CohereConfig):
         super().__init__(config)
         self.endpoint = config.endpoint
@@ -74,7 +82,7 @@ class CohereLLM(AbstractLLM):
     def summarize(self, prepared_text: str) -> str:
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match self.client_mode_group[self.model_name][self.endpoint]:
+            match client_mode_group[self.model_name][self.endpoint]:
                 case 1:
                     response = self.client.chat(
                         model=self.model_fullname,
@@ -106,7 +114,7 @@ class CohereLLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"COHERE_API_KEY")
                 assert api_key is not None, (
                     f"{COMPANY} API key not found in environment variable "
