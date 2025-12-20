@@ -60,132 +60,143 @@ class OpenAISummary(BasicSummary):
         extra = "ignore"
 
 class ClientMode(Enum):
-    DEFAULT = auto()
-    # TODO: Add more as needed, make the term descriptive
+    DEFAULT_CHAT = auto()
+    CHAT_NO_TEMP = auto()
+    CHAT_NO_TEMP_NO_REASONING = auto()
+    DEFAULT_RESPONSE = auto()
+    RESPONSE_NO_TEMP = auto()
+    DEFAULT_TOGETHER_API = auto()
+    DEFAULT_REPLICATE_API = auto()
+    O4_MINI_LOW = auto()
+    O4_MINI_HIGH = auto()
+    GPT_5P2_HIGH = auto()
+    GPT_5P2_LOW = auto()
+    GPT_5P1_HIGH = auto()
+    GPT_5P1_LOW = auto()
+    GPT_5_HIGH = auto()
+    GPT_5_MINIMAL = auto()
+    GPT_5_DEFAULT = auto()
 
 class LocalMode(Enum):
-    DEFAULT = auto()
-    # TODO: Add more as needed, make the term descriptive
+    DEFAULT_CHAT = auto()
 
 client_mode_group = {
     "gpt-5.2-low": {
-        "chat": 15,
+        "chat": ClientMode.GPT_5P2_LOW,
         "api_type": "openai"
     },
     "gpt-5.2-high": {
-        "chat": 16,
+        "chat": ClientMode.GPT_5P2_HIGH,
         "api_type": "openai"
     },
     "gpt-5.1-low": {
-        "chat": 13,
+        "chat": ClientMode.GPT_5P1_LOW,
         "api_type": "openai"
     },
     "gpt-5.1-high": {
-        "chat": 14,
+        "chat": ClientMode.GPT_5P1_HIGH,
         "api_type": "openai"
     },
     "gpt-5-minimal": {
-        "chat": 10,
+        "chat": ClientMode.GPT_5_MINIMAL,
         "api_type": "openai"
     },
     "gpt-5-high": {
-        "chat": 11,
+        "chat": ClientMode.GPT_5_HIGH,
         "api_type": "openai"
     },
     "gpt-5": {
-        "chat": 9,
+        "chat": ClientMode.GPT_5_DEFAULT,
         "api_type": "openai"
     },
     "gpt-5-mini": {
-        "chat": 9,
+        "chat": ClientMode.GPT_5_DEFAULT,
         "api_type": "openai"
     },
     "gpt-5-nano": {
-        "chat": 9,
+        "chat": ClientMode.GPT_5_DEFAULT,
         "api_type": "openai",
     },
     "gpt-4.1": {
-        "chat": 1,
+        "chat": ClientMode.DEFAULT_CHAT,
         "api_type": "openai",
-        "response": 3
+        "response": ClientMode.DEFAULT_RESPONSE
     },
     "gpt-4.1-nano": {
-        "chat": 1,
+        "chat": ClientMode.DEFAULT_CHAT,
         "api_type": "openai",
-        "response": 3
+        "response": ClientMode.DEFAULT_RESPONSE
     },
-    "o3": {  # o3 does not support temperature
-        "chat": 2,
+    "o3": {
+        "chat": ClientMode.CHAT_NO_TEMP,
         "api_type": "openai",
-        "response": 3
+        "response": ClientMode.DEFAULT_RESPONSE
     },
-    "o3-pro": { # o3-pro doesn't support chatting protocol or temperature
-        "chat": None, 
+    "o3-pro": {
         "api_type": "openai",
-        "response": 4
+        "response": ClientMode.RESPONSE_NO_TEMP
     },
     "o4-mini": {
-        "chat": 2,
+        "chat": ClientMode.CHAT_NO_TEMP,
         "api_type": "openai",
     },
     "o4-mini-low": {
-        "chat": 6,
+        "chat": ClientMode.O4_MINI_LOW,
         "api_type": "openai",
     },
     "o4-mini-high": {
-        "chat": 7,
+        "chat": ClientMode.O4_MINI_HIGH,
         "api_type": "openai",
     },
-    "o1-pro": { # doesn't support chatting or temperature
-        "chat": None,
+    "o1-pro": {
         "api_type": "openai",
-        "response": 4
+        "response": ClientMode.RESPONSE_NO_TEMP
     },
     "gpt-4.1-mini": {
-        "chat": 1,
+        "chat": ClientMode.DEFAULT_CHAT,
         "api_type": "openai",
     },
     "o1": {
-        "chat": 2,
+        "chat": ClientMode.CHAT_NO_TEMP,
         "api_type": "openai",
     },
-    "o1-mini": { # Doesn't support reasoning effort or temperature
-        "chat": 5,
+    "o1-mini": {
+        "chat": ClientMode.CHAT_NO_TEMP_NO_REASONING,
         "api_type": "openai",
     },
     "gpt-oss-120b": {
-        "chat": 8,
+        "chat": ClientMode.DEFAULT_TOGETHER_API,
         "api_type": "together"
     },
     "gpt-oss-20b": {
-        "chat": 12,
+        "chat": ClientMode.DEFAULT_REPLICATE_API,
         "api_type": "replicate"
     },
     "gpt-4o-mini": {
-        "chat": 1,
+        "chat": ClientMode.DEFAULT_CHAT,
         "api_type": "openai",
     },
     "gpt-4o": {
-        "chat": 1,
+        "chat": ClientMode.DEFAULT_CHAT,
         "api_type": "openai",
     },
     "gpt-4-turbo": {
-        "chat": 1,
+        "chat": ClientMode.DEFAULT_CHAT,
         "api_type": "openai",
     },
     "gpt-3.5-turbo": {
-        "chat": 1,
+        "chat": ClientMode.DEFAULT_CHAT,
         "api_type": "openai",
     },
     "gpt-4": {
-        "chat": 1,
+        "chat": ClientMode.DEFAULT_CHAT,
         "api_type": "openai",
     }
 }
 
 local_mode_group = {
     "gpt-oss-20b": {
-        "chat": 1
+        "chat": LocalMode.DEFAULT_CHAT
     },
 }
 
@@ -198,7 +209,7 @@ class OpenAILLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.reasoning_effort = config.reasoning_effort
-        if self.model_name in self.local_mode_group:
+        if self.model_name in local_mode_group:
             self.model_fullname = f"openai/{self.model_fullname}"
 
     def extract_summary(self, resp):
@@ -214,7 +225,7 @@ class OpenAILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Chat with temperature and max_tokens
+                case ClientMode.DEFAULT_CHAT:
                     chat_package = self.client.chat.completions.create(
                         model=self.model_fullname,
                         temperature=self.temperature,
@@ -222,7 +233,7 @@ class OpenAILLM(AbstractLLM):
                         messages=[{"role": "user", "content":prepared_text}]
                     )
                     summary = chat_package.choices[0].message.content
-                case 2: # Chat without temperature
+                case ClientMode.CHAT_NO_TEMP:
                     chat_package = self.client.chat.completions.create(
                         model=self.model_fullname,
                         messages=[{"role": "user", "content":prepared_text}],
@@ -230,23 +241,23 @@ class OpenAILLM(AbstractLLM):
                         reasoning_effort = self.reasoning_effort
                     )
                     summary = chat_package.choices[0].message.content
-                case 6: # o4-mini-low
+                case ClientMode.O4_MINI_LOW:
                     chat_package = self.client.chat.completions.create(
-                        model="o4-mini-2025-04-16", # need to talk about this case
+                        model="o4-mini-2025-04-16",
                         messages=[{"role": "user", "content":prepared_text}],
                         max_completion_tokens=self.max_tokens,
                         reasoning_effort = "low"
                     )
                     summary = chat_package.choices[0].message.content
-                case 7: # o4-mini-high
+                case ClientMode.O4_MINI_HIGH:
                     chat_package = self.client.chat.completions.create(
-                        model="o4-mini-2025-04-16", # need to talk about this case
+                        model="o4-mini-2025-04-16",
                         messages=[{"role": "user", "content":prepared_text}],
                         max_completion_tokens=self.max_tokens,
                         reasoning_effort = "high"
                     )
                     summary = chat_package.choices[0].message.content
-                case 9: #gpt-5
+                case ClientMode.GPT_5_DEFAULT:
                     chat_package = self.client.responses.create(
                         model=self.model_fullname,
                         input=prepared_text,
@@ -257,9 +268,9 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = chat_package.output[1].content[0].text
-                case 10: # gpt-5-minimal
+                case ClientMode.GPT_5_MINIMAL:
                     chat_package = self.client.responses.create(
-                        model="gpt-5-2025-08-07", # need to talk about this case
+                        model="gpt-5-2025-08-07",
                         input=prepared_text,
                         max_output_tokens=self.max_tokens,
                         reasoning={
@@ -268,9 +279,9 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = chat_package.output[1].content[0].text
-                case 11: # gpt-5-high, TODO: add reponse data at end from usage
+                case ClientMode.GPT_5_HIGH:
                     chat_package = self.client.responses.create(
-                        model="gpt-5-2025-08-07", # need to talk about this case
+                        model="gpt-5-2025-08-07",
                         input=prepared_text,
                         max_output_tokens=self.max_tokens,
                         reasoning={
@@ -279,9 +290,9 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = chat_package.output[1].content[0].text
-                case 13: # gpt-5.1-low
+                case ClientMode.GPT_5P1_LOW:
                     chat_package = self.client.responses.create(
-                        model="gpt-5.1-2025-11-13", # need to talk about this case
+                        model="gpt-5.1-2025-11-13",
                         input=prepared_text,
                         max_output_tokens=self.max_tokens,
                         reasoning={
@@ -290,9 +301,9 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = chat_package.output[1].content[0].text
-                case 14: # gpt-5.1-high
+                case ClientMode.GPT_5P1_HIGH:
                     chat_package = self.client.responses.create(
-                        model="gpt-5.1-2025-11-13", # need to talk about this case
+                        model="gpt-5.1-2025-11-13",
                         input=prepared_text,
                         max_output_tokens=self.max_tokens,
                         reasoning={
@@ -301,9 +312,9 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = chat_package.output[1].content[0].text
-                case 15: # gpt-5.2-low
+                case ClientMode.GPT_5P2_LOW:
                     chat_package = self.client.responses.create(
-                        model="gpt-5.2-2025-12-11", # need to talk about this case
+                        model="gpt-5.2-2025-12-11",
                         input=prepared_text,
                         max_output_tokens=self.max_tokens,
                         reasoning={
@@ -312,9 +323,9 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = self.extract_summary(chat_package)
-                case 16: # gpt-5.2-high
+                case ClientMode.GPT_5P2_HIGH:
                     chat_package = self.client.responses.create(
-                        model="gpt-5.2-2025-12-11", # need to talk about this case
+                        model="gpt-5.2-2025-12-11",
                         input=prepared_text,
                         max_output_tokens=self.max_tokens,
                         reasoning={
@@ -323,7 +334,7 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = self.extract_summary(chat_package)
-                case 8: # gpt-oss-120b not supported on open ai and too big to run locally, using together
+                case ClientMode.DEFAULT_TOGETHER_API:
                     together_name = f"openai/{self.model_fullname}"
                     response = self.client.chat.completions.create(
                         model=together_name,
@@ -332,7 +343,7 @@ class OpenAILLM(AbstractLLM):
                         temperature = self.temperature
                     )
                     summary = response.choices[0].message.content
-                case 12: # manual 20b
+                case ClientMode.DEFAULT_REPLICATE_API:
                     input = {
                         "prompt": prepared_text,
                         "temperature": self.temperature,
@@ -343,7 +354,7 @@ class OpenAILLM(AbstractLLM):
                         input=input
                     )
                     summary = summary[0]
-                case 3: # Use OpenAI's Response API
+                case ClientMode.DEFAULT_RESPONSE:
                     chat_package = self.client.responses.create(
                         model=self.model_fullname,
                         temperature=self.temperature,
@@ -352,7 +363,7 @@ class OpenAILLM(AbstractLLM):
                         reasoning = {"effort": self.reasoning_effort}
                     )
                     summary = chat_package.output_text
-                case 4: # Use OpenAI's Response API no temp
+                case ClientMode.RESPONSE_NO_TEMP:
                     chat_package = self.client.responses.create(
                         model=self.model_fullname,
                         max_output_tokens=self.max_tokens,
@@ -360,7 +371,7 @@ class OpenAILLM(AbstractLLM):
                         reasoning = {"effort": self.reasoning_effort}
                     )
                     summary = chat_package.output_text
-                case 5: # Chat without temperature and reasoning effort
+                case ClientMode.CHAT_NO_TEMP_NO_REASONING:
                     chat_package = self.client.chat.completions.create(
                         model=self.model_fullname,
                         messages=[{"role": "user", "content":prepared_text}],
@@ -371,7 +382,7 @@ class OpenAILLM(AbstractLLM):
                     raise Exception(f"Model `{self.model_name}` cannot be run from `{self.endpoint}` endpoint")
         elif self.local_model:
             match local_mode_group[self.model_name][self.endpoint]:
-                case 1: # Chat with temperature and max_tokens
+                case LocalMode.DEFAULT_CHAT:
                     def extract_after_assistant_final(text):
                         keyword = "assistantfinal"
                         index = text.find(keyword)

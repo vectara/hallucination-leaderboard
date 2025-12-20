@@ -130,7 +130,7 @@ Here is the passage:
         #   }
         # ),
 
-        AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.01, "execution_mode": "vllm"}),
+        # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.01, "execution_mode": "vllm"}),
         # AllenAIConfig(**{"model_name": "Olmo-3-7B-Think", "temperature": 0.01, "execution_mode": "vllm"}),
 
         # AllenAIConfig(**{"threads": 3, "model_name": "Olmo-3-32B-Think", "temperature": 0.0, "max_tokens": 64000, "min_throttle_time": 4.0}),
@@ -439,7 +439,7 @@ Here is the passage:
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
         # NvidiaConfig(**{"threads": 1, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01}),
         
-        # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
+        OpenAIConfig(**{"threads": 1, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
         # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-low", "date_code": "2025-11-13", "reasoning_effort": "low", "temperature": -1.0, "max_tokens": 32768}),

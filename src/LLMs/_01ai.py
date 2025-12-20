@@ -30,23 +30,22 @@ class _01AISummary(BasicSummary):
 
 class ClientMode(Enum):
     DEFAULT = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 class LocalMode(Enum):
     DEFAULT = auto()
-    # TODO: Add more as needed, make the term descriptive
+    UNDEFINED = auto()
 
 client_mode_group = {} 
 
 local_mode_group = {
     "Yi-1.5-6B-Chat": { 
-        "chat": 100
+        "chat": LocalMode.UNDEFINED
     },
     "Yi-1.5-9B-Chat": {
-        "chat": 1
+        "chat": LocalMode.DEFAULT
     },
     "Yi-1.5-34B-Chat": {
-        "chat": 1
+        "chat": LocalMode.DEFAULT
     }
 }
 
@@ -70,7 +69,7 @@ class _01AILLM(AbstractLLM):
             pass
         elif self.local_model:
             match local_mode_group[self.model_name][self.endpoint]:
-                case 1: # Uses chat template
+                case LocalMode.DEFAULT: # Uses chat template
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname, use_fast=False)
 
                     messages = [

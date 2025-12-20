@@ -81,7 +81,7 @@ class AllenAILLM(AbstractLLM):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         # Olmo has it's date code in the middle
-        if self.date_code is not "":
+        if self.date_code != "":
             self.model_fullname = f"{self.model_name[0:6]}-{config.date_code}{self.model_name[6:]}"
         self.model_fullname = f"{COMPANY}/{self.model_fullname}"
 
