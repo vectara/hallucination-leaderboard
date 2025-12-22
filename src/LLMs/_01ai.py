@@ -46,10 +46,10 @@ local_mode_group = {
         "chat": LocalMode.UNDEFINED
     },
     "Yi-1.5-9B-Chat": {
-        "chat": LocalMode.DEFAULT
+        "chat": LocalMode.CHAT_DEFAULT
     },
     "Yi-1.5-34B-Chat": {
-        "chat": LocalMode.DEFAULT
+        "chat": LocalMode.CHAT_DEFAULT
     }
 }
 
@@ -73,7 +73,7 @@ class _01AILLM(AbstractLLM):
             pass
         elif self.local_model:
             match local_mode_group[self.model_name][self.endpoint]:
-                case LocalMode.DEFAULT: # Uses chat template
+                case LocalMode.CHAT_DEFAULT: # Uses chat template
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname, use_fast=False)
 
                     messages = [
