@@ -44,16 +44,16 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "jamba-large-1.7": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "jamba-mini-1.7": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "jamba-large-1.6": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "jamba-mini-1.6": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
 }
 
@@ -75,7 +75,7 @@ class AI21LabsLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1:
+                case ClientMode.CHAT_DEFAULT:
                     messages = [
                         ChatMessage(role="user", content=prepared_text),
                     ]
