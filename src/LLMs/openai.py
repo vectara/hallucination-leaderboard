@@ -60,10 +60,10 @@ class OpenAISummary(BasicSummary):
         extra = "ignore"
 
 class ClientMode(Enum):
-    DEFAULT_CHAT = auto()
+    CHAT_DEFAULT = auto()
     CHAT_NO_TEMP = auto()
     CHAT_NO_TEMP_NO_REASONING = auto()
-    DEFAULT_RESPONSE = auto()
+    RESPONSE_DEFAULT = auto()
     RESPONSE_NO_TEMP = auto()
     DEFAULT_TOGETHER_API = auto()
     DEFAULT_REPLICATE_API = auto()
@@ -78,7 +78,7 @@ class ClientMode(Enum):
     GPT_5_DEFAULT = auto()
 
 class LocalMode(Enum):
-    DEFAULT_CHAT = auto()
+    CHAT_DEFAULT = auto()
 
 client_mode_group = {
     "gpt-5.2-low": {
@@ -118,19 +118,19 @@ client_mode_group = {
         "api_type": "openai",
     },
     "gpt-4.1": {
-        "chat": ClientMode.DEFAULT_CHAT,
+        "chat": ClientMode.CHAT_DEFAULT,
         "api_type": "openai",
-        "response": ClientMode.DEFAULT_RESPONSE
+        "response": ClientMode.RESPONSE_DEFAULT
     },
     "gpt-4.1-nano": {
-        "chat": ClientMode.DEFAULT_CHAT,
+        "chat": ClientMode.CHAT_DEFAULT,
         "api_type": "openai",
-        "response": ClientMode.DEFAULT_RESPONSE
+        "response": ClientMode.RESPONSE_DEFAULT
     },
     "o3": {
         "chat": ClientMode.CHAT_NO_TEMP,
         "api_type": "openai",
-        "response": ClientMode.DEFAULT_RESPONSE
+        "response": ClientMode.RESPONSE_DEFAULT
     },
     "o3-pro": {
         "api_type": "openai",
@@ -153,7 +153,7 @@ client_mode_group = {
         "response": ClientMode.RESPONSE_NO_TEMP
     },
     "gpt-4.1-mini": {
-        "chat": ClientMode.DEFAULT_CHAT,
+        "chat": ClientMode.CHAT_DEFAULT,
         "api_type": "openai",
     },
     "o1": {
@@ -173,30 +173,30 @@ client_mode_group = {
         "api_type": "replicate"
     },
     "gpt-4o-mini": {
-        "chat": ClientMode.DEFAULT_CHAT,
+        "chat": ClientMode.CHAT_DEFAULT,
         "api_type": "openai",
     },
     "gpt-4o": {
-        "chat": ClientMode.DEFAULT_CHAT,
+        "chat": ClientMode.CHAT_DEFAULT,
         "api_type": "openai",
     },
     "gpt-4-turbo": {
-        "chat": ClientMode.DEFAULT_CHAT,
+        "chat": ClientMode.CHAT_DEFAULT,
         "api_type": "openai",
     },
     "gpt-3.5-turbo": {
-        "chat": ClientMode.DEFAULT_CHAT,
+        "chat": ClientMode.CHAT_DEFAULT,
         "api_type": "openai",
     },
     "gpt-4": {
-        "chat": ClientMode.DEFAULT_CHAT,
+        "chat": ClientMode.CHAT_DEFAULT,
         "api_type": "openai",
     }
 }
 
 local_mode_group = {
     "gpt-oss-20b": {
-        "chat": LocalMode.DEFAULT_CHAT
+        "chat": LocalMode.CHAT_DEFAULT
     },
 }
 
@@ -225,7 +225,7 @@ class OpenAILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case ClientMode.DEFAULT_CHAT:
+                case ClientMode.CHAT_DEFAULT:
                     chat_package = self.client.chat.completions.create(
                         model=self.model_fullname,
                         temperature=self.temperature,
@@ -354,7 +354,7 @@ class OpenAILLM(AbstractLLM):
                         input=input
                     )
                     summary = summary[0]
-                case ClientMode.DEFAULT_RESPONSE:
+                case ClientMode.RESPONSE_DEFAULT:
                     chat_package = self.client.responses.create(
                         model=self.model_fullname,
                         temperature=self.temperature,
@@ -382,7 +382,7 @@ class OpenAILLM(AbstractLLM):
                     raise Exception(f"Model `{self.model_name}` cannot be run from `{self.endpoint}` endpoint")
         elif self.local_model:
             match local_mode_group[self.model_name][self.endpoint]:
-                case LocalMode.DEFAULT_CHAT:
+                case LocalMode.CHAT_DEFAULT:
                     def extract_after_assistant_final(text):
                         keyword = "assistantfinal"
                         index = text.find(keyword)

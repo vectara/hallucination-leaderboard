@@ -26,24 +26,33 @@ class COMPANY_NAMESummary(BasicSummary): # TODO: Update object name
         extra = "ignore"
 
 class ClientMode(Enum):
-    DEFAULT = auto()
+    CHAT_DEFAULT = auto() # LLM responds in a conversational manner
+    RESPONSE_DEFAULT = auto() # LLM returns tokens until complete
+    UNDEFINED = auto() # LLM has no defined case currently
+    # TODO: Add more as needed, make the term descriptive
+
+class LocalMode(Enum):
+    CHAT_DEFAULT = auto()
+    RESPONSE_DEFAULT = auto()
+    UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
 
 # TODO: Add API models here to specify what logic path to run that model from
 client_mode_group = {
     "MODEL_NAME": { 
-        "chat": ClientMode.DEFAULT
+        "chat": ClientMode.CHAT_DEFAULT
     }
 }
 
 class LocalMode(Enum):
-    DEFAULT = auto()
+    CHAT_DEFAULT = auto()
+    COMPLETION_DEFAULT = auto()
     # TODO: Add more as needed, make the term descriptive
 
 # TODO: Add local models here and specify what logic path to run that model
 local_mode_group = {
     "MODEL_NAME": {
-        "chat": LocalMode.DEFAULT
+        "chat": LocalMode.CHAT_DEFAULT
     }
 } 
 
@@ -61,12 +70,12 @@ class COMPANY_NAMELLM(AbstractLLM): # TODO: Update object name
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
                 # TODO Define how the default case model will run
-                case ClientMode.DEFAULT:
+                case ClientMode.CHAT_DEFAULT:
                     pass
         elif self.local_model: 
             match local_mode_group[self.model_name][self.endpoint]:
                 # TODO Define how the default case model will run
-                case LocalMode.DEFAULT:
+                case LocalMode.CHAT_DEFAULT:
                     pass
         else:
             raise Exception(

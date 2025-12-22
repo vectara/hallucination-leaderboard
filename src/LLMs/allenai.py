@@ -39,11 +39,14 @@ class AllenAISummary(BasicSummary):
         extra = "ignore"
 
 class ClientMode(Enum):
-    DEFAULT = auto()
+    CHAT_DEFAULT = auto()
+    RESPONSE_DEFAULT = auto()
+    UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
-
 class LocalMode(Enum):
-    DEFAULT = auto()
+    CHAT_DEFAULT = auto()
+    RESPONSE_DEFAULT = auto()
+    UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
