@@ -41,19 +41,19 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "nova-pro-v2": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "nova-2-lite-v1:0": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "nova-lite-v1:0": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "nova-micro-v1:0": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "nova-pro-v1:0": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
 }
 
@@ -74,7 +74,7 @@ class AmazonLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1:
+                case ClientMode.CHAT_DEFAULT:
                     response_package = self.client.invoke_model(
                         modelId=self.model_fullname,
                         body=json.dumps({
