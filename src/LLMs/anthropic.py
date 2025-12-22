@@ -50,40 +50,40 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "claude-opus-4-5": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-3-5-haiku": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-sonnet-4-5": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-haiku-4-5": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-opus-4-1": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-opus-4": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-sonnet-4": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-3-7-sonnet": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-3-5-sonnet": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-3-sonnet": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-3-opus": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-2.0": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }
 }
 
@@ -102,7 +102,7 @@ class AnthropicLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1:
+                case ClientMode.CHAT_DEFAULT:
                     chat_package = self.client.messages.create(
                         model=self.model_fullname,
                         messages=[{"role": "user", "content":prepared_text}],
