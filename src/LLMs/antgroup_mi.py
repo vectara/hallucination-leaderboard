@@ -30,6 +30,8 @@ class AntGroupMISummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    FINIX_S1_32B = auto()
+    ANTFINIX_A1 = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
@@ -41,10 +43,10 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "finix_s1_32b":{
-        "chat": 1
+        "chat": ClientMode.FINIX_S1_32B
     },
     "antfinix-a1":{
-        "chat":2
+        "chat": ClientMode.ANTFINIX_A1
     }
 }
 
@@ -63,7 +65,7 @@ class AntGroupMILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Standard chat completion
+                case ClientMode.FINIX_S1_32B:
                     base_url = "https://antfinix.alipay.com/v1/chat/completions"
                     messages = [{"role": "user", "content": prepared_text}]
                     summary = self.call_insllm_api(
@@ -75,7 +77,7 @@ class AntGroupMILLM(AbstractLLM):
                         max_tokens=self.max_tokens
                     )
 
-                case 2:
+                case ClientMode.ANTFINIX_A1:
                     base_url = "https://antfinix.alipay.com/v1/chat/completions"
                     messages = [{"role": "user", "content": prepared_text}]
                     summary = self.call_insllm_api_v2(
