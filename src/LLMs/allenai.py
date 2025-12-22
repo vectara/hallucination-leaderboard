@@ -40,34 +40,37 @@ class AllenAISummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    CHAT_REASONING = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
+    CHAT_MGPU = auto()
+    CHAT_VLLM = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "Olmo-3-32B-Think": {
-        "chat": 2,
+        "chat": ClientMode.CHAT_REASONING,
         "provider": "openrouter"
     },
 }
 
 local_mode_group = {
     "Olmo-3-32B-Think": {
-        "chat": 3,
+        "chat": LocalMode.CHAT_VLLM,
     },
     "Olmo-3-7B-Think": {
-        "chat": 3,
+        "chat": LocalMode.CHAT_VLLM,
     },
     "OLMo-2-7B-Instruct": {
-        "chat": 1
+        "chat": LocalMode.CHAT_DEFAULT
     },
     "OLMo-2-13B-Instruct": {
-        "chat": 1
+        "chat": LocalMode.CHAT_DEFAULT
     }
 }
 
@@ -92,7 +95,7 @@ class AllenAILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Standard chat completion
+                case ClientMode.CHAT_DEFAULT: # Standard chat completion
                     messages = [{"role": "user", "content":prepared_text}]
                     client_package = self.client.chat_completion(
                         messages,
@@ -100,19 +103,19 @@ class AllenAILLM(AbstractLLM):
                         max_tokens=self.max_tokens
                     )
                     summary = client_package.choices[0].message.content
-                case 2:
+                case ClientMode.CHAT_REASONING:
                     unique_name = f"{self.model_fullname}:free".lower()
                     messages = [{"role": "user", "content":prepared_text}]
                     response = self.client.chat.completions.create(
-                    model=unique_name,
-                    messages=messages,
-                    extra_body={"reasoning": {"enabled": True}}
+                        model=unique_name,
+                        messages=messages,
+                        extra_body={"reasoning": {"enabled": True}}
                     )
                     summary = response.choices[0].message.content
                     print(summary)
         elif self.local_model:
             match local_mode_group[self.model_name][self.endpoint]:
-                case 1: # Uses chat template
+                case LocalMode.CHAT_DEFAULT: # Uses chat template
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname, use_fast=False)
 
                     messages = [
@@ -131,7 +134,7 @@ class AllenAILLM(AbstractLLM):
 
                     summary = response
 
-                case 2: # mpgu
+                case LocalMode.CHAT_MGPU: # mpgu
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
                     inputs = tokenizer(
                         prepared_text,
@@ -148,7 +151,7 @@ class AllenAILLM(AbstractLLM):
                     )
 
                     summary = tokenizer.decode(output[0], skip_special_tokens=True)
-                case 3:  # vllm
+                case LocalMode.CHAT_VLLM:  # vllm
                     sampling_params = SamplingParams(
                         temperature=self.temperature,
                         max_tokens=self.max_tokens,
