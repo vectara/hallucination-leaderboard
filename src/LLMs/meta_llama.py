@@ -55,58 +55,57 @@ class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "Llama-4-Maverick-17B-128E-Instruct-FP8": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Llama-4-Scout-17B-16E-Instruct": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Meta-Llama-3.1-8B-Instruct-Turbo": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Llama-3.3-70B-Instruct-Turbo": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Llama-3.3-70B-Instruct-Turbo-Free": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Meta-Llama-3.1-405B-Instruct-Turbo": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Llama-3.2-3B-Instruct-Turbo": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Llama-3.2-11B-Vision-Instruct-Turbo*": { # Unable to access model atm
-        "chat": 0
+        "chat": ClientMode.UNDEFINED
     },
     "Llama-3.2-90B-Vision-Instruct-Turbo*": { # Unable to access model atm
-        "chat": 0
+        "chat": ClientMode.UNDEFINED
     },
     "Meta-Llama-3.1-405B-Instruct-Turbo": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Meta-Llama-3.1-8B-Instruct-Turbo": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Meta-Llama-3-8B-Instruct-Lite": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Llama-3-8b-chat-hf*": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Llama-3-70b-chat-hf": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Llama-2-70b-hf": {
-        "response": 2
+        "response": ClientMode.RESPONSE_DEFAULT
     } # Completion?
 }
 
@@ -125,7 +124,7 @@ class MetaLlamaLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Default chat
+                case ClientMode.CHAT_DEFAULT:
                     together_name = f"meta-llama/{self.model_fullname}"
                     response = self.client.chat.completions.create(
                     model=together_name,
@@ -135,7 +134,7 @@ class MetaLlamaLLM(AbstractLLM):
                     )
                     summary = response.choices[0].message.content
 
-                case 2: # Default Completion
+                case ClientMode.RESPONSE_DEFAULT:
                     together_name = f"meta-llama/{self.model_fullname}"
                     response = self. client.completions.create(
                         model=together_name,
