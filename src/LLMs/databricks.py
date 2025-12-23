@@ -35,7 +35,7 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "dbrx-instruct": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }
 }
 
@@ -55,7 +55,7 @@ class DatabricksLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1:
+                case ClientMode.CHAT_DEFAULT:
                     summary = None
         elif self.local_model: 
             pass
