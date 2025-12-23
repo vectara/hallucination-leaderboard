@@ -25,18 +25,17 @@ class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {}
 
 local_mode_group = {
-    "rednote-hilab/dots.llm1.inst": 1, # Uses chat template
-    "rednote-hilab/dots.llm1.base": 2 # Uses direct text input
+    "rednote-hilab/dots.llm1.inst": ClientMode.CHAT_DEFAULT,
+    "rednote-hilab/dots.llm1.base": ClientMode.RESPONSE_DEFAULT
 }
 
 class RednoteHilabLLM(AbstractLLM):
@@ -52,7 +51,7 @@ class RednoteHilabLLM(AbstractLLM):
             pass
         elif self.local_model:
             match local_mode_group[self.model_name]:
-                case 1: # Uses chat template
+                case ClientMode.CHAT_DEFAULT:
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
                     input_tensor = tokenizer.apply_chat_template(
@@ -72,7 +71,7 @@ class RednoteHilabLLM(AbstractLLM):
                     )
 
                     summary = result
-                case 2: # Uses direct text input
+                case ClientMode.RESPONSE_DEFAULT:
                     tokenizer = AutoTokenizer.from_pretrained(self.model_fullname)
 
                     inputs = tokenizer(prepared_text, return_tensors="pt")
