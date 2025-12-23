@@ -29,24 +29,24 @@ class NvidiaSummary(BasicSummary):
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
+    REPLICATE_NEMOTRON_3_NANO_30B_A3B = auto()
+    DEEPINFRA_NEMOTRON_3_NANO_30B_A3B = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "Nemotron-3-Nano-30B-A3B": { 
-        "chat": 2
+        "chat": ClientMode.DEEPINFRA_NEMOTRON_3_NANO_30B_A3B
     }
 }
 
-# TODO: Add local models here and specify what logic path to run that model
 local_mode_group = {
     "MODEL_NAME": {
-        "chat": 1
+        "chat": LocalMode.UNDEFINED
     }
 } 
 
@@ -70,7 +70,7 @@ class NvidiaLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1:
+                case ClientMode.REPLICATE_NEMOTRON_3_NANO_30B_A3B:
                     replicate_name = f"{COMPANY}/{self.model_fullname}:135b4a9c545002830563436c88ea56b401d135faa59da6773bc5934d2ae56344"
                     output = replicate.run(
                         replicate_name,
@@ -88,7 +88,7 @@ class NvidiaLLM(AbstractLLM):
 
                     raw_text = "".join(chunks)
                     summary = strip_thinking(raw_text)
-                case 2:
+                case ClientMode.DEEPINFRA_NEMOTRON_3_NANO_30B_A3B:
                     deep_infra_name = f"{COMPANY}/{self.model_fullname}"
                     chat_completion = self.client.chat.completions.create(
                         model=deep_infra_name,
@@ -99,7 +99,6 @@ class NvidiaLLM(AbstractLLM):
                     summary = chat_completion.choices[0].message.content.lstrip()
         elif self.local_model: 
             match local_mode_group[self.model_name][self.endpoint]:
-                # TODO Define how the case 1 model will run
                 case 1:
                     pass
         else:
