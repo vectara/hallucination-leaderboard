@@ -40,6 +40,7 @@ class IBMGraniteSummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
@@ -51,47 +52,47 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "granite-4.0-h-small": {
-        "chat": 1,
+        "chat": ClientMode.CHAT_DEFAULT,
     },
     "granite-3.3-8b-instruct": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "granite-3.2-8b-instruct": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
 
 }
 
 local_mode_group = {
     "granite-4.0-h-small": {
-        "chat": 1,
+        "chat": ClientMode.UNDEFINED,
     },
     "granite-4.0-h-tiny": {
-        "chat": 1,
+        "chat": ClientMode.UNDEFINED,
     },
     "granite-4.0-h-micro": {
-        "chat": 2,
+        "chat": ClientMode.UNDEFINED,
     },
     "granite-4.0-micro": {
-        "chat": 2,
+        "chat": ClientMode.UNDEFINED,
     },
     "granite-3.2-8b-instruct": {
-        "chat": 1
+        "chat": ClientMode.UNDEFINED
     },
     "granite-3.2-2b-instruct": {
-        "chat": 1
+        "chat": ClientMode.UNDEFINED
     },
     "granite-3.1-8b-instruct": {
-        "chat": 1
+        "chat": ClientMode.UNDEFINED
     },
     "granite-3.1-2b-instruct": {
-        "chat": 1
+        "chat": ClientMode.UNDEFINED
     },
     "granite-3.0-8b-instruct": {
-        "chat": 1
+        "chat": ClientMode.UNDEFINED
     },
     "granite-3.0-2b-instruct": {
-        "chat": 1
+        "chat": ClientMode.UNDEFINED
     }
 }
 
@@ -110,7 +111,7 @@ class IBMGraniteLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Default
+                case ClientMode.CHAT_DEFAULT: # Default
                     input = {
                         "prompt": prepared_text,
                         "temperature": self.temperature,
