@@ -27,15 +27,14 @@ class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
-    "Fanar": 1
+    "Fanar": ClientMode.CHAT_DEFAULT
 }
 
 local_mode_group = {}
@@ -51,7 +50,7 @@ class QCRILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name]:
-                case 1: # Standard chat completion
+                case ClientMode.CHAT_DEFAULT:
                     chat_package = self.client.chat.completions.create(
                         model=self.model_fullname,
                         temperature=self.temperature,
