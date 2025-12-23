@@ -32,20 +32,20 @@ class MoonshotAISummary(BasicSummary):
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
+    KIMI_K2_INSTRUCT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "Kimi-K2-Instruct": {
         "chat": 2
     },
     "kimi-k2-thinking": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
 }
 
@@ -65,7 +65,7 @@ class MoonshotAILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Default
+                case ClientMode.CHAT_DEFAULT:
                     completion = self.client.chat.completions.create(
                         model = self.model_fullname,
                         messages = [
@@ -77,7 +77,7 @@ class MoonshotAILLM(AbstractLLM):
                     
                     summary = completion.choices[0].message.content
 
-                case 2:
+                case ClientMode.KIMI_K2_INSTRUCT:
                     if self.date_code == "0905":
                         client = Together()
                         response = client.chat.completions.create(
