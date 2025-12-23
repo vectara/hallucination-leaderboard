@@ -42,7 +42,7 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "Kimi-K2-Instruct": {
-        "chat": 2
+        "chat": ClientMode.KIMI_K2_INSTRUCT
     },
     "kimi-k2-thinking": {
         "chat": ClientMode.CHAT_DEFAULT
