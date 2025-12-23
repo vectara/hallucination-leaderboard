@@ -30,13 +30,11 @@ class ClientMode(Enum):
     CHAT_NO_TEMP_NO_TOKENS = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "ERNIE-4.5-VL-28B-A3B-Thinking": {

@@ -28,6 +28,7 @@ class ClientMode(Enum):
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()

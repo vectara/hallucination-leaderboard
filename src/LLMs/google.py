@@ -75,12 +75,11 @@ class ClientMode(Enum):
     REPLICATE_GEMMA_27B_IT = auto()
     REPLICATE_GEMMA_12B_IT = auto()
     REPLICATE_GEMMA_4B_IT = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "gemini-3-flash-preview": {

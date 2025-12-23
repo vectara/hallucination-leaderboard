@@ -43,14 +43,13 @@ class ClientMode(Enum):
     CHAT_REASONING = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     CHAT_MGPU = auto()
     CHAT_VLLM = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "Olmo-3-32B-Think": {
