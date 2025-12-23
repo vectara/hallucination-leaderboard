@@ -37,6 +37,7 @@ class CohereSummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    CHAT_REASONING = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
@@ -48,25 +49,25 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "command-a": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "command-a-reasoning": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "c4ai-aya-expanse-32b": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "c4ai-aya-expanse-8b": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "command-r-plus": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "command-r": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "command-r7b": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
 }
 
@@ -86,7 +87,7 @@ class CohereLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1:
+                case ClientMode.CHAT_DEFAULT:
                     response = self.client.chat(
                         model=self.model_fullname,
                         messages=[{"role": "user", "content": prepared_text}],
@@ -95,7 +96,7 @@ class CohereLLM(AbstractLLM):
                     )
 
                     summary = response.message.content[0].text
-                case 2:
+                case ClientMode.CHAT_REASONING:
                     response = self.client.chat(
                         model=self.model_fullname,
                         messages=[{"role": "user", "content": prepared_text}],
