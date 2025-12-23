@@ -27,9 +27,11 @@ class BaiduSummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    CHAT_NO_TEMP_NO_TOKENS = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
@@ -38,7 +40,7 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "ERNIE-4.5-VL-28B-A3B-Thinking": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
 }
 
@@ -63,7 +65,7 @@ class BaiduLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Standard chat completion
+                case ClientMode.CHAT_DEFAULT:
                     messages = [{"role": "user", "content":prepared_text}]
                     client_package = self.client.chat_completion(
                         messages,
@@ -71,7 +73,7 @@ class BaiduLLM(AbstractLLM):
                         max_tokens=self.max_tokens
                     )
                     summary = client_package.choices[0].message.content
-                case 2: # V2.5. Does not work
+                case ClientMode.CHAT_NO_TEMP_NO_TOKENS:
                     messages = [{"role": "user", "content":prepared_text}]
                     client_package = self.client.chat_completion(
                         messages
