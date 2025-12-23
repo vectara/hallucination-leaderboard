@@ -36,7 +36,7 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "MODEL_NAME": {
-        "chat": 1
+        "chat": ClientMode.UNDEFINED
     }
 }
 
