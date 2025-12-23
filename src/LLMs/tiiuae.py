@@ -26,16 +26,15 @@ class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "MODEL_NAME": {
-        "chat": 1
+        "chat": ClientMode.UNDEFINED
     }
 }
 
@@ -55,8 +54,8 @@ class TiiuaeLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1:
-                    summary = None
+                case ClientMode.CHAT_DEFAULT:
+                    pass
         elif self.local_model: 
             pass
         else:
