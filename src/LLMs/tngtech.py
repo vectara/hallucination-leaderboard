@@ -29,16 +29,15 @@ class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "DeepSeek-TNG-R1T2-Chimera": {
-        "chat": 1,
+        "chat": ClientMode.CHAT_DEFAULT,
     }
 }
 
@@ -58,7 +57,7 @@ class TngTechLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1:
+                case ClientMode.CHAT_DEFAULT:
                     chat_package = self.client.chat.completions.create(
                         model=self.model_fullname,
                         temperature=self.temperature,
