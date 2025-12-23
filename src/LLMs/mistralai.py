@@ -49,43 +49,42 @@ class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "magistral-medium":{
-        "chat": 1
-    }, # Doesn't look like magistral can disable thinking
+        "chat": ClientMode.CHAT_DEFAULT
+    },
     "mistral-medium":{
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "mistral-small": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "mistral-large": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "ministral-3b": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "ministral-8b": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "ministral-14b": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "pixtral-large": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "pixtral-12b": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "open-mistral-nemo": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }
 }
 
@@ -104,7 +103,7 @@ class MistralAILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Standard chat completion
+                case ClientMode.CHAT_DEFAULT:
                     chat_package = self.client.chat.complete(
                         model=self.model_fullname,
                         messages=[{"role": "user", "content":prepared_text}],
