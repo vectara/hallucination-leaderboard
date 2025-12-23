@@ -29,7 +29,8 @@ class ClientMode(Enum):
     CHAT_DEFAULT = auto() # LLM responds in a conversational manner
     RESPONSE_DEFAULT = auto() # LLM returns tokens until complete
     UNDEFINED = auto() # LLM has no defined case currently
-    # TODO: Add more as needed, make the term descriptive
+    # TODO: Add more as needed, make the term descriptive.
+    # Default refers to our default parameters being set (temperature, and tokens)
 
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
@@ -40,7 +41,7 @@ class LocalMode(Enum):
 # TODO: Add API models here to specify what logic path to run that model from
 client_mode_group = {
     "MODEL_NAME": { 
-        "chat": ClientMode.CHAT_DEFAULT
+        "chat": ClientMode.UNDEFINED
     }
 }
 
@@ -52,7 +53,7 @@ class LocalMode(Enum):
 # TODO: Add local models here and specify what logic path to run that model
 local_mode_group = {
     "MODEL_NAME": {
-        "chat": LocalMode.CHAT_DEFAULT
+        "chat": LocalMode.UNDEFINED
     }
 } 
 
