@@ -54,16 +54,16 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "Phi-4-mini-instruct": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "Phi-4": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "microsoft-phi-2": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "microsoft-Orca-2-13b": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }
 }
 
@@ -84,7 +84,7 @@ class MicrosoftLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1:
+                case ClientMode.CHAT_DEFAULT:
                     response = self.client.complete(
                         messages=[
                             UserMessage(content=prepared_text),
@@ -95,8 +95,6 @@ class MicrosoftLLM(AbstractLLM):
                     )
 
                     summary = response.choices[0].message.content
-                case 2:
-                    pass
         elif self.local_model: 
             pass
         else:
