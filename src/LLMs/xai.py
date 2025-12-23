@@ -36,48 +36,48 @@ class XAISummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    CHAT_REASONING = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "grok-4-1-fast-reasoning":{
-        "chat": 1
+        "chat": ClientMode.CHAT_REASONING
     },
     "grok-4-1-fast-non-reasoning":{
-        "chat": 1
+        "chat": ClientMode.CHAT_REASONING
     },
     "grok-4-fast-non-reasoning":{
-        "chat": 1
+        "chat": ClientMode.CHAT_REASONING
     },
     "grok-4-fast-reasoning":{
-        "chat": 1
+        "chat": ClientMode.CHAT_REASONING
     },
     "grok-4-fast-non-reasoning":{
-        "chat": 1
+        "chat": ClientMode.CHAT_REASONING
     },
     "grok-4":{
-        "chat": 1
+        "chat": ClientMode.CHAT_REASONING
     },
     "grok-3":{
-        "chat": 2
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "grok-3-mini":{
-        "chat": 2
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "grok-3-fast":{
-        "chat": 2
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "grok-3-mini-fast":{
-        "chat": 2
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "grok-2-vision":{
-        "chat": 2
+        "chat": ClientMode.CHAT_DEFAULT
     },
 }
 
@@ -98,7 +98,7 @@ class XAILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Reasoning Model
+                case ClientMode.CHAT_REASONING:
                     chat = self.client.chat.create(
                         model=self.model_fullname,
                         temperature=self.temperature,
@@ -109,7 +109,7 @@ class XAILLM(AbstractLLM):
                     response = chat.sample()
                     summary = response.content
                     self.thinking_tokens = response.usage.reasoning_tokens
-                case 2: # Non reasoning models
+                case ClientMode.CHAT_DEFAULT:
                     chat = self.client.chat.create(
                         model=self.model_name,
                         temperature=self.temperature,
