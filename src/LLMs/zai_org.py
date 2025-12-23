@@ -30,26 +30,28 @@ class ZhipuAISummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    GLM_4P5_AIR_FP8 = auto()
+    GLM_4P5 = auto()
+    GLM_4P6 = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "GLM-4.5-AIR-FP8":{
-        "chat": 1,
+        "chat": ClientMode.GLM_4P5_AIR_FP8,
         "api_type": "together"
     },
     "glm-4p5":{
-        "chat": 2,
+        "chat": ClientMode.GLM_4P5,
         "api_type": "fireworks"
     },
     "GLM-4.6": {
-        "chat": 3,
+        "chat": ClientMode.GLM_4P6,
         "api_type": "deepinfra"
     }
 }
@@ -70,7 +72,7 @@ class ZhipuAILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Together API
+                case ClientMode.GLM_4P5_AIR_FP8:
                     together_name = f"zai-org/{self.model_fullname}"
                     response = self.client.chat.completions.create(
                         model=together_name,
@@ -79,7 +81,7 @@ class ZhipuAILLM(AbstractLLM):
                         temperature = self.temperature
                     )
                     summary = response.choices[0].message.content
-                case 2: # Fireworks but using OpenAI
+                case ClientMode.GLM_4P5:
                     self.model_fullname = f"accounts/fireworks/models/{self.model_name}"
                     response = self.client.chat.completions.create(
                         messages=[
@@ -93,7 +95,7 @@ class ZhipuAILLM(AbstractLLM):
 
                     summary = response.choices[0].message.content
 
-                case 3: # Deepinfra glm 4.6
+                case ClientMode.GLM_4P6:
                     self.model_fullname = f"{COMPANY}/{self.model_name}"
                     chat_completion = self.client.chat.completions.create(
                         model=self.model_fullname,
