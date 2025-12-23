@@ -41,7 +41,7 @@ client_mode_group = {
 
 local_mode_group = {
     "OpenELM-3B-Instruct": {
-        "chat": 1
+        "chat": LocalMode.CHAT_DEFAULT
     }
 }
 
@@ -65,7 +65,7 @@ class AppleLLM(AbstractLLM):
                     summary = None
         elif self.local_model: 
             match local_mode_group[self.model_name][self.endpoint]:
-                case 1: # Uses chat template
+                case LocalMode.CHAT_DEFAULT: # Uses chat template
                     tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf", add_bos_token=True)
 
                     messages = [
