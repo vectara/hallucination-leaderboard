@@ -62,11 +62,11 @@ class NvidiaLLM(AbstractLLM):
 
     def summarize(self, prepared_text: str) -> str:
         def strip_thinking(text: str) -> str:
-            # Remove <thinking>...</thinking> or <think>...</think>
             text = re.sub(r"<thinking>.*?</thinking>", "", text, flags=re.DOTALL | re.IGNORECASE)
             text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
             text = re.sub(r"^.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
             return text.strip()
+
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
