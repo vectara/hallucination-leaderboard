@@ -153,6 +153,10 @@ class HHEM_2_3_API():
         self.PROMPT_TEMPLATE = "Determine if the hypothesis is true given the premise?\n\nPremise: {text1}\n\nHypothesis: {text2}"
         self.max_retries = 6
         self.retry_delay = 1
+        self.api_key = os.getenv(f"VECTARA_HHEM_API_KEY")
+        assert self.api_key is not None, (
+            f"VECTARA_HHEM_API_KEY not found in environment variable "
+        )
 
     def __str__(self):
         return "HHEM-2.3-API"
@@ -183,11 +187,6 @@ class HHEM_2_3_API():
         )
 
     def get_hhem_score(self, article: str, summary: str) -> dict[str, Any]:
-        api_key = os.getenv(f"VECTARA_HHEM_API_KEY")
-        assert api_key is not None, (
-            f"VECTARA_HHEM_API_KEY not found in environment variable "
-        )
-        
         payload = {
             "generated_text": summary,
             "source_texts": [article]
@@ -196,7 +195,7 @@ class HHEM_2_3_API():
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "x-api-key": api_key
+            "x-api-key": self.api_key
         }
         
         try:
