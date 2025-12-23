@@ -188,14 +188,18 @@ class AbstractLLM(ABC):
         """
         Prepare for overwriting existing summaries
         """
-        if self.date_code in [None, "", " "]:
-            # Clean the summary file 
-            open(summaries_jsonl_path, 'w').close()
-        else: 
-            # Remove summaries in existing summary file that match the model name, date code, and summary_date
-            df = pd.read_json(summaries_jsonl_path, lines=True)
-            df = df[(df['model_name'] != self.model_name) | (df['date_code'] != self.date_code) | (df['summary_date'] != summary_date)]
-            df.to_json(summaries_jsonl_path, orient='records', lines=True)
+        open(summaries_jsonl_path, 'w').close()
+
+
+        # TODO: Unsure the need for this logic
+        # if self.date_code in [None, "", " "]:
+        #     # Clean the summary file 
+        #     open(summaries_jsonl_path, 'w').close()
+        # else: 
+        #     # Remove summaries in existing summary file that match the model name, date code, and summary_date
+        #     df = pd.read_json(summaries_jsonl_path, lines=True)
+        #     df = df[(df['model_name'] != self.model_name) | (df['date_code'] != self.date_code) | (df['summary_date'] != summary_date)]
+        #     df.to_json(summaries_jsonl_path, orient='records', lines=True)
 
     @abstractmethod
     def summarize(self, prepared_text: str) -> str:

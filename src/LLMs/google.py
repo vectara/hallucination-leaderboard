@@ -181,7 +181,7 @@ class GoogleLLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.thinking_budget = config.thinking_budget
-        if self.model_name in self.local_mode_group:
+        if self.model_name in local_mode_group:
             self.model_fullname = f"{COMPANY}/{self.model_name}"
 
 
