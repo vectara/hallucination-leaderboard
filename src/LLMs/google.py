@@ -71,6 +71,10 @@ class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
+    CHAT_THINKING_BUDGET = auto()
+    REPLICATE_GEMMA_27B_IT = auto()
+    REPLICATE_GEMMA_12B_IT = auto()
+    REPLICATE_GEMMA_4B_IT = auto()
     # TODO: Add more as needed, make the term descriptive
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
@@ -80,91 +84,91 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "gemini-3-flash-preview": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-3-pro-preview": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-2.5-flash-preview": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemma-3-4b-it": {
-        "chat": 7
+        "chat": ClientMode.REPLICATE_GEMMA_4B_IT
     },
     "gemma-3-12b-it": {
-        "chat": 6
+        "chat": ClientMode.REPLICATE_GEMMA_12B_IT
     },
     "gemma-3-27b-it": {
-        "chat": 5
+        "chat": ClientMode.REPLICATE_GEMMA_27B_IT
     },
     "gemini-2.0-pro-exp": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-2.0-flash-001": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-2.0-flash": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-2.0-flash-exp": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-2.0-flash-lite": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-1.5-flash-002": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-1.5-pro-002": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-1.5-flash": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-1.5-pro": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-pro": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }, # Prob does not work
     "gemma-7n-it": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }, # Not officially listed
     "gemma-1.1-2b-it": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }, # Not officially listed
     "gemma-1.1-7b-it": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }, # Not officially listed
     "gemma-2-2b-it": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }, # Not officially listed
     "gemma-2-9b-it": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }, # Not officially listed
     "gemini-2.5-pro": {
-        "chat": 2
+        "chat": ClientMode.CHAT_THINKING_BUDGET
     },
     "gemini-2.5-pro-preview": {
-        "chat": 3
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-2.5-flash-lite": {
-        "chat": 4
+        "chat": ClientMode.CHAT_THINKING_BUDGET
     },
     "gemini-2.5-flash": {
-        "chat": 4
+        "chat": ClientMode.CHAT_THINKING_BUDGET
     },
 }
 
 local_mode_group = {
     "gemma-3-1b-it": {
-        "chat": 1
+        "chat": LocalMode.CHAT_DEFAULT
     },
     "gemma-3-4b-it": {
-        "chat": 1
+        "chat": LocalMode.CHAT_DEFAULT
     },
     "gemma-3-12b-it": {
-        "chat": 1
+        "chat": LocalMode.CHAT_DEFAULT
     },
 }
 
@@ -186,7 +190,7 @@ class GoogleLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Default
+                case ClientMode.CHAT_DEFAULT: # Default
                     response = self.client.models.generate_content(
                         model=self.model_fullname,
                         contents=prepared_text,
@@ -196,7 +200,7 @@ class GoogleLLM(AbstractLLM):
                         ),
                     )
                     summary = response.text
-                case 2: # gemini-2.5-pro - supports thinking tokens
+                case ClientMode.CHAT_THINKING_BUDGET:
                     response = self.client.models.generate_content(
                         model=self.model_fullname,
                         contents=prepared_text,
@@ -207,29 +211,7 @@ class GoogleLLM(AbstractLLM):
                         ),
                     )
                     summary = response.text
-                case 3: # gemini-2.5-pro-preview - requires large output token amount
-                    response = self.client.models.generate_content(
-                        model=self.model_fullname,
-                        contents=prepared_text,
-                        config=types.GenerateContentConfig(
-                            max_output_tokens=4096,
-                            temperature=self.temperature
-                        )
-                    )
-                    summary = response.text
-                case 4: # gemini-2.5-flash-lite
-                    response = self.client.models.generate_content(
-                        model=self.model_fullname,
-                        contents=prepared_text,
-                        config=types.GenerateContentConfig(
-                            max_output_tokens=self.max_tokens,
-                            temperature=self.temperature,
-                            thinking_config=types.ThinkingConfig(thinking_budget=self.thinking_budget)
-                        )
-                    )
-                    summary = response.text
-
-                case 5:
+                case ClientMode.REPLICATE_GEMMA_27B_IT:
                     input = {
                         "prompt": prepared_text,
                         "temperature": self.temperature,
@@ -240,7 +222,7 @@ class GoogleLLM(AbstractLLM):
                         input=input
                     )
                     summary = summary.replace("<end_of_turn>", "")
-                case 6:
+                case ClientMode.REPLICATE_GEMMA_12B_IT:
                     input = {
                         "prompt": prepared_text,
                         "temperature": self.temperature,
@@ -251,7 +233,7 @@ class GoogleLLM(AbstractLLM):
                         input=input
                     )
                     summary = summary.replace("<end_of_turn>", "")
-                case 7:
+                case ClientMode.REPLICATE_GEMMA_4B_IT:
                     input = {
                         "prompt": prepared_text,
                         "temperature": self.temperature,
@@ -264,7 +246,7 @@ class GoogleLLM(AbstractLLM):
                     summary = summary.replace("<end_of_turn>", "")
         elif self.local_model:
             match local_mode_group[self.model_name][self.endpoint]:
-                case 1: # Uses chat template
+                case LocalMode.CHAT_DEFAULT: # Uses chat template
                     print("ATTEMPTING TO REQUEST")
                     messages = [
                         {
