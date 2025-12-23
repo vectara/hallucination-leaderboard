@@ -38,6 +38,8 @@ class DeepSeekAISummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    CHAT_NO_TEMP_NO_TOKENS = auto()
+    CHAT_CONVERSATIONAL_NO_TOKENS = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
     # TODO: Add more as needed, make the term descriptive
@@ -49,25 +51,25 @@ class LocalMode(Enum):
 
 client_mode_group = {
     "DeepSeek-V3.2": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "DeepSeek-R1": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "DeepSeek-V3": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "DeepSeek-V3.1": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "DeepSeek-V3.1-Terminus": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "DeepSeek-V3.2-Exp": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "DeepSeek-V2.5": {
-        "chat": 2
+        "chat": ClientMode.CHAT_NO_TEMP_NO_TOKENS
     }
 }
 
@@ -89,7 +91,7 @@ class DeepSeekAILLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Standard chat completion
+                case ClientMode.CHAT_DEFAULT:
                     messages = [{"role": "user", "content":prepared_text}]
                     client_package = self.client.chat_completion(
                         messages,
@@ -97,13 +99,13 @@ class DeepSeekAILLM(AbstractLLM):
                         max_tokens=self.max_tokens
                     )
                     summary = client_package.choices[0].message.content
-                case 2: # V2.5. Does not work
+                case ClientMode.CHAT_NO_TEMP_NO_TOKENS:
                     messages = [{"role": "user", "content":prepared_text}]
                     client_package = self.client.chat_completion(
                         messages
                     )
                     summary = client_package.choices[0].message.content
-                case 3:
+                case ClientMode.CHAT_CONVERSATIONAL_NO_TOKENS:
                     client_package = self.client.conversational(
                         messages=prepared_text,
                         temperature=self.temperature
