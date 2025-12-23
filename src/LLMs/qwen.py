@@ -66,72 +66,72 @@ class QwenSummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    CHAT_REASONING = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "Qwen3-235B-A22B": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-30b-a3b-thinking": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-next-80b-a3b-thinking": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-omni-30b-a3b-thinking": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-max-preview": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-32b": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-14b": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-8b": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-4b": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-1.7b": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-0.6b": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen-plus": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     }, # 2025-04-28
     "qwen-turbo": {
-        "chat": 2
+        "chat": ClientMode.CHAT_REASONING
     }, # 2025-04-28
     "Qwen2.5-Max": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "qwen-max": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "qwen2.5-72b-instruct": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "qwen2.5-32b-instruct": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "qwen2.5-14b-instruct": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     },
     "qwen2.5-7b-instruct": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }
 }
 
@@ -148,7 +148,7 @@ class QwenLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1: # Default
+                case ClientMode.CHAT_DEFAULT:
                     completion = self.client.chat.completions.create(
                         model=self.model_fullname,
                         temperature=self.temperature,
@@ -157,7 +157,7 @@ class QwenLLM(AbstractLLM):
                             {"role": "user", "content": prepared_text}],
                         )
                     summary = completion.choices[0].message.content
-                case 2: # Reasoning model
+                case ClientMode.CHAT_REASONING:
                     completion = self.client.chat.completions.create(
                         model=self.model_fullname,
                         temperature=self.temperature,
