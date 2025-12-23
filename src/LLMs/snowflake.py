@@ -25,18 +25,18 @@ class SnowflakeSummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    REPLICATE_CHAT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
+
 class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
-    # TODO: Add more as needed, make the term descriptive
 
 client_mode_group = {
     "snowflake-arctic-instruct": {
-        "chat": 1
+        "chat": ClientMode.CHAT_DEFAULT
     }
 }
 
@@ -57,7 +57,7 @@ class SnowflakeLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
-                case 1:
+                case ClientMode.REPLICATE_CHAT:
                     input = {
                         "prompt": prepared_text,
                         "temperature": self.temperature,
