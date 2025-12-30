@@ -21,6 +21,7 @@ class COMPANY_NAMEConfig(BasicLLMConfig): # TODO: Update object name
 
 class COMPANY_NAMESummary(BasicSummary): # TODO: Update object name
     endpoint: Literal["chat", "response"] | None = None
+    # TODO: Add the same new attributes above also here
 
     class Config:
         extra = "ignore"
