@@ -84,6 +84,10 @@ def main(eval_config: EvalConfig) -> None:
         aggregate_judgments(eval_config)
 
         compile_results_for_all_llms(eval_config)
+
+    if "compile_results" in eval_config.pipeline:
+        compile_results_for_all_llms(eval_config)
+
         # Todo: make it incremental. But may not be necessary because the compile function is very fast. 
 
 

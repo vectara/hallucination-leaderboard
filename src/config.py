@@ -778,10 +778,10 @@ Here is the passage:
   ),
   EvalConfig(**
     {
-      "eval_name": "update_stats_all",
+      "eval_name": "compile_results",
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-API",
-      "pipeline": ["aggregate"],
+      "pipeline": ["compile_results"],
       "output_dir": "output",
       "overwrite_summaries": True,
       "source_article_path": "datasets/leaderboard_dataset_v2.csv",

@@ -199,7 +199,7 @@ class EvalConfig(BaseModel):
     eval_name: str
     eval_date: str
     hhem_version: str
-    pipeline: List[Literal["summarize", "judge", "aggregate"]] = ["summarize", "judge", "aggregate"]
+    pipeline: List[Literal["summarize", "judge", "aggregate", "compile_results"]] = ["summarize", "judge", "aggregate", "compile_results"]
     overwrite_summaries: bool = False
     source_article_path: str = "datasets/test_articles.csv"
     output_dir: str = "./output"
