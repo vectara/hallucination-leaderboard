@@ -91,7 +91,7 @@ class MiniMaxAILLM(AbstractLLM):
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 if client_mode_group[self.model_name]["api_type"] == "fireworks":
                     api_key = os.getenv(f"FIREWORKS_API_KEY")
                     assert api_key is not None, f"FIREWORKS API key not found in environment variable {COMPANY.upper()}_API_KEY"
@@ -110,7 +110,7 @@ class MiniMaxAILLM(AbstractLLM):
                     )
                 )
         elif self.execution_mode == "local":
-            if self.model_name in self.local_mode_group:
+            if self.model_name in local_mode_group:
                 self.local_model = None
             else:
                 raise Exception(

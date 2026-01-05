@@ -136,7 +136,7 @@ class ZhipuAILLM(AbstractLLM):
     def setup(self):
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                if self.client_mode_group[self.model_name]["api_type"] == "together":
+                if client_mode_group[self.model_name]["api_type"] == "together":
                     api_key = os.getenv(f"TOGETHER_API_KEY")
                     assert api_key is not None, f"TOGETHER API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = Together(api_key=api_key)

@@ -17,6 +17,7 @@ from . LLMs import (
   MistralAIConfig,
   MetaLlamaConfig,
   MicrosoftConfig,
+  MiniMaxAIConfig,
   NvidiaConfig,
   _01AIConfig,
   AI21LabsConfig,
@@ -194,7 +195,7 @@ Here is the passage:
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0}),
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1-Terminus", "temperature": 0.0, "min_throttle_time": 4.0}),
-        GoogleConfig(**{"threads": 3, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        # GoogleConfig(**{"threads": 3, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
@@ -418,6 +419,7 @@ Here is the passage:
         #     "temperature": 0.0,
         #   }
         # ),
+        MiniMaxAIConfig(**{"model_name": "minimax-m2p1", "date_code": "", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2512", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2512", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-14b", "date_code": "2512", "temperature": 0.0}),
@@ -439,7 +441,7 @@ Here is the passage:
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
         # NvidiaConfig(**{"threads": 1, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01}),
         
-        OpenAIConfig(**{"threads": 1, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
+        # OpenAIConfig(**{"threads": 1, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0}),
         # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
         # OpenAIConfig(**{"company": "openai", "model_name": "gpt-5.1-low", "date_code": "2025-11-13", "reasoning_effort": "low", "temperature": -1.0, "max_tokens": 32768}),
@@ -521,6 +523,7 @@ Here is the passage:
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "temperature": 0.0}),
         # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
+        ZhipuAIConfig(**{"model_name": "glm-4p7", "temperature": 0.0}),
       ]
     }
   ),

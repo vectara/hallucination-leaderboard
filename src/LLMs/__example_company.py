@@ -84,7 +84,7 @@ class COMPANY_NAMELLM(AbstractLLM): # TODO: Update object name
 
     def setup(self):
         if self.execution_mode == "api":
-            if self.model_name in self.client_mode_group:
+            if self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                 assert api_key is not None, (
                     f"{COMPANY} API key not found in environment variable "
@@ -101,7 +101,7 @@ class COMPANY_NAMELLM(AbstractLLM): # TODO: Update object name
                     )
                 )
         elif self.execution_mode == "local":
-            if self.model_name in self.local_mode_group:
+            if self.model_name in local_mode_group:
                 # TODO: Assign a local model if using a local model
                 self.local_model = None
             else:

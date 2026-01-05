@@ -29,6 +29,7 @@ from . intel import IntelLLM, IntelConfig, IntelSummary
 from . internlm import InternLmLLM, InternLmConfig, InternLmSummary
 from . meta_llama import MetaLlamaLLM, MetaLlamaConfig, MetaLlamaSummary
 from . microsoft import MicrosoftLLM, MicrosoftConfig, MicrosoftSummary
+from . minimaxai import MiniMaxAILLM, MiniMaxAIConfig, MiniMaxAISummary
 from . mistralai import MistralAILLM, MistralAIConfig, MistralAISummary
 from . moonshotai import MoonshotAILLM, MoonshotAIConfig, MoonshotAISummary
 from . nvidia import NvidiaLLM, NvidiaConfig, NvidiaSummary
@@ -130,6 +131,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": MicrosoftLLM,
         "config_class": MicrosoftConfig,
         "summary_class": MicrosoftSummary
+    },
+    "MiniMaxAI": {
+        "LLM_class": MiniMaxAILLM,
+        "config_class": MiniMaxAIConfig,
+        "summary_class": MiniMaxAISummary
     },
     "mistralai": {
         "LLM_class": MistralAILLM,
