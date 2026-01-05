@@ -596,10 +596,10 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # MiniMaxAIConfig(**{"model_name": "minimax-m2p1", "date_code": "", "temperature": 0.0}),
+        # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "date_code": "", "temperature": 0.0}),
 
         # CPU 2
-        # ZhipuAIConfig(**{"model_name": "glm-4p7", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"threads": 2, "model_name": "glm-4p7", "temperature": 0.0}),
 
         # CPU 3
 
