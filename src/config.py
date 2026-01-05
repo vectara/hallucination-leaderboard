@@ -596,29 +596,12 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m2p1", "date_code": "", "temperature": 0.0}),
 
         # CPU 2
-        # AI21LabsConfig(**
-        #   {
-        #     "threads": 4,
-        #     "model_name": "jamba-large-1.7",
-        #     "date_code": "2025-07",
-        #     "temperature": 0.0,
-        #     "max_tokens": 4096
-        #   }
-        # ),
+        # ZhipuAIConfig(**{"model_name": "glm-4p7", "temperature": 0.0}),
 
         # CPU 3
-        # AI21LabsConfig(**
-        #   {
-        #     "threads": 4,
-        #     "model_name": "jamba-mini-1.7",
-        #     "date_code": "2025-07",
-        #     "temperature": 0.0,
-        #     "max_tokens": 4096
-        #   }
-        # ),
 
         # CPU 4
 
@@ -652,6 +635,25 @@ Here is the passage:
 
         # # Completed Models
         # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
+        # GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        # AI21LabsConfig(**
+        #   {
+        #     "threads": 4,
+        #     "model_name": "jamba-mini-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0,
+        #     "max_tokens": 4096
+        #   }
+        # ),
+        # AI21LabsConfig(**
+        #   {
+        #     "threads": 4,
+        #     "model_name": "jamba-large-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0,
+        #     "max_tokens": 4096
+        #   }
+        # ),
 
         # AmazonConfig(**{"model_name": "nova-pro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
         # AmazonConfig(**{"model_name": "nova-micro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024}), # 1024 token cap
