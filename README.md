@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on December 18, 2025
+Last updated on January 5, 2026
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-09.png)
 
@@ -76,7 +76,9 @@ Last updated on December 18, 2025
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
 |openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
 |deepseek-ai/DeepSeek-R1|11.3 %|88.7 %|97.0 %|93.5|
+|zai-org/glm-4p7|11.7 %|88.3 %|99.8 %|70.6|
 |anthropic/claude-opus-4-1-20250805|11.8 %|88.2 %|92.4 %|129.1|
+|MiniMaxAI/minimax-m2p1|11.8 %|88.2 %|98.5 %|106.9|
 |anthropic/claude-opus-4-20250514|12.0 %|88.0 %|91.0 %|123.2|
 |anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
 |openai/gpt-5.1-high-2025-11-13|12.1 %|87.9 %|100.0 %|254.4|
