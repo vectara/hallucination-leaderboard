@@ -1,5 +1,6 @@
 import os
 from typing import Literal
+import requests
 
 from ai21 import AI21Client
 from ai21.models.chat import ChatMessage
@@ -14,6 +15,7 @@ class AI21LabsConfig(BasicLLMConfig):
     company: Literal["ai21labs"] = "ai21labs"
     model_name: Literal[
         "AI21-Jamba-Mini-1.5",
+        "jamba-mini-2",
         "jamba-large-1.7",
         "jamba-mini-1.7",
         "jamba-large-1.6", # Deprecated
@@ -33,6 +35,7 @@ class AI21LabsSummary(BasicSummary):
 
 class ClientMode(Enum):
     CHAT_DEFAULT = auto()
+    CHAT_HTTP = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
@@ -42,6 +45,9 @@ class LocalMode(Enum):
     UNDEFINED = auto()
 
 client_mode_group = {
+    "jamba-mini-2": {
+        "chat": ClientMode.CHAT_DEFAULT
+    },
     "jamba-large-1.7": {
         "chat": ClientMode.CHAT_DEFAULT
     },
@@ -86,6 +92,30 @@ class AI21LabsLLM(AbstractLLM):
                     )
 
                     summary = response.choices[0].message.content
+                case ClientMode.CHAT_HTTP:
+                    api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                    url = "https://api.ai21.com/studio/v1/chat/completions"
+
+                    headers = {
+                        "Authorization": f"Bearer {api_key}",
+                        "Content-Type": "application/json"
+                    }
+
+                    payload = {
+                        "model": self.model_fullname,
+                        "messages": [
+                            {"role": "user", "content": prepared_text}
+                        ],
+                        "max_tokens": self.max_tokens,
+                        "temperature": self.temperature
+                    }
+
+                    response = requests.post(url, headers=headers, json=payload)
+                    response.raise_for_status()
+
+                    data = response.json()
+                    summary = data["choices"][0]["message"]["content"]
+
         elif self.local_model: 
             pass 
         else:

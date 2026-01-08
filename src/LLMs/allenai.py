@@ -10,9 +10,9 @@ from .. data_model import ModelInstantiationError, SummaryError
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from huggingface_hub import InferenceClient
 from openai import OpenAI
-from vllm import SamplingParams
-from vllm import LLM
-from vllm.config import CompilationConfig, CompilationMode
+# from vllm import SamplingParams
+# from vllm import LLM
+# from vllm.config import CompilationConfig, CompilationMode
 
 COMPANY = "allenai"
 
