@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on January 5, 2026
+Last updated on January 8, 2026
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2025-12-09.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-01-08.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -38,6 +38,7 @@ Last updated on January 5, 2026
 |amazon/nova-2-lite-v1:0|5.1 %|94.9 %|99.6 %|94.1|
 |mistralai/mistral-small-2501|5.1 %|94.9 %|97.9 %|98.8|
 |ibm-granite/granite-4.0-h-small|5.2 %|94.8 %|100.0 %|107.4|
+|ai21labs/jamba-mini-2|5.3 %|94.7 %|99.6 %|109.4|
 |deepseek-ai/DeepSeek-V3.2-Exp|5.3 %|94.7 %|96.6 %|64.6|
 |qwen/qwen3-14b|5.4 %|94.6 %|99.9 %|111.1|
 |amazon/nova-micro-v1:0|5.5 %|94.5 %|100.0 %|100.0|
