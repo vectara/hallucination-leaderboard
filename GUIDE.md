@@ -8,20 +8,25 @@ Make sure you are in the correct environment, have the proper libraries installe
 
 #### Add New Company and Models
 
-Copy the example_company.py code and create a new file preferably with the name of the company. If there are unusual characters then the python file name can be whatever is a proper file name that still clearly refers to the company.
+Copy the __example_company.py code and create a new file preferably with the name of the company. If there are unusual characters then the python file name can be whatever is a proper file name that still clearly refers to the company.
 
-Within the python file reference and satisfy all TODO comments.
+Within the python file reference and satisfy all TODO comments. Company name within the file 
+should replicate its official name on huggingface or as close to it as possible.
 
 Once the new python file is complete update the model registry in `src/LLMs/__init__.py` with the new company objects you created in the company python file. Place the company alphabetically within the dictionary.
 
-Lastly it's time for a test run. config.py contains various experimental setups including the test and live runs. Scan for the EvalConfig object with field eval_name assigned to "test". Then under per_LLM_configs add the new model using the companys config object you created in its respective company class alphabetically by company. Repeat the previous step for all the models you added.
+Lastly it's time for a test run. config.py contains various experimental setups including the test and live runs. Import the new classes config object. Scan for the EvalConfig object with field eval_name assigned to "test". Then under per_LLM_configs add the new model to the list of model configs alphabetically by company.
+
 
 The test run object also serves as an example for how to add models for other tests so leave them there as a reference and overall list of all possible models we can run. Comment out other company objects if that hasn't been done yet and do a test run with only the models you added by inputting the command. 
 
 `hhem-leaderboard --eval_name test`
 
-Inspect the console output for any issues. If it runs to completion then inspect the output_test directory for the saved summaries. We have two test cases. A null case and a real summary case. The first article you should see a real summary. The second case you should see "I cannot do it.". If both are satisfied then you successfully added the company and its models.
+Inspect ouput_test to find your new models output. Make sure it only contains summary text, if there are extra artifacts around the summary add additional code to handle their removal.
 
+Test case 1 is expected to have a response.
+Test case 2 should either say "I am unable to summarize this passage." or some output related to it not having anything to summarize.
+Test case 3 tests if the model can handle the largest context it can expect. Failure of this case is a yellow flag. It may indicate a sub optimal answer rate if this case is failed.
 
 #### Add Models to Existing Company
 
@@ -54,7 +59,7 @@ Once complete run the following git commands
 `git commit -a -m "adding {model_name-date_code}`
 `git push`
 
-The LB will automatically update the leaderboard once it see the file changes.
+The LB will automatically update the leaderboard once it sees the file changes.
 
 ## Installation
 
