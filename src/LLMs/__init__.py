@@ -1,14 +1,33 @@
+"""LLM provider implementations for hallucination evaluation.
+
+This package contains implementations for various LLM providers used in the
+hallucination leaderboard evaluation pipeline. All providers implement a unified
+interface through the AbstractLLM base class, enabling consistent summarization
+across different models.
+
+Each provider module exports three components:
+    - LLM class: The main class implementing AbstractLLM for inference.
+    - Config class: Pydantic model for provider-specific configuration.
+    - Summary class: Pydantic model for structured summary output.
+
+Key AbstractLLM Methods:
+    setup: Initialize the LLM connection at the start of a context block.
+    teardown: Clean up resources at the end of a context block.
+    summarize: Generate a summary of the provided text.
+
+Example:
+    >>> from src.LLMs import MODEL_REGISTRY
+    >>> provider_info = MODEL_REGISTRY["openai"]
+    >>> config = provider_info["config_class"](model_name="gpt-4o")
+    >>> with provider_info["LLM_class"](config) as llm:
+    ...     result = llm.summarize("Long article text here...")
+
+Attributes:
+    MODEL_REGISTRY: Dictionary mapping provider names to their LLM, config,
+        and summary classes for dynamic instantiation.
+"""
+
 from typing import Dict, Any
-
-"""
-This package contains implementations for various LLM providers.
-The package provides a unified interface through the AbstractLLM base class.
-
-Key functions in the AbstractLLM class:
-- setup(): Initialize an LLM at the beginning of `with` block
-- teardown(): Clean up an LLM at the end of `with` block
-- summarize(): Summarize a given text
-"""
 
 from . AbstractLLM import AbstractLLM
 
@@ -46,6 +65,20 @@ from . xai import XAILLM, XAIConfig, XAISummary
 from . zai_org import ZhipuAILLM, ZhipuAIConfig, ZhipuAISummary
 
 
+# MODEL_REGISTRY: Central registry for all supported LLM providers.
+#
+# Maps provider identifier strings to dictionaries containing:
+#     - LLM_class: The AbstractLLM subclass for model inference.
+#     - config_class: The Pydantic config model for provider settings.
+#     - summary_class: The Pydantic model for structured summary output.
+#
+# Provider keys should match the organization/provider naming convention
+# used in model identifiers (e.g., "openai", "anthropic", "meta-llama").
+#
+# To add a new provider:
+#     1. Create a new module in src/LLMs/ with LLM, Config, and Summary classes.
+#     2. Import the classes at the top of this file.
+#     3. Add an entry to MODEL_REGISTRY with the provider key.
 MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     "01-ai": {
         "LLM_class": _01AILLM,
@@ -209,8 +242,5 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
     }
 }
 
-# Discourage from using `from .LLMs import *` -- Forrest, 2025-07-03
-# __all__ = [
-#     "AbstractLLM",
-#     "MODEL_REGISTRY"
-# ]
+# Note: __all__ is intentionally not defined to discourage wildcard imports.
+# Use explicit imports: `from src.LLMs import AbstractLLM, MODEL_REGISTRY`
