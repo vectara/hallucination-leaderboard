@@ -1,3 +1,17 @@
+"""Aggregation pipeline for computing per-LLM statistics from judgments.
+
+This module provides functionality for aggregating summary-level judgment
+scores into per-LLM statistics. Computes metrics such as hallucination rate,
+answer rate, average word count, and confidence intervals for each model.
+
+The pipeline groups judgments by summary date and judgment date, enabling
+tracking of model performance over time and across evaluation runs.
+
+Functions:
+    aggregate_judgments: Main entry point for aggregating judgment results.
+    generate_and_save_results: Core aggregation logic for a single LLM.
+"""
+
 import os
 from datetime import datetime, timezone
 from typing import Dict, Any
@@ -13,23 +27,23 @@ from .. data_model import Stats, EvalConfig, BasicLLMConfig, BasicJudgment
 from .. json_utils import append_record_to_jsonl
 from .. Logger import logger
 
-"""
-Aggregate the judgments on summaries to get per-LLM stats
-"""
-
 def aggregate_judgments(eval_config: EvalConfig):
-    """
-    Aggregate the judgments on summaries to get per-LLM stats
+    """Aggregate summary-level judgments into per-LLM statistics.
+
+    Main entry point for the aggregation pipeline. Iterates through all
+    configured LLMs, loads their judgment files, and computes aggregate
+    statistics including hallucination rate, answer rate, and confidence
+    intervals. Results are saved to stats JSONL files.
 
     Args:
-        eval_config (EvalConfig): evaluation configuration
-        judgment_file (str): name of the judgment file
-        stats_file (str): name of the stats file
+        eval_config: Evaluation configuration containing LLM configs, file
+            paths, and evaluation metadata.
 
-    Returns:
-        None
+    Note:
+        Skips LLMs whose judgment files are not found, logging a warning
+        for each missing file. Common LLM config settings are merged into
+        per-LLM configs before processing.
     """
-
     judgment_file = eval_config.judgment_file
     stats_file = eval_config.stats_file
 
@@ -102,16 +116,31 @@ def aggregate_judgments(eval_config: EvalConfig):
     )
 
 def generate_and_save_results(
-        eval_config: EvalConfig, 
+        eval_config: EvalConfig,
         llm_config: BasicLLMConfig,
     ):
-    """
-    Loads per-summary judgments and aggregates them to get per-LLM stats.
-    If date_code is provided, filters judgments by joining with summary data
-    to get the date_code information.
+    """Load judgments and compute aggregated statistics for a single LLM.
 
-    """
+    Loads per-summary judgment scores, optionally filters by date_code,
+    groups by summary and judgment dates, and computes aggregate metrics
+    for each group. Results are saved incrementally to a stats JSONL file.
 
+    Computed metrics include:
+        - Hallucination rate (percentage)
+        - Answer rate (percentage)
+        - Average word count
+        - Confidence interval (percentage)
+
+    Args:
+        eval_config: Evaluation configuration with file paths and settings.
+        llm_config: Model-specific configuration including company, model
+            name, and optional date_code for filtering.
+
+    Note:
+        If date_code is provided, judgments are filtered by joining with
+        summary data to match the specified date_code. Logs warnings for
+        HHEM version mismatches and empty result sets after filtering.
+    """
     date_code = llm_config.date_code
     hhem_version = eval_config.hhem_version
 
