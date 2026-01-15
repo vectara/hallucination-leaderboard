@@ -1,3 +1,29 @@
+"""Abstract base class for LLM implementations.
+
+This module defines the AbstractLLM base class that all LLM provider
+implementations must inherit from. It provides a unified interface for
+text summarization across different model providers and execution modes.
+
+The AbstractLLM class supports:
+    - Context manager protocol for resource management (setup/teardown).
+    - Both API client and local model inference modes.
+    - Automatic thinking tag removal for reasoning models.
+    - Rate limiting via configurable throttle times.
+
+Classes:
+    AbstractLLM: Abstract base class defining the LLM interface.
+
+Example:
+    >>> class MyLLM(AbstractLLM):
+    ...     def setup(self): ...
+    ...     def teardown(self): ...
+    ...     def summarize(self, text): ...
+    ...     def close_client(self): ...
+    >>> config = MyConfig(company="myco", model_name="my-model")
+    >>> with MyLLM(config) as llm:
+    ...     summary = llm.try_to_summarize_one_article("Article text...")
+"""
+
 import os
 import re
 import time
@@ -32,11 +58,39 @@ from .. Logger import logger
 # ]
 
 class AbstractLLM(ABC):
-    """
-    Abstract Class for an LLM.
+    """Abstract base class for all LLM provider implementations.
+
+    Defines the interface that all LLM implementations must follow, providing
+    common functionality for text summarization, resource management, and
+    error handling. Subclasses must implement the abstract methods: setup(),
+    teardown(), summarize(), and close_client().
+
+    Supports both API-based inference (via self.client) and local model
+    inference (via self.local_model). The class implements the context manager
+    protocol for automatic resource cleanup.
+
+    Attributes:
+        company: Provider/company identifier string.
+        model_name: Name of the specific model variant.
+        prompt: Template string for formatting input text.
+        temperature: Sampling temperature for generation.
+        max_tokens: Maximum tokens to generate in response.
+        min_throttle_time: Minimum seconds between API calls for rate limiting.
+        date_code: Optional version/date identifier for the model.
+        thinking_tokens: Configuration for reasoning/thinking tokens.
+        execution_mode: Where to run inference ("api", "gpu", "cpu").
+        model_fullname: Complete model identifier including date code.
+        client: API client instance for remote inference, if applicable.
+        local_model: Local model instance for on-device inference, if applicable.
+        device: PyTorch device (cuda or cpu) for local inference.
     """
 
     def __init__(self, config: BasicLLMConfig) -> None:
+        """Initialize the LLM with configuration settings.
+
+        Args:
+            config: Configuration object containing model settings and parameters.
+        """
         # Expose all config keys and values as attributes on self
         # for key, value in config.model_dump().items():
         #     setattr(self, key, value)
@@ -71,10 +125,27 @@ class AbstractLLM(ABC):
         # self.summary_file: str | None = None # won't be set until after instantiation in summarize.py
 
     def __enter__(self):
-        self.setup() # TODO: Try to skip the setup() and teardown() 
+        """Enter the context manager, initializing the model.
+
+        Calls setup() to prepare the model for inference.
+
+        Returns:
+            self: The initialized LLM instance.
+        """
+        self.setup() # TODO: Try to skip the setup() and teardown()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_t):
+        """Exit the context manager, cleaning up resources.
+
+        Calls teardown() to release model resources regardless of whether
+        an exception occurred.
+
+        Args:
+            exc_type: Exception type if an exception was raised, else None.
+            exc_val: Exception value if an exception was raised, else None.
+            exc_t: Exception traceback if an exception was raised, else None.
+        """
         self.teardown()
 
     # Commented out by Forrest, 2025-07-16 
@@ -98,17 +169,20 @@ class AbstractLLM(ABC):
     #     return summaries
 
     def try_to_summarize_one_article(self, article: str) -> str:
-        """
-        Tries to request the model to summarize an Article. Logs warnings if it
-        fails but continues the program with dummy output indicative of the 
-        failure
+        """Attempt to summarize an article with error handling.
+
+        Formats the article with the configured prompt template, requests a
+        summary from the model, and handles any errors gracefully. Applies
+        rate limiting based on min_throttle_time and removes thinking tags
+        from the response.
 
         Args:
-            Article (str): Article to be summarized
+            article: The article text to be summarized.
 
         Returns:
-            str: Summary of article or error message
-        
+            The generated summary text, or an error message string if
+            summarization fails (e.g., MODEL_FAILED_TO_RETURN_OUTPUT,
+            MODEL_RETURNED_NON_STRING_TYPE_OUTPUT).
         """
 
         prepared_llm_input = self.prompt.format(article=article)
@@ -145,19 +219,24 @@ class AbstractLLM(ABC):
         return llm_summary
 
     def remove_thinking_text(self, raw_summary: str) -> str:
-        """
-        Removes any thinking tags and content in between them. If a summary does
-        not have a closing thinking tag it will be considered as an incomplete 
-        summary and return an error string instead.
+        """Remove thinking/reasoning tags and their content from model output.
 
-        TODO: Note that different LLMs may use different tags for thinking. Shall we move to child classes?
+        Strips <think>...</think> blocks from the summary, which are used by
+        some reasoning models to show their thought process. If an opening
+        <think> tag is found without a matching </think>, the response is
+        considered incomplete and an error string is returned.
+
+        Note:
+            Different LLMs may use different tags for thinking. Consider
+            overriding in subclasses if a model uses non-standard tags.
 
         Args:
-            raw_summary (str): raw summary from LLM
+            raw_summary: The raw summary text from the LLM, potentially
+                containing thinking tags.
 
-        returns:
-            str: summary without thinking data or invalid summary text
-
+        Returns:
+            The summary with thinking content removed, or
+            INCOMPLETE_THINK_TAG error string if the response is malformed.
         """
         if '<think>' in raw_summary and '</think>' not in raw_summary:
             logger.warning(f"<think> tag found with no </think>. This is indicative of an incomplete response from an LLM. Raw Summary: {raw_summary}")
@@ -170,14 +249,11 @@ class AbstractLLM(ABC):
         return summary
 
     def default_local_model_teardown(self):
-        """
-        Standard protcol for tearing down a torch based model, Sets 
-        self.local_model to None when done
+        """Standard teardown protocol for PyTorch-based local models.
 
-        Args:
-            None
-        Returns:
-            None
+        Deletes the local model, clears the CUDA cache to free GPU memory,
+        and resets the local_model attribute to None. Call this method from
+        subclass teardown() implementations when using local inference.
         """
         # self.local_model.to("cpu")
         del self.local_model
@@ -185,8 +261,15 @@ class AbstractLLM(ABC):
         self.local_model = None
 
     def prepare_for_overwrite(self, summaries_jsonl_path: str, summary_date: str):
-        """
-        Prepare for overwriting existing summaries
+        """Prepare the summary file for overwriting with new results.
+
+        Clears the existing summary file to allow fresh results to be written.
+        Used when re-running summarization for a model.
+
+        Args:
+            summaries_jsonl_path: Path to the JSONL file storing summaries.
+            summary_date: Date identifier for the summarization run (unused
+                in current implementation but reserved for future filtering).
         """
         open(summaries_jsonl_path, 'w').close()
 
@@ -203,49 +286,45 @@ class AbstractLLM(ABC):
 
     @abstractmethod
     def summarize(self, prepared_text: str) -> str:
-        """
-        Requests LLM to generate a summary given the input
+        """Generate a summary from the prepared input text.
+
+        This is the core inference method that subclasses must implement.
+        It should invoke the model (via API client or local inference) to
+        generate a summary of the provided text.
 
         Args:
-            prepared_text (str): Prompt prepared text
+            prepared_text: The prompt-formatted text ready for model input.
 
         Returns:
-            str: Generated LLM summary
+            The generated summary text from the model.
         """
         return None
 
     @abstractmethod
     def setup(self):
-        """
-        Setup model for use
+        """Initialize the model and prepare for inference.
 
-        Args:
-            None
-        Returns:
-            None
+        Subclasses must implement this to set up either self.client (for API
+        inference) or self.local_model (for local inference). Called automatically
+        when entering a context manager block.
         """
         return None
 
     @abstractmethod
     def teardown(self):
-        """
-        Teardown model
+        """Release resources and clean up after inference.
 
-        Args:
-            None
-        Returns:
-            None
+        Subclasses must implement this to properly release model resources.
+        For local models, consider calling default_local_model_teardown().
+        Called automatically when exiting a context manager block.
         """
         return None
 
     @abstractmethod
     def close_client(self):
-        """
-        Close client
+        """Close any active API client connections.
 
-        Args:
-            None
-        Returns:
-            None
+        Lately it is not necessary to do this, this method may be removed in
+        the future.
         """
         return None
