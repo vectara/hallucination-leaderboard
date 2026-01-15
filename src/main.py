@@ -1,7 +1,33 @@
+"""Main entry point for the HHEM Leaderboard evaluation system.
+
+This module provides the command-line interface and orchestration logic
+for running hallucination evaluation pipelines. Coordinates the three
+main pipeline stages (summarize, judge, aggregate) and compiles results
+across all evaluated LLMs.
+
+Functions:
+    compile_results_for_all_llms: Aggregate stats from all LLMs into one file.
+    main: Execute the evaluation pipeline based on configuration.
+    cli_main: Command-line interface entry point.
+
+Example:
+    Command-line usage::
+
+        python -m src.main --eval_name test
+        python -m src.main --eval_name production
+
+    Programmatic usage::
+
+        from src.main import main
+        from src.data_model import EvalConfig
+        config = EvalConfig(...)
+        main(config)
+"""
+
 import argparse
+import json
 import os
 from typing import List
-import json
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -14,6 +40,27 @@ from . pipeline import (
 
 
 def compile_results_for_all_llms(eval_config: EvalConfig) -> None:
+    """Compile statistics from all evaluated LLMs into a single JSON file.
+
+    Traverses the output directory structure, reads per-LLM stats files,
+    and aggregates them into a unified JSON file for the leaderboard
+    frontend. For each LLM, only the most recent results (by judgment
+    and summary date) are included.
+
+    Args:
+        eval_config: Evaluation configuration containing output directory
+            path and stats file naming convention.
+
+    Output:
+        Creates "{output_dir}/stats_all_LLMs.json" containing an array of
+        objects with fields: model_name, date_code, hallucination_rate,
+        confidence_interval, answer_rate, avg_word_count.
+
+    Note:
+        Model names in the output are prefixed with the provider name
+        (e.g., "openai/gpt-4o") and suffixed with date_code if present.
+        Empty stats files are skipped with a warning message.
+    """
     output_dir = eval_config.output_dir
     stats_jsonl = eval_config.stats_file
 
@@ -61,7 +108,30 @@ def compile_results_for_all_llms(eval_config: EvalConfig) -> None:
 
 # TODO: Move the main function to pipeline/__init__.py
 def main(eval_config: EvalConfig) -> None:
+    """Execute the evaluation pipeline based on configuration.
 
+    Main orchestration function that runs the configured pipeline stages
+    in sequence. Loads source articles, validates them against the
+    SourceArticle schema, and executes each enabled stage.
+
+    Pipeline stages (controlled by eval_config.pipeline):
+        - "summarize": Generate summaries using configured LLMs.
+        - "judge": Score summaries using HHEM for hallucination detection.
+        - "aggregate": Compute per-LLM statistics from individual judgments.
+        - "compile_results": Merge all LLM stats into a single output file.
+
+    Args:
+        eval_config: Complete evaluation configuration including pipeline
+            stages to run, LLM configurations, file paths, and settings.
+
+    Raises:
+        ValueError: If source article data fails schema validation.
+
+    Note:
+        The "aggregate" stage automatically triggers "compile_results"
+        for convenience. The "compile_results" stage can also be run
+        independently to regenerate the combined stats file.
+    """
     article_df = pd.read_csv(eval_config.source_article_path)
     article_df = article_df[[SourceArticle.Keys.ARTICLE_ID, SourceArticle.Keys.TEXT]]
     
@@ -92,6 +162,25 @@ def main(eval_config: EvalConfig) -> None:
 
 
 def cli_main():
+    """Command-line interface entry point for the evaluation system.
+
+    Parses command-line arguments, loads environment variables from .env,
+    and dispatches to the main() function with the selected evaluation
+    configuration. Available evaluation names are defined in config.py.
+
+    Command-line Arguments:
+        --eval_name: Name of the evaluation configuration to run.
+            Must match an eval_name defined in config.py. Defaults to "test".
+
+    Raises:
+        ValueError: If the specified eval_name is not found in config.py
+            or if multiple configurations share the same eval_name.
+
+    Example:
+        Run from command line::
+
+            python -m src.main --eval_name production
+    """
     load_dotenv()
     parser = argparse.ArgumentParser(
         description="HHEM Leaderboard Backend",
