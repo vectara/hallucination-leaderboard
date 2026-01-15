@@ -1,3 +1,24 @@
+"""Summarization pipeline for generating LLM summaries.
+
+This module provides functionality for generating summaries from source articles
+using configured LLM models. Supports both single-threaded and multi-threaded
+execution modes with automatic retry logic for rate-limited API calls.
+
+The pipeline iterates through configured LLM models, generates summaries for
+each article in the dataset, and saves results incrementally to JSONL files.
+
+Classes:
+    TooManyRequestsError: Custom exception for rate limit errors.
+
+Functions:
+    is_rate_limit_error: Check if an exception is a rate limit error.
+    prepare_llm: Initialize an LLM instance with configuration.
+    get_summaries: Main entry point for generating summaries.
+    generate_summaries_for_one_llm: Single-threaded summary generation.
+    generate_summaries_for_one_llm_multithreaded: Multi-threaded summary generation.
+    generate_summary_uid: Generate unique identifier for a summary.
+"""
+
 import hashlib
 import json
 import os
@@ -17,26 +38,28 @@ from .. json_utils import append_record_to_jsonl
 from .. LLMs import AbstractLLM, MODEL_REGISTRY
 from .. Logger import logger
 
-
-
-"""
-Loops through all given LLMs and requests a summary for the give article
-dataframe. 
-
-Global Variables:
-    SUMMARY_FILE
-
-Functions:
-    run(models)
-    generate_and_save_summaries(model, article_df, json_path)
-    generate_summary_uid(model_name, date_code, summary_text, date)
-"""
-
 class TooManyRequestsError(Exception):
+    """Custom exception for HTTP 429 Too Many Requests errors.
+
+    Raised when an API rate limit is exceeded. Used as a signal for
+    retry logic to wait and attempt the request again.
+    """
+
     pass
 
-# General purpose check for 429 errors
+
 def is_rate_limit_error(exception):
+    """Check if an exception indicates a rate limit error.
+
+    Performs a general-purpose check for HTTP 429 errors by examining
+    the exception's status_code attribute and string representation.
+
+    Args:
+        exception: The exception to check for rate limit indicators.
+
+    Returns:
+        True if the exception appears to be a rate limit error, False otherwise.
+    """
     # If the exception has a `status_code` attribute
     if hasattr(exception, "status_code") and exception.status_code == 429:
         return True
@@ -48,8 +71,27 @@ def is_rate_limit_error(exception):
 def prepare_llm(
     eval_config: EvalConfig,
     llm_config: BasicLLMConfig,
-) -> Tuple[AbstractLLM, type, str]: 
+) -> Tuple[AbstractLLM, type, str]:
+    """Prepare an LLM instance for summary generation.
 
+    Initializes an LLM instance from the model registry, applies common
+    configuration settings, creates the output directory structure, and
+    handles summary file creation or overwrite logic.
+
+    Args:
+        eval_config: Evaluation configuration containing output paths and
+            common LLM settings.
+        llm_config: Model-specific configuration for the LLM to prepare.
+
+    Returns:
+        A tuple containing:
+            - llm: The initialized AbstractLLM instance.
+            - LLM_SUMMARY_CLASS: The Pydantic model class for summary records.
+            - summaries_jsonl_path: Path to the output JSONL file.
+
+    Raises:
+        Exception: If the model is not registered or user declines overwrite.
+    """
     try:
         llm_registry = MODEL_REGISTRY.get(llm_config.company)
         LLM_CLASS = llm_registry["LLM_class"]
@@ -95,12 +137,24 @@ def prepare_llm(
         raise
 
 def get_summaries(
-        eval_config: EvalConfig, 
+        eval_config: EvalConfig,
         article_df: pd.DataFrame):
-    """
-    Generates summaries for a given model and then save to a jsonl file, overwrite flag will overwrite existing jsonl file
-    """
+    """Generate summaries for all configured LLMs and save to JSONL files.
 
+    Main entry point for the summarization pipeline. Iterates through all
+    LLM configurations in eval_config, generates summaries for each article
+    in the dataset, and saves results incrementally. Supports both single-
+    threaded and multi-threaded execution based on the threads setting.
+
+    Args:
+        eval_config: Evaluation configuration containing LLM configs, output
+            paths, and execution settings.
+        article_df: DataFrame containing source articles with columns for
+            article text and article IDs.
+
+    Raises:
+        Exception: If an invalid thread count is specified.
+    """
     summary_file = eval_config.summary_file
 
     LLMs_to_be_processed = [llm_config.model_name for llm_config in eval_config.per_LLM_configs]
@@ -165,7 +219,6 @@ def get_summaries(
     
     logger.info(f"Finished generating and saving summaries for the following LLMs: {LLMs_to_be_processed}")
 
-# TODO: Docs
 def generate_summaries_for_one_llm_multithreaded(
         llm_factory,
         article_df,
@@ -175,7 +228,27 @@ def generate_summaries_for_one_llm_multithreaded(
         LLM_SUMMARY_CLASS,
         max_workers: int
     ):
-    
+    """Generate summaries using multiple worker threads.
+
+    Parallelizes summary generation across multiple threads for improved
+    throughput. Uses a dedicated writer thread for thread-safe file I/O
+    and implements retry logic with exponential backoff for rate-limited
+    API calls.
+
+    Args:
+        llm_factory: Callable that creates new LLM instances for each worker.
+            Signature: (eval_config, llm_config) -> AbstractLLM.
+        article_df: DataFrame containing source articles with text and IDs.
+        eval_config: Evaluation configuration with eval_name and eval_date.
+        llm_config: Model-specific configuration for the LLM.
+        summaries_jsonl_path: Path to the output JSONL file.
+        LLM_SUMMARY_CLASS: Pydantic model class for summary records.
+        max_workers: Maximum number of concurrent worker threads.
+
+    Note:
+        Each worker creates its own LLM instance to avoid thread-safety
+        issues with shared client connections.
+    """
     current_date = datetime.now(timezone.utc).date().isoformat()
     article_texts = article_df[SourceArticle.Keys.TEXT].tolist()
     article_ids   = article_df[SourceArticle.Keys.ARTICLE_ID].tolist()
@@ -271,14 +344,24 @@ def generate_summaries_for_one_llm_multithreaded(
 def generate_summaries_for_one_llm(
         llm: AbstractLLM,
         article_df: pd.DataFrame,
-        eval_name: str, 
-        eval_date: str, 
-        summaries_jsonl_path, 
+        eval_name: str,
+        eval_date: str,
+        summaries_jsonl_path,
         LLM_SUMMARY_CLASS: type
     ):
-    """
-    Produces summaries for all articles and saves them to the given jsonl file.
-    Saving is performed incrementally.
+    """Generate summaries for all articles using a single LLM instance.
+
+    Iterates through all articles in the DataFrame, generates a summary for
+    each using the provided LLM, and saves results incrementally to a JSONL
+    file. Uses a context manager to handle LLM setup and teardown.
+
+    Args:
+        llm: The initialized LLM instance to use for generation.
+        article_df: DataFrame containing source articles with text and IDs.
+        eval_name: Name identifier for this evaluation run.
+        eval_date: Date identifier for this evaluation run.
+        summaries_jsonl_path: Path to the output JSONL file.
+        LLM_SUMMARY_CLASS: Pydantic model class for summary records.
     """
     current_date = datetime.now(timezone.utc).date().isoformat()
     article_texts = article_df[SourceArticle.Keys.TEXT].tolist()
@@ -317,18 +400,19 @@ def generate_summaries_for_one_llm(
 def generate_summary_uid(
         model_name: str, summary_text: str, date: str
     ) -> str:
-    """
-    Generates a hash for the summary using the model name, date code, summary 
-    text, date and time.
+    """Generate a unique identifier hash for a summary.
+
+    Creates an MD5 hash from the combination of model name, summary text,
+    date, and current time to ensure uniqueness even for identical summaries
+    generated at different times.
 
     Args:
-        model_name (str): name of model
-        date_code (str): date code of model
-        summary_text (str): summary generated by model
-        date (str): current date
+        model_name: Full name of the model that generated the summary.
+        summary_text: The generated summary text content.
+        date: Date string for the evaluation run.
 
-    Returns
-        str: hash of summary generation
+    Returns:
+        A 32-character hexadecimal MD5 hash string.
     """
     current_time = datetime.now().strftime("%H:%M:%S.%f")
     combined_string = (
