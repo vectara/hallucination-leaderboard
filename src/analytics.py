@@ -1,3 +1,19 @@
+"""Analytics functions for computing evaluation metrics and statistics.
+
+This module provides functions for validating summaries and computing
+aggregate metrics from judgment data. Includes hallucination rate,
+factual consistency rate, answer rate, and word count statistics.
+
+Functions:
+    is_valid_summary: Check if a summary meets validity criteria.
+    compute_hallucination_rate: Calculate percentage of hallucinated summaries.
+    compute_factual_consistancy_rate: Calculate percentage of factually consistent summaries.
+    compute_confidence_interval: Calculate confidence interval for metrics.
+    compute_answer_rate: Calculate percentage of valid summaries.
+    compute_avg_word_count: Calculate average word count for valid summaries.
+    clean_string: Preprocess text for improved HHEM performance.
+"""
+
 import pandas as pd
 import re
 import string
@@ -5,18 +21,21 @@ import string
 from . data_model import BasicJudgment, SummaryError
 
 def is_valid_summary(summary: str) -> bool:
-    """
-    Checks if summary is valid and returns True if it is else False. A summary
-    is valid if it is longer than 4 words and the output is not equivalent to
-    specific error strings
+    """Check if a summary meets validity criteria.
+
+    A summary is considered valid if it contains more than 5 words and
+    does not match any predefined error strings from the SummaryError enum.
 
     Args:
-        summary (str): the summary
+        summary: The summary text to validate.
 
     Returns:
-        bool: True if valid summary else False
-    """
+        True if the summary is valid, False otherwise.
 
+    Note:
+        This validation may not catch all invalid summaries, such as
+        model refusals or explanations of why content cannot be summarized.
+    """
     # Get all SummaryError values
     error_values = [error.value for error in SummaryError]
 
@@ -53,19 +72,22 @@ def is_valid_summary(summary: str) -> bool:
 def compute_hallucination_rate(
         metrics_df: pd.DataFrame, threshold=0.5
     ) -> float:
-    """
-    Computes hallucination rate for valid summaries with default threshold of 
-    0.5. If factual conistancy rate returns -1.0 this also returns -1.0. 
-    -1.0 means there were no valid summaries in metrics_df.
+    """Compute the hallucination rate for valid summaries.
+
+    Calculates the proportion of valid summaries that are classified as
+    hallucinated based on the HHEM score threshold. Hallucination rate
+    is the complement of factual consistency rate.
 
     Args:
-        metrics_df (pd.DataFrame): metrics dataframe
-        threshold (float): confidence threshold for positive result
+        metrics_df: DataFrame containing judgment data with HHEM scores
+            and validity flags.
+        threshold: HHEM score threshold for classifying a summary as
+            factually consistent. Defaults to 0.5.
 
     Returns:
-        float: hallucination rate
+        Hallucination rate as a float between 0.0 and 1.0, or -1.0 if
+        there are no valid summaries in the DataFrame.
     """
-
     fcr = compute_factual_consistancy_rate(
         metrics_df, threshold=threshold
     )
@@ -78,18 +100,22 @@ def compute_hallucination_rate(
 def compute_factual_consistancy_rate(
         metrics_df: pd.DataFrame, threshold=0.5
     ) -> float:
-    """
-    Computes factual consistancy rate for valid summaries with default threshold
-    of 0.5. Assigned a value of -1.0 when metrics_df has no valid summaries.
+    """Compute the factual consistency rate for valid summaries.
+
+    Calculates the proportion of valid summaries with HHEM scores at or
+    above the specified threshold, indicating factual consistency with
+    the source document.
 
     Args:
-        metrics_df (pd.DataFrame): metrics dataframe
-        threshold (float): confidence threshold for positive result
+        metrics_df: DataFrame containing judgment data with HHEM scores
+            and validity flags.
+        threshold: HHEM score threshold for classifying a summary as
+            factually consistent. Defaults to 0.5.
 
     Returns:
-        float: factual consistancy rate
+        Factual consistency rate as a float between 0.0 and 1.0, or -1.0
+        if there are no valid summaries in the DataFrame.
     """
-
     valid_summs_df = metrics_df[metrics_df[BasicJudgment.Keys.IS_VALID]]
     if valid_summs_df.empty:
         return -1.0
@@ -103,21 +129,36 @@ def compute_factual_consistancy_rate(
     return factual_consistancy_rate
 
 def compute_confidence_interval(metrics_df: pd.DataFrame) -> float:
-    """
-    Not defined yet, gives a dummy value for now.
+    """Compute the confidence interval for hallucination rate.
+
+    Placeholder function for computing statistical confidence intervals
+    around the hallucination rate metric.
+
+    Args:
+        metrics_df: DataFrame containing judgment data.
+
+    Returns:
+        Confidence interval value, currently returns -0.01 as a placeholder.
+
+    Todo:
+        Implement proper confidence interval calculation using binomial
+        proportion confidence interval or bootstrap methods.
     """
     return -0.01
 
 def compute_answer_rate(metrics_df: pd.DataFrame) -> float:
-    """
-    Computes the the rate of valid summaries. Returns -1.0 if there are no valid
-    summaries in metrics_df.
+    """Compute the answer rate (proportion of valid summaries).
+
+    Calculates the proportion of summaries that pass validity checks,
+    indicating the model successfully produced a substantive response
+    rather than an error or refusal.
 
     Args:
-        metrics_df (pd.DataFrame): metrics dataframe
+        metrics_df: DataFrame containing judgment data with validity flags.
 
     Returns:
-        float: answer rate
+        Answer rate as a float between 0.0 and 1.0, or -1.0 if the
+        validity column is empty.
     """
     if metrics_df[BasicJudgment.Keys.IS_VALID].empty:
         return -1.0
@@ -125,17 +166,19 @@ def compute_answer_rate(metrics_df: pd.DataFrame) -> float:
     return answer_rate
 
 def compute_avg_word_count(metrics_df: pd.DataFrame) -> float:
-    """
-    Computes average number of words in a summary for valid summaries only.
-    Returns -1.0 if there are no valid summaries.
+    """Compute the average word count for valid summaries.
+
+    Calculates the mean word count across all summaries that pass
+    validity checks, providing insight into summary verbosity.
 
     Args:
-        metrics_df (pd.DataFrame): metrics dataframe
+        metrics_df: DataFrame containing judgment data with word counts
+            and validity flags.
 
     Returns:
-        float: Average number of words in a summary
+        Average word count as a float, or -1.0 if there are no valid
+        summaries in the DataFrame.
     """
-
     valid_summs_df = metrics_df[metrics_df[BasicJudgment.Keys.IS_VALID]]
     if valid_summs_df.empty:
         return -1.0
@@ -143,8 +186,22 @@ def compute_avg_word_count(metrics_df: pd.DataFrame) -> float:
     return avg_word_count
 
 def clean_string(s: str) -> str:
-    """
-    Clean up the string to improve HHEM's performance.
+    """Clean and normalize text for improved HHEM performance.
+
+    Applies preprocessing steps to standardize text input before
+    hallucination detection. Currently performs basic whitespace
+    trimming, with additional cleaning steps commented out for
+    potential future use.
+
+    Args:
+        s: The input string to clean.
+
+    Returns:
+        The cleaned and normalized string.
+
+    Note:
+        Additional cleaning options (citation removal, bracket handling,
+        punctuation normalization) are available but currently disabled.
     """
     s = s.strip()
     # remove citations in the form of [1], [2], etc.
