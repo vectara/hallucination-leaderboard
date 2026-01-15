@@ -1,3 +1,25 @@
+"""TII UAE (Falcon) model implementations for hallucination evaluation.
+
+This module provides the LLM implementation for Technology Innovation Institute's
+Falcon model family. Currently a stub implementation that defines the interface
+but requires completion for full functionality.
+
+Classes:
+    TiiuaeConfig: Configuration model for TII UAE model settings.
+    TiiuaeSummary: Output model for TII UAE summarization results.
+    ClientMode: Enum for API client execution modes.
+    LocalMode: Enum for local model execution modes.
+    TiiuaeLLM: Main LLM class implementing AbstractLLM for TII UAE models.
+
+Attributes:
+    COMPANY: Provider identifier string ("tiiuae").
+    client_mode_group: Mapping of models to supported API client modes.
+    local_mode_group: Mapping of models to local execution modes (empty).
+
+Note:
+    This implementation is a stub and requires completion for full functionality.
+"""
+
 import os
 from typing import Literal
 from enum import Enum, auto
@@ -7,7 +29,24 @@ from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "tiiuae"
+"""str: Provider identifier used for API key lookup and model registration."""
+
+
 class TiiuaeConfig(BasicLLMConfig):
+    """Configuration model for TII UAE Falcon models.
+
+    Extends BasicLLMConfig with TII UAE-specific settings for model selection
+    and execution mode configuration. Supports the Falcon model family.
+
+    Attributes:
+        company: Provider identifier, fixed to "tiiuae".
+        model_name: Name of the Falcon model variant to use. Currently supports
+            falcon-7b-instruct.
+        date_code: Optional version/date identifier for the model.
+        execution_mode: Where to run inference ("api", "cpu", or "gpu").
+        endpoint: API endpoint type ("chat" for conversational format).
+    """
+
     company: Literal["tiiuae"] = "tiiuae"
     model_name: Literal[
         "falcon-7b-instruct",
@@ -17,40 +56,108 @@ class TiiuaeConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat"
 
 class TiiuaeSummary(BasicSummary):
+    """Output model for TII UAE summarization results.
+
+    Extends BasicSummary with endpoint tracking for result provenance.
+
+    Attributes:
+        endpoint: The API endpoint type used for generation, if applicable.
+    """
+
     endpoint: Literal["chat", "response"] | None = None
 
     class Config:
+        """Pydantic configuration to ignore extra fields during parsing."""
+
         extra = "ignore"
 
 class ClientMode(Enum):
+    """Execution modes for API client inference.
+
+    Defines how the model should be invoked when using an API client.
+
+    Attributes:
+        CHAT_DEFAULT: Use the chat/conversational API endpoint.
+        RESPONSE_DEFAULT: Use the completion/response API endpoint.
+        UNDEFINED: Mode not defined or not supported.
+    """
+
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
+
 
 class LocalMode(Enum):
+    """Execution modes for local model inference.
+
+    Defines how the model should be invoked when running locally.
+    Currently unused as TII UAE model support is not fully implemented.
+
+    Attributes:
+        CHAT_DEFAULT: Use chat template formatting for input.
+        RESPONSE_DEFAULT: Use direct completion without chat template.
+        UNDEFINED: Mode not defined or not supported.
+    """
+
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+# client_mode_group: Mapping of model names to their supported API client modes.
+# Currently contains a placeholder entry. Requires implementation for actual
+# Falcon model support.
 client_mode_group = {
     "MODEL_NAME": {
         "chat": ClientMode.UNDEFINED
     }
 }
 
+# local_mode_group: Mapping of model names to their supported local execution modes.
+# Empty dict indicates TII UAE models do not currently support local execution.
 local_mode_group = {}
 
 class TiiuaeLLM(AbstractLLM):
+    """LLM implementation for TII UAE Falcon models.
+
+    Provides text summarization using Technology Innovation Institute's Falcon
+    model family. This is currently a stub implementation that requires
+    completion for full functionality.
+
+    Attributes:
+        endpoint: The API endpoint type (e.g., "chat").
+        execution_mode: Where inference runs ("api", "cpu", or "gpu").
+        full_config: Complete configuration object for reference.
+
+    Note:
+        The summarize method is not yet implemented and returns empty summary.
     """
-    Class for models from tiiuae
-    """
+
     def __init__(self, config: TiiuaeConfig):
+        """Initialize the TII UAE LLM with the given configuration.
+
+        Args:
+            config: Configuration object specifying model and execution settings.
+        """
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.full_config = config
 
     def summarize(self, prepared_text: str) -> str:
+        """Generate a summary of the provided text.
+
+        Uses the configured Falcon model to generate a condensed summary.
+        Currently a stub implementation that returns an empty summary.
+
+        Args:
+            prepared_text: The preprocessed text to summarize.
+
+        Returns:
+            The generated summary text, or an error placeholder (stub implementation).
+
+        Raises:
+            Exception: If neither client nor local_model is initialized.
+        """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
@@ -67,6 +174,16 @@ class TiiuaeLLM(AbstractLLM):
         return summary
 
     def setup(self):
+        """Initialize the API client placeholder for TII UAE model inference.
+
+        Validates that the model supports API execution and checks for the
+        required API key in the environment. Currently sets client to None
+        as a placeholder for future implementation.
+
+        Raises:
+            AssertionError: If the API key environment variable is not set.
+            Exception: If the model does not support the configured execution mode.
+        """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
@@ -87,10 +204,20 @@ class TiiuaeLLM(AbstractLLM):
             pass
 
     def teardown(self):
+        """Clean up resources after inference is complete.
+
+        Releases any held resources from the client or local model.
+        Currently a no-op as this is a stub implementation.
+        """
         if self.client:
             pass
         elif self.local_model:
             pass
 
     def close_client(self):
+        """Close the API client connection.
+
+        Currently a no-op as this is a stub implementation without
+        an active client connection.
+        """
         pass
