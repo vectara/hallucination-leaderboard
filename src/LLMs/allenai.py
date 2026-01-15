@@ -1,3 +1,22 @@
+"""Allen AI (OLMo) model implementations for hallucination evaluation.
+
+This module provides the LLM implementation for Allen AI's OLMo model family,
+supporting multiple execution modes including API inference (via HuggingFace
+or OpenRouter), local GPU inference, and vLLM for high-throughput serving.
+
+Classes:
+    AllenAIConfig: Configuration model for OLMo model settings.
+    AllenAISummary: Output model for OLMo summarization results.
+    ClientMode: Enum for API client execution modes.
+    LocalMode: Enum for local model execution modes.
+    AllenAILLM: Main LLM class implementing AbstractLLM for OLMo models.
+
+Attributes:
+    COMPANY: Provider identifier string ("allenai").
+    client_mode_group: Mapping of models to supported API client modes.
+    local_mode_group: Mapping of models to supported local execution modes.
+"""
+
 import os
 import torch
 from typing import Literal
@@ -15,8 +34,23 @@ from openai import OpenAI
 # from vllm.config import CompilationConfig, CompilationMode
 
 COMPANY = "allenai"
+"""str: Provider identifier used for model path construction and registration."""
 
 class AllenAIConfig(BasicLLMConfig):
+    """Configuration model for Allen AI OLMo models.
+
+    Extends BasicLLMConfig with OLMo-specific settings for model selection
+    and execution mode configuration. Supports multiple execution backends.
+
+    Attributes:
+        company: Provider identifier, fixed to "allenai".
+        model_name: Name of the OLMo model variant to use. Includes both
+            reasoning models (Think) and instruction-tuned models (Instruct).
+        date_code: Optional version/date identifier inserted into model name.
+        endpoint: Inference endpoint type ("chat" for conversational format).
+        execution_mode: Where to run inference ("api", "gpu", "cpu", or "vllm").
+    """
+
     company: Literal["allenai"] = "allenai"
     model_name: Literal[
         "Olmo-3-32B-Think",
@@ -32,25 +66,66 @@ class AllenAIConfig(BasicLLMConfig):
     execution_mode: Literal["api", "gpu", "cpu", "vllm"] = "api"
 
 class AllenAISummary(BasicSummary):
+    """Output model for Allen AI OLMo summarization results.
+
+    Extends BasicSummary with endpoint and execution mode tracking
+    for result provenance.
+
+    Attributes:
+        endpoint: The API endpoint type used for generation, if applicable.
+        execution_mode: The execution backend used for generation.
+    """
+
     endpoint: Literal["chat", "response"] | None = None
     execution_mode: Literal["api", "gpu", "cpu", "vllm"] | None = None
 
     class Config:
+        """Pydantic configuration to ignore extra fields during parsing."""
+
         extra = "ignore"
 
 class ClientMode(Enum):
+    """Execution modes for API client inference.
+
+    Defines how the model should be invoked when using an API client
+    (HuggingFace Inference or OpenRouter).
+
+    Attributes:
+        CHAT_DEFAULT: Standard chat completion via HuggingFace Inference API.
+        CHAT_REASONING: Chat completion with reasoning enabled (OpenRouter).
+        RESPONSE_DEFAULT: Use the completion/response API endpoint.
+        UNDEFINED: Mode not defined or not supported.
+    """
+
     CHAT_DEFAULT = auto()
     CHAT_REASONING = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+
 class LocalMode(Enum):
+    """Execution modes for local model inference.
+
+    Defines how the model should be invoked when running locally
+    via HuggingFace transformers or vLLM.
+
+    Attributes:
+        CHAT_DEFAULT: Standard chat template inference on single GPU.
+        CHAT_MGPU: Multi-GPU inference with automatic device mapping.
+        CHAT_VLLM: High-throughput inference via vLLM engine.
+        RESPONSE_DEFAULT: Direct completion without chat template.
+        UNDEFINED: Mode not defined or not supported for this model.
+    """
+
     CHAT_DEFAULT = auto()
     CHAT_MGPU = auto()
     CHAT_VLLM = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+# client_mode_group: Mapping of model names to their supported API client modes.
+# Each model maps endpoint types to ClientMode enum values and specifies the
+# API provider ("hf" for HuggingFace, "openrouter" for OpenRouter).
 client_mode_group = {
     "Olmo-3-32B-Think": {
         "chat": ClientMode.CHAT_REASONING,
@@ -58,6 +133,9 @@ client_mode_group = {
     },
 }
 
+# local_mode_group: Mapping of model names to their supported local execution modes.
+# Each model maps endpoint types to LocalMode enum values indicating how to
+# load and invoke the model locally.
 local_mode_group = {
     "Olmo-3-32B-Think": {
         "chat": LocalMode.CHAT_VLLM,
@@ -74,12 +152,28 @@ local_mode_group = {
 }
 
 class AllenAILLM(AbstractLLM):
-    """
-    Class for models from AllenAI
+    """LLM implementation for Allen AI OLMo models.
+
+    Provides text summarization using Allen AI's OLMo model family via multiple
+    backends: API inference (HuggingFace or OpenRouter), local GPU inference
+    with HuggingFace transformers, or high-throughput vLLM serving.
 
     Attributes:
+        endpoint: The inference endpoint type (e.g., "chat").
+        execution_mode: Where inference runs ("api", "gpu", "cpu", or "vllm").
+        device: PyTorch device for local inference.
+        model_fullname: Full model path including company prefix.
     """
+
     def __init__(self, config: AllenAIConfig):
+        """Initialize the Allen AI LLM with the given configuration.
+
+        Handles OLMo's special naming convention where the date code is
+        inserted in the middle of the model name rather than at the end.
+
+        Args:
+            config: Configuration object specifying model and execution settings.
+        """
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
@@ -91,6 +185,21 @@ class AllenAILLM(AbstractLLM):
         self.model_fullname = f"{COMPANY}/{self.model_fullname}"
 
     def summarize(self, prepared_text: str) -> str:
+        """Generate a summary of the provided text.
+
+        Uses the configured OLMo model to generate a condensed summary.
+        Supports multiple inference modes: API client (HuggingFace/OpenRouter),
+        local transformers, multi-GPU, and vLLM.
+
+        Args:
+            prepared_text: The preprocessed text to summarize.
+
+        Returns:
+            The generated summary text, or an error placeholder if generation fails.
+
+        Raises:
+            Exception: If neither client nor local_model is initialized.
+        """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
@@ -167,6 +276,18 @@ class AllenAILLM(AbstractLLM):
         return summary
 
     def setup(self):
+        """Initialize the model for inference based on execution mode.
+
+        For API mode, creates either a HuggingFace InferenceClient or OpenAI
+        client (for OpenRouter) depending on the provider configuration.
+        For vLLM mode, initializes a vLLM LLM engine with tensor parallelism.
+        For GPU/CPU mode, loads the model via HuggingFace transformers with
+        automatic device mapping and memory optimization.
+
+        Raises:
+            AssertionError: If the required API key environment variable is not set.
+            Exception: If the model does not support the configured execution mode.
+        """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 if self.client_mode_group[self.model_name]["provider"] == "hf":
@@ -239,10 +360,19 @@ class AllenAILLM(AbstractLLM):
                 ))
 
     def teardown(self):
+        """Clean up resources after inference is complete.
+
+        Releases any held resources from the client or local model.
+        Currently a no-op as cleanup is handled by garbage collection.
+        """
         if self.client:
             return
         elif self.local_model:
             return
 
     def close_client(self):
+        """Close any active API client connections.
+
+        Currently a no-op as the API clients do not require explicit cleanup.
+        """
         pass
