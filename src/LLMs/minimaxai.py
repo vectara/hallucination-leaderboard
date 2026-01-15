@@ -1,3 +1,22 @@
+"""MiniMax AI model implementations for hallucination evaluation.
+
+This module provides the LLM implementation for MiniMax AI's model family,
+supporting API-based inference via the Fireworks AI platform using an
+OpenAI-compatible client.
+
+Classes:
+    MiniMaxAIConfig: Configuration model for MiniMax AI model settings.
+    MiniMaxAISummary: Output model for MiniMax AI summarization results.
+    ClientMode: Enum for API client execution modes.
+    LocalMode: Enum for local model execution modes.
+    MiniMaxAILLM: Main LLM class implementing AbstractLLM for MiniMax AI models.
+
+Attributes:
+    COMPANY: Provider identifier string ("MiniMaxAI").
+    client_mode_group: Mapping of models to supported API client modes.
+    local_mode_group: Mapping of models to local execution modes.
+"""
+
 import os
 from typing import Literal
 from openai import OpenAI
@@ -7,10 +26,24 @@ from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 from enum import Enum, auto
 
-# TODO: IMPORTS IF NEEDED
-
 COMPANY = "MiniMaxAI"
+"""str: Provider identifier used for model registration."""
+
+
 class MiniMaxAIConfig(BasicLLMConfig):
+    """Configuration model for MiniMax AI models.
+
+    Extends BasicLLMConfig with MiniMax AI-specific settings for model selection
+    and execution mode configuration.
+
+    Attributes:
+        company: Provider identifier, fixed to "MiniMaxAI".
+        model_name: Name of the MiniMax AI model variant to use.
+        date_code: Optional version/date identifier for the model.
+        execution_mode: Where to run inference ("api", "cpu", or "gpu").
+        endpoint: API endpoint type ("chat" for conversational format).
+    """
+
     company: Literal["MiniMaxAI"] = "MiniMaxAI"
     model_name: Literal[
         "minimax-m2p1",
@@ -20,29 +53,67 @@ class MiniMaxAIConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat"
 
 class MiniMaxAISummary(BasicSummary):
+    """Output model for MiniMax AI summarization results.
+
+    Extends BasicSummary with endpoint tracking for result provenance.
+
+    Attributes:
+        endpoint: The API endpoint type used for generation, if applicable.
+    """
+
     endpoint: Literal["chat", "response"] | None = None
 
     class Config:
+        """Pydantic configuration to ignore extra fields during parsing."""
+
         extra = "ignore"
 
 class ClientMode(Enum):
+    """Execution modes for API client inference.
+
+    Defines how the model should be invoked when using the Fireworks AI
+    platform with an OpenAI-compatible client.
+
+    Attributes:
+        CHAT_DEFAULT: Standard chat completion endpoint.
+        RESPONSE_DEFAULT: Use the completion/response API endpoint.
+        UNDEFINED: Mode not defined or not supported.
+        M2P1: MiniMax M2P1 model via Fireworks AI.
+    """
+
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
     M2P1 = auto()
 
+
 class LocalMode(Enum):
+    """Execution modes for local model inference.
+
+    Defines how the model should be invoked when running locally.
+
+    Attributes:
+        CHAT_DEFAULT: Use chat template formatting for input.
+        RESPONSE_DEFAULT: Use direct completion without chat template.
+        UNDEFINED: Mode not defined or not supported.
+    """
+
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+# client_mode_group: Mapping of model names to their supported API client modes.
+# Each model maps endpoint types to ClientMode enum values and includes an
+# api_type field indicating which backend platform to use (e.g., "fireworks").
 client_mode_group = {
-    "minimax-m2p1": { 
+    "minimax-m2p1": {
         "chat": ClientMode.M2P1,
         "api_type": "fireworks"
     }
 }
 
+# local_mode_group: Mapping of model names to their supported local execution modes.
+# Contains placeholder entry; local execution not fully implemented.
 local_mode_group = {
     "MODEL_NAME": {
         "chat": LocalMode.UNDEFINED
@@ -50,15 +121,44 @@ local_mode_group = {
 } 
 
 class MiniMaxAILLM(AbstractLLM):
+    """LLM implementation for MiniMax AI models.
+
+    Provides text summarization using MiniMax AI's model family via the
+    Fireworks AI platform. Uses an OpenAI-compatible client for API calls.
+
+    Attributes:
+        endpoint: The API endpoint type (e.g., "chat").
+        execution_mode: Where inference runs ("api", "cpu", or "gpu").
+        full_config: Complete configuration object for reference.
     """
-    """
+
     def __init__(self, config: MiniMaxAIConfig):
+        """Initialize the MiniMax AI LLM with the given configuration.
+
+        Args:
+            config: Configuration object specifying model and execution settings.
+        """
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.full_config = config
 
     def summarize(self, prepared_text: str) -> str:
+        """Generate a summary of the provided text.
+
+        Uses the configured MiniMax AI model via the Fireworks AI platform
+        to generate a condensed summary. Routes through the OpenAI-compatible
+        chat completions API.
+
+        Args:
+            prepared_text: The preprocessed text to summarize.
+
+        Returns:
+            The generated summary text, or an error placeholder if generation fails.
+
+        Raises:
+            Exception: If neither client nor local_model is initialized.
+        """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
@@ -90,6 +190,16 @@ class MiniMaxAILLM(AbstractLLM):
         return summary
 
     def setup(self):
+        """Initialize the Fireworks AI client for MiniMax model inference.
+
+        Creates an OpenAI-compatible client instance configured for the
+        Fireworks AI platform using the API key from the FIREWORKS_API_KEY
+        environment variable.
+
+        Raises:
+            AssertionError: If the API key environment variable is not set.
+            Exception: If the model does not support the configured execution mode.
+        """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 if client_mode_group[self.model_name]["api_type"] == "fireworks":
@@ -122,10 +232,20 @@ class MiniMaxAILLM(AbstractLLM):
                 )
 
     def teardown(self):
+        """Clean up resources after inference is complete.
+
+        Releases any held resources from the client or local model.
+        Currently a no-op as cleanup is handled automatically.
+        """
         if self.client:
             pass
         elif self.local_model:
             pass
 
     def close_client(self):
+        """Close the Fireworks AI client connection.
+
+        Currently a no-op as the OpenAI-compatible client does not require
+        explicit cleanup.
+        """
         pass
