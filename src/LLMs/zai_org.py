@@ -1,3 +1,23 @@
+"""Zhipu AI (GLM) model implementations for hallucination evaluation.
+
+This module provides the LLM implementation for Zhipu AI's GLM model family,
+supporting API-based inference via multiple backends including Together AI,
+Fireworks AI, and DeepInfra. Includes support for GLM-4.5, GLM-4.6, and
+GLM-4.7 series models.
+
+Classes:
+    ZhipuAIConfig: Configuration model for Zhipu AI model settings.
+    ZhipuAISummary: Output model for Zhipu AI summarization results.
+    ClientMode: Enum for API client execution modes.
+    LocalMode: Enum for local model execution modes.
+    ZhipuAILLM: Main LLM class implementing AbstractLLM for Zhipu AI models.
+
+Attributes:
+    COMPANY: Provider identifier string ("zai-org").
+    client_mode_group: Mapping of models to supported API client modes and backends.
+    local_mode_group: Mapping of models to local execution modes (empty).
+"""
+
 import os
 from typing import Literal
 from together import Together
@@ -10,12 +30,31 @@ from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 COMPANY = "zai-org"
+"""str: Provider identifier used for model path construction and registration."""
+
+
 class ZhipuAIConfig(BasicLLMConfig):
-    company: Literal["zai-org"] = "zai-org" 
+    """Configuration model for Zhipu AI GLM models.
+
+    Extends BasicLLMConfig with Zhipu AI-specific settings for model selection
+    and API configuration. Supports GLM models via multiple backend providers
+    including Together AI, Fireworks AI, and DeepInfra.
+
+    Attributes:
+        company: Provider identifier, fixed to "zai-org".
+        model_name: Name of the GLM model variant to use. Includes GLM-4.5
+            (via Together), glm-4p5/4p7 (via Fireworks), GLM-4.6 (via DeepInfra),
+            and glm-4-9b-chat for local execution.
+        date_code: Optional version/date identifier for the model.
+        execution_mode: Where to run inference, currently only "api" supported.
+        endpoint: API endpoint type ("chat" for conversational format).
+    """
+
+    company: Literal["zai-org"] = "zai-org"
     model_name: Literal[
-        "GLM-4.5-AIR-FP8", # Together
-        "glm-4p5", # Fireworks but using OpenAI
-        "glm-4p7", # Fireworks but using OpenAI
+        "GLM-4.5-AIR-FP8",  # Together
+        "glm-4p5",  # Fireworks but using OpenAI
+        "glm-4p7",  # Fireworks but using OpenAI
         "glm-4-9b-chat",
         "GLM-4.6",
         "GLM-4.7"
@@ -25,12 +64,37 @@ class ZhipuAIConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat"
 
 class ZhipuAISummary(BasicSummary):
+    """Output model for Zhipu AI summarization results.
+
+    Extends BasicSummary with endpoint tracking for result provenance.
+
+    Attributes:
+        endpoint: The API endpoint type used for generation, if applicable.
+    """
+
     endpoint: Literal["chat", "response"] | None = None
 
     class Config:
+        """Pydantic configuration to ignore extra fields during parsing."""
+
         extra = "ignore"
 
 class ClientMode(Enum):
+    """Execution modes for API client inference.
+
+    Defines how the model should be invoked when using the various backend
+    providers (Together AI, Fireworks AI, DeepInfra).
+
+    Attributes:
+        CHAT_DEFAULT: Standard chat completion mode.
+        GLM_4P5_AIR_FP8: GLM-4.5-AIR-FP8 via Together AI.
+        GLM_4P5: glm-4p5 via Fireworks AI with OpenAI-compatible client.
+        GLM_4P6: GLM-4.6 via DeepInfra with OpenAI-compatible client.
+        GLM_4P7: glm-4p7 via Fireworks AI with OpenAI-compatible client.
+        RESPONSE_DEFAULT: Use the completion/response API endpoint.
+        UNDEFINED: Mode not defined or not supported.
+    """
+
     CHAT_DEFAULT = auto()
     GLM_4P5_AIR_FP8 = auto()
     GLM_4P5 = auto()
@@ -39,21 +103,36 @@ class ClientMode(Enum):
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+
 class LocalMode(Enum):
+    """Execution modes for local model inference.
+
+    Defines how the model should be invoked when running locally.
+    Currently unused as Zhipu AI models are accessed via API only.
+
+    Attributes:
+        CHAT_DEFAULT: Use chat template formatting for input.
+        RESPONSE_DEFAULT: Use direct completion without chat template.
+        UNDEFINED: Mode not defined or not supported.
+    """
+
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+# client_mode_group: Mapping of model names to their supported API client modes.
+# Each model maps endpoint types to ClientMode enum values and includes an api_type
+# field indicating the backend provider (together, fireworks, or deepinfra).
 client_mode_group = {
-    "GLM-4.5-AIR-FP8":{
+    "GLM-4.5-AIR-FP8": {
         "chat": ClientMode.GLM_4P5_AIR_FP8,
         "api_type": "together"
     },
-    "glm-4p5":{
+    "glm-4p5": {
         "chat": ClientMode.GLM_4P5,
         "api_type": "fireworks"
     },
-    "glm-4p7":{
+    "glm-4p7": {
         "chat": ClientMode.GLM_4P7,
         "api_type": "fireworks"
     },
@@ -63,19 +142,51 @@ client_mode_group = {
     }
 }
 
+# local_mode_group: Mapping of model names to their supported local execution modes.
+# Empty dict indicates Zhipu AI models are accessed via API only.
 local_mode_group = {}
 
 class ZhipuAILLM(AbstractLLM):
+    """LLM implementation for Zhipu AI GLM models.
+
+    Provides text summarization using Zhipu AI's GLM model family via multiple
+    backend providers. Supports Together AI for GLM-4.5, Fireworks AI for
+    glm-4p5/4p7 variants, and DeepInfra for GLM-4.6. Each backend uses either
+    the Together SDK or an OpenAI-compatible client.
+
+    Attributes:
+        endpoint: The API endpoint type (e.g., "chat").
+        execution_mode: Where inference runs (currently only "api" supported).
+        full_config: Complete configuration object for reference.
     """
-    Class for models from z.ai
-    """
+
     def __init__(self, config: ZhipuAIConfig):
+        """Initialize the Zhipu AI LLM with the given configuration.
+
+        Args:
+            config: Configuration object specifying model and API settings.
+        """
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.full_config = config
 
     def summarize(self, prepared_text: str) -> str:
+        """Generate a summary of the provided text.
+
+        Uses the configured GLM model via the appropriate backend provider
+        to generate a condensed summary. Routes requests to Together AI,
+        Fireworks AI, or DeepInfra based on the model's api_type configuration.
+
+        Args:
+            prepared_text: The preprocessed text to summarize.
+
+        Returns:
+            The generated summary text, or an error placeholder if generation fails.
+
+        Raises:
+            Exception: If neither client nor local_model is initialized.
+        """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
@@ -134,6 +245,17 @@ class ZhipuAILLM(AbstractLLM):
         return summary
 
     def setup(self):
+        """Initialize the appropriate API client for model inference.
+
+        Creates a client instance based on the model's api_type configuration:
+        - Together AI: Uses the Together SDK with TOGETHER_API_KEY
+        - Fireworks AI: Uses OpenAI-compatible client with FIREWORKS_API_KEY
+        - DeepInfra: Uses OpenAI-compatible client with DEEPINFRA_API_KEY
+
+        Raises:
+            AssertionError: If the required API key environment variable is not set.
+            Exception: If the model does not support the configured execution mode.
+        """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 if client_mode_group[self.model_name]["api_type"] == "together":
@@ -168,10 +290,20 @@ class ZhipuAILLM(AbstractLLM):
             pass
 
     def teardown(self):
+        """Clean up resources after inference is complete.
+
+        Releases any held resources from the client or local model.
+        Currently a no-op as cleanup is handled automatically.
+        """
         if self.client:
             pass
         elif self.local_model:
             pass
 
     def close_client(self):
+        """Close the API client connection.
+
+        Currently a no-op as the Together SDK and OpenAI-compatible clients
+        do not require explicit cleanup.
+        """
         pass
