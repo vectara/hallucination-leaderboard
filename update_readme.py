@@ -1,12 +1,43 @@
+"""README leaderboard auto-updater for the HHEM Leaderboard.
+
+This script regenerates the leaderboard section of the README.md file with
+current evaluation results. It loads aggregated LLM statistics, generates
+a ranked markdown table, creates a visualization bar chart, and updates
+the README between designated HTML comment tags.
+
+The script is typically run after completing an evaluation pipeline to
+publish updated results. It filters for models with >95% answer rate
+when selecting the top 25 for the visualization.
+
+Output Files:
+    - img/top25_hallucination_rates_{date}.png: Bar chart visualization
+    - README.md: Updated with new leaderboard table and plot reference
+
+Input Files:
+    - output/stats_all_LLMs.json: Aggregated statistics from all evaluated LLMs
+    - img/vectara_logo_official.png: Logo overlay for the visualization
+
+Usage:
+    Run from the repository root directory::
+
+        python update_readme.py
+
+Note:
+    The README.md must contain <!-- LEADERBOARD_START --> and
+    <!-- LEADERBOARD_END --> tags to mark the update region. If tags
+    are missing, the leaderboard section is appended to the end.
+"""
+
+import colorsys
 import json
 from datetime import datetime, timezone
-import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-import numpy as np
-from PIL import Image
-import colorsys
-import pandas as pd
 from io import StringIO
+
+import matplotlib.cm as cm
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from PIL import Image
 
 # === Load leaderboard data ===
 with open("output/stats_all_LLMs.json", "r") as f:
@@ -39,6 +70,20 @@ for _, row in df_sorted.iterrows():
 
 # === Generate Plot ===
 def slightly_desaturate(color, factor=0.8):
+    """Reduce the saturation of an RGBA color for softer visualization.
+
+    Converts the color to HLS color space, scales the saturation component,
+    and converts back to RGB. Used to create more visually appealing bar
+    colors from the turbo colormap.
+
+    Args:
+        color: RGBA tuple with values in range [0, 1] for each component.
+        factor: Saturation multiplier. Values < 1.0 reduce saturation,
+            values > 1.0 increase it. Defaults to 0.8.
+
+    Returns:
+        RGBA tuple with adjusted saturation, alpha unchanged.
+    """
     r, g, b, a = color
     h, l, s = colorsys.rgb_to_hls(r, g, b)
     r_d, g_d, b_d = colorsys.hls_to_rgb(h, l, s * factor)
