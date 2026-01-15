@@ -1,3 +1,21 @@
+"""Baidu (ERNIE) model implementations for hallucination evaluation.
+
+This module provides the LLM implementation for Baidu's ERNIE model family,
+supporting API-based inference via the HuggingFace Inference API.
+
+Classes:
+    BaiduConfig: Configuration model for ERNIE model settings.
+    BaiduSummary: Output model for ERNIE summarization results.
+    ClientMode: Enum for API client execution modes.
+    LocalMode: Enum for local model execution modes (currently unused).
+    BaiduLLM: Main LLM class implementing AbstractLLM for ERNIE models.
+
+Attributes:
+    COMPANY: Provider identifier string ("baidu").
+    client_mode_group: Mapping of models to supported API client modes.
+    local_mode_group: Mapping of models to local execution modes (empty).
+"""
+
 import os
 from typing import Literal
 from enum import Enum, auto
@@ -9,8 +27,22 @@ from .. data_model import ModelInstantiationError, SummaryError
 from huggingface_hub import InferenceClient
 
 COMPANY = "baidu"
+"""str: Provider identifier used for model path construction and registration."""
 
 class BaiduConfig(BasicLLMConfig):
+    """Configuration model for Baidu ERNIE models.
+
+    Extends BasicLLMConfig with ERNIE-specific settings for model selection
+    and API configuration.
+
+    Attributes:
+        company: Provider identifier, fixed to "baidu".
+        model_name: Name of the ERNIE model variant to use.
+        execution_mode: Where to run inference, currently only "api" supported.
+        date_code: Optional version/date identifier for the model.
+        endpoint: API endpoint type ("chat" for conversational format).
+    """
+
     company: Literal["baidu"] = "baidu"
     model_name: Literal[
         "ERNIE-4.5-VL-28B-A3B-Thinking"
@@ -20,46 +52,110 @@ class BaiduConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat"
 
 class BaiduSummary(BasicSummary):
+    """Output model for Baidu ERNIE summarization results.
+
+    Extends BasicSummary with endpoint tracking for result provenance.
+
+    Attributes:
+        endpoint: The API endpoint type used for generation, if applicable.
+    """
+
     endpoint: Literal["chat", "response"] | None = None
 
     class Config:
+        """Pydantic configuration to ignore extra fields during parsing."""
+
         extra = "ignore"
 
 class ClientMode(Enum):
+    """Execution modes for HuggingFace Inference API client.
+
+    Defines how the model should be invoked when using the HuggingFace
+    Inference API.
+
+    Attributes:
+        CHAT_DEFAULT: Chat completion with temperature and max_tokens parameters.
+        CHAT_NO_TEMP_NO_TOKENS: Chat completion without generation parameters.
+        RESPONSE_DEFAULT: Use the completion/response API endpoint.
+        UNDEFINED: Mode not defined or not supported.
+    """
+
     CHAT_DEFAULT = auto()
     CHAT_NO_TEMP_NO_TOKENS = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+
 class LocalMode(Enum):
+    """Execution modes for local model inference.
+
+    Defines how the model should be invoked when running locally.
+    Currently unused as ERNIE models only support API inference.
+
+    Attributes:
+        CHAT_DEFAULT: Use chat template formatting for input.
+        RESPONSE_DEFAULT: Use direct completion without chat template.
+        UNDEFINED: Mode not defined or not supported.
+    """
+
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+# client_mode_group: Mapping of model names to their supported API client modes.
+# Each model maps endpoint types to ClientMode enum values indicating how to
+# invoke the HuggingFace Inference API.
 client_mode_group = {
     "ERNIE-4.5-VL-28B-A3B-Thinking": {
         "chat": ClientMode.CHAT_DEFAULT
     },
 }
 
+# local_mode_group: Mapping of model names to their supported local execution modes.
+# Empty dict indicates ERNIE models do not support local execution.
 local_mode_group = {}
 
 
 class BaiduLLM(AbstractLLM):
-    """
-    Class for models from baidu
+    """LLM implementation for Baidu ERNIE models.
+
+    Provides text summarization using Baidu's ERNIE model family via the
+    HuggingFace Inference API. Supports chat-formatted generation with
+    configurable temperature and token limits.
 
     Attributes:
-        client (InferenceClient): client associated with api calls
-        model_name (str): baidu style model name
+        endpoint: The API endpoint type (e.g., "chat").
+        execution_mode: Where inference runs (currently only "api" supported).
+        model_fullname: Full HuggingFace model path (e.g., "baidu/ERNIE-4.5-VL-28B-A3B-Thinking").
     """
+
     def __init__(self, config: BaiduConfig):
+        """Initialize the Baidu LLM with the given configuration.
+
+        Args:
+            config: Configuration object specifying model and API settings.
+        """
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.model_fullname = f"{self.company}/{self.model_name}"
 
     def summarize(self, prepared_text: str) -> str:
+        """Generate a summary of the provided text.
+
+        Uses the configured ERNIE model via the HuggingFace Inference API
+        to generate a condensed summary. Supports both parameterized and
+        default generation modes.
+
+        Args:
+            prepared_text: The preprocessed text to summarize.
+
+        Returns:
+            The generated summary text, or an error placeholder if generation fails.
+
+        Raises:
+            Exception: If neither client nor local_model is initialized.
+        """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
@@ -84,6 +180,15 @@ class BaiduLLM(AbstractLLM):
         return summary
 
     def setup(self):
+        """Initialize the HuggingFace Inference client for ERNIE inference.
+
+        Creates an InferenceClient instance configured for the specified
+        ERNIE model. No API key is required as it uses the HuggingFace
+        Inference API directly.
+
+        Raises:
+            Exception: If the model does not support the configured execution mode.
+        """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 self.client = InferenceClient(model=self.model_fullname)
@@ -97,10 +202,19 @@ class BaiduLLM(AbstractLLM):
             pass
 
     def teardown(self):
+        """Clean up resources after inference is complete.
+
+        Releases any held resources from the client or local model.
+        Currently a no-op as cleanup is handled automatically.
+        """
         if self.client:
             pass
         elif self.local_model:
             pass
 
     def close_client(self):
+        """Close the HuggingFace Inference client connection.
+
+        Currently a no-op as the InferenceClient does not require explicit cleanup.
+        """
         pass
