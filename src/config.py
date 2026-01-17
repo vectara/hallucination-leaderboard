@@ -4,36 +4,36 @@ import os
 
 from . data_model import EvalConfig, BasicLLMConfig
 from . LLMs import (
+  _01AIConfig,
   AnthropicConfig,
+  AntGroupMIConfig,
   AppleConfig,
+  AmazonConfig,
+  AI21LabsConfig,
+  AllenAIConfig,
   BaiduConfig,
-  OpenAIConfig,
-  QwenConfig,
-  XAIConfig,
   CohereConfig,
-  GoogleConfig,
-  MoonshotAIConfig,
+  DatabricksConfig,
   DeepSeekAIConfig,
+  GoogleConfig,
+  IntelConfig,
+  InternLmConfig,
+  IBMGraniteConfig,
+  MoonshotAIConfig,
   MistralAIConfig,
   MetaLlamaConfig,
   MicrosoftConfig,
   MiniMaxAIConfig,
   NvidiaConfig,
-  _01AIConfig,
-  AI21LabsConfig,
-  AllenAIConfig,
-  IBMGraniteConfig,
-  TngTechConfig,
-  AntGroupMIConfig,
-  ZhipuAIConfig,
-  VectaraConfig,
-  AmazonConfig,
-  DatabricksConfig,
-  IntelConfig,
-  InternLmConfig,
-  TiiuaeConfig,
+  OpenAIConfig,
+  PrimeIntellectConfig,
+  QwenConfig,
   SnowflakeConfig,
-  PrimeIntellectConfig
+  TngTechConfig,
+  TiiuaeConfig,
+  XAIConfig,
+  VectaraConfig,
+  ZhipuAIConfig,
 )
 
 """
@@ -90,14 +90,14 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        AI21LabsConfig(**
-          {
-            "model_name": "jamba-mini-2",
-            "date_code": "",
-            "temperature": 0.00,
-            "max_tokens": 4096
-          }
-        ),
+        # AI21LabsConfig(**
+        #   {
+        #     "model_name": "jamba-mini-2",
+        #     "date_code": "",
+        #     "temperature": 0.00,
+        #     "max_tokens": 4096
+        #   }
+        # ),
         # AI21LabsConfig(**
         #   {
         #     "model_name": "jamba-large-1.7",
@@ -221,7 +221,7 @@ Here is the passage:
         # DeepSeekAIConfig(**{"company": "deepseek-ai", "model_name": "DeepSeek-V3.1-Terminus", "temperature": 0.0, "min_throttle_time": 4.0}),
         # GoogleConfig(**{"threads": 3, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
-        # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
+        GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-flash", "temperature": 0.0}),
         # GoogleConfig(**{"company": "google", "model_name": "gemini-1.5-flash-002", "temperature": 0.0}),
