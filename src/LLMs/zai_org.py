@@ -57,7 +57,8 @@ class ZhipuAIConfig(BasicLLMConfig):
         "glm-4p7",  # Fireworks but using OpenAI
         "glm-4-9b-chat",
         "GLM-4.6",
-        "GLM-4.7"
+        "GLM-4.7",
+        "glm-4p7-flash"
     ]
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
@@ -100,6 +101,7 @@ class ClientMode(Enum):
     GLM_4P5 = auto()
     GLM_4P6 = auto()
     GLM_4P7 = auto()
+    GLM_4P7_FLASH = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
@@ -130,6 +132,10 @@ client_mode_group = {
     },
     "glm-4p5": {
         "chat": ClientMode.GLM_4P5,
+        "api_type": "fireworks"
+    },
+    "glm-4p7-flash": {
+        "chat": ClientMode.GLM_4P7_FLASH,
         "api_type": "fireworks"
     },
     "glm-4p7": {
@@ -213,6 +219,20 @@ class ZhipuAILLM(AbstractLLM):
 
                     summary = response.choices[0].message.content
                 case ClientMode.GLM_4P7:
+                    self.model_fullname = f"accounts/fireworks/models/{self.model_name}"
+                    response = self.client.chat.completions.create(
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": prepared_text,
+                            }
+                        ],
+                        model=self.model_fullname,
+                    )
+
+                    summary = response.choices[0].message.content
+
+                case ClientMode.GLM_4P7_FLASH:
                     self.model_fullname = f"accounts/fireworks/models/{self.model_name}"
                     response = self.client.chat.completions.create(
                         messages=[
