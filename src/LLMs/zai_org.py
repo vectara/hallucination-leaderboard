@@ -28,6 +28,7 @@ from enum import Enum, auto
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+from huggingface_hub import InferenceClient
 
 COMPANY = "zai-org"
 """str: Provider identifier used for model path construction and registration."""
@@ -58,7 +59,7 @@ class ZhipuAIConfig(BasicLLMConfig):
         "glm-4-9b-chat",
         "GLM-4.6",
         "GLM-4.7",
-        "glm-4p7-flash"
+        "GLM-4.7-Flash"
     ]
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
@@ -134,9 +135,9 @@ client_mode_group = {
         "chat": ClientMode.GLM_4P5,
         "api_type": "fireworks"
     },
-    "glm-4p7-flash": {
+    "GLM-4.7-Flash": {
         "chat": ClientMode.GLM_4P7_FLASH,
-        "api_type": "fireworks"
+        "api_type": "huggingface"
     },
     "glm-4p7": {
         "chat": ClientMode.GLM_4P7,
@@ -233,18 +234,13 @@ class ZhipuAILLM(AbstractLLM):
                     summary = response.choices[0].message.content
 
                 case ClientMode.GLM_4P7_FLASH:
-                    self.model_fullname = f"accounts/fireworks/models/{self.model_name}"
-                    response = self.client.chat.completions.create(
-                        messages=[
-                            {
-                                "role": "user",
-                                "content": prepared_text,
-                            }
-                        ],
-                        model=self.model_fullname,
+                    messages = [{"role": "user", "content": prepared_text}]
+                    client_package = self.client.chat_completion(
+                        messages,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens
                     )
-
-                    summary = response.choices[0].message.content
+                    summary = client_package.choices[0].message.content
 
                 case ClientMode.GLM_4P6:
                     self.model_fullname = f"{COMPANY}/{self.model_name}"
@@ -296,6 +292,10 @@ class ZhipuAILLM(AbstractLLM):
                         api_key=api_key,
                         base_url="https://api.deepinfra.com/v1/openai"
                     )
+                elif client_mode_group[self.model_name]["api_type"] == "huggingface":
+                    self.model_fullname = f"{COMPANY}/{self.model_name}"
+                    self.client = InferenceClient(model=self.model_fullname)
+                
                 else:
                     self.client  = None
             else:

@@ -548,7 +548,7 @@ Here is the passage:
         # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "temperature": 0.0}),
         # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
         # ZhipuAIConfig(**{"model_name": "glm-4p7", "temperature": 0.0}),
-        ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.0}),
+        ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
       ]
     }
   ),
@@ -621,14 +621,7 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # AI21LabsConfig(**
-        #   {
-        #     "model_name": "jamba-mini-2",
-        #     "date_code": "",
-        #     "temperature": 0.00,
-        #     "max_tokens": 4096
-        #   }
-        # ),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 2
 
@@ -665,6 +658,14 @@ Here is the passage:
 
 
         # # Complete but sort
+        # AI21LabsConfig(**
+        #   {
+        #     "model_name": "jamba-mini-2",
+        #     "date_code": "",
+        #     "temperature": 0.00,
+        #     "max_tokens": 4096
+        #   }
+        # ),
         # ZhipuAIConfig(**{"threads": 2, "model_name": "glm-4p7", "temperature": 0.0}),
         # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "date_code": "", "temperature": 0.0}),
         # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
