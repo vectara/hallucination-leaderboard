@@ -59,7 +59,8 @@ class ZhipuAIConfig(BasicLLMConfig):
         "glm-4-9b-chat",
         "GLM-4.6",
         "GLM-4.7",
-        "GLM-4.7-Flash"
+        "GLM-4.7-Flash",
+        "glm-4p7-flash"
     ]
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
@@ -103,6 +104,7 @@ class ClientMode(Enum):
     GLM_4P6 = auto()
     GLM_4P7 = auto()
     GLM_4P7_FLASH = auto()
+    GLM_4P7_FLASH_FW_DEPLOY = auto() # Deployment Name: accounts/ahmed-vectara/deployments/mdkz97wn
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
@@ -142,6 +144,10 @@ client_mode_group = {
     "glm-4p7": {
         "chat": ClientMode.GLM_4P7,
         "api_type": "fireworks"
+    },
+    "glm-4p7-flash": {
+        "chat": ClientMode.GLM_4P7_FLASH_FW_DEPLOY,
+        "api_type": "fireworks_deploy"
     },
     "GLM-4.6": {
         "chat": ClientMode.GLM_4P6,
@@ -232,6 +238,20 @@ class ZhipuAILLM(AbstractLLM):
                     )
 
                     summary = response.choices[0].message.content
+                case ClientMode.GLM_4P7_FLASH_FW_DEPLOY:
+                    # self.model_fullname = f"accounts/fireworks/models/glm-4p7-flash#accounts/fireworks/deploymentShapes/glm-4p7-flash-throughput"
+                    self.model_fullname = f"accounts/fireworks/models/glm-4p7-flash#accounts/ahmed-vectara/deployments/mdkz97wn"
+                    response = self.client.chat.completions.create(
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": prepared_text,
+                            }
+                        ],
+                        model=self.model_fullname,
+                    )
+
+                    summary = response.choices[0].message.content
 
                 case ClientMode.GLM_4P7_FLASH:
                     messages = [{"role": "user", "content": prepared_text}]
@@ -295,6 +315,13 @@ class ZhipuAILLM(AbstractLLM):
                 elif client_mode_group[self.model_name]["api_type"] == "huggingface":
                     self.model_fullname = f"{COMPANY}/{self.model_name}"
                     self.client = InferenceClient(model=self.model_fullname)
+                elif client_mode_group[self.model_name]["api_type"] == "fireworks_deploy":
+                    api_key = os.getenv(f"FIREWORKS_DEPLOY_API_KEY")
+                    assert api_key is not None, f"FIREWORKS DEPLOY API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    self.client = OpenAI(
+                        api_key=api_key,
+                        base_url="https://api.fireworks.ai/inference/v1"
+                    )
                 
                 else:
                     self.client  = None
