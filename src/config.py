@@ -549,7 +549,8 @@ Here is the passage:
         # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
         # ZhipuAIConfig(**{"model_name": "glm-4p7", "temperature": 0.0}),
         # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
-        ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.01, "max_output_tokens": 8192}),
+        ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
       ]
     }
   ),
@@ -622,7 +623,7 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.0}),
+        ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
         # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 2

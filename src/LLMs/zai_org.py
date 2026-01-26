@@ -105,6 +105,7 @@ class ClientMode(Enum):
     GLM_4P7 = auto()
     GLM_4P7_FLASH = auto()
     GLM_4P7_FLASH_FW_DEPLOY = auto() # Deployment Name: accounts/ahmed-vectara/deployments/mdkz97wn
+    # Depolyment Name: accounts/ahmed-vectara/deployments/j5r4b365
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
@@ -240,7 +241,8 @@ class ZhipuAILLM(AbstractLLM):
                     summary = response.choices[0].message.content
                 case ClientMode.GLM_4P7_FLASH_FW_DEPLOY:
                     # self.model_fullname = f"accounts/fireworks/models/glm-4p7-flash#accounts/fireworks/deploymentShapes/glm-4p7-flash-throughput"
-                    self.model_fullname = f"accounts/fireworks/models/glm-4p7-flash#accounts/ahmed-vectara/deployments/mdkz97wn"
+                    # self.model_fullname = f"accounts/fireworks/models/glm-4p7-flash#accounts/ahmed-vectara/deployments/mdkz97wn"
+                    self.model_fullname = f"accounts/fireworks/models/glm-4p7-flash#accounts/ahmed-vectara/deployments/j5r4b365"
                     response = self.client.chat.completions.create(
                         messages=[
                             {
@@ -249,6 +251,8 @@ class ZhipuAILLM(AbstractLLM):
                             }
                         ],
                         model=self.model_fullname,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens
                     )
 
                     summary = response.choices[0].message.content
