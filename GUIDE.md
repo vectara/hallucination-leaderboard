@@ -61,7 +61,7 @@ If you are still running issues then it's likely you dont have permissions or ac
 
 #### Add New Company and Models
 
-Copy the __example_company.py code and create a new file preferably with the name of the company. If there are unusual characters then the python file name can be whatever is a proper file name that still clearly refers to the company.
+Copy the __example_company.py code and create a new file preferably with the name of the company. If there are unusual characters than the python file name can be whatever is a proper file name that still clearly refers to the company.
 
 Within the python file reference and satisfy all TODO comments. Some TODO comments may not need to be satisfied in which case remove the TODO comment and leave as is. Company name within the file 
 should replicate its official name on huggingface or as close to it as possible.
@@ -76,9 +76,9 @@ Decide if the models execution mode is local(cpu/gpu) or api based.
 
 Search for the company python file within `src/LLMs/`. Within the class find the `class COMPANY_NAMEConfig(BasicLLMConfig)` object and add the model to the field model_name. 
 
-Next you should understand how your model should be ran to get a summary. When you do inspect the summarize method and at the respective execution modes conditional branch. If there is no case that matches how your model needs to be executed then you will need to add a new case with a new unique id number(Just go +1 from the last number shown). If there is a valid case then record the case number for later.
+Next you should understand how your model should be ran to get a summary. When you do inspect the summarize method and at the respective execution modes conditional branch. If there is no case that matches how your model needs to be executed then you will need to add a new case with a new and descriptive enum.
 
-Find either the client_mode_group or local_mode_group dictionary. Add your model to the dictionary. If there existed a case that matched how your model should run then simply record that number. If there wasn't a case then use then one you should have made in the previous step.
+Find either the client_mode_group(You're using an API) or local_mode_group(You are running the model locally) dictionary. Add your model to the dictionary. If there existed a case that matched how your model should run then simply record that number. If there wasn't a case then use then one you should have made in the previous step.
 
 #### Testing your model
 
@@ -94,11 +94,9 @@ Test case 1 is a red flag if it fails. It is expected to have a response.
 
 Make sure the response only contains summary text. If there are extra artifacts around the summary add additional code to handle their removal. Then run the test again to verify.
 
-Test case 2 is a yellow flag if it fails. Should either say "I am unable to summarize this passage." or some output related to it not having anything to summarize. Failure of this case hasn't happened but if it did happen may indicate the model is weak.
+Test case 2 is simply informative of behavior. Should either say "I am unable to summarize this passage." or some output related to it not having anything to summarize. Failure of this case is rare and may indicate the model has issue with small texts or weak reasoning to this edge case.
 
-Test case 3 is a yellow flag if failed. Tests if the model can handle the largest context it can expect. Failure of this case may indicate a sub optimal answer rate if this case is failed.
-
-Make sure it only contains summary text, if there are extra artifacts around the summary add additional code to handle their removal. Then run the test again to verify.
+Test case 3 is a yellow flag if failed. Tests if the model can handle the largest context it can expect. Failure of this case may indicate a sub optimal answer rate.
 
 #### Live LB Run
 
@@ -116,7 +114,7 @@ Github actions will automatically update both the README and the plot, make sure
 
 This process can be done manually by `update_readme.py` scripted located in the root directory.
 
-
+Once a model is completed succesfully move it below the completed models comment so we have an internal record of the models we've run so far and their exact settings.
 
 ## Advanced Info
 
