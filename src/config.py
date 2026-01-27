@@ -459,6 +459,7 @@ Here is the passage:
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-12b", "date_code": "2409", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-large", "date_code": "2411", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
+        MoonshotAIConfig(**{"model_name": "kimi-k2.5", "temperature": 1, "threads": 3}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0}),
@@ -550,7 +551,7 @@ Here is the passage:
         # ZhipuAIConfig(**{"model_name": "glm-4p7", "temperature": 0.0}),
         # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
         # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.01, "max_output_tokens": 8192}),
-        ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
+        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
       ]
     }
   ),
@@ -623,10 +624,11 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
+        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
         # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 2
+        MoonshotAIConfig(**{"model_name": "kimi-k2.5", "temperature": 1, "threads": 3}),
 
         # CPU 3
 

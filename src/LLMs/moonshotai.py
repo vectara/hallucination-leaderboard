@@ -51,10 +51,11 @@ class MoonshotAIConfig(BasicLLMConfig):
         endpoint: API endpoint type ("chat" for conversational format).
     """
 
-    company: Literal["moonshotai"]
+    company: Literal["moonshotai"] = "moonshotai"
     model_name: Literal[
         "Kimi-K2-Instruct",
-        "kimi-k2-thinking"
+        "kimi-k2-thinking",
+        "kimi-k2.5"
     ]
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
@@ -121,6 +122,9 @@ client_mode_group = {
     "kimi-k2-thinking": {
         "chat": ClientMode.CHAT_DEFAULT
     },
+    "kimi-k2.5": {
+        "chat": ClientMode.CHAT_DEFAULT
+    }
 }
 
 # local_mode_group: Mapping of model names to their supported local execution modes.
