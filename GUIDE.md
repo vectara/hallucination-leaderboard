@@ -23,6 +23,29 @@ src/
 ├── ...
 ```
 
+#### Initial Preparation
+
+This step does not need to be followed exactly but helps simplify later on for repeated building of the engine.
+
+- Optional
+```bash
+mkdir LB
+cd LB
+python3 -m venv lb_env
+source lb_env/bin/activate
+```
+
+- Required
+```bash
+git clone https://github.com/vectara/hallucination-leaderboard.git
+cd hallucination-leaderboard
+git checkout lb-engine
+```
+
+You will need the .env file containing all the keys, likely this is already shared with you. This is placed in the project root.
+
+You will need the leadersboard_dataset_v2.csv, likely this is already shared with you. This is placed inside the datasets directory.
+
 #### Installation
 
 Before you run you need to import all necessary packages. Start in the root directory.
