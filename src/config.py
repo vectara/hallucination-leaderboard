@@ -561,6 +561,7 @@ Here is the passage:
       "eval_date": datetime.now().strftime('%Y-%m-%d'), #today
       "hhem_version": "2.3-API",
       "pipeline": ["summarize", "judge", "aggregate"],
+      # "pipeline": ["aggregate"],
       # "pipeline": ["summarize"],
       # "pipeline": ["judge", "aggregate"],
       "output_dir": "output",
@@ -624,11 +625,11 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
+        ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
         # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 2
-        MoonshotAIConfig(**{"model_name": "kimi-k2.5", "temperature": 1, "threads": 3}),
+        # MoonshotAIConfig(**{"model_name": "kimi-k2.5", "temperature": 1, "threads": 3}),
 
         # CPU 3
 
