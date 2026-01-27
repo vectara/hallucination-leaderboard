@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on January 8, 2026
+Last updated on January 27, 2026
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-01-08.png)
 
@@ -63,6 +63,7 @@ Last updated on January 8, 2026
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
+|zai-org/GLM-4.7-flash|9.3 %|90.7 %|91.6 %|71.8|
 |CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
 |zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
 |nvidia/Nemotron-3-Nano-30B-A3B|9.6 %|90.4 %|99.6 %|104.2|
