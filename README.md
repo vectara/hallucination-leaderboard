@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on January 08, 2026
+Last updated on January 27, 2026
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-01-08.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-01-27.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -63,8 +63,9 @@ Last updated on January 08, 2026
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
-|CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
+|zai-org/glm-4p7-flash|9.3 %|90.7 %|91.6 %|71.8|
 |zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
+|CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
 |openai/gpt-4o-2024-08-06|9.6 %|90.4 %|93.8 %|86.6|
 |nvidia/Nemotron-3-Nano-30B-A3B|9.6 %|90.4 %|99.6 %|104.2|
 |ai21labs/jamba-large-1.7-2025-07|9.7 %|90.3 %|98.9 %|124.8|
@@ -73,9 +74,9 @@ Last updated on January 08, 2026
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
 |openai/gpt-5.2-high-2025-12-11|10.8 %|89.2 %|100.0 %|186.3|
-|openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
 |anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
+|openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
 |deepseek-ai/DeepSeek-R1|11.3 %|88.7 %|97.0 %|93.5|
 |zai-org/glm-4p7|11.7 %|88.3 %|99.8 %|70.6|
 |anthropic/claude-opus-4-1-20250805|11.8 %|88.2 %|92.4 %|129.1|
@@ -93,8 +94,8 @@ Last updated on January 08, 2026
 |openai/gpt-5-high-2025-08-07|15.1 %|84.9 %|99.9 %|162.7|
 |xai-org/grok-4-1-fast-non-reasoning|17.8 %|82.2 %|98.5 %|87.5|
 |moonshotai/Kimi-K2-Instruct-0905|17.9 %|82.1 %|98.6 %|59.2|
-|openai/o4-mini-low-2025-04-16|18.6 %|81.4 %|98.7 %|130.9|
 |openai/o4-mini-high-2025-04-16|18.6 %|81.4 %|99.2 %|127.7|
+|openai/o4-mini-low-2025-04-16|18.6 %|81.4 %|98.7 %|130.9|
 |xai-org/grok-4-1-fast-reasoning|19.2 %|80.8 %|99.7 %|99.5|
 |mistralai/ministral-14b-2512|19.4 %|80.6 %|99.6 %|135.8|
 |xai-org/grok-4-fast-non-reasoning|19.7 %|80.3 %|99.2 %|141.9|
