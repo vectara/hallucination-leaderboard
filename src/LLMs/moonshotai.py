@@ -55,7 +55,8 @@ class MoonshotAIConfig(BasicLLMConfig):
     model_name: Literal[
         "Kimi-K2-Instruct",
         "kimi-k2-thinking",
-        "kimi-k2.5"
+        "kimi-k2.5-hf",
+        "Kimi-K2.5"
     ]
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
@@ -93,6 +94,7 @@ class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     KIMI_K2_INSTRUCT = auto()
+    KIMI_K2P5_HF = auto()
     UNDEFINED = auto()
 
 
@@ -124,6 +126,10 @@ client_mode_group = {
     },
     "kimi-k2.5": {
         "chat": ClientMode.CHAT_DEFAULT
+    },
+    "Kimi-K2.5": {
+        "chat": ClientMode.KIMI_K2P5_HF,
+        "api_type": "huggingface"
     }
 }
 
@@ -214,6 +220,21 @@ class MoonshotAILLM(AbstractLLM):
                             max_tokens=self.max_tokens
                         )
                         summary = response.choices[0].message.content
+                case ClientMode.KIMI_K2P5_HF:
+                    messages = [
+                        {"role": "user", "content": [{"type": "text", "text":  prepared_text}]}
+                    ]
+                    response = self.client.chat.completions.create(
+                        model=self.huggingface_name,
+                        messages=messages,
+                        stream=False,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens
+                    )
+                    summary = response.choices[0].message.content
+                    if "</think>" in summary:
+                        summary = summary.split("</think>")[1].strip()
+
         elif self.local_model: 
             pass
         else:
@@ -239,10 +260,13 @@ class MoonshotAILLM(AbstractLLM):
             api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
             assert api_key is not None, f"{COMPANY.upper()} API key not found in environment variable {COMPANY.upper()}_API_KEY"
             if self.model_name in client_mode_group:
-                self.client = OpenAI(
-                    api_key = api_key,
-                    base_url = "https://api.moonshot.ai/v1",
-                )
+                if client_mode_group[self.model_name]["api_type"] == "huggingface":
+                    self.client = InferenceClient(model=self.huggingface_name)
+                else:
+                    self.client = OpenAI(
+                        api_key = api_key,
+                        base_url = "https://api.moonshot.ai/v1",
+                    )
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
