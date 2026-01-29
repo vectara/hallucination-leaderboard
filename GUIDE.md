@@ -84,12 +84,19 @@ If you are still running issues then it's likely you dont have permissions or ac
 
 #### Add New Company and Models
 
+**Quick Overview — Files to modify:**
+- [ ] `src/LLMs/{company}.py` — new provider file
+- [ ] `src/LLMs/__init__.py` — add import + registry entry
+- [ ] `src/config.py` — add config import + test config entry
+
 Copy the __example_company.py code and create a new file preferably with the name of the company. If there are unusual characters than the python file name can be whatever is a proper file name that still clearly refers to the company.
 
 Within the python file reference and satisfy all TODO comments. Some TODO comments may not need to be satisfied in which case remove the TODO comment and leave as is. Company name within the file 
 should replicate its official name on huggingface or as close to it as possible.
 
-Once the new python file is complete update the model registry in `src/LLMs/__init__.py` with the new company objects you created in the company python file. Place the company alphabetically within the dictionary.
+Once the new python file is complete, update `src/LLMs/__init__.py` with two changes:
+1. Add an import statement for your new classes (LLM, Config, Summary) at the top of the file, placed alphabetically among the other imports.
+2. Add an entry to the `MODEL_REGISTRY` dictionary with your company's classes, placed alphabetically within the dictionary.
 
 Lastly import the companies config object(e.g. VectaraConfig) into `src/config.py`. Place the object alphabetically.
 
@@ -105,7 +112,9 @@ Find either the client_mode_group(You're using an API) or local_mode_group(You a
 
 #### Testing your model
 
-Before doing a live run its recommended to test your model to make sure it works and the output doesn't have any troublesome artifacts. config.py contains various experimental setups including the test and live runs. Scan for the EvalConfig object with field eval_name assigned to "test"(Should be the first entry in the list). Then under per_LLM_configs add the new model to the list of model configs alphabetically by company. Make sure other models are commented out before testing your own model.
+Before doing a live run its recommended to test your model to make sure it works and the output doesn't have any troublesome artifacts. config.py contains various experimental setups including the test and live runs. Scan for the EvalConfig object with field eval_name assigned to "test"(Should be the first entry in the list). Then under per_LLM_configs add the new model to the list of model configs alphabetically by company.
+
+**Important:** Before running the test, verify that your new model config is the ONLY uncommented entry in the `per_LLM_configs` list. Comment out any other active configs to avoid running unnecessary evaluations.
 
 The test experiment also serves as an example on how to use your model for other experiments so when you're finished just comment out your new addition. 
 
