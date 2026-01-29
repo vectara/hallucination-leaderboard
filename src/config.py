@@ -7,6 +7,7 @@ from . LLMs import (
   _01AIConfig,
   AnthropicConfig,
   AntGroupMIConfig,
+  ArceeAIConfig,
   AppleConfig,
   AmazonConfig,
   AI21LabsConfig,
@@ -202,6 +203,8 @@ Here is the passage:
         # AnthropicConfig(**{"company": "anthropic", "model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0}),
 
         # AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
+
+        ArceeAIConfig(**{"model_name": "trinity-large-preview", "temperature": 0.0}),
 
         # BaiduConfig(**{"model_name": "ERNIE-4.5-VL-28B-A3B-Thinking", "temperature": 0.01, "min_throttle_time": 4.0}),
         
@@ -459,7 +462,7 @@ Here is the passage:
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-12b", "date_code": "2409", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-large", "date_code": "2411", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
-        MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0}),
+        # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"model_name": "kimi-k2.5", "temperature": 1, "threads": 3}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
@@ -626,12 +629,11 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
-        # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
+        ArceeAIConfig(**{"model_name": "trinity-large-preview", "temperature": 0.0}),
 
         # CPU 2
         # MoonshotAIConfig(**{"model_name": "kimi-k2.5", "temperature": 1, "threads": 3}),
-        MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0}),
+        # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0}),
 
         # CPU 3
 
@@ -666,6 +668,8 @@ Here is the passage:
 
 
         # # Complete but sort
+        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
         # AI21LabsConfig(**
         #   {
         #     "model_name": "jamba-mini-2",

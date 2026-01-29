@@ -37,6 +37,7 @@ from . allenai import AllenAILLM, AllenAIConfig, AllenAISummary
 from . amazon import AmazonLLM, AmazonConfig, AmazonSummary
 from . antgroup_mi import AntGroupMILLM, AntGroupMIConfig, AntGroupMISummary
 from . anthropic import AnthropicLLM, AnthropicConfig, AnthropicSummary
+from . arcee_ai import ArceeAILLM, ArceeAIConfig, ArceeAISummary
 from . apple import AppleLLM, AppleConfig, AppleSummary
 from . baidu import BaiduLLM, BaiduConfig, BaiduSummary
 from . cohere import CohereLLM, CohereConfig,CohereSummary
@@ -109,6 +110,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": AnthropicLLM,
         "config_class": AnthropicConfig,
         "summary_class": AnthropicSummary,
+    },
+    "arcee-ai": {
+        "LLM_class": ArceeAILLM,
+        "config_class": ArceeAIConfig,
+        "summary_class": ArceeAISummary,
     },
     "apple": {
         "LLM_class": AppleLLM,
