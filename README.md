@@ -52,6 +52,7 @@ Last updated on January 27, 2026
 |deepseek-ai/DeepSeek-V3.2|6.3 %|93.7 %|92.6 %|62.0|
 |google/gemma-3-4b-it|6.4 %|93.6 %|67.3 %|77.4|
 |CohereLabs/command-r-plus-08-2024|6.9 %|93.1 %|95.0 %|91.5|
+|arcee-ai/trinity-large-preview|6.9 %|93.1 %|99.0 %|117.3|
 |google/gemini-2.5-pro|7.0 %|93.0 %|99.1 %|106.4|
 |mistralai/ministral-3b-2410|7.3 %|92.7 %|99.9 %|167.9|
 |google/gemma-3-27b-it|7.4 %|92.6 %|98.8 %|96.4|
