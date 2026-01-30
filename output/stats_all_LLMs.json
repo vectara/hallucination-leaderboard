@@ -152,6 +152,14 @@
     "avg_word_count": 127.8
   },
   {
+    "model_name": "arcee-ai/trinity-large-preview",
+    "date_code": "",
+    "hallucination_rate": 6.9,
+    "confidence_interval": -1,
+    "answer_rate": 99.0,
+    "avg_word_count": 117.3
+  },
+  {
     "model_name": "deepseek-ai/DeepSeek-R1",
     "date_code": "",
     "hallucination_rate": 11.3,
