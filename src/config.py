@@ -204,7 +204,7 @@ Here is the passage:
 
         # AppleConfig(**{"company": "apple", "model_name": "OpenELM-3B-Instruct", "date_code": "", "temperature": 0.0}),
 
-        ArceeAIConfig(**{"model_name": "trinity-large-preview", "temperature": 0.0}),
+        # ArceeAIConfig(**{"model_name": "trinity-large-preview", "temperature": 0.0}),
 
         # BaiduConfig(**{"model_name": "ERNIE-4.5-VL-28B-A3B-Thinking", "temperature": 0.01, "min_throttle_time": 4.0}),
         
@@ -498,7 +498,7 @@ Here is the passage:
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
         # PrimeIntellectConfig(**{"model_name": "INTELLECT-3", "temperature": 0.0, "min_throttle_time": 4.0}),
-        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-235B-A22V", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-235b-a22b", "date_code": "", "temperature": 0.0, "enable_thinking": False, "max_tokens": 16000}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-30b-a3b-thinking", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-omni-30b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
@@ -1410,7 +1410,7 @@ Here is the passage:
         QwenConfig(**{"company": "qwen", "model_name": "Qwen3-14B", "date_code": "", "temperature": 0.0}),
         QwenConfig(**{"company": "qwen", "model_name": "Qwen3-30B-A3B", "date_code": "", "temperature": 0.0}),
         QwenConfig(**{"company": "qwen", "model_name": "Qwen3-32B", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-235B-A22B", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-235b-a22b", "date_code": "", "temperature": 0.0}),
         QwenConfig(**{"company": "qwen", "model_name": "QwQ-32B-Preview", "date_code": "", "temperature": 0.0}),
 
         SnowflakeConfig(**{"company": "snowflake", "model_name": "snowflake-arctic-instruct", "date_code": "", "temperature": 0.0}),

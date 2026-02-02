@@ -72,7 +72,7 @@ class QwenConfig(BasicLLMConfig):
         "Qwen3-14B",
         "Qwen3-30B-A3B",
         "Qwen3-32B",
-        "Qwen3-235B-A22B",
+        "qwen3-235b-a22b",
         "QwQ-32B-Preview",
 
         "qwen3-30b-a3b-thinking",
@@ -98,7 +98,7 @@ class QwenConfig(BasicLLMConfig):
     execution_mode: Literal["api"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
     thinking_tokens: bool = None
-    enable_thinking: bool = None
+    enable_thinking: bool = False
 
 class QwenSummary(BasicSummary):
     """Output model for Qwen summarization results.
@@ -158,7 +158,7 @@ class LocalMode(Enum):
 # Each model maps endpoint types to ClientMode enum values. Models with CHAT_REASONING
 # support the enable_thinking parameter for reasoning/thinking mode.
 client_mode_group = {
-    "Qwen3-235B-A22B": {
+    "qwen3-235b-a22b": {
         "chat": ClientMode.CHAT_REASONING
     },
     "qwen3-30b-a3b-thinking": {
