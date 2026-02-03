@@ -446,7 +446,7 @@ Here is the passage:
         #     "temperature": 0.0,
         #   }
         # ),
-        # MiniMaxAIConfig(**{"model_name": "minimax-m2p1", "date_code": "", "temperature": 0.0}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m2p1", "api_type": "fireworks", "date_code": "", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2512", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2512", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-14b", "date_code": "2512", "temperature": 0.0}),
@@ -464,7 +464,10 @@ Here is the passage:
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
         # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "api_type": "huggingface", "temperature": 0.01, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"model_name": "kimi-k2-thinking", "temperature": 0.01}),
-        MiniMaxAIConfig(**{"model_name": "minimax-m2p1", "temperature": 0.01}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m2p1", "api_type": "fireworks", "temperature": 0.01}),
+        # OpenAIConfig(**{"model_name": "gpt-4o-mini", "temperature": 0.0}),
+        OpenAIConfig(**{"model_name": "gpt-oss-120b", "api_type": "together", "temperature": 0.0}),
+        OpenAIConfig(**{"model_name": "gpt-oss-20b", "api_type": "replicate", "temperature": 0.7}),
         # MoonshotAIConfig(**{"model_name": "kimi-k2.5", "temperature": 1, "threads": 3}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
@@ -681,7 +684,7 @@ Here is the passage:
         #   }
         # ),
         # ZhipuAIConfig(**{"threads": 2, "model_name": "glm-4p7", "temperature": 0.0}),
-        # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "date_code": "", "temperature": 0.0}),
+        # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "api_type": "fireworks", "date_code": "", "temperature": 0.0}),
         # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
         # GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
 

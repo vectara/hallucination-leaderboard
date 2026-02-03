@@ -42,7 +42,7 @@ class MiniMaxAIConfig(BasicLLMConfig):
         date_code: Optional version/date identifier for the model.
         execution_mode: Where to run inference ("api", "cpu", or "gpu").
         endpoint: API endpoint type ("chat" for conversational format).
-        api_type: Backend API to use. "default" uses Fireworks AI.
+        api_type: Backend API to use. "fireworks" uses Fireworks AI platform.
     """
 
     company: Literal["MiniMaxAI"] = "MiniMaxAI"
@@ -52,7 +52,7 @@ class MiniMaxAIConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
-    api_type: Literal["default"] = "default"
+    api_type: Literal["fireworks"] = "fireworks"
 
 class MiniMaxAISummary(BasicSummary):
     """Output model for MiniMax AI summarization results.
@@ -61,11 +61,11 @@ class MiniMaxAISummary(BasicSummary):
 
     Attributes:
         endpoint: The API endpoint type used for generation, if applicable.
-        api_type: The backend API used ("default" for Fireworks AI).
+        api_type: The backend API used ("fireworks" for Fireworks AI platform).
     """
 
     endpoint: Literal["chat", "response"] | None = None
-    api_type: Literal["default"] | None = None
+    api_type: Literal["fireworks"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -205,7 +205,7 @@ class MiniMaxAILLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                # default api_type uses Fireworks AI
+                # fireworks api_type uses Fireworks AI platform
                 api_key = os.getenv(f"FIREWORKS_API_KEY")
                 assert api_key is not None, f"FIREWORKS API key not found in environment variable FIREWORKS_API_KEY"
                 self.client = OpenAI(
