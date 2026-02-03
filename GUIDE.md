@@ -1,5 +1,15 @@
 # How to run and expand this code base
 
+## Overview
+
+The HHEM (Hughes Hallucination Evaluation Model) Leaderboard is an evaluation system that measures hallucination rates across different LLMs. It works by:
+
+1. **Summarization**: Each LLM generates summaries of source articles from a standardized dataset.
+2. **Judgment**: HHEM scores each summary for factual consistency against the source article (0-1 scale, higher = more consistent).
+3. **Aggregation**: Results are compiled into statistics (hallucination rate, answer rate, avg word count) per model.
+
+The codebase is organized around **providers** (companies like OpenAI, Anthropic, etc.), each with their own LLM implementation file. Adding a new model means either adding to an existing provider or creating a new provider file.
+
 ## The Basics
 
 This section serves as an introduction to using the basic and critical features of the leaderboard. Largely to add a model, test it, and then run the experiment associated with results on the public leaderboard.
@@ -42,21 +52,29 @@ cd hallucination-leaderboard
 git checkout lb-engine
 ```
 
+**Branch workflow:** The `lb-engine` branch is the main development branch for running evaluations. For adding new models or making changes, you can either work directly on `lb-engine` or create a feature branch from it (e.g., `git checkout -b add-new-model`). Merge back to `lb-engine` when complete.
+
 You will need the .env file containing all the keys, likely this is already shared with you. This is placed in the project root.
 
 You will need the leadersboard_dataset_v2.csv, likely this is already shared with you. This is placed inside the datasets directory.
 
 #### Installation
 
-Before you run you need to import all necessary packages. Start in the root directory.
+Before you run you need to install all necessary packages. Start in the root directory.
 
-Order here matters, make sure you do these in sequence
+Order here matters, make sure you do these in sequence:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Then
+**Optional:** If you need to run models locally on GPU (not just API calls), also install:
+
+```bash
+pip install -r requirements-gpu.txt
+```
+
+Then install the package itself:
 
 ```bash
 pip install -e .
@@ -89,7 +107,7 @@ If you are still running issues then it's likely you dont have permissions or ac
 - [ ] `src/LLMs/__init__.py` — add import + registry entry
 - [ ] `src/config.py` — add config import + test config entry
 
-Copy the __example_company.py code and create a new file preferably with the name of the company. If there are unusual characters than the python file name can be whatever is a proper file name that still clearly refers to the company.
+Copy the __example_company.py code and create a new file preferably with the name of the company. If there are unusual characters, then the python file name can be whatever is a proper file name that still clearly refers to the company.
 
 Within the python file reference and satisfy all TODO comments. Some TODO comments may not need to be satisfied in which case remove the TODO comment and leave as is. Company name within the file 
 should replicate its official name on huggingface or as close to it as possible.
@@ -106,9 +124,9 @@ Decide if the models execution mode is local(cpu/gpu) or api based.
 
 Search for the company python file within `src/LLMs/`. Within the class find the `class COMPANY_NAMEConfig(BasicLLMConfig)` object and add the model to the field model_name. 
 
-Next you should understand how your model should be ran to get a summary. When you do inspect the summarize method and at the respective execution modes conditional branch. If there is no case that matches how your model needs to be executed then you will need to add a new case with a new and descriptive enum.
+Next you should understand how your model should be ran to get a summary. When you do, inspect the summarize method and at the respective execution modes conditional branch. If there is no case that matches how your model needs to be executed then you will need to add a new case with a new and descriptive enum.
 
-Find either the client_mode_group(You're using an API) or local_mode_group(You are running the model locally) dictionary. Add your model to the dictionary. If there existed a case that matched how your model should run then simply record that number. If there wasn't a case then use then one you should have made in the previous step.
+Find either the client_mode_group(You're using an API) or local_mode_group(You are running the model locally) dictionary. Add your model to the dictionary. If there existed a case that matched how your model should run, then simply record that enum value. If there wasn't a case then use then one you should have made in the previous step.
 
 #### Testing your model
 
@@ -120,7 +138,7 @@ The test experiment also serves as an example on how to use your model for other
 
 To begin the test, run the following command `hhem-leaderboard --eval_name test`
 
-Inspect ouput_test to find your new models output. 
+Inspect output_test to find your new model's output. 
 
 Test case 1 is a red flag if it fails. It is expected to have a response.
 
