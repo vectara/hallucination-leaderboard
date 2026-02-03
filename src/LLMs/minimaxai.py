@@ -42,6 +42,7 @@ class MiniMaxAIConfig(BasicLLMConfig):
         date_code: Optional version/date identifier for the model.
         execution_mode: Where to run inference ("api", "cpu", or "gpu").
         endpoint: API endpoint type ("chat" for conversational format).
+        api_type: Backend API to use. "default" uses Fireworks AI.
     """
 
     company: Literal["MiniMaxAI"] = "MiniMaxAI"
@@ -51,17 +52,20 @@ class MiniMaxAIConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["default"] = "default"
 
 class MiniMaxAISummary(BasicSummary):
     """Output model for MiniMax AI summarization results.
 
-    Extends BasicSummary with endpoint tracking for result provenance.
+    Extends BasicSummary with endpoint and api_type tracking for result provenance.
 
     Attributes:
         endpoint: The API endpoint type used for generation, if applicable.
+        api_type: The backend API used ("default" for Fireworks AI).
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["default"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -103,12 +107,10 @@ class LocalMode(Enum):
     UNDEFINED = auto()
 
 # client_mode_group: Mapping of model names to their supported API client modes.
-# Each model maps endpoint types to ClientMode enum values and includes an
-# api_type field indicating which backend platform to use (e.g., "fireworks").
+# Each model maps endpoint types to ClientMode enum values.
 client_mode_group = {
     "minimax-m2p1": {
-        "chat": ClientMode.M2P1,
-        "api_type": "fireworks"
+        "chat": ClientMode.M2P1
     }
 }
 
@@ -141,6 +143,7 @@ class MiniMaxAILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.full_config = config
 
     def summarize(self, prepared_text: str) -> str:
@@ -202,15 +205,13 @@ class MiniMaxAILLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                if client_mode_group[self.model_name]["api_type"] == "fireworks":
-                    api_key = os.getenv(f"FIREWORKS_API_KEY")
-                    assert api_key is not None, f"FIREWORKS API key not found in environment variable {COMPANY.upper()}_API_KEY"
-                    self.client = OpenAI(
-                        api_key=api_key,
-                        base_url="https://api.fireworks.ai/inference/v1"
-                    )
-                else:
-                    self.client  = None
+                # default api_type uses Fireworks AI
+                api_key = os.getenv(f"FIREWORKS_API_KEY")
+                assert api_key is not None, f"FIREWORKS API key not found in environment variable FIREWORKS_API_KEY"
+                self.client = OpenAI(
+                    api_key=api_key,
+                    base_url="https://api.fireworks.ai/inference/v1"
+                )
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
