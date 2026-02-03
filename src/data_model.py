@@ -18,11 +18,12 @@ Attributes:
     default_prompt: Default summarization prompt template.
 """
 
-from typing import List, Literal, Dict, Any
+from typing import List, Literal, Dict, Any, get_type_hints, get_args, get_origin
 from datetime import datetime
+import difflib
 
 from enum import Enum
-from pydantic import BaseModel, model_serializer
+from pydantic import BaseModel, model_serializer, model_validator
 
 class SourceArticle(BaseModel):
     """Schema for source document records from evaluation datasets.
@@ -213,6 +214,67 @@ class BasicLLMConfig(BaseModel):
         """
         fields_to_exclude = ['min_throttle_time', 'model_fullname']
         return {k: v for k, v in self.__dict__.items() if k not in fields_to_exclude}
+
+    @model_validator(mode='wrap')
+    @classmethod
+    def validate_model_name_with_suggestions(cls, values, handler):
+        """Validate model and provide helpful suggestions for invalid model names.
+
+        Wraps the standard validation to catch model_name errors and provide
+        fuzzy-matched suggestions when an invalid model name is provided.
+
+        Args:
+            values: Input data dictionary or object.
+            handler: The standard Pydantic validation handler.
+
+        Returns:
+            Validated model instance.
+
+        Raises:
+            ValueError: If model_name is invalid, with suggestions for similar names.
+        """
+        try:
+            return handler(values)
+        except Exception as e:
+            error_str = str(e)
+            # Check if this is a model_name validation error
+            if 'model_name' in error_str:
+                # Extract the invalid model name from values
+                if isinstance(values, dict):
+                    invalid_name = values.get('model_name', '')
+                else:
+                    invalid_name = getattr(values, 'model_name', '')
+
+                # Get valid model names from the subclass's type hints
+                valid_names = []
+                hints = get_type_hints(cls)
+                if 'model_name' in hints:
+                    model_type = hints['model_name']
+                    # Handle Literal types
+                    if get_origin(model_type) is Literal:
+                        valid_names = list(get_args(model_type))
+
+                if valid_names and invalid_name:
+                    # Find fuzzy matches (case-insensitive)
+                    matches = difflib.get_close_matches(
+                        invalid_name.lower(),
+                        [n.lower() for n in valid_names],
+                        n=5,
+                        cutoff=0.4
+                    )
+                    # Map back to original casing
+                    lower_to_original = {n.lower(): n for n in valid_names}
+                    suggestions = [lower_to_original[m] for m in matches]
+
+                    if suggestions:
+                        suggestion_list = '\n  - '.join(suggestions)
+                        raise ValueError(
+                            f"Model '{invalid_name}' not found for {cls.__name__}.\n"
+                            f"Similar model names:\n  - {suggestion_list}\n\n"
+                            f"Note: Model names are case-sensitive."
+                        ) from None
+            # Re-raise original error if we can't provide suggestions
+            raise
 
     class Config:
         """Pydantic configuration for LLM config validation."""

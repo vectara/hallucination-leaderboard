@@ -134,6 +134,8 @@ Before doing a live run its recommended to test your model to make sure it works
 
 **Important:** Before running the test, verify that your new model config is the ONLY uncommented entry in the `per_LLM_configs` list. Comment out any other active configs to avoid running unnecessary evaluations.
 
+**Note on model names:** Model names are case-sensitive and must match exactly as defined in the provider's config class. If you use an incorrect model name, the error message will suggest similar valid names to help you find the correct spelling.
+
 The test experiment also serves as an example on how to use your model for other experiments so when you're finished just comment out your new addition. 
 
 To begin the test, run the following command `hhem-leaderboard --eval_name test`
