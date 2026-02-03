@@ -462,7 +462,8 @@ Here is the passage:
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-12b", "date_code": "2409", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-large", "date_code": "2411", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
-        # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0}),
+        MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "api_type": "huggingface", "temperature": 0.01, "min_throttle_time": 4.0}),
+        MoonshotAIConfig(**{"model_name": "kimi-k2-thinking", "temperature": 0.01}),
         # MoonshotAIConfig(**{"model_name": "kimi-k2.5", "temperature": 1, "threads": 3}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
@@ -498,7 +499,7 @@ Here is the passage:
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
         # PrimeIntellectConfig(**{"model_name": "INTELLECT-3", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "qwen3-235b-a22b", "date_code": "", "temperature": 0.0, "enable_thinking": False, "max_tokens": 16000}),
+        # QwenConfig(**{"company": "qwen", "model_name": "qwen3-235b-a23", "date_code": "", "temperature": 0.0, "enable_thinking": False, "max_tokens": 16000}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-30b-a3b-thinking", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-omni-30b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),

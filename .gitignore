@@ -5,6 +5,7 @@ __pycache__/
 .env
 log.txt
 TODO.md
+notes/
 
 models/
 output_test/
