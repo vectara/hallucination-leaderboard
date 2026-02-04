@@ -23,6 +23,7 @@ from typing import Literal
 from enum import Enum, auto
 
 from openai import OpenAI
+from together import Together
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -134,6 +135,7 @@ class ClientMode(Enum):
 
     CHAT_DEFAULT = auto()
     CHAT_REASONING = auto()
+    CHAT_QWEN_235B_A22B = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
@@ -159,7 +161,8 @@ class LocalMode(Enum):
 # support the enable_thinking parameter for reasoning/thinking mode.
 client_mode_group = {
     "Qwen3-235B-A22B": {
-        "chat": ClientMode.CHAT_REASONING
+        "chat": ClientMode.CHAT_QWEN_235B_A22B,
+        "api_type": "Together"
     },
     "qwen3-30b-a3b-thinking": {
         "chat": ClientMode.CHAT_REASONING
@@ -284,6 +287,24 @@ class QwenLLM(AbstractLLM):
                             {"role": "user", "content": prepared_text}],
                         )
                     summary = completion.choices[0].message.content
+                case ClientMode.CHAT_QWEN_235B_A22B:
+                    if self.model_name == 'Qwen3-235B-A22B':
+                        model_name = 'Qwen/Qwen3-235B-A22B-Instruct-2507-tput'
+                    else:
+                        raise Exception(f"Illegal model name for Together client: {self.model_fullname}")
+                    response = self.client.chat.completions.create(
+                        model=model_name,
+                            messages=[
+                                {
+                                "role": "user",
+                                "content": prepared_text
+                                }
+                            ],
+                            max_tokens = self.max_tokens,
+                            temperature = self.temperature,
+                    )
+                    summary = response.choices[0].message.content
+
         elif self.local_model: 
             pass
         else:
@@ -306,7 +327,17 @@ class QwenLLM(AbstractLLM):
             Exception: If the model does not support the configured execution mode.
         """
         if self.execution_mode == "api":
-            if self.model_name in client_mode_group:
+            if client_mode_group[self.model_name]["api_type"] == "Together":
+                api_key = os.getenv("TOGETHER_API_KEY")
+                assert api_key is not None, (
+                    f"TOGETHER API key not found in environment variable "
+                    f"TOGETHER_API_KEY"
+                )
+                self.client = Together(
+                    api_key=api_key, 
+                    base_url="https://together.xyz/api/v1",
+                )
+            elif self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                 assert api_key is not None, (
                     f"{COMPANY} API key not found in environment variable "
