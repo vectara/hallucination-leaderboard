@@ -109,8 +109,12 @@ If you are still running issues then it's likely you dont have permissions or ac
 
 Copy the __example_company.py code and create a new file preferably with the name of the company. If there are unusual characters, then the python file name can be whatever is a proper file name that still clearly refers to the company.
 
-Within the python file reference and satisfy all TODO comments. Some TODO comments may not need to be satisfied in which case remove the TODO comment and leave as is. Company name within the file 
+Within the python file reference and satisfy all TODO comments. Some TODO comments may not need to be satisfied in which case remove the TODO comment and leave as is. Company name within the file
 should replicate its official name on huggingface or as close to it as possible.
+
+If the company's models are accessed through multiple backend providers (e.g., Together AI, Fireworks, HuggingFace), configure the `api_type` field. See the `api_type` TODOs in the template. The rule is:
+- Use `"default"` only if the company has their own native API
+- If models are only available through third-party providers, list those explicitly with no default value
 
 Once the new python file is complete, update `src/LLMs/__init__.py` with two changes:
 1. Add an import statement for your new classes (LLM, Config, Summary) at the top of the file, placed alphabetically among the other imports.
@@ -204,6 +208,7 @@ A `BasicLLMConfig` object includes but is not limited to the following fields (n
 - `min_throttle_time`: The minimum time to wait between requests. (Default: `0.1`)
 - `thinking_tokens`: The number of tokens allocated for thinking. (Default: `None`)
 - `execution_mode`: The execution mode of the LLM. (Default: `None`)
+- `api_type`: The backend API provider to use. Use `"default"` for the company's native API. If only third-party providers are available, use explicit provider names like `"together"`, `"fireworks"`, `"huggingface"`. (Default: varies by provider)
 
 #### Order of supersedes in LLM configs
 

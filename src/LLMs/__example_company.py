@@ -17,10 +17,16 @@ class COMPANY_NAMEConfig(BasicLLMConfig): # TODO: Update object name
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
+    # TODO: Add api_type if using multiple backends
+    # - "default" = company's native API (only use if available)
+    # - No native API? Omit "default", make field required (no = value)
+    # api_type: Literal["default", "backend_name"] = "default"
     # TODO: Add new attributes if needed for further customization
 
 class COMPANY_NAMESummary(BasicSummary): # TODO: Update object name
     endpoint: Literal["chat", "response"] | None = None
+    # TODO: Add api_type if added to Config
+    # api_type: Literal["default", "backend_name"] | None = None
     # TODO: Add the same new attributes above also here
 
     class Config:
@@ -60,6 +66,8 @@ class COMPANY_NAMELLM(AbstractLLM): # TODO: Update object name
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        # TODO: Add if using api_type
+        # self.api_type = config.api_type
         self.full_config = config
 
     def summarize(self, prepared_text: str) -> str:
@@ -91,6 +99,13 @@ class COMPANY_NAMELLM(AbstractLLM): # TODO: Update object name
                     f"{COMPANY.upper()}_API_KEY"
                 )
                 # TODO: Assign client if using client based models
+                # TODO: Add if/elif if using multiple api_types
+                # if self.api_type == "backend_name":
+                #     self.client = BackendClient(api_key=api_key)
+                # elif self.api_type == "default":
+                #     self.client = NativeClient(api_key=api_key)
+                # else:
+                #     raise ValueError(f"Unknown api_type: {self.api_type}")
                 self.client = None 
             else:
                 raise Exception(
