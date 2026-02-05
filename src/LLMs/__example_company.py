@@ -93,16 +93,15 @@ class COMPANY_NAMELLM(AbstractLLM): # TODO: Update object name
     def setup(self):
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-                assert api_key is not None, (
-                    f"{COMPANY} API key not found in environment variable "
-                    f"{COMPANY.upper()}_API_KEY"
-                )
-                # TODO: Assign client if using client based models
-                # TODO: Add if/elif if using multiple api_types
+                # TODO: Add if/elif for each api_type
+                # IMPORTANT: Load API key INSIDE each branch (different providers use different keys)
                 # if self.api_type == "backend_name":
+                #     api_key = os.getenv("BACKEND_API_KEY")
+                #     assert api_key is not None, "BACKEND_API_KEY not found"
                 #     self.client = BackendClient(api_key=api_key)
                 # elif self.api_type == "default":
+                #     api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                #     assert api_key is not None, f"{COMPANY.upper()}_API_KEY not found"
                 #     self.client = NativeClient(api_key=api_key)
                 # else:
                 #     raise ValueError(f"Unknown api_type: {self.api_type}")

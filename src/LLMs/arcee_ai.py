@@ -52,6 +52,7 @@ class ArceeAIConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["default"] = "default"
 
 
 class ArceeAISummary(BasicSummary):
@@ -64,6 +65,7 @@ class ArceeAISummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["default"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -136,6 +138,7 @@ class ArceeAILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
 
     def summarize(self, prepared_text: str) -> str:
         """Generate a summary of the provided text.
@@ -190,14 +193,17 @@ class ArceeAILLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                api_key = os.getenv("ARCEE_AI_API_KEY")
-                assert api_key is not None, (
-                    "Arcee AI API key not found in environment variable ARCEE_AI_API_KEY"
-                )
-                self.client = OpenAI(
-                    api_key=api_key,
-                    base_url="https://api.arcee.ai/api/v1"
-                )
+                if self.api_type == "default":
+                    api_key = os.getenv("ARCEE_AI_API_KEY")
+                    assert api_key is not None, (
+                        "Arcee AI API key not found in environment variable ARCEE_AI_API_KEY"
+                    )
+                    self.client = OpenAI(
+                        api_key=api_key,
+                        base_url="https://api.arcee.ai/api/v1"
+                    )
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

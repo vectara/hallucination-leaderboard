@@ -53,6 +53,7 @@ class _01AIConfig(BasicLLMConfig):
     date_code: str = "",
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["gpu", "cpu"] = "gpu"
+    api_type: Literal["default"] = "default"
 
 class _01AISummary(BasicSummary):
     """Output model for 01.AI Yi summarization results.
@@ -64,6 +65,7 @@ class _01AISummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["default"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -145,6 +147,7 @@ class _01AILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.model_fullname = f"{COMPANY}/{self.model_fullname}"
 
     def summarize(self, prepared_text: str) -> str:

@@ -50,6 +50,7 @@ class BaiduConfig(BasicLLMConfig):
     execution_mode: Literal["api"] = "api"
     date_code: str = ""
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["huggingface"] = "huggingface"
 
 class BaiduSummary(BasicSummary):
     """Output model for Baidu ERNIE summarization results.
@@ -61,6 +62,7 @@ class BaiduSummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["huggingface"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -138,6 +140,7 @@ class BaiduLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.model_fullname = f"{self.company}/{self.model_name}"
 
     def summarize(self, prepared_text: str) -> str:
@@ -183,15 +186,20 @@ class BaiduLLM(AbstractLLM):
         """Initialize the HuggingFace Inference client for ERNIE inference.
 
         Creates an InferenceClient instance configured for the specified
-        ERNIE model. No API key is required as it uses the HuggingFace
-        Inference API directly.
+        ERNIE model using the HF_TOKEN environment variable for authentication.
 
         Raises:
+            AssertionError: If the HF_TOKEN environment variable is not set.
             Exception: If the model does not support the configured execution mode.
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                self.client = InferenceClient(model=self.model_fullname)
+                if self.api_type == "huggingface":
+                    api_key = os.getenv("HF_TOKEN")
+                    assert api_key is not None, "HF_TOKEN not found in environment variable HF_TOKEN"
+                    self.client = InferenceClient(model=self.model_fullname, token=api_key)
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,

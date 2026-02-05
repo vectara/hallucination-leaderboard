@@ -205,13 +205,15 @@ class MiniMaxAILLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                # fireworks api_type uses Fireworks AI platform
-                api_key = os.getenv(f"FIREWORKS_API_KEY")
-                assert api_key is not None, f"FIREWORKS API key not found in environment variable FIREWORKS_API_KEY"
-                self.client = OpenAI(
-                    api_key=api_key,
-                    base_url="https://api.fireworks.ai/inference/v1"
-                )
+                if self.api_type == "fireworks":
+                    api_key = os.getenv("FIREWORKS_API_KEY")
+                    assert api_key is not None, "FIREWORKS_API_KEY not found in environment variable FIREWORKS_API_KEY"
+                    self.client = OpenAI(
+                        api_key=api_key,
+                        base_url="https://api.fireworks.ai/inference/v1"
+                    )
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

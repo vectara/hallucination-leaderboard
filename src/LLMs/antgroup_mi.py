@@ -54,6 +54,7 @@ class AntGroupMIConfig(BasicLLMConfig):
     execution_mode: Literal["api"] = "api"
     date_code: str = ""
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["default"] = "default"
 
 class AntGroupMISummary(BasicSummary):
     """Output model for Ant Group AntFinix summarization results.
@@ -65,6 +66,7 @@ class AntGroupMISummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["default"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -146,6 +148,7 @@ class AntGroupMILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
 
     def summarize(self, prepared_text: str) -> str:
         """Generate a summary of the provided text.
@@ -208,10 +211,13 @@ class AntGroupMILLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                model_id = COMPANY.replace("-", "_")
-                self.api_key = os.getenv(f"{model_id.upper()}_API_KEY")
-                assert self.api_key is not None, f"{COMPANY} API key not found in environment variable {model_id}"
-                self.client = True
+                if self.api_type == "default":
+                    model_id = COMPANY.replace("-", "_")
+                    self.api_key = os.getenv(f"{model_id.upper()}_API_KEY")
+                    assert self.api_key is not None, f"{COMPANY} API key not found in environment variable {model_id}"
+                    self.client = True
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,

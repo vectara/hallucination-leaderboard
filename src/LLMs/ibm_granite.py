@@ -65,6 +65,7 @@ class IBMGraniteConfig(BasicLLMConfig):
     ]
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["api", "gpu", "cpu"] = "api"
+    api_type: Literal["replicate"] = "replicate"
 
 class IBMGraniteSummary(BasicSummary):
     """Output model for IBM Granite summarization results.
@@ -76,6 +77,7 @@ class IBMGraniteSummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["replicate"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -190,6 +192,7 @@ class IBMGraniteLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model_fullname = f"{COMPANY}/{self.model_fullname}"
 
@@ -243,7 +246,10 @@ class IBMGraniteLLM(AbstractLLM):
             Exception: If the model does not support the configured execution mode.
         """
         if self.execution_mode == "api":
-            self.client = "replicate doesnt have a client"
+            if self.api_type == "replicate":
+                self.client = "replicate doesnt have a client"
+            else:
+                raise ValueError(f"Unknown api_type: {self.api_type}")
         elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in local_mode_group:
                 pass

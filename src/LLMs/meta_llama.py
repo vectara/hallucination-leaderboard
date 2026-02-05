@@ -82,6 +82,7 @@ class MetaLlamaConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["together"] = "together"
 
 class MetaLlamaSummary(BasicSummary):
     """Output model for Meta Llama summarization results.
@@ -93,6 +94,7 @@ class MetaLlamaSummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["together"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -208,6 +210,7 @@ class MetaLlamaLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
 
     def summarize(self, prepared_text: str) -> str:
         """Generate a summary of the provided text.
@@ -269,9 +272,12 @@ class MetaLlamaLLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                api_key = os.getenv(f"TOGETHER_API_KEY")
-                assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
-                self.client = Together(api_key=api_key)
+                if self.api_type == "together":
+                    api_key = os.getenv(f"TOGETHER_API_KEY")
+                    assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    self.client = Together(api_key=api_key)
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

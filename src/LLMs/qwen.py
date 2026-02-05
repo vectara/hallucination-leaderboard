@@ -99,6 +99,7 @@ class QwenConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat"
     thinking_tokens: bool = None
     enable_thinking: bool = False
+    api_type: Literal["default"] = "default"
 
 class QwenSummary(BasicSummary):
     """Output model for Qwen summarization results.
@@ -113,6 +114,7 @@ class QwenSummary(BasicSummary):
 
     endpoint: Literal["chat", "response"] | None = None
     enable_thinking: bool | None = None
+    api_type: Literal["default"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -244,6 +246,7 @@ class QwenLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.enable_thinking = config.enable_thinking
 
     def summarize(self, prepared_text: str) -> str:
@@ -307,15 +310,18 @@ class QwenLLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-                assert api_key is not None, (
-                    f"{COMPANY} API key not found in environment variable "
-                    f"{COMPANY.upper()}_API_KEY"
-                )
-                self.client = OpenAI(
-                    api_key=api_key, 
-                    base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
-                )
+                if self.api_type == "default":
+                    api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                    assert api_key is not None, (
+                        f"{COMPANY} API key not found in environment variable "
+                        f"{COMPANY.upper()}_API_KEY"
+                    )
+                    self.client = OpenAI(
+                        api_key=api_key,
+                        base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+                    )
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

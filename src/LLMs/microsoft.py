@@ -73,6 +73,7 @@ class MicrosoftConfig(BasicLLMConfig):
     execution_mode: Literal["api"] = "api"
     azure_endpoint: str = "NoneGiven"
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["default"] = "default"
 
 class MicrosoftSummary(BasicSummary):
     """Output model for Microsoft summarization results.
@@ -84,6 +85,7 @@ class MicrosoftSummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["default"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -167,6 +169,7 @@ class MicrosoftLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.azure_endpoint = config.azure_endpoint
         self.model_key = config.model_key
 
@@ -222,13 +225,16 @@ class MicrosoftLLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                api_key = self.model_key
-                assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
-                self.client = ChatCompletionsClient(
-                    endpoint=self.azure_endpoint,
-                    credential=AzureKeyCredential(api_key),
-                    api_version="2024-05-01-preview"
-                )
+                if self.api_type == "default":
+                    api_key = self.model_key
+                    assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    self.client = ChatCompletionsClient(
+                        endpoint=self.azure_endpoint,
+                        credential=AzureKeyCredential(api_key),
+                        api_version="2024-05-01-preview"
+                    )
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
 
             else:
                 raise Exception(

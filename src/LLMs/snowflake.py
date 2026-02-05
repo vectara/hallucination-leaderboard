@@ -53,6 +53,7 @@ class SnowflakeConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["replicate"] = "replicate"
 
 class SnowflakeSummary(BasicSummary):
     """Output model for Snowflake summarization results.
@@ -64,6 +65,7 @@ class SnowflakeSummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["replicate"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -140,6 +142,7 @@ class SnowflakeLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.full_config = config
         self.model_fullname = f"{COMPANY}/{self.model_name}"
 
@@ -191,7 +194,10 @@ class SnowflakeLLM(AbstractLLM):
         is handled via the REPLICATE_API_TOKEN environment variable.
         """
         if self.execution_mode == "api":
-            self.client = "Replicate doesn't have a client"
+            if self.api_type == "replicate":
+                self.client = "Replicate doesn't have a client"
+            else:
+                raise ValueError(f"Unknown api_type: {self.api_type}")
         elif self.execution_mode == "local":
             pass
 

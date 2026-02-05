@@ -116,6 +116,8 @@ If the company's models are accessed through multiple backend providers (e.g., T
 - Use `"default"` only if the company has their own native API
 - If models are only available through third-party providers, list those explicitly with no default value
 
+**Important:** In `setup()`, load API keys INSIDE each `api_type` branch, not outside. Different providers use different API keys (e.g., `TOGETHER_API_KEY`, `HF_TOKEN`, `{COMPANY}_API_KEY`).
+
 Once the new python file is complete, update `src/LLMs/__init__.py` with two changes:
 1. Add an import statement for your new classes (LLM, Config, Summary) at the top of the file, placed alphabetically among the other imports.
 2. Add an entry to the `MODEL_REGISTRY` dictionary with your company's classes, placed alphabetically within the dictionary.
@@ -153,6 +155,8 @@ Make sure the response only contains summary text. If there are extra artifacts 
 Test case 2 is simply informative of behavior. Should either say "I am unable to summarize this passage." or some output related to it not having anything to summarize. Failure of this case is rare and may indicate the model has issue with small texts or weak reasoning to this edge case.
 
 Test case 3 is a yellow flag if failed. Tests if the model can handle the largest context it can expect. Failure of this case may indicate a sub optimal answer rate.
+
+**Important clarification:** If the model responds with "I am unable to summarize this passage." (or similar), this is NOT a failure - it's a valid model response. The model understood the request but chose not to summarize that particular article (e.g., due to token limits or content). This may indicate lower answer rate on long articles but is not something that needs fixing. API errors or token limit exceptions are more concerning but still may not be an issue - monitor the run more closely in these cases. Models can still achieve high answer rates since this test case is at the extreme limit of tokens.
 
 #### Live LB Run
 

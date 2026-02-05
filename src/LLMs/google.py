@@ -95,8 +95,9 @@ class GoogleConfig(BasicLLMConfig):
     ]
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["api", "gpu", "cpu"] = "api"
-    date_code: str = "",
+    date_code: str = ""
     thinking_budget: Literal[-1, 0] = 0  # -1 is dynamic thinking, 0 thinking is off
+    api_type: Literal["default", "replicate"] = "default"
 
 class GoogleSummary(BasicSummary):
     """Output model for Google summarization results.
@@ -112,6 +113,7 @@ class GoogleSummary(BasicSummary):
 
     endpoint: Literal["chat", "response"] | None = None
     thinking_budget: Literal[-1, 0] | None = None  # -1 is dynamic thinking, 0 thinking is off
+    api_type: Literal["default", "replicate"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -280,6 +282,7 @@ class GoogleLLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.thinking_budget = config.thinking_budget
+        self.api_type = config.api_type
         if self.model_name in local_mode_group:
             self.model_fullname = f"{COMPANY}/{self.model_name}"
 
@@ -396,9 +399,15 @@ class GoogleLLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                api_key = os.getenv(f"{COMPANY.upper()}_GEMINI_API_KEY")
-                assert api_key is not None, f"Google Gemini API key not found in environment variable {COMPANY.upper()}_GEMINI_API_KEY"
-                self.client = genai.Client(api_key=api_key)
+                if self.api_type == "default":
+                    api_key = os.getenv(f"{COMPANY.upper()}_GEMINI_API_KEY")
+                    assert api_key is not None, f"Google Gemini API key not found in environment variable {COMPANY.upper()}_GEMINI_API_KEY"
+                    self.client = genai.Client(api_key=api_key)
+                elif self.api_type == "replicate":
+                    # Replicate uses functional API (replicate.run) with REPLICATE_API_TOKEN env var
+                    self.client = "Replicate doesn't have a client"
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,

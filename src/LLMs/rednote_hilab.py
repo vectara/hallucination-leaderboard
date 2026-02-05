@@ -52,6 +52,7 @@ class RednoteHilabConfig(BasicLLMConfig):
     model_name: Literal["rednote-model"]
     execution_mode: Literal["api"] = "api"
     date_code: str
+    api_type: Literal["default"] = "default"
 
 class RednoteHilabSummary(BasicSummary):
     """Output model for RedNote HiLab summarization results.
@@ -60,7 +61,7 @@ class RednoteHilabSummary(BasicSummary):
     Used for type consistency in RedNote HiLab model outputs.
     """
 
-    pass
+    api_type: Literal["default"] | None = None
 
 
 class ClientMode(Enum):
@@ -126,6 +127,7 @@ class RednoteHilabLLM(AbstractLLM):
             config: Configuration object specifying model and execution settings.
         """
         super().__init__(config)
+        self.api_type = config.api_type
 
     def summarize(self, prepared_text: str) -> str:
         """Generate a summary of the provided text.
@@ -198,7 +200,10 @@ class RednoteHilabLLM(AbstractLLM):
             Exception: If the model does not support the configured execution mode.
         """
         if self.execution_mode == "api":
-            pass
+            if self.api_type == "default":
+                pass
+            else:
+                raise ValueError(f"Unknown api_type: {self.api_type}")
         elif self.execution_mode in ["gpu", "cpu"]:
             if self.model_name in local_mode_group:
                 bnb_config = BitsAndBytesConfig(

@@ -64,6 +64,7 @@ class AllenAIConfig(BasicLLMConfig):
     date_code: str = ""
     endpoint: Literal["chat", "response"] = "chat"
     execution_mode: Literal["api", "gpu", "cpu", "vllm"] = "api"
+    api_type: Literal["huggingface", "openrouter"] | None = None  # Required for api mode
 
 class AllenAISummary(BasicSummary):
     """Output model for Allen AI OLMo summarization results.
@@ -78,6 +79,7 @@ class AllenAISummary(BasicSummary):
 
     endpoint: Literal["chat", "response"] | None = None
     execution_mode: Literal["api", "gpu", "cpu", "vllm"] | None = None
+    api_type: Literal["huggingface", "openrouter"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -128,8 +130,7 @@ class LocalMode(Enum):
 # API provider ("hf" for HuggingFace, "openrouter" for OpenRouter).
 client_mode_group = {
     "Olmo-3-32B-Think": {
-        "chat": ClientMode.CHAT_REASONING,
-        "provider": "openrouter"
+        "chat": ClientMode.CHAT_REASONING
     },
 }
 
@@ -177,6 +178,7 @@ class AllenAILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         # Olmo has it's date code in the middle
@@ -290,17 +292,19 @@ class AllenAILLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                if self.client_mode_group[self.model_name]["provider"] == "hf":
-                    self.client = InferenceClient(model=self.model_fullname)
-                elif client_mode_group[self.model_name]["provider"] == "openrouter":
-                    api_key = os.getenv(f"OPENROUTER_API_KEY")
-                    assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                if self.api_type == "huggingface":
+                    api_key = os.getenv("HF_TOKEN")
+                    assert api_key is not None, "HF_TOKEN not found in environment variable HF_TOKEN"
+                    self.client = InferenceClient(model=self.model_fullname, token=api_key)
+                elif self.api_type == "openrouter":
+                    api_key = os.getenv("OPENROUTER_API_KEY")
+                    assert api_key is not None, "OPENROUTER_API_KEY not found in environment variable OPENROUTER_API_KEY"
                     self.client = OpenAI(
                         base_url="https://openrouter.ai/api/v1",
                         api_key=api_key,
                     )
                 else:
-                    self.client = None
+                    raise ValueError(f"api_type must be 'huggingface' or 'openrouter' for API mode, got: {self.api_type}")
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,

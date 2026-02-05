@@ -308,14 +308,14 @@ class ZhipuAILLM(AbstractLLM):
                     self.model_fullname = f"{COMPANY}/{self.model_name}"
                     self.client = InferenceClient(model=self.model_fullname)
                 elif self.api_type == "fireworks_deploy":
-                    api_key = os.getenv(f"FIREWORKS_DEPLOY_API_KEY")
-                    assert api_key is not None, f"FIREWORKS DEPLOY API key not found in environment variable FIREWORKS_DEPLOY_API_KEY"
+                    api_key = os.getenv("FIREWORKS_DEPLOY_API_KEY")
+                    assert api_key is not None, "FIREWORKS_DEPLOY_API_KEY not found in environment variable FIREWORKS_DEPLOY_API_KEY"
                     self.client = OpenAI(
                         api_key=api_key,
                         base_url="https://api.fireworks.ai/inference/v1"
                     )
                 else:
-                    self.client = None
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

@@ -266,16 +266,20 @@ class MoonshotAILLM(AbstractLLM):
             Exception: If the model does not support the configured execution mode.
         """
         if self.execution_mode == "api":
-            api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-            assert api_key is not None, f"{COMPANY.upper()} API key not found in environment variable {COMPANY.upper()}_API_KEY"
             if self.model_name in client_mode_group:
                 if self.api_type == "huggingface":
-                    self.client = InferenceClient(model=self.huggingface_name)
-                else:
+                    api_key = os.getenv("HF_TOKEN")
+                    assert api_key is not None, "HF_TOKEN not found in environment variable HF_TOKEN"
+                    self.client = InferenceClient(model=self.huggingface_name, token=api_key)
+                elif self.api_type == "default":
+                    api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                    assert api_key is not None, f"{COMPANY.upper()} API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = OpenAI(
                         api_key = api_key,
                         base_url = "https://api.moonshot.ai/v1",
                     )
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

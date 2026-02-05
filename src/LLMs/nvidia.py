@@ -56,6 +56,7 @@ class NvidiaConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["deepinfra"] = "deepinfra"
 
 class NvidiaSummary(BasicSummary):
     """Output model for NVIDIA summarization results.
@@ -67,6 +68,7 @@ class NvidiaSummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["deepinfra"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -149,6 +151,7 @@ class NvidiaLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.full_config = config
 
     def summarize(self, prepared_text: str) -> str:
@@ -230,15 +233,18 @@ class NvidiaLLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                api_key = os.getenv(f"DEEPINFRA_API_KEY")
-                assert api_key is not None, (
-                    f"{COMPANY} API key not found in environment variable "
-                )
+                if self.api_type == "deepinfra":
+                    api_key = os.getenv(f"DEEPINFRA_API_KEY")
+                    assert api_key is not None, (
+                        f"{COMPANY} API key not found in environment variable "
+                    )
 
-                self.client = OpenAI(
-                    api_key=api_key,
-                    base_url="https://api.deepinfra.com/v1/openai",
-                )
+                    self.client = OpenAI(
+                        api_key=api_key,
+                        base_url="https://api.deepinfra.com/v1/openai",
+                    )
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

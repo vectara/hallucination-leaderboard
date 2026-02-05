@@ -59,6 +59,7 @@ class AI21LabsConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["default"] = "default"
 
     class Config:
         """Pydantic configuration to forbid extra fields during parsing."""
@@ -75,6 +76,7 @@ class AI21LabsSummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["default"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -162,6 +164,7 @@ class AI21LabsLLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
 
     def summarize(self, prepared_text: str) -> str:
         """Generate a summary of the provided text.
@@ -243,9 +246,12 @@ class AI21LabsLLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
-                assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
-                self.client = AI21Client(api_key=api_key)
+                if self.api_type == "default":
+                    api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                    assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    self.client = AI21Client(api_key=api_key)
+                else:
+                    raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
                 raise Exception(ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(
                     model_name=self.model_name,
