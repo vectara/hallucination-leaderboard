@@ -48,6 +48,7 @@ class AnthropicConfig(BasicLLMConfig):
 
     company: Literal["anthropic"] = "anthropic"
     model_name: Literal[
+        "claude-opus-4-6",
         "claude-opus-4-5",
         "claude-sonnet-4-5",
         "claude-opus-4-1",
@@ -124,6 +125,9 @@ class LocalMode(Enum):
 # Each model maps endpoint types to ClientMode enum values indicating how to
 # invoke the Anthropic API. All Claude models use the messages API.
 client_mode_group = {
+    "claude-opus-4-6": {
+        "chat": ClientMode.CHAT_DEFAULT
+    },
     "claude-opus-4-5": {
         "chat": ClientMode.CHAT_DEFAULT
     },
@@ -208,14 +212,16 @@ class AnthropicLLM(AbstractLLM):
         if self.client:
             match client_mode_group[self.model_name][self.endpoint]:
                 case ClientMode.CHAT_DEFAULT:
-                    chat_package = self.client.messages.create(
+                    # Use streaming to handle long-running requests (>10 min)
+                    with self.client.messages.stream(
                         model=self.model_fullname,
                         messages=[{"role": "user", "content":prepared_text}],
                         max_tokens=self.max_tokens,
                         temperature=self.temperature
-                    )
-                    summary = chat_package.content[0].text
-        elif self.local_model: 
+                    ) as stream:
+                        response = stream.get_final_message()
+                        summary = response.content[0].text
+        elif self.local_model:
             pass
         else:
             raise Exception(ModelInstantiationError.MISSING_SETUP.format(class_name=self.__class__.__name__))

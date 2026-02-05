@@ -84,9 +84,7 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        # BATCH 5: Testing default api_type
-        OpenAIConfig(**{"model_name": "gpt-4o", "temperature": 0.0, "api_type": "default"}),
-        # QwenConfig - skipped, validation issue to investigate
+        AnthropicConfig(**{"model_name": "claude-opus-4-6", "threads": 3, "temperature": 0.0, "api_type": "default"}),
       ]
     }
   ),
@@ -160,6 +158,7 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
+        AnthropicConfig(**{"model_name": "claude-opus-4-6", "threads": 3, "temperature": 0.0, "api_type": "default"}),
 
         # CPU 2
 
