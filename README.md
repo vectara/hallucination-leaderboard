@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on February 3, 2026
+Last updated on February 5, 2026
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-01-30.png)
 
@@ -85,6 +85,7 @@ Last updated on February 3, 2026
 |anthropic/claude-opus-4-20250514|12.0 %|88.0 %|91.0 %|123.2|
 |anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
 |openai/gpt-5.1-high-2025-11-13|12.1 %|87.9 %|100.0 %|254.4|
+|anthropic/claude-opus-4-6|12.2 %|87.8 %|99.8 %|137.6|
 |openai/gpt-5-mini-2025-08-07|12.9 %|87.1 %|99.9 %|169.7|
 |google/gemini-3-flash-preview|13.5 %|86.5 %|99.8 %|90.2|
 |google/gemini-3-pro-preview|13.6 %|86.4 %|99.4 %|101.9|
