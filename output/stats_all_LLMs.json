@@ -136,6 +136,14 @@
     "avg_word_count": 114.5
   },
   {
+    "model_name": "anthropic/claude-opus-4-6",
+    "date_code": "",
+    "hallucination_rate": 12.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.8,
+    "avg_word_count": 137.6
+  },
+  {
     "model_name": "anthropic/claude-sonnet-4-20250514",
     "date_code": "20250514",
     "hallucination_rate": 10.3,
