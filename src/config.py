@@ -84,7 +84,169 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
-        AnthropicConfig(**{"model_name": "claude-opus-4-6", "threads": 3, "temperature": 0.0, "api_type": "default"}),
+        # AI21LabsConfig(**
+        #   {
+        #     "model_name": "jamba-mini-2",
+        #     "date_code": "",
+        #     "temperature": 0.00,
+        #     "max_tokens": 4096,
+        #     "api_type": "default"
+        #   }
+        # ),
+        # AI21LabsConfig(**
+        #   {
+        #     "threads": 4,
+        #     "model_name": "jamba-mini-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0,
+        #     "max_tokens": 4096,
+        #     "api_type": "default"
+        #   }
+        # ),
+        # AI21LabsConfig(**
+        #   {
+        #     "threads": 4,
+        #     "model_name": "jamba-large-1.7",
+        #     "date_code": "2025-07",
+        #     "temperature": 0.0,
+        #     "max_tokens": 4096,
+        #     "api_type": "default"
+        #   }
+        # ),
+
+        # AmazonConfig(**{"model_name": "nova-pro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024, "api_type": "default"}), # 1024 token cap
+        # AmazonConfig(**{"model_name": "nova-micro-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024, "api_type": "default"}), # 1024 token cap
+        # AmazonConfig(**{"model_name": "nova-2-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
+        # AmazonConfig(**{"model_name": "nova-lite-v1:0", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 1024, "api_type": "default"}), # Capped at 1024
+        # AntGroupMIConfig(**
+        #   {
+        #     "model_name": "finix_s1_32b",
+        #     "date_code": "",
+        #     "temperature": 0.0,
+        #     "api_type": "default"
+        #   }
+        # ),
+        # AnthropicConfig(**{"threads": 4, "model_name": "claude-opus-4-5", "date_code": "20251101", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
+        # AnthropicConfig(**{"model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0, "api_type": "default"}),
+        # AnthropicConfig(**{"model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0, "api_type": "default"}),
+        # AnthropicConfig(**{"model_name": "claude-opus-4", "date_code": "20250514", "temperature": 0.0, "api_type": "default"}),
+        # AnthropicConfig(**{"model_name": "claude-opus-4-1", "date_code": "20250805", "temperature": 0.0, "api_type": "default"}),
+        # AnthropicConfig(**{"model_name": "claude-sonnet-4-5", "date_code": "20250929", "temperature": 0.0, "api_type": "default"}),
+        # ArceeAIConfig(**{"model_name": "trinity-large-preview", "temperature": 0.0, "api_type": "default"}),
+        # CohereConfig(**{"model_name": "c4ai-aya-expanse-32b", "temperature": 0.0, "max_tokens": 4096, "api_type": "default"}),
+        # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0, "max_tokens": 4096, "api_type": "default"}),
+        # CohereConfig(**{"model_name": "command-a", "date_code": "03-2025", "temperature": 0.0, "max_tokens": 8192, "api_type": "default"}),
+        # CohereConfig(**{"model_name": "command-r-plus", "date_code": "08-2024", "temperature": 0.0, "max_tokens": 4096, "api_type": "default"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}), # API Bad request
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}), # API Bad request
+        # GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0, "mini_throttle_time": 2.0, "max_tokens": 8192, "api_type": "replicate"}),
+        # GoogleConfig(**{"model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemini-2.5-pro", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemini-2.5-flash-lite", "date_code": "", "temperature": 0.0, "thinking_budget": 0, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemma-3-12b-it", "date_code": "", "temperature": 0.01, "mini_throttle_time": 2.0, "api_type": "replicate"}),
+        # GoogleConfig(**{"model_name": "gemma-3-27b-it", "date_code": "", "temperature": 0.0, "mini_throttle_time": 2.0, "api_type": "replicate"}),
+        # IBMGraniteConfig(**
+        #   {
+        #     "model_name": "granite-3.3-8b-instruct", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
+        #     "temperature": 0.01,
+        #     "mini_throttle_time": 2.0, # Cant be 0.0 has to be positive
+        #     "api_type": "replicate"
+        #   }
+        # ),
+        # IBMGraniteConfig(**
+        #   {
+        #     "model_name": "granite-4.0-h-small", # Has an odd error but seems to work? The attention mask is not set and cannot be inferred from input because pad token is same as eos token as a consequence you may observe unexpected behavior please pass your inputs attention_mask to obtain reliable results
+        #     "temperature": 0.01,
+        #     "mini_throttle_time": 2.0, # Cant be 0.0 has to be positive
+        #     "api_type": "replicate"
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
+        #     "temperature": 0.0,
+        #     "api_type": "together"
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "model_name": "Llama-4-Scout-17B-16E-Instruct",
+        #     "temperature": 0.0,
+        #     "api_type": "together"
+        #   }
+        # ),
+        # MetaLlamaConfig(**
+        #   {
+        #     "model_name": "Llama-3.3-70B-Instruct-Turbo",
+        #     "temperature": 0.0,
+        #     "api_type": "together"
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "model_name": "Phi-4-mini-instruct",
+        #     "model_key": os.getenv("PHI_4_MINI_INSTRUCT_API_KEY"),
+        #     "azure_endpoint": "https://hhem-lb-phi-4-mini-inst-resource.services.ai.azure.com/models",
+        #     "temperature": 0.0,
+        #     "api_type": "default"
+        #   }
+        # ),
+        # MicrosoftConfig(**
+        #   {
+        #     "model_name": "Phi-4",
+        #     "model_key": os.getenv("PHI_4_API_KEY"),
+        #     "azure_endpoint": "https://hhem-lb-phi-4-resource.services.ai.azure.com/models",
+        #     "temperature": 0.0,
+        #     "api_type": "default"
+        #   }
+        # ),
+        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-3b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
+        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-8b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
+        # MistralAIConfig(**{"threads": 2, "model_name": "ministral-14b", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
+        # MistralAIConfig(**{"threads": 2, "model_name": "mistral-large", "date_code": "2512", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
+        # MistralAIConfig(**{"model_name": "ministral-3b", "date_code": "2410", "temperature": 0.0, "api_type": "default"}),
+        # MistralAIConfig(**{"model_name": "ministral-8b", "date_code": "2410", "temperature": 0.0, "api_type": "default"}),
+        # MistralAIConfig(**{"model_name": "mistral-large", "date_code": "2411", "temperature": 0.0, "api_type": "default"}),
+        # MistralAIConfig(**{"model_name": "mistral-small", "date_code": "2501", "temperature": 0.0, "api_type": "default"}),
+        # MistralAIConfig(**{"model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0, "api_type": "default"}), #mistral medium 3.1 date code
+        # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "api_type": "fireworks", "date_code": "", "temperature": 0.0}),
+        # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0, "api_type": "huggingface"}),
+        # MoonshotAIConfig(**{"model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
+        # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0, "api_type": "deepinfra"}),
+        # OpenAIConfig(**{"threads": 32, "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-4.1", "date_code": "2025-04-14", "temperature": 0.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-5-minimal", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-5-mini", "date_code": "2025-08-07", "reasoning_effort": "minimal", "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-5-nano", "date_code": "2025-08-07", "reasoning_effort":"minimal", "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-oss-120b", "date_code": "", "temperature": 0.0, "api_type": "together"}),
+        # OpenAIConfig(**{"model_name": "gpt-4o", "date_code": "2024-08-06", "temperature": 0.0, "max_tokens": 16384, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "o3-pro", "temperature": 0.0, "endpoint": "response", "reasoning_effort": "low", "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low", "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high", "api_type": "default"}),
+        # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-high", "date_code": "2025-12-11", "reasoning_effort": "high", "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"threads": 3, "model_name": "gpt-5.2-low", "date_code": "2025-12-11", "reasoning_effort": "low", "temperature": -1.0, "api_type": "default"}),
+        # QwenConfig(**{"model_name": "qwen3-4b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0, "api_type": "default"}),
+        # QwenConfig(**{"model_name": "qwen3-32b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0, "api_type": "default"}),
+        # QwenConfig(**{"model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True, "api_type": "default"}),
+        # QwenConfig(**{"model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0, "api_type": "default"}),
+        # QwenConfig(**{"model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0, "api_type": "default"}),
+        # SnowflakeConfig(**{"model_name": "snowflake-arctic-instruct", "temperature": 0.01, "mini_throttle_time": 2.0, "max_output_tokens": 4090, "api_type": "replicate"}),
+        # VectaraConfig(**{"model_name": "mockingbird-2.0", "api_type": "default"}),
+        # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}), # failed need money
+        # XAIConfig(**{"model_name": "grok-4-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
+        # XAIConfig(**{"model_name": "grok-4-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
+        # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768, "api_type": "default"}),
+        # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768, "api_type": "default"}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.5-AIR-FP8", "api_type": "together", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "api_type": "deepinfra", "temperature": 0.0}), #failed need money
+        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "api_type": "fireworks_deploy", "temperature": 0.1}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "api_type": "huggingface", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # ZhipuAIConfig(**{"threads": 2, "model_name": "glm-4p7", "api_type": "fireworks", "temperature": 0.0}),
       ]
     }
   ),

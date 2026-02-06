@@ -293,9 +293,7 @@ class AllenAILLM(AbstractLLM):
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 if self.api_type == "huggingface":
-                    api_key = os.getenv("HF_TOKEN")
-                    assert api_key is not None, "HF_TOKEN not found in environment variable HF_TOKEN"
-                    self.client = InferenceClient(model=self.model_fullname, token=api_key)
+                    self.client = InferenceClient(model=self.model_fullname)
                 elif self.api_type == "openrouter":
                     api_key = os.getenv("OPENROUTER_API_KEY")
                     assert api_key is not None, "OPENROUTER_API_KEY not found in environment variable OPENROUTER_API_KEY"

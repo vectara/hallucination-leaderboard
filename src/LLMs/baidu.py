@@ -186,18 +186,15 @@ class BaiduLLM(AbstractLLM):
         """Initialize the HuggingFace Inference client for ERNIE inference.
 
         Creates an InferenceClient instance configured for the specified
-        ERNIE model using the HF_TOKEN environment variable for authentication.
+        ERNIE model. Uses cached HuggingFace login credentials.
 
         Raises:
-            AssertionError: If the HF_TOKEN environment variable is not set.
             Exception: If the model does not support the configured execution mode.
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 if self.api_type == "huggingface":
-                    api_key = os.getenv("HF_TOKEN")
-                    assert api_key is not None, "HF_TOKEN not found in environment variable HF_TOKEN"
-                    self.client = InferenceClient(model=self.model_fullname, token=api_key)
+                    self.client = InferenceClient(model=self.model_fullname)
                 else:
                     raise ValueError(f"Unknown api_type: {self.api_type}")
             else:

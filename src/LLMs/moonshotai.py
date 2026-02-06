@@ -268,9 +268,7 @@ class MoonshotAILLM(AbstractLLM):
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 if self.api_type == "huggingface":
-                    api_key = os.getenv("HF_TOKEN")
-                    assert api_key is not None, "HF_TOKEN not found in environment variable HF_TOKEN"
-                    self.client = InferenceClient(model=self.huggingface_name, token=api_key)
+                    self.client = InferenceClient(model=self.huggingface_name)
                 elif self.api_type == "default":
                     api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                     assert api_key is not None, f"{COMPANY.upper()} API key not found in environment variable {COMPANY.upper()}_API_KEY"

@@ -228,8 +228,7 @@ class DeepSeekAILLM(AbstractLLM):
         """Initialize the HuggingFace Inference client for DeepSeek inference.
 
         Creates an InferenceClient instance configured for the specified
-        DeepSeek model using the HF_TOKEN environment variable for
-        authentication with the HuggingFace Inference API.
+        DeepSeek model. Uses cached HuggingFace login credentials.
 
         Raises:
             Exception: If the model does not support the configured execution mode.
@@ -237,9 +236,7 @@ class DeepSeekAILLM(AbstractLLM):
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 if self.api_type == "huggingface":
-                    api_key = os.getenv("HF_TOKEN")
-                    assert api_key is not None, "HF_TOKEN not found in environment variable HF_TOKEN"
-                    self.client = InferenceClient(model=self.model_fullname, token=api_key)
+                    self.client = InferenceClient(model=self.model_fullname)
                 else:
                     raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
