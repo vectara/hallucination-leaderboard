@@ -446,7 +446,7 @@ Here is the passage:
         #     "temperature": 0.0,
         #   }
         # ),
-        # MiniMaxAIConfig(**{"model_name": "minimax-m2p1", "date_code": "", "temperature": 0.0}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m2p1", "api_type": "fireworks", "date_code": "", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-3b", "date_code": "2512", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-8b", "date_code": "2512", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "ministral-14b", "date_code": "2512", "temperature": 0.0}),
@@ -462,7 +462,16 @@ Here is the passage:
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-12b", "date_code": "2409", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "pixtral-large", "date_code": "2411", "temperature": 0.0}),
         # MistralAIConfig(**{"company": "mistralai", "model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0}), #mistral medium 3.1 date code
-        # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0}),
+        # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "api_type": "huggingface", "temperature": 0.01, "min_throttle_time": 4.0}),
+        # MoonshotAIConfig(**{"model_name": "kimi-k2-thinking", "temperature": 0.01}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m2p1", "api_type": "fireworks", "temperature": 0.01}),
+        # OpenAIConfig(**{"model_name": "gpt-4o-mini", "temperature": 0.0}),
+        # OpenAIConfig(**{"model_name": "gpt-oss-120b", "api_type": "together", "temperature": 0.0}),
+        # OpenAIConfig(**{"model_name": "gpt-oss-20b", "api_type": "replicate", "temperature": 0.7}),
+        # ZhipuAIConfig(**{"model_name": "glm-4p5", "api_type": "fireworks", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.5-AIR-FP8", "api_type": "together", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "api_type": "huggingface", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "api_type": "deepinfra", "temperature": 0.0}),
         # MoonshotAIConfig(**{"model_name": "kimi-k2.5", "temperature": 1, "threads": 3}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "moonshotai/Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "Kimi-K2-Instruct", "temperature": 0.0, "min_throttle_time": 4.0}),
@@ -498,7 +507,7 @@ Here is the passage:
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-low", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "low"}),
         # OpenAIConfig(**{"company": "openai", "model_name": "o4-mini-high", "date_code": "2025-04-16", "temperature": 1.0, "reasoning_effort": "high"}),
         # PrimeIntellectConfig(**{"model_name": "INTELLECT-3", "temperature": 0.0, "min_throttle_time": 4.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-235B-A22B", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-235b-a22b", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-30b-a3b-thinking", "date_code": "2507", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-omni-30b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
@@ -549,13 +558,13 @@ Here is the passage:
         #     "temperature": 0.01, # Cant be 0.0 has to be positive
         #   }
         # ),
-        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
-        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "temperature": 0.0}),
-        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}),
-        # ZhipuAIConfig(**{"model_name": "glm-4p7", "temperature": 0.0}),
-        # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
-        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.01, "max_output_tokens": 8192}),
-        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
+        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "api_type": "together", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "api_type": "fireworks", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "api_type": "deepinfra", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "glm-4p7", "api_type": "fireworks", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "api_type": "huggingface", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "api_type": "fireworks_deploy", "temperature": 0.01, "max_output_tokens": 8192}),
+        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "api_type": "fireworks_deploy", "temperature": 0.1}),
       ]
     }
   ),
@@ -629,7 +638,7 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        ArceeAIConfig(**{"model_name": "trinity-large-preview", "temperature": 0.0}),
+        # ArceeAIConfig(**{"model_name": "trinity-large-preview", "temperature": 0.0}),
 
         # CPU 2
         # MoonshotAIConfig(**{"model_name": "kimi-k2.5", "temperature": 1, "threads": 3}),
@@ -668,8 +677,8 @@ Here is the passage:
 
 
         # # Complete but sort
-        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "temperature": 0.1}),
-        # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "api_type": "fireworks_deploy", "temperature": 0.1}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "api_type": "huggingface", "temperature": 0.0, "min_throttle_time": 4.0}),
         # AI21LabsConfig(**
         #   {
         #     "model_name": "jamba-mini-2",
@@ -678,8 +687,8 @@ Here is the passage:
         #     "max_tokens": 4096
         #   }
         # ),
-        # ZhipuAIConfig(**{"threads": 2, "model_name": "glm-4p7", "temperature": 0.0}),
-        # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "date_code": "", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"threads": 2, "model_name": "glm-4p7", "api_type": "fireworks", "temperature": 0.0}),
+        # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "api_type": "fireworks", "date_code": "", "temperature": 0.0}),
         # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
         # GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1}),
 
@@ -818,6 +827,7 @@ Here is the passage:
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
         # QwenConfig(**{"company": "qwen", "model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-235b-a22b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0, "threads": 16}),
         # SnowflakeConfig(**{"model_name": "snowflake-arctic-instruct", "temperature": 0.01, "mini_throttle_time": 2.0, "max_output_tokens": 4090}),
         # VectaraConfig(**{"model_name": "mockingbird-2.0"}),
         # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0, "min_throttle_time": 4.0}), # failed need money
@@ -825,8 +835,8 @@ Here is the passage:
         # XAIConfig(**{"model_name": "grok-4-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0}),
         # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
         # XAIConfig(**{"threads": 8, "model_name": "grok-4-1-fast-non-reasoning", "temperature": 0.0, "min_throttle_time": 2.0, "max_tokens": 32768}),
-        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "temperature": 0.0}),
-        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "temperature": 0.0}), #failed need money
+        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "api_type": "together", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "GLM-4.6", "api_type": "deepinfra", "temperature": 0.0}), #failed need money
       ]
     }
   ),
@@ -1410,7 +1420,7 @@ Here is the passage:
         QwenConfig(**{"company": "qwen", "model_name": "Qwen3-14B", "date_code": "", "temperature": 0.0}),
         QwenConfig(**{"company": "qwen", "model_name": "Qwen3-30B-A3B", "date_code": "", "temperature": 0.0}),
         QwenConfig(**{"company": "qwen", "model_name": "Qwen3-32B", "date_code": "", "temperature": 0.0}),
-        QwenConfig(**{"company": "qwen", "model_name": "Qwen3-235B-A22B", "date_code": "", "temperature": 0.0}),
+        QwenConfig(**{"company": "qwen", "model_name": "qwen3-235b-a22b", "date_code": "", "temperature": 0.0}),
         QwenConfig(**{"company": "qwen", "model_name": "QwQ-32B-Preview", "date_code": "", "temperature": 0.0}),
 
         SnowflakeConfig(**{"company": "snowflake", "model_name": "snowflake-arctic-instruct", "date_code": "", "temperature": 0.0}),
@@ -1423,9 +1433,9 @@ Here is the passage:
         XAIConfig(**{"company": "xai-org", "model_name": "grok-3-mini", "temperature": 0.0, "date_code": ""}),
         XAIConfig(**{"company": "xai-org", "model_name": "grok-4", "temperature": 0.0, "date_code": "0709"}),
 
-        ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4-9b-chat", "date_code": "", "temperature": 0.0}),
-        ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "date_code": "", "temperature": 0.0}),
-        ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "date_code": "", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4-9b-chat", "date_code": "", "temperature": 0.0}),  # not in client_mode_group
+        ZhipuAIConfig(**{"company": "zai-org", "model_name": "GLM-4.5-AIR-FP8", "api_type": "together", "date_code": "", "temperature": 0.0}),
+        ZhipuAIConfig(**{"company": "zai-org", "model_name": "glm-4p5", "api_type": "fireworks", "date_code": "", "temperature": 0.0}),
       ]
     }
   ),

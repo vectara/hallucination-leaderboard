@@ -73,7 +73,7 @@ class QwenConfig(BasicLLMConfig):
         "Qwen3-14B",
         "Qwen3-30B-A3B",
         "Qwen3-32B",
-        "Qwen3-235B-A22B",
+        "qwen3-235b-a22b",
         "QwQ-32B-Preview",
 
         "qwen3-30b-a3b-thinking",
@@ -99,7 +99,7 @@ class QwenConfig(BasicLLMConfig):
     execution_mode: Literal["api"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
     thinking_tokens: bool = None
-    enable_thinking: bool = None
+    enable_thinking: bool = False
 
 class QwenSummary(BasicSummary):
     """Output model for Qwen summarization results.
@@ -160,7 +160,7 @@ class LocalMode(Enum):
 # Each model maps endpoint types to ClientMode enum values. Models with CHAT_REASONING
 # support the enable_thinking parameter for reasoning/thinking mode.
 client_mode_group = {
-    "Qwen3-235B-A22B": {
+    "qwen3-235b-a22b": {
         "chat": ClientMode.CHAT_QWEN_235B_A22B,
         "api_type": "Together"
     },
@@ -288,7 +288,7 @@ class QwenLLM(AbstractLLM):
                         )
                     summary = completion.choices[0].message.content
                 case ClientMode.CHAT_QWEN_235B_A22B:
-                    if self.model_name == 'Qwen3-235B-A22B':
+                    if self.model_name == 'qwen3-235b-a22b':
                         model_name = 'Qwen/Qwen3-235B-A22B-Instruct-2507-tput'
                     else:
                         raise Exception(f"Illegal model name for Together client: {self.model_fullname}")
@@ -335,7 +335,7 @@ class QwenLLM(AbstractLLM):
                 )
                 self.client = Together(
                     api_key=api_key, 
-                    base_url="https://together.xyz/api/v1",
+                    base_url="https://api.together.xyz/v1",
                 )
             elif self.model_name in client_mode_group:
                 api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")

@@ -5,12 +5,15 @@ __pycache__/
 .env
 log.txt
 TODO.md
+notes/
 
 models/
 output_test/
 old_output/
 staging_output/
 live_staging/
+lb_env/
+.DS_Store
 
 config.json
 test_config.json

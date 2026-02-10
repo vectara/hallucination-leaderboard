@@ -15,6 +15,10 @@ Attributes:
     COMPANY: Provider identifier string ("moonshotai").
     client_mode_group: Mapping of models to supported API client modes.
     local_mode_group: Mapping of models to local execution modes (empty).
+
+Note:
+    Models using HuggingFace Inference API (e.g., Kimi-K2.5) require
+    api_type="huggingface" in their config.
 """
 
 import os
@@ -49,6 +53,8 @@ class MoonshotAIConfig(BasicLLMConfig):
             alternative backends (e.g., "0905" for Together AI).
         execution_mode: Where to run inference, currently only "api" supported.
         endpoint: API endpoint type ("chat" for conversational format).
+        api_type: Backend API to use. "default" for Moonshot AI's OpenAI-compatible
+            API, "huggingface" for HuggingFace Inference API (required for Kimi-K2.5).
     """
 
     company: Literal["moonshotai"] = "moonshotai"
@@ -61,17 +67,20 @@ class MoonshotAIConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["default", "huggingface"] = "default"
 
 class MoonshotAISummary(BasicSummary):
     """Output model for Moonshot AI summarization results.
 
-    Extends BasicSummary with endpoint tracking for result provenance.
+    Extends BasicSummary with endpoint and api_type tracking for result provenance.
 
     Attributes:
         endpoint: The API endpoint type used for generation, if applicable.
+        api_type: The backend API used ("default" for Moonshot, "huggingface" for HF).
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["default", "huggingface"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -128,8 +137,7 @@ client_mode_group = {
         "chat": ClientMode.CHAT_DEFAULT
     },
     "Kimi-K2.5": {
-        "chat": ClientMode.KIMI_K2P5_HF,
-        "api_type": "huggingface"
+        "chat": ClientMode.KIMI_K2P5_HF
     }
 }
 
@@ -160,6 +168,7 @@ class MoonshotAILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.huggingface_name = f"moonshotai/{self.model_fullname}"
 
     def summarize(self, prepared_text: str) -> str:
@@ -260,7 +269,7 @@ class MoonshotAILLM(AbstractLLM):
             api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
             assert api_key is not None, f"{COMPANY.upper()} API key not found in environment variable {COMPANY.upper()}_API_KEY"
             if self.model_name in client_mode_group:
-                if client_mode_group[self.model_name]["api_type"] == "huggingface":
+                if self.api_type == "huggingface":
                     self.client = InferenceClient(model=self.huggingface_name)
                 else:
                     self.client = OpenAI(

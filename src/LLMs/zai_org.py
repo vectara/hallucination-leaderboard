@@ -14,7 +14,7 @@ Classes:
 
 Attributes:
     COMPANY: Provider identifier string ("zai-org").
-    client_mode_group: Mapping of models to supported API client modes and backends.
+    client_mode_group: Mapping of models to supported API client modes.
     local_mode_group: Mapping of models to local execution modes (empty).
 """
 
@@ -49,6 +49,8 @@ class ZhipuAIConfig(BasicLLMConfig):
         date_code: Optional version/date identifier for the model.
         execution_mode: Where to run inference, currently only "api" supported.
         endpoint: API endpoint type ("chat" for conversational format).
+        api_type: Backend API provider to use. Required field with no default
+            since Zhipu AI models are only available via third-party providers.
     """
 
     company: Literal["zai-org"] = "zai-org"
@@ -65,17 +67,20 @@ class ZhipuAIConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
+    api_type: Literal["together", "fireworks", "huggingface", "deepinfra", "fireworks_deploy"]
 
 class ZhipuAISummary(BasicSummary):
     """Output model for Zhipu AI summarization results.
 
-    Extends BasicSummary with endpoint tracking for result provenance.
+    Extends BasicSummary with endpoint and api_type tracking for result provenance.
 
     Attributes:
         endpoint: The API endpoint type used for generation, if applicable.
+        api_type: The backend API provider used for generation.
     """
 
     endpoint: Literal["chat", "response"] | None = None
+    api_type: Literal["together", "fireworks", "huggingface", "deepinfra", "fireworks_deploy"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -127,33 +132,15 @@ class LocalMode(Enum):
     UNDEFINED = auto()
 
 # client_mode_group: Mapping of model names to their supported API client modes.
-# Each model maps endpoint types to ClientMode enum values and includes an api_type
-# field indicating the backend provider (together, fireworks, or deepinfra).
+# Each model maps endpoint types to ClientMode enum values.
+# Note: api_type is now specified in config, not here.
 client_mode_group = {
-    "GLM-4.5-AIR-FP8": {
-        "chat": ClientMode.GLM_4P5_AIR_FP8,
-        "api_type": "together"
-    },
-    "glm-4p5": {
-        "chat": ClientMode.GLM_4P5,
-        "api_type": "fireworks"
-    },
-    "GLM-4.7-Flash": {
-        "chat": ClientMode.GLM_4P7_FLASH,
-        "api_type": "huggingface"
-    },
-    "glm-4p7": {
-        "chat": ClientMode.GLM_4P7,
-        "api_type": "fireworks"
-    },
-    "glm-4p7-flash": {
-        "chat": ClientMode.GLM_4P7_FLASH_FW_DEPLOY,
-        "api_type": "fireworks_deploy"
-    },
-    "GLM-4.6": {
-        "chat": ClientMode.GLM_4P6,
-        "api_type": "deepinfra"
-    }
+    "GLM-4.5-AIR-FP8": {"chat": ClientMode.GLM_4P5_AIR_FP8},
+    "glm-4p5": {"chat": ClientMode.GLM_4P5},
+    "GLM-4.7-Flash": {"chat": ClientMode.GLM_4P7_FLASH},
+    "glm-4p7": {"chat": ClientMode.GLM_4P7},
+    "glm-4p7-flash": {"chat": ClientMode.GLM_4P7_FLASH_FW_DEPLOY},
+    "GLM-4.6": {"chat": ClientMode.GLM_4P6}
 }
 
 # local_mode_group: Mapping of model names to their supported local execution modes.
@@ -183,6 +170,7 @@ class ZhipuAILLM(AbstractLLM):
         super().__init__(config)
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
+        self.api_type = config.api_type
         self.full_config = config
 
     def summarize(self, prepared_text: str) -> str:
@@ -298,37 +286,36 @@ class ZhipuAILLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                if client_mode_group[self.model_name]["api_type"] == "together":
+                if self.api_type == "together":
                     api_key = os.getenv(f"TOGETHER_API_KEY")
-                    assert api_key is not None, f"TOGETHER API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    assert api_key is not None, f"TOGETHER API key not found in environment variable TOGETHER_API_KEY"
                     self.client = Together(api_key=api_key)
-                elif client_mode_group[self.model_name]["api_type"] == "fireworks":
+                elif self.api_type == "fireworks":
                     api_key = os.getenv(f"FIREWORKS_API_KEY")
-                    assert api_key is not None, f"FIREWORKS API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    assert api_key is not None, f"FIREWORKS API key not found in environment variable FIREWORKS_API_KEY"
                     self.client = OpenAI(
                         api_key=api_key,
                         base_url="https://api.fireworks.ai/inference/v1"
                     )
-                elif client_mode_group[self.model_name]["api_type"] == "deepinfra":
+                elif self.api_type == "deepinfra":
                     api_key = os.getenv(f"DEEPINFRA_API_KEY")
-                    assert api_key is not None, f"DEEPINFRA API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    assert api_key is not None, f"DEEPINFRA API key not found in environment variable DEEPINFRA_API_KEY"
                     self.client = OpenAI(
                         api_key=api_key,
                         base_url="https://api.deepinfra.com/v1/openai"
                     )
-                elif client_mode_group[self.model_name]["api_type"] == "huggingface":
+                elif self.api_type == "huggingface":
                     self.model_fullname = f"{COMPANY}/{self.model_name}"
                     self.client = InferenceClient(model=self.model_fullname)
-                elif client_mode_group[self.model_name]["api_type"] == "fireworks_deploy":
+                elif self.api_type == "fireworks_deploy":
                     api_key = os.getenv(f"FIREWORKS_DEPLOY_API_KEY")
-                    assert api_key is not None, f"FIREWORKS DEPLOY API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    assert api_key is not None, f"FIREWORKS DEPLOY API key not found in environment variable FIREWORKS_DEPLOY_API_KEY"
                     self.client = OpenAI(
                         api_key=api_key,
                         base_url="https://api.fireworks.ai/inference/v1"
                     )
-                
                 else:
-                    self.client  = None
+                    self.client = None
             else:
                 raise Exception(
                     ModelInstantiationError.CANNOT_EXECUTE_IN_MODE.format(

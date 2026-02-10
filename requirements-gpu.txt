@@ -1,0 +1,25 @@
+# GPU/CUDA dependencies for local model inference
+# Only install if you need to run models locally on GPU
+# Install after core requirements: pip install -r requirements-gpu.txt
+
+# Quantization (for running quantized models locally)
+bitsandbytes>=0.49.0
+
+# NVIDIA CUDA Libraries (cu12 = CUDA 12.x)
+nvidia-cublas-cu12>=12.6.0
+nvidia-cuda-cupti-cu12>=12.6.0
+nvidia-cuda-nvrtc-cu12>=12.6.0
+nvidia-cuda-runtime-cu12>=12.6.0
+nvidia-cudnn-cu12>=9.5.0
+nvidia-cufft-cu12>=11.3.0
+nvidia-cufile-cu12>=1.11.0
+nvidia-curand-cu12>=10.3.0
+nvidia-cusolver-cu12>=11.7.0
+nvidia-cusparse-cu12>=12.5.0
+nvidia-cusparselt-cu12>=0.6.0
+nvidia-nccl-cu12>=2.26.0
+nvidia-nvjitlink-cu12>=12.6.0
+nvidia-nvtx-cu12>=12.6.0
+
+# Triton (for optimized GPU kernels)
+triton>=3.3.0

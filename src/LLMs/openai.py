@@ -53,6 +53,8 @@ class OpenAIConfig(BasicLLMConfig):
             responses API used by reasoning models).
         reasoning_effort: Reasoning intensity for supported models ("none", "minimal",
             "low", "medium", "high"). Used by o-series and GPT-5 models.
+        api_type: Backend API to use. "default" for OpenAI, "together" for Together AI,
+            "replicate" for Replicate. gpt-oss models require explicit api_type.
     """
 
     company: Literal["openai"] = "openai"
@@ -92,20 +94,23 @@ class OpenAIConfig(BasicLLMConfig):
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
     reasoning_effort: Literal["none", "minimal", "low", "medium", "high"] = None
+    api_type: Literal["default", "together", "replicate"] = "default"
 
 class OpenAISummary(BasicSummary):
     """Output model for OpenAI summarization results.
 
-    Extends BasicSummary with endpoint and reasoning effort tracking for
-    result provenance. Captures configuration used during generation.
+    Extends BasicSummary with endpoint, reasoning effort, and api_type tracking
+    for result provenance. Captures configuration used during generation.
 
     Attributes:
         endpoint: The API endpoint type used for generation, if applicable.
         reasoning_effort: The reasoning effort level used, if applicable.
+        api_type: The backend API used ("default" for OpenAI, "together", "replicate").
     """
 
     endpoint: Literal["chat", "response"] | None = None
     reasoning_effort: Literal["none", "minimal", "low", "medium", "high"] | None = None
+    api_type: Literal["default", "together", "replicate"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -169,121 +174,36 @@ class LocalMode(Enum):
     CHAT_DEFAULT = auto()
 
 # client_mode_group: Mapping of model names to their supported API client modes.
-# Each model maps endpoint types to ClientMode enum values and includes an
-# api_type field indicating which backend platform to use (openai, together,
-# or replicate). Models may support chat, response, or both endpoints.
+# Each model maps endpoint types to ClientMode enum values.
+# Models may support chat, response, or both endpoints.
 client_mode_group = {
-    "gpt-5.2-low": {
-        "chat": ClientMode.GPT_5P2_LOW,
-        "api_type": "openai"
-    },
-    "gpt-5.2-high": {
-        "chat": ClientMode.GPT_5P2_HIGH,
-        "api_type": "openai"
-    },
-    "gpt-5.1-low": {
-        "chat": ClientMode.GPT_5P1_LOW,
-        "api_type": "openai"
-    },
-    "gpt-5.1-high": {
-        "chat": ClientMode.GPT_5P1_HIGH,
-        "api_type": "openai"
-    },
-    "gpt-5-minimal": {
-        "chat": ClientMode.GPT_5_MINIMAL,
-        "api_type": "openai"
-    },
-    "gpt-5-high": {
-        "chat": ClientMode.GPT_5_HIGH,
-        "api_type": "openai"
-    },
-    "gpt-5": {
-        "chat": ClientMode.GPT_5_DEFAULT,
-        "api_type": "openai"
-    },
-    "gpt-5-mini": {
-        "chat": ClientMode.GPT_5_DEFAULT,
-        "api_type": "openai"
-    },
-    "gpt-5-nano": {
-        "chat": ClientMode.GPT_5_DEFAULT,
-        "api_type": "openai",
-    },
-    "gpt-4.1": {
-        "chat": ClientMode.CHAT_DEFAULT,
-        "api_type": "openai",
-        "response": ClientMode.RESPONSE_DEFAULT
-    },
-    "gpt-4.1-nano": {
-        "chat": ClientMode.CHAT_DEFAULT,
-        "api_type": "openai",
-        "response": ClientMode.RESPONSE_DEFAULT
-    },
-    "o3": {
-        "chat": ClientMode.CHAT_NO_TEMP,
-        "api_type": "openai",
-        "response": ClientMode.RESPONSE_DEFAULT
-    },
-    "o3-pro": {
-        "api_type": "openai",
-        "response": ClientMode.RESPONSE_NO_TEMP
-    },
-    "o4-mini": {
-        "chat": ClientMode.CHAT_NO_TEMP,
-        "api_type": "openai",
-    },
-    "o4-mini-low": {
-        "chat": ClientMode.O4_MINI_LOW,
-        "api_type": "openai",
-    },
-    "o4-mini-high": {
-        "chat": ClientMode.O4_MINI_HIGH,
-        "api_type": "openai",
-    },
-    "o1-pro": {
-        "api_type": "openai",
-        "response": ClientMode.RESPONSE_NO_TEMP
-    },
-    "gpt-4.1-mini": {
-        "chat": ClientMode.CHAT_DEFAULT,
-        "api_type": "openai",
-    },
-    "o1": {
-        "chat": ClientMode.CHAT_NO_TEMP,
-        "api_type": "openai",
-    },
-    "o1-mini": {
-        "chat": ClientMode.CHAT_NO_TEMP_NO_REASONING,
-        "api_type": "openai",
-    },
-    "gpt-oss-120b": {
-        "chat": ClientMode.DEFAULT_TOGETHER_API,
-        "api_type": "together"
-    },
-    "gpt-oss-20b": {
-        "chat": ClientMode.DEFAULT_REPLICATE_API,
-        "api_type": "replicate"
-    },
-    "gpt-4o-mini": {
-        "chat": ClientMode.CHAT_DEFAULT,
-        "api_type": "openai",
-    },
-    "gpt-4o": {
-        "chat": ClientMode.CHAT_DEFAULT,
-        "api_type": "openai",
-    },
-    "gpt-4-turbo": {
-        "chat": ClientMode.CHAT_DEFAULT,
-        "api_type": "openai",
-    },
-    "gpt-3.5-turbo": {
-        "chat": ClientMode.CHAT_DEFAULT,
-        "api_type": "openai",
-    },
-    "gpt-4": {
-        "chat": ClientMode.CHAT_DEFAULT,
-        "api_type": "openai",
-    }
+    "gpt-5.2-low": {"chat": ClientMode.GPT_5P2_LOW},
+    "gpt-5.2-high": {"chat": ClientMode.GPT_5P2_HIGH},
+    "gpt-5.1-low": {"chat": ClientMode.GPT_5P1_LOW},
+    "gpt-5.1-high": {"chat": ClientMode.GPT_5P1_HIGH},
+    "gpt-5-minimal": {"chat": ClientMode.GPT_5_MINIMAL},
+    "gpt-5-high": {"chat": ClientMode.GPT_5_HIGH},
+    "gpt-5": {"chat": ClientMode.GPT_5_DEFAULT},
+    "gpt-5-mini": {"chat": ClientMode.GPT_5_DEFAULT},
+    "gpt-5-nano": {"chat": ClientMode.GPT_5_DEFAULT},
+    "gpt-4.1": {"chat": ClientMode.CHAT_DEFAULT, "response": ClientMode.RESPONSE_DEFAULT},
+    "gpt-4.1-nano": {"chat": ClientMode.CHAT_DEFAULT, "response": ClientMode.RESPONSE_DEFAULT},
+    "o3": {"chat": ClientMode.CHAT_NO_TEMP, "response": ClientMode.RESPONSE_DEFAULT},
+    "o3-pro": {"response": ClientMode.RESPONSE_NO_TEMP},
+    "o4-mini": {"chat": ClientMode.CHAT_NO_TEMP},
+    "o4-mini-low": {"chat": ClientMode.O4_MINI_LOW},
+    "o4-mini-high": {"chat": ClientMode.O4_MINI_HIGH},
+    "o1-pro": {"response": ClientMode.RESPONSE_NO_TEMP},
+    "gpt-4.1-mini": {"chat": ClientMode.CHAT_DEFAULT},
+    "o1": {"chat": ClientMode.CHAT_NO_TEMP},
+    "o1-mini": {"chat": ClientMode.CHAT_NO_TEMP_NO_REASONING},
+    "gpt-oss-120b": {"chat": ClientMode.DEFAULT_TOGETHER_API},
+    "gpt-oss-20b": {"chat": ClientMode.DEFAULT_REPLICATE_API},
+    "gpt-4o-mini": {"chat": ClientMode.CHAT_DEFAULT},
+    "gpt-4o": {"chat": ClientMode.CHAT_DEFAULT},
+    "gpt-4-turbo": {"chat": ClientMode.CHAT_DEFAULT},
+    "gpt-3.5-turbo": {"chat": ClientMode.CHAT_DEFAULT},
+    "gpt-4": {"chat": ClientMode.CHAT_DEFAULT},
 }
 
 # local_mode_group: Mapping of model names to their supported local execution modes.
@@ -319,6 +239,7 @@ class OpenAILLM(AbstractLLM):
         self.endpoint = config.endpoint
         self.execution_mode = config.execution_mode
         self.reasoning_effort = config.reasoning_effort
+        self.api_type = config.api_type
         if self.model_name in local_mode_group:
             self.model_fullname = f"openai/{self.model_fullname}"
 
@@ -556,15 +477,15 @@ class OpenAILLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                if client_mode_group[self.model_name]["api_type"] == "together":
+                if self.api_type == "together":
                     api_key = os.getenv(f"TOGETHER_API_KEY")
-                    assert api_key is not None, f"TOGETHER API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    assert api_key is not None, f"TOGETHER API key not found in environment variable TOGETHER_API_KEY"
                     self.client = Together(api_key=api_key)
-                if client_mode_group[self.model_name]["api_type"] == "replicate":
+                elif self.api_type == "replicate":
                     api_key = os.getenv(f"REPLICATE_API_TOKEN")
-                    assert api_key is not None, f"REPLICATE API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    assert api_key is not None, f"REPLICATE API key not found in environment variable REPLICATE_API_TOKEN"
                     self.client = "replicate has no client"
-                else:
+                else:  # default
                     api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                     assert api_key is not None, f"OpenAI API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = OpenAI(api_key=api_key)

@@ -28,7 +28,7 @@
     "date_code": "08-2024",
     "hallucination_rate": 6.9,
     "confidence_interval": -1,
-    "answer_rate": 95.0,
+    "answer_rate": 95,
     "avg_word_count": 91.5
   },
   {
@@ -84,8 +84,8 @@
     "date_code": "",
     "hallucination_rate": 5.5,
     "confidence_interval": -1,
-    "answer_rate": 100.0,
-    "avg_word_count": 100.0
+    "answer_rate": 100,
+    "avg_word_count": 100
   },
   {
     "model_name": "amazon/nova-pro-v1:0",
@@ -122,9 +122,9 @@
   {
     "model_name": "anthropic/claude-opus-4-20250514",
     "date_code": "20250514",
-    "hallucination_rate": 12.0,
+    "hallucination_rate": 12,
     "confidence_interval": -1,
-    "answer_rate": 91.0,
+    "answer_rate": 91,
     "avg_word_count": 123.2
   },
   {
@@ -146,7 +146,7 @@
   {
     "model_name": "anthropic/claude-sonnet-4-5-20250929",
     "date_code": "20250929",
-    "hallucination_rate": 12.0,
+    "hallucination_rate": 12,
     "confidence_interval": -1,
     "answer_rate": 95.6,
     "avg_word_count": 127.8
@@ -156,7 +156,7 @@
     "date_code": "",
     "hallucination_rate": 6.9,
     "confidence_interval": -1,
-    "answer_rate": 99.0,
+    "answer_rate": 99,
     "avg_word_count": 117.3
   },
   {
@@ -164,7 +164,7 @@
     "date_code": "",
     "hallucination_rate": 11.3,
     "confidence_interval": -1,
-    "answer_rate": 97.0,
+    "answer_rate": 97,
     "avg_word_count": 93.5
   },
   {
@@ -189,7 +189,7 @@
     "hallucination_rate": 6.3,
     "confidence_interval": -1,
     "answer_rate": 92.6,
-    "avg_word_count": 62.0
+    "avg_word_count": 62
   },
   {
     "model_name": "deepseek-ai/DeepSeek-V3.2-Exp",
@@ -204,7 +204,7 @@
     "date_code": "",
     "hallucination_rate": 7.8,
     "confidence_interval": -1,
-    "answer_rate": 99.0,
+    "answer_rate": 99,
     "avg_word_count": 101.5
   },
   {
@@ -218,7 +218,7 @@
   {
     "model_name": "google/gemini-2.5-pro",
     "date_code": "",
-    "hallucination_rate": 7.0,
+    "hallucination_rate": 7,
     "confidence_interval": -1,
     "answer_rate": 99.1,
     "avg_word_count": 106.4
@@ -268,7 +268,7 @@
     "date_code": "",
     "hallucination_rate": 10.6,
     "confidence_interval": -1,
-    "answer_rate": 100.0,
+    "answer_rate": 100,
     "avg_word_count": 131.4
   },
   {
@@ -276,7 +276,7 @@
     "date_code": "",
     "hallucination_rate": 5.2,
     "confidence_interval": -1,
-    "answer_rate": 100.0,
+    "answer_rate": 100,
     "avg_word_count": 107.4
   },
   {
@@ -292,15 +292,15 @@
     "date_code": "",
     "hallucination_rate": 8.2,
     "confidence_interval": -1,
-    "answer_rate": 100.0,
-    "avg_word_count": 106.0
+    "answer_rate": 100,
+    "avg_word_count": 106
   },
   {
     "model_name": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
     "date_code": "",
     "hallucination_rate": 7.7,
     "confidence_interval": -1,
-    "answer_rate": 99.0,
+    "answer_rate": 99,
     "avg_word_count": 137.3
   },
   {
@@ -349,7 +349,7 @@
     "hallucination_rate": 7.4,
     "confidence_interval": -1,
     "answer_rate": 99.9,
-    "avg_word_count": 196.0
+    "avg_word_count": 196
   },
   {
     "model_name": "mistralai/ministral-8b-2512",
@@ -365,7 +365,7 @@
     "hallucination_rate": 4.5,
     "confidence_interval": -1,
     "answer_rate": 99.9,
-    "avg_word_count": 85.0
+    "avg_word_count": 85
   },
   {
     "model_name": "mistralai/mistral-large-2512",
@@ -398,6 +398,14 @@
     "confidence_interval": -1,
     "answer_rate": 98.6,
     "avg_word_count": 59.2
+  },
+  {
+    "model_name": "moonshotai/Kimi-K2.5",
+    "date_code": "",
+    "hallucination_rate": 14.2,
+    "confidence_interval": -1,
+    "answer_rate": 92.2,
+    "avg_word_count": 112
   },
   {
     "model_name": "nvidia/Nemotron-3-Nano-30B-A3B",
@@ -452,7 +460,7 @@
     "date_code": "2025-08-07",
     "hallucination_rate": 10.5,
     "confidence_interval": -1,
-    "answer_rate": 100.0,
+    "answer_rate": 100,
     "avg_word_count": 105.7
   },
   {
@@ -460,7 +468,7 @@
     "date_code": "2025-11-13",
     "hallucination_rate": 12.1,
     "confidence_interval": -1,
-    "answer_rate": 100.0,
+    "answer_rate": 100,
     "avg_word_count": 254.4
   },
   {
@@ -468,7 +476,7 @@
     "date_code": "2025-11-13",
     "hallucination_rate": 10.9,
     "confidence_interval": -1,
-    "answer_rate": 100.0,
+    "answer_rate": 100,
     "avg_word_count": 165.5
   },
   {
@@ -476,7 +484,7 @@
     "date_code": "2025-12-11",
     "hallucination_rate": 10.8,
     "confidence_interval": -1,
-    "answer_rate": 100.0,
+    "answer_rate": 100,
     "avg_word_count": 186.3
   },
   {
@@ -484,7 +492,7 @@
     "date_code": "2025-12-11",
     "hallucination_rate": 8.4,
     "confidence_interval": -1,
-    "answer_rate": 100.0,
+    "answer_rate": 100,
     "avg_word_count": 126.5
   },
   {
@@ -500,7 +508,7 @@
     "date_code": "",
     "hallucination_rate": 23.3,
     "confidence_interval": -1,
-    "answer_rate": 100.0,
+    "answer_rate": 100,
     "avg_word_count": 127.4
   },
   {
@@ -526,6 +534,14 @@
     "confidence_interval": -1,
     "answer_rate": 99.9,
     "avg_word_count": 111.1
+  },
+  {
+    "model_name": "qwen/qwen3-235b-a22b",
+    "date_code": "",
+    "hallucination_rate": 9.3,
+    "confidence_interval": -1,
+    "answer_rate": 94.9,
+    "avg_word_count": 105.6
   },
   {
     "model_name": "qwen/qwen3-32b",
@@ -572,7 +588,7 @@
     "date_code": "",
     "hallucination_rate": 5.8,
     "confidence_interval": -1,
-    "answer_rate": 93.0,
+    "answer_rate": 93,
     "avg_word_count": 95.9
   },
   {
