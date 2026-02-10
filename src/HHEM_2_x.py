@@ -292,16 +292,16 @@ class HHEM_2_3_API():
             kept for interface consistency).
         max_retries: Maximum number of retry attempts for failed API calls.
         retry_delay: Base delay in seconds for exponential backoff.
-        api_key: Vectara API key loaded from VECTARA_HHEM_API_KEY environment variable.
+        api_key: Vectara API key loaded from VECTARA_API_KEY environment variable.
 
     Raises:
-        AssertionError: If VECTARA_HHEM_API_KEY environment variable is not set.
+        AssertionError: If VECTARA_API_KEY environment variable is not set.
     """
 
     def __init__(self):
         """Initialize the HHEM API client.
 
-        Loads the API key from the VECTARA_HHEM_API_KEY environment variable
+        Loads the API key from the VECTARA_API_KEY environment variable
         and configures retry parameters.
 
         Raises:
@@ -310,9 +310,9 @@ class HHEM_2_3_API():
         self.PROMPT_TEMPLATE = "Determine if the hypothesis is true given the premise?\n\nPremise: {text1}\n\nHypothesis: {text2}"
         self.max_retries = 6
         self.retry_delay = 1
-        self.api_key = os.getenv(f"VECTARA_HHEM_API_KEY")
+        self.api_key = os.getenv(f"VECTARA_API_KEY")
         assert self.api_key is not None, (
-            f"VECTARA_HHEM_API_KEY not found in environment variable "
+            f"VECTARA_API_KEY not found in environment variable "
         )
 
     def __str__(self):
