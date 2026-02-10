@@ -64,6 +64,7 @@ Last updated on February 5, 2026
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
+|qwen/qwen3-235b-a22b|9.3 %|90.7 %|94.9 %|XX %|YY|
 |zai-org/GLM-4.7-flash|9.3 %|90.7 %|91.6 %|71.8|
 |CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
 |zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
