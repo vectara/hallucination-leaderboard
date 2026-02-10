@@ -158,7 +158,7 @@ Test case 3 is a yellow flag if failed. Tests if the model can handle the larges
 
 **Important clarification:** If the model responds with "I am unable to summarize this passage." (or similar), this is NOT a failure - it's a valid model response. The model understood the request but chose not to summarize that particular article (e.g., due to token limits or content). This may indicate lower answer rate on long articles but is not something that needs fixing. API errors or token limit exceptions are more concerning but still may not be an issue - monitor the run more closely in these cases. Models can still achieve high answer rates since this test case is at the extreme limit of tokens.
 
-#### Live LB Run
+#### Live LB Run UPDATE THE FINAL STEPS
 
 Similar to before we need to adjust the config.py file but this time adjust the EvalConfig object with field eval_name assigned to "live"(Should be the second list entry). Within live find the per_LLM_configs field and remove all other models currently there. Add the models you want to run, save the file, and run the following command.
 

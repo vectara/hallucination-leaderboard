@@ -182,6 +182,15 @@ def cli_main():
             python -m src.main --eval_name production
     """
     load_dotenv()
+
+    # Check for critical API key
+    if os.getenv("VECTARA_API_KEY") is None:
+        logger.critical("VECTARA_API_KEY not found in environment variables. Judging will fail.")
+        response = input("Continue anyway? (y/N): ").strip().lower()
+        if response != 'y':
+            logger.info("Exiting due to missing VECTARA_API_KEY.")
+            return
+
     parser = argparse.ArgumentParser(
         description="HHEM Leaderboard Backend",
         formatter_class=argparse.RawTextHelpFormatter
