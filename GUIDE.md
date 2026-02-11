@@ -140,6 +140,11 @@ Next you should understand how your model should be ran to get a summary. When y
 
 Find either the client_mode_group(You're using an API) or local_mode_group(You are running the model locally) dictionary. Add your model to the dictionary. If there existed a case that matched how your model should run, then simply record that enum value. If there wasn't a case then use then one you should have made in the previous step.
 
+**Hardcoded Model Names:** Some third-party providers (e.g., Together AI) use model identifiers that don't match our `model_fullname` convention (different casing, extra suffixes like `-Instruct`, etc.). In these cases:
+- Create a model-specific `ClientMode` enum (e.g., `QWEN3_235B_A22B_TOGETHER`)
+- Hardcode the provider's exact model ID in the `summarize()` method for that case
+- See `src/LLMs/qwen.py` for an example with `Qwen/Qwen3-235B-A22B-Instruct-2507-tput`
+
 #### Testing your model
 
 Before doing a live run its recommended to test your model to make sure it works and the output doesn't have any troublesome artifacts. config.py contains various experimental setups including the test and live runs. Scan for the EvalConfig object with field eval_name assigned to "test"(Should be the first entry in the list). Then under per_LLM_configs add the new model to the list of model configs alphabetically by company.
@@ -181,6 +186,30 @@ Github actions will automatically update both the README and the plot, make sure
 This process can be done manually by `update_readme.py` scripted located in the root directory.
 
 Once a model is completed succesfully move it below the completed models comment so we have an internal record of the models we've run so far and their exact settings.
+
+#### Importing External Results
+
+If you generate results on a remote machine or separate branch and bring the data files in (e.g., cherry-picking `output/{company}/{model}/` directories), you also need to update the aggregated stats file. Either:
+1. Also import the `output/stats_all_LLMs.json` file from the source, OR
+2. Run `hhem-leaderboard --eval_name compile_results` locally to regenerate it from all present output data
+
+The `compile_results` pipeline scans all output directories and rebuilds `stats_all_LLMs.json`, so running it after importing new data ensures everything is in sync.
+
+#### Updating README and Leaderboard Plot
+
+When you push to the `lb-engine` branch, GitHub Actions will automatically run `update_readme.py` to update the README and leaderboard plot image. You have two options:
+1. **Let GitHub Actions handle it:** Push your changes, wait for the action to complete, then pull the auto-generated commits.
+2. **Run manually:** Run `python update_readme.py` locally and include the changes in your push.
+
+#### Publishing Results
+
+Publishing results has two parts: GitHub repo and HuggingFace.
+
+**GitHub Repo:**
+1. Update `README.md` on the `main` branch with the new results from `README.md` on `lb-engine` branch.
+2. If a model is competitive enough to change the top 25 leaderboard rankings, also update:
+   - The plot image (found in the `img/` directory)
+   - The image reference in `README.md` to point to the new plot filename
 
 ## Advanced Info
 
