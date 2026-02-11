@@ -23,6 +23,7 @@ from typing import Literal
 from enum import Enum, auto
 
 from openai import OpenAI
+from together import Together
 
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -99,7 +100,7 @@ class QwenConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat"
     thinking_tokens: bool = None
     enable_thinking: bool = False
-    api_type: Literal["default"] = "default"
+    api_type: Literal["default", "together"] = "default"
 
 class QwenSummary(BasicSummary):
     """Output model for Qwen summarization results.
@@ -114,7 +115,7 @@ class QwenSummary(BasicSummary):
 
     endpoint: Literal["chat", "response"] | None = None
     enable_thinking: bool | None = None
-    api_type: Literal["default"] | None = None
+    api_type: Literal["default", "together"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -136,6 +137,7 @@ class ClientMode(Enum):
 
     CHAT_DEFAULT = auto()
     CHAT_REASONING = auto()
+    QWEN3_235B_A22B_TOGETHER = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
@@ -161,7 +163,7 @@ class LocalMode(Enum):
 # support the enable_thinking parameter for reasoning/thinking mode.
 client_mode_group = {
     "qwen3-235b-a22b": {
-        "chat": ClientMode.CHAT_REASONING
+        "chat": ClientMode.QWEN3_235B_A22B_TOGETHER
     },
     "qwen3-30b-a3b-thinking": {
         "chat": ClientMode.CHAT_REASONING
@@ -287,6 +289,15 @@ class QwenLLM(AbstractLLM):
                             {"role": "user", "content": prepared_text}],
                         )
                     summary = completion.choices[0].message.content
+                case ClientMode.QWEN3_235B_A22B_TOGETHER:
+                    completion = self.client.chat.completions.create(
+                        model="Qwen/Qwen3-235B-A22B-Instruct-2507-tput",
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens,
+                        messages=[
+                            {"role": "user", "content": prepared_text}],
+                        )
+                    summary = completion.choices[0].message.content
         elif self.local_model: 
             pass
         else:
@@ -310,7 +321,14 @@ class QwenLLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                if self.api_type == "default":
+                if self.api_type == "together":
+                    api_key = os.getenv("TOGETHER_API_KEY")
+                    assert api_key is not None, (
+                        "TOGETHER API key not found in environment variable "
+                        "TOGETHER_API_KEY"
+                    )
+                    self.client = Together(api_key=api_key)
+                elif self.api_type == "default":
                     api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                     assert api_key is not None, (
                         f"{COMPANY} API key not found in environment variable "

@@ -544,6 +544,14 @@
     "avg_word_count": 111.1
   },
   {
+    "model_name": "qwen/qwen3-235b-a22b",
+    "date_code": "",
+    "hallucination_rate": 9.3,
+    "confidence_interval": -1,
+    "answer_rate": 94.9,
+    "avg_word_count": 105.6
+  },
+  {
     "model_name": "qwen/qwen3-32b",
     "date_code": "",
     "hallucination_rate": 5.9,

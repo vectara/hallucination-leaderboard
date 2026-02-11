@@ -235,6 +235,7 @@ Here is the passage:
         # QwenConfig(**{"model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True, "api_type": "default"}),
         # QwenConfig(**{"model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0, "api_type": "default"}),
         # QwenConfig(**{"model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0, "api_type": "default"}),
+        QwenConfig(**{"model_name": "qwen3-235b-a22b", "date_code": "2507", "temperature": 0.0, "api_type": "together"}),
         # SnowflakeConfig(**{"model_name": "snowflake-arctic-instruct", "temperature": 0.01, "mini_throttle_time": 2.0, "max_output_tokens": 4090, "api_type": "replicate"}),
         # VectaraConfig(**{"model_name": "mockingbird-2.0", "api_type": "default"}),
         # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}), # failed need money
