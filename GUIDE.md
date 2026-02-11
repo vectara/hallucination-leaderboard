@@ -116,7 +116,13 @@ If the company's models are accessed through multiple backend providers (e.g., T
 - Use `"default"` only if the company has their own native API
 - If models are only available through third-party providers, list those explicitly with no default value
 
-**Important:** In `setup()`, load API keys INSIDE each `api_type` branch, not outside. Different providers use different API keys (e.g., `TOGETHER_API_KEY`, `HF_TOKEN`, `{COMPANY}_API_KEY`).
+**Important:** In `setup()`, load API keys INSIDE each `api_type` branch, not outside.
+
+**API Key Naming Convention:** All API keys must follow the pattern `{NAME}_API_KEY` where `{NAME}` is either:
+- The company name in uppercase (e.g., `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`) for native APIs (`api_type="default"`)
+- The provider name in uppercase (e.g., `TOGETHER_API_KEY`, `FIREWORKS_API_KEY`, `REPLICATE_API_KEY`) for third-party providers
+
+Exception: `api_type="huggingface"` uses cached login credentials from `huggingface-cli login` (no environment variable needed).
 
 Once the new python file is complete, update `src/LLMs/__init__.py` with two changes:
 1. Add an import statement for your new classes (LLM, Config, Summary) at the top of the file, placed alphabetically among the other imports.

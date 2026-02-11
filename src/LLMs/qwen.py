@@ -53,7 +53,7 @@ class QwenConfig(BasicLLMConfig):
             models. Passed via extra_body to the API.
     """
 
-    company: Literal["qwen"]
+    company: Literal["qwen"] = "qwen"
     model_name: Literal[
         "Qwen2-72B-Instruct",
         "Qwen2-VL-2B-Instruct",

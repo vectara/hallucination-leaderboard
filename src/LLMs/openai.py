@@ -468,7 +468,7 @@ class OpenAILLM(AbstractLLM):
         Creates the API client based on the model's api_type configuration:
         - "openai": Official OpenAI SDK using OPENAI_API_KEY
         - "together": Together AI client using TOGETHER_API_KEY
-        - "replicate": Replicate API using REPLICATE_API_TOKEN
+        - "replicate": Replicate API using REPLICATE_API_KEY
         For local execution, initializes a HuggingFace transformers pipeline.
 
         Raises:
@@ -482,8 +482,8 @@ class OpenAILLM(AbstractLLM):
                     assert api_key is not None, f"TOGETHER API key not found in environment variable TOGETHER_API_KEY"
                     self.client = Together(api_key=api_key)
                 elif self.api_type == "replicate":
-                    api_key = os.getenv(f"REPLICATE_API_TOKEN")
-                    assert api_key is not None, f"REPLICATE API key not found in environment variable REPLICATE_API_TOKEN"
+                    api_key = os.getenv(f"REPLICATE_API_KEY")
+                    assert api_key is not None, f"REPLICATE API key not found in environment variable REPLICATE_API_KEY"
                     self.client = "replicate has no client"
                 else:  # default
                     api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")

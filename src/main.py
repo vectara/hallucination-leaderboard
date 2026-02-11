@@ -219,6 +219,31 @@ def cli_main():
     else:
         eval_config = qualified_eval_config[0]
 
+    # Check for missing API keys based on active configs
+    required_keys = set()
+    for llm_config in eval_config.per_LLM_configs:
+        api_type = getattr(llm_config, 'api_type', 'default')
+        if api_type == "huggingface":
+            continue  # Uses cached login, no API key needed
+        elif api_type == "default":
+            company = getattr(llm_config, 'company', '')
+            if company:
+                # Replace hyphens with underscores for valid env var names
+                key_name = company.upper().replace("-", "_")
+                required_keys.add(f"{key_name}_API_KEY")
+        else:
+            key_name = api_type.upper().replace("-", "_")
+            required_keys.add(f"{key_name}_API_KEY")
+
+    missing_keys = [key for key in required_keys if os.getenv(key) is None]
+    if missing_keys:
+        for key in missing_keys:
+            logger.warning(f"API key not found: {key}")
+        response = input("Some API keys are missing. Continue anyway? Program will crash if these keys are needed. (y/N): ").strip().lower()
+        if response != 'y':
+            logger.info("Exiting due to missing API keys.")
+            return
+
     main(eval_config)
 
 if __name__ == "__main__":

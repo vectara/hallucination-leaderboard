@@ -47,7 +47,7 @@ class TngTechConfig(BasicLLMConfig):
         endpoint: API endpoint type ("chat" for conversational format).
     """
 
-    company: Literal["tngtech"]
+    company: Literal["tngtech"] = "tngtech"
     model_name: Literal[
         "DeepSeek-TNG-R1T2-Chimera"
     ]

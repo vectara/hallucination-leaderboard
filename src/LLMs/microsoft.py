@@ -51,7 +51,7 @@ class MicrosoftConfig(BasicLLMConfig):
         endpoint: API endpoint type ("chat" for conversational format).
     """
 
-    company: Literal["microsoft"]
+    company: Literal["microsoft"] = "microsoft"
     model_name: Literal[
         "Orca-2-13b",
         "phi-2",
@@ -68,10 +68,10 @@ class MicrosoftConfig(BasicLLMConfig):
         "microsoft-phi-2",  # Resource not active
         "microsoft-Orca-2-13b"  # Resource not active
     ]
-    model_key: str = "NoneGiven"
+    model_key: str = ""
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
-    azure_endpoint: str = "NoneGiven"
+    azure_endpoint: str = ""
     endpoint: Literal["chat", "response"] = "chat"
     api_type: Literal["default"] = "default"
 
@@ -220,14 +220,14 @@ class MicrosoftLLM(AbstractLLM):
         azure_endpoint from the configuration. Uses API version 2024-05-01-preview.
 
         Raises:
-            AssertionError: If the model_key is None.
+            AssertionError: If the model_key is not set.
             Exception: If the model does not support the configured execution mode.
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 if self.api_type == "default":
                     api_key = self.model_key
-                    assert api_key is not None, f"{COMPANY} API key not found in environment variable {COMPANY.upper()}_API_KEY"
+                    assert api_key, f"Microsoft model_key not set for {self.model_name}"
                     self.client = ChatCompletionsClient(
                         endpoint=self.azure_endpoint,
                         credential=AzureKeyCredential(api_key),

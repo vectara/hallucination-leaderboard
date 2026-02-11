@@ -191,7 +191,7 @@ class SnowflakeLLM(AbstractLLM):
 
         Sets a placeholder client value since Replicate uses a functional API
         (replicate.run) rather than a persistent client connection. Authentication
-        is handled via the REPLICATE_API_TOKEN environment variable.
+        is handled via the REPLICATE_API_KEY environment variable.
         """
         if self.execution_mode == "api":
             if self.api_type == "replicate":

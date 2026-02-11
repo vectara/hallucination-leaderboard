@@ -23,7 +23,7 @@ from datetime import datetime
 import difflib
 
 from enum import Enum
-from pydantic import BaseModel, model_serializer, model_validator
+from pydantic import BaseModel, model_serializer, model_validator, ValidationError
 
 class SourceArticle(BaseModel):
     """Schema for source document records from evaluation datasets.
@@ -235,10 +235,14 @@ class BasicLLMConfig(BaseModel):
         """
         try:
             return handler(values)
-        except Exception as e:
-            error_str = str(e)
-            # Check if this is a model_name validation error
-            if 'model_name' in error_str:
+        except ValidationError as e:
+            # Check if this is specifically a model_name validation error
+            is_model_name_error = any(
+                err.get('loc') == ('model_name',) and err.get('type') == 'literal_error'
+                for err in e.errors()
+            )
+
+            if is_model_name_error:
                 # Extract the invalid model name from values
                 if isinstance(values, dict):
                     invalid_name = values.get('model_name', '')

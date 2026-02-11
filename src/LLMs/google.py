@@ -390,7 +390,7 @@ class GoogleLLM(AbstractLLM):
         """Initialize the appropriate client for Google model inference.
 
         For API mode, creates a Google genai Client using the API key from
-        the GOOGLE_GEMINI_API_KEY environment variable. For GPU/CPU modes,
+        the GOOGLE_API_KEY environment variable. For GPU/CPU modes,
         creates a HuggingFace text-generation pipeline with bfloat16 precision.
 
         Raises:
@@ -400,11 +400,11 @@ class GoogleLLM(AbstractLLM):
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
                 if self.api_type == "default":
-                    api_key = os.getenv(f"{COMPANY.upper()}_GEMINI_API_KEY")
-                    assert api_key is not None, f"Google Gemini API key not found in environment variable {COMPANY.upper()}_GEMINI_API_KEY"
+                    api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
+                    assert api_key is not None, f"Google API key not found in environment variable {COMPANY.upper()}_API_KEY"
                     self.client = genai.Client(api_key=api_key)
                 elif self.api_type == "replicate":
-                    # Replicate uses functional API (replicate.run) with REPLICATE_API_TOKEN env var
+                    # Replicate uses functional API (replicate.run) with REPLICATE_API_KEY env var
                     self.client = "Replicate doesn't have a client"
                 else:
                     raise ValueError(f"Unknown api_type: {self.api_type}")
