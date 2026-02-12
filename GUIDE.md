@@ -56,7 +56,7 @@ git checkout lb-engine
 
 You will need the .env file containing all the keys, likely this is already shared with you. This is placed in the project root.
 
-You will need the leadersboard_dataset_v2.csv, likely this is already shared with you. This is placed inside the datasets directory.
+You will need the leaderboard_dataset_v2.csv, likely this is already shared with you. This is placed inside the datasets directory.
 
 #### Installation
 
@@ -87,17 +87,15 @@ It's possible requirements.txt will be updated in the future and include the cus
 
 #### Huggingface login
 
-Currently this is not an issue when using HHEM API which is standard practice now but this is a note for later if you do end up using HHEM on local GPU. Skip this section if you aren't
+This step is optional but necessary if you plan to:
+- Run HHEM on local GPU (instead of the HHEM API)
+- Use models that run via HuggingFace Inference (`api_type="huggingface"`)
 
-If you are having trouble running HHEM on GPU its likely because you haven't linked your huggingface account.
+Run the following command and follow the instructions:
 
 `huggingface-cli login`
 
-Follow the instructions to login.
-
-Should work fine after you succesfully login.
-
-If you are still running issues then it's likely you dont have permissions or access to the HHEM repo on huggingface. Go find someone that can give you access.
+If you are still having issues, it's likely you don't have permissions or access to the required repo on HuggingFace. Contact someone who can grant you access.
 
 
 #### Add New Company and Models
@@ -169,31 +167,33 @@ Test case 3 is a yellow flag if failed. Tests if the model can handle the larges
 
 **Important clarification:** If the model responds with "I am unable to summarize this passage." (or similar), this is NOT a failure - it's a valid model response. The model understood the request but chose not to summarize that particular article (e.g., due to token limits or content). This may indicate lower answer rate on long articles but is not something that needs fixing. API errors or token limit exceptions are more concerning but still may not be an issue - monitor the run more closely in these cases. Models can still achieve high answer rates since this test case is at the extreme limit of tokens.
 
-#### Live LB Run UPDATE THE FINAL STEPS
+#### Live LB Run
 
 Similar to before we need to adjust the config.py file but this time adjust the EvalConfig object with field eval_name assigned to "live"(Should be the second list entry). Within live find the per_LLM_configs field and remove all other models currently there. Add the models you want to run, save the file, and run the following command.
 
 `hhem-leaderboard --eval_name live`
 
-Once complete run the following git commands
+Once complete, commit and push your changes:
 
-`git add .`
-`git commit -a -m "adding {model_name-date_code}`
-`git push`
+```bash
+git add .
+git commit -m "adding {model_name}-{date_code}"
+git push
+```
 
-Github actions will automatically update both the README and the plot, make sure to pull those changes.
+Once a model is completed successfully, move its config entry below the "completed models" comment in `config.py` so we have an internal record of the models we've run and their exact settings.
 
-This process can be done manually by `update_readme.py` scripted located in the root directory.
-
-Once a model is completed succesfully move it below the completed models comment so we have an internal record of the models we've run so far and their exact settings.
+See "Updating README and Leaderboard Plot" below for what happens after you push.
 
 #### Importing External Results
 
-If you generate results on a remote machine or separate branch and bring the data files in (e.g., cherry-picking `output/{company}/{model}/` directories), you also need to update the aggregated stats file. Either:
-1. Also import the `output/stats_all_LLMs.json` file from the source, OR
-2. Run `hhem-leaderboard --eval_name compile_results` locally to regenerate it from all present output data
+If you run evaluations on a remote machine or separate branch and bring the output data files here (e.g., copying `output/{company}/{model}/` directories), you need to update the aggregated stats file.
 
-The `compile_results` pipeline scans all output directories and rebuilds `stats_all_LLMs.json`, so running it after importing new data ensures everything is in sync.
+Simply run:
+
+`hhem-leaderboard --eval_name compile_results`
+
+No need to modify `config.py` or add any model entries. This command scans all `output/` directories and rebuilds `stats_all_LLMs.json` from the data present.
 
 #### Updating README and Leaderboard Plot
 
@@ -216,13 +216,16 @@ Publishing results has two parts: GitHub repo and HuggingFace.
    ```bash
    git clone https://huggingface.co/datasets/vectara/results
    ```
-2. From `huggingface_scripts/`, run the script to generate structured output:
+2. Update the dictionaries in `huggingface_scripts/huggingface_script.py` for any new models:
+   - `model_size_map`: Set to `"small"` (<32B parameters) or `"large"` (≥32B). Confirm parameter count online.
+   - `accessibility_map`: Set to `"open"` (open-weights) or `"commercial"` (closed/proprietary). Confirm license online.
+3. From `huggingface_scripts/`, run the script to generate structured output:
    ```bash
    python huggingface_script.py
    ```
    This reads from `output/` and writes new results to `hf_structured_output/`. Models already processed are skipped. Use `-v` for verbose output.
-3. Copy the new model folders from `hf_structured_output/` to the cloned HuggingFace repo.
-4. From the HuggingFace repo, commit and push:
+4. Copy the new model folders from `hf_structured_output/` to the cloned HuggingFace repo.
+5. From the HuggingFace repo, commit and push:
    ```bash
    git add .
    git commit -m "Add results for {model_name}"
