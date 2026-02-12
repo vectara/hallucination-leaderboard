@@ -62,7 +62,8 @@ class ZhipuAIConfig(BasicLLMConfig):
         "GLM-4.6",
         "GLM-4.7",
         "GLM-4.7-Flash",
-        "glm-4p7-flash"
+        "glm-4p7-flash",
+        "glm-5"  # Fireworks
     ]
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
@@ -111,6 +112,7 @@ class ClientMode(Enum):
     GLM_4P7_FLASH = auto()
     GLM_4P7_FLASH_FW_DEPLOY = auto() # Deployment Name: accounts/ahmed-vectara/deployments/mdkz97wn
     # Depolyment Name: accounts/ahmed-vectara/deployments/j5r4b365
+    GLM_5 = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
@@ -140,7 +142,8 @@ client_mode_group = {
     "GLM-4.7-Flash": {"chat": ClientMode.GLM_4P7_FLASH},
     "glm-4p7": {"chat": ClientMode.GLM_4P7},
     "glm-4p7-flash": {"chat": ClientMode.GLM_4P7_FLASH_FW_DEPLOY},
-    "GLM-4.6": {"chat": ClientMode.GLM_4P6}
+    "GLM-4.6": {"chat": ClientMode.GLM_4P6},
+    "glm-5": {"chat": ClientMode.GLM_5}
 }
 
 # local_mode_group: Mapping of model names to their supported local execution modes.
@@ -224,6 +227,21 @@ class ZhipuAILLM(AbstractLLM):
                             }
                         ],
                         model=self.model_fullname,
+                    )
+
+                    summary = response.choices[0].message.content
+                case ClientMode.GLM_5:
+                    self.model_fullname = f"accounts/fireworks/models/{self.model_name}"
+                    response = self.client.chat.completions.create(
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": prepared_text,
+                            }
+                        ],
+                        model=self.model_fullname,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens
                     )
 
                     summary = response.choices[0].message.content

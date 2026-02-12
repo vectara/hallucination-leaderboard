@@ -235,7 +235,7 @@ Here is the passage:
         # QwenConfig(**{"model_name": "qwen3-next-80b-a3b-thinking", "date_code": "", "temperature": 0.0, "enable_thinking": True, "api_type": "default"}),
         # QwenConfig(**{"model_name": "qwen3-14b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0, "api_type": "default"}),
         # QwenConfig(**{"model_name": "qwen3-8b", "thinking_tokens": 0, "enable_thinking": False, "temperature": 0.0, "api_type": "default"}),
-        QwenConfig(**{"model_name": "qwen3-235b-a22b", "date_code": "2507", "temperature": 0.0, "api_type": "together"}),
+        # QwenConfig(**{"model_name": "qwen3-235b-a22b", "date_code": "2507", "temperature": 0.0, "api_type": "together"}),
         # SnowflakeConfig(**{"model_name": "snowflake-arctic-instruct", "temperature": 0.01, "mini_throttle_time": 2.0, "max_output_tokens": 4090, "api_type": "replicate"}),
         # VectaraConfig(**{"model_name": "mockingbird-2.0", "api_type": "default"}),
         # XAIConfig(**{"model_name": "grok-3", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}), # failed need money
@@ -248,6 +248,7 @@ Here is the passage:
         # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "api_type": "fireworks_deploy", "temperature": 0.1}),
         # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "api_type": "huggingface", "temperature": 0.0, "min_throttle_time": 4.0}),
         # ZhipuAIConfig(**{"threads": 2, "model_name": "glm-4p7", "api_type": "fireworks", "temperature": 0.0}),
+        ZhipuAIConfig(**{"model_name": "glm-5", "api_type": "fireworks", "temperature": 0.0}),
       ]
     }
   ),
@@ -321,7 +322,7 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        AnthropicConfig(**{"model_name": "claude-opus-4-6", "threads": 3, "temperature": 0.0, "api_type": "default"}),
+        ZhipuAIConfig(**{"model_name": "glm-5", "api_type": "fireworks", "temperature": 0.0}),
 
         # CPU 2
 
@@ -347,9 +348,11 @@ Here is the passage:
         # OpenAIConfig(**{"threads": 16, "company": "openai", "model_name": "gpt-5.1-high", "date_code": "2025-11-13", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768}),
         # OpenAIConfig(**{"threads": 16, "company": "openai", "model_name": "gpt-5.1-low", "date_code": "2025-11-13", "reasoning_effort": "low", "temperature": -1.0, "max_tokens": 32768}),
         # MoonshotAIConfig(**{"company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01}),
+        # AnthropicConfig(**{"model_name": "claude-opus-4-6", "threads": 3, "temperature": 0.0, "api_type": "default"}),
 
 
         # # Complete but sort
+        # AnthropicConfig(**{"model_name": "claude-opus-4-6", "threads": 3, "temperature": 0.0, "api_type": "default"}),
 
 
         # # Completed Models
