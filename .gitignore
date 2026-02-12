@@ -12,6 +12,7 @@ output_test/
 old_output/
 staging_output/
 live_staging/
+hf_structured_output/
 
 config.json
 test_config.json

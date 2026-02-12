@@ -1,20 +1,29 @@
 import os
 import json
+import argparse
 from datetime import datetime
 import csv
 csv.field_size_limit(2_000_000_000)
 from collections import defaultdict
+
+parser = argparse.ArgumentParser(description="Process leaderboard results for HuggingFace")
+parser.add_argument("--verbose", "-v", action="store_true", help="Print progress messages")
+args = parser.parse_args()
 
 # ===========================
 # Your mappings
 # ===========================
 # <32B is considered small
 model_size_map = {
-    "antgroup/finix_s1_32b": "small",
+    "ai21labs/jamba-large-1.7": "large",
+    "ai21labs/jamba-mini-1.7": "large",
+    "ai21labs/jamba-mini-2": "large",
     "amazon/nova-lite-v1:0": "unknown",
     "amazon/nova-micro-v1:0": "unknown",
     "amazon/nova-pro-v1:0": "unknown",
     "amazon/nova-2-lite-v1:0": "unknown",
+    "antgroup/finix_s1_32b": "small",
+    "antgroup/antfinix-a1": "large",
     "anthropic/claude-haiku-4-5-20251001": "large",
     "anthropic/claude-opus-4-1-20250805": "large",
     "anthropic/claude-opus-4-20250514": "large",
@@ -28,9 +37,6 @@ model_size_map = {
     "anthropic/claude-haiku-4-5": "small",
     "anthropic/claude-opus-4-1": "large",
     "arcee-ai/trinity-large-preview": "large",
-    "ai21labs/jamba-large-1.7": "large",
-    "ai21labs/jamba-mini-1.7": "large",
-    "ai21labs/jamba-mini-2": "large",
     "CohereLabs/c4ai-aya-expanse-32b": "small",
     "CohereLabs/c4ai-aya-expanse-8b": "small",
     "CohereLabs/command-a-03-2025": "large",
@@ -49,6 +55,9 @@ model_size_map = {
     "google/gemma-3-4b-it": "small",
     "google/gemma-3-12b-it": "small",
     "google/gemma-3-27b-it": "small",
+    "google/gemini-3-flash-preview": "large",
+    "ibm-granite/granite-4.0-h-small": "small",
+    "ibm-granite/granite-3.3-8b-instruct": "small",
     "meta-llama/Llama-3.3-70B-Instruct-Turbo": "large",
     "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8": "large",
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": "large",
@@ -69,12 +78,15 @@ model_size_map = {
     "moonshotai/Kimi-K2-Instruct-0905": "large",
     "moonshotai/Kimi-K2-Instruct": "large",
     "moonshotai/Kimi-K2.5": "large",
+    "nvidia/Nemotron-3-Nano-30B-A3B": "small",
     "openai/gpt-5-high-2025-08-07": "large",
     "openai/gpt-4.1-2025-04-14": "large",
     "openai/gpt-4o-2024-08-06": "large",
     "openai/gpt-5-mini-2025-08-07": "large",
     "openai/gpt-5-minimal-2025-08-07": "large",
     "openai/gpt-5-nano-2025-08-07": "large", # ?
+    "openai/gpt-5.2-high": "large",
+    "openai/gpt-5.2-low": "large",
     "openai/gpt-oss-120b": "large",
     "openai/o3-pro": "large",
     "openai/o4-mini-high-2025-04-16": "large", # ?
@@ -89,8 +101,13 @@ model_size_map = {
     "openai/gpt-4o": "large",
     "openai/gpt-5-high": "large",
     "openai/gpt-5.1-low": "large",
+    "qwen/qwen3-4b": "small",
+    "qwen/qwen3-8b": "small",
+    "qwen/qwen3-14b": "small",
     "qwen/qwen3-32b": "small",
+    "qwen/qwen3-235b-a22b": "large",
     "qwen/qwen3-next-80b-a3b-thinking": "large",
+    "snowflake/snowflake-arctic-instruct": "large",
     "vectara/mockingbird-2.0": "small",
     "xai-org/grok-3": "large",
     "xai-org/grok-4-fast-non-reasoning": "large",
@@ -101,21 +118,19 @@ model_size_map = {
     "zai-org/glm-4p7": "large",
     "zai-org/GLM-4.5-AIR-FP8": "large",
     "zai-org/GLM-4.6": "large",
-    "antgroup/antfinix-a1": "large",
-    "snowflake/snowflake-arctic-instruct": "large",
-    "qwen/qwen3-4b": "small",
-    "qwen/qwen3-8b": "small",
-    "qwen/qwen3-14b": "small",
-    "ibm-granite/granite-4.0-h-small": "small",
-    "ibm-granite/granite-3.3-8b-instruct": "small"
+
 }
 
 accessibility_map = {
-    "antgroup/finix_s1_32b": "commercial",
+    "ai21labs/jamba-large-1.7": "open",
+    "ai21labs/jamba-mini-1.7": "open",
+    "ai21labs/jamba-mini-2": "open",
     "amazon/nova-lite-v1:0": "commercial",
     "amazon/nova-micro-v1:0": "commercial",
     "amazon/nova-pro-v1:0": "commercial",
     "amazon/nova-2-lite-v1:0": "commercial",
+    "antgroup/finix_s1_32b": "commercial",
+    "antgroup/antfinix-a1": "commercial",
     "anthropic/claude-haiku-4-5-20251001": "commercial",
     "anthropic/claude-opus-4-1-20250805": "commercial",
     "anthropic/claude-opus-4-20250514": "commercial",
@@ -129,9 +144,6 @@ accessibility_map = {
     "anthropic/claude-haiku-4-5": "commercial",
     "anthropic/claude-opus-4-1": "commercial",
     "arcee-ai/trinity-large-preview": "open",
-    "ai21labs/jamba-large-1.7": "open",
-    "ai21labs/jamba-mini-1.7": "open",
-    "ai21labs/jamba-mini-2": "open",
     "CohereLabs/c4ai-aya-expanse-32b": "open",
     "CohereLabs/c4ai-aya-expanse-8b": "open",
     "CohereLabs/command-a-03-2025": "open",
@@ -144,12 +156,15 @@ accessibility_map = {
     "deepseek-ai/DeepSeek-R1": "open",
     "deepseek-ai/DeepSeek-V3.2": "open",
     "google/gemini-2.5-flash": "commercial",
+    "google/gemini-3-flash-preview": "commercial",
     "google/gemini-2.5-flash-lite": "commercial",
     "google/gemini-2.5-pro": "commercial",
     "google/gemini-3-pro-preview": "commercial",
     "google/gemma-3-4b-it": "open",
     "google/gemma-3-12b-it": "open",
     "google/gemma-3-27b-it": "open",
+    "ibm-granite/granite-4.0-h-small": "open",
+    "ibm-granite/granite-3.3-8b-instruct": "open",
     "meta-llama/Llama-3.3-70B-Instruct-Turbo": "open",
     "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8": "open",
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": "open",
@@ -170,6 +185,7 @@ accessibility_map = {
     "moonshotai/Kimi-K2-Instruct-0905": "open",
     "moonshotai/Kimi-K2-Instruct": "open",
     "moonshotai/Kimi-K2.5": "open",
+    "nvidia/Nemotron-3-Nano-30B-A3B": "open",
     "openai/gpt-5-high-2025-08-07": "commercial",
     "openai/gpt-4.1-2025-04-14": "commercial",
     "openai/gpt-4o-2024-08-06": "commercial",
@@ -177,6 +193,8 @@ accessibility_map = {
     "openai/gpt-5-minimal-2025-08-07": "commercial",
     "openai/gpt-5-nano-2025-08-07": "commercial",
     "openai/gpt-oss-120b": "open",
+    "openai/gpt-5.2-high": "commercial",
+    "openai/gpt-5.2-low": "commercial",
     "openai/o3-pro": "commercial",
     "openai/o4-mini-high-2025-04-16": "commercial",
     "openai/o4-mini-low-2025-04-16": "commercial",
@@ -192,6 +210,11 @@ accessibility_map = {
     "openai/gpt-5.1-low": "commercial",
     "qwen/qwen3-32b": "open",
     "qwen/qwen3-next-80b-a3b-thinking": "open",
+    "qwen/qwen3-4b": "open",
+    "qwen/qwen3-8b": "open",
+    "qwen/qwen3-14b": "open",
+    "qwen/qwen3-235b-a22b": "open",
+    "snowflake/snowflake-arctic-instruct": "open",
     "vectara/mockingbird-2.0": "commercial",
     "xai-org/grok-3": "commercial",
     "xai-org/grok-4-fast-non-reasoning": "commercial",
@@ -202,21 +225,29 @@ accessibility_map = {
     "zai-org/glm-4p7-flash": "open",
     "zai-org/GLM-4.5-AIR-FP8": "open",
     "zai-org/GLM-4.6": "open",
-    "antgroup/antfinix-a1": "commercial",
-    "snowflake/snowflake-arctic-instruct": "open",
-    "qwen/qwen3-4b": "open",
-    "qwen/qwen3-8b": "open",
-    "qwen/qwen3-14b": "open",
-    "ibm-granite/granite-4.0-h-small": "open",
-    "ibm-granite/granite-3.3-8b-instruct": "open"
+
 }
 
 VALID_SIZES = {"small", "large", "unknown"}
 VALID_ACCESS = {"open", "commercial", "unknown"}
 
 # Input and output base directories
-input_base = "output_staging"
-output_base = "output_final"
+input_base = "../output"
+output_base = "hf_structured_output"
+
+# Ensure output directory exists
+os.makedirs(output_base, exist_ok=True)
+
+# Get set of already processed models (company/model folders that exist in output)
+existing_models = set()
+if os.path.exists(output_base):
+    for company_dir in os.listdir(output_base):
+        company_path = os.path.join(output_base, company_dir)
+        if os.path.isdir(company_path):
+            for model_dir in os.listdir(company_path):
+                model_path = os.path.join(company_path, model_dir)
+                if os.path.isdir(model_path):
+                    existing_models.add(f"{company_dir}/{model_dir}")
 
 # Load leaderboard CSV (article_id → metadata)
 lb_path = "../datasets/leaderboard_dataset_v2.csv"
@@ -267,6 +298,17 @@ for root, dirs, files in os.walk(input_base):
     company = stats.get("company")
     model_name = stats.get("model_name")
     date_code = stats.get("date_code")
+
+    # Skip if this model already has results in output
+    model_key = f"{company}/{model_name}-{date_code}"
+    if model_key in existing_models:
+        if args.verbose:
+            print(f"Skipping {model_key} (already processed)")
+        continue
+
+    if args.verbose:
+        print(f"Processing {model_key}...")
+
     hallucination_rate_total = stats.get("hallucination_rate", 0.0)
     answer_rate_total = stats.get("answer_rate", 0.0)
     avg_word_count_total = stats.get("avg_word_count", 0.0)
