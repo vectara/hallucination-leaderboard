@@ -211,6 +211,24 @@ Publishing results has two parts: GitHub repo and HuggingFace.
    - The plot image (found in the `img/` directory)
    - The image reference in `README.md` to point to the new plot filename
 
+**HuggingFace:**
+1. If this is your first time, clone the HuggingFace results repo in a separate folder (not inside this project):
+   ```bash
+   git clone https://huggingface.co/datasets/vectara/results
+   ```
+2. From `huggingface_scripts/`, run the script to generate structured output:
+   ```bash
+   python huggingface_script.py
+   ```
+   This reads from `output/` and writes new results to `hf_structured_output/`. Models already processed are skipped. Use `-v` for verbose output.
+3. Copy the new model folders from `hf_structured_output/` to the cloned HuggingFace repo.
+4. From the HuggingFace repo, commit and push:
+   ```bash
+   git add .
+   git commit -m "Add results for {model_name}"
+   git push
+   ```
+
 ## Advanced Info
 
 #### Classes 
