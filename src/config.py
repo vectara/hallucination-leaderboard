@@ -215,6 +215,7 @@ Here is the passage:
         # MistralAIConfig(**{"model_name": "mistral-small", "date_code": "2501", "temperature": 0.0, "api_type": "default"}),
         # MistralAIConfig(**{"model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0, "api_type": "default"}), #mistral medium 3.1 date code
         # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "api_type": "fireworks", "date_code": "", "temperature": 0.0}),
+        MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0, "api_type": "huggingface"}),
         # MoonshotAIConfig(**{"model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
         # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0, "api_type": "deepinfra"}),
@@ -248,7 +249,7 @@ Here is the passage:
         # ZhipuAIConfig(**{"model_name": "glm-4p7-flash", "api_type": "fireworks_deploy", "temperature": 0.1}),
         # ZhipuAIConfig(**{"model_name": "GLM-4.7-Flash", "api_type": "huggingface", "temperature": 0.0, "min_throttle_time": 4.0}),
         # ZhipuAIConfig(**{"threads": 2, "model_name": "glm-4p7", "api_type": "fireworks", "temperature": 0.0}),
-        ZhipuAIConfig(**{"model_name": "glm-5", "api_type": "fireworks", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "glm-5", "api_type": "fireworks", "temperature": 0.0}),
       ]
     }
   ),
@@ -322,9 +323,10 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        ZhipuAIConfig(**{"model_name": "glm-5", "api_type": "fireworks", "temperature": 0.0}),
+        # ZhipuAIConfig(**{"model_name": "glm-5", "api_type": "fireworks", "temperature": 0.0}),
 
         # CPU 2
+        MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
 
         # CPU 3
 
