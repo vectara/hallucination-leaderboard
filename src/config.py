@@ -215,8 +215,9 @@ Here is the passage:
         # MistralAIConfig(**{"model_name": "mistral-small", "date_code": "2501", "temperature": 0.0, "api_type": "default"}),
         # MistralAIConfig(**{"model_name": "mistral-medium", "date_code": "2508", "temperature": 0.0, "api_type": "default"}), #mistral medium 3.1 date code
         # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "api_type": "fireworks", "date_code": "", "temperature": 0.0}),
-        MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0, "api_type": "huggingface"}),
+        QwenConfig(**{"model_name": "qwen3.5-plus", "date_code": "2026-02-15", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
         # MoonshotAIConfig(**{"model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
         # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0, "api_type": "deepinfra"}),
         # OpenAIConfig(**{"threads": 32, "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768, "api_type": "default"}),
@@ -323,10 +324,9 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # ZhipuAIConfig(**{"model_name": "glm-5", "api_type": "fireworks", "temperature": 0.0}),
 
         # CPU 2
-        MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
+        QwenConfig(**{"model_name": "qwen3.5-plus", "date_code": "2026-02-15", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
 
         # CPU 3
 
@@ -355,6 +355,8 @@ Here is the passage:
 
         # # Complete but sort
         # AnthropicConfig(**{"model_name": "claude-opus-4-6", "threads": 3, "temperature": 0.0, "api_type": "default"}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
+        # ZhipuAIConfig(**{"model_name": "glm-5", "api_type": "fireworks", "temperature": 0.0}),
 
 
         # # Completed Models
