@@ -63,6 +63,7 @@ Last updated on February 5, 2026
 |openai/gpt-5.2-low-2025-12-11|8.4 %|91.6 %|100.0 %|126.5|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
+|qwen/qwen3-235b-a22b|9.3 %|90.7 %|94.9 %|105.6|
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
 |zai-org/GLM-4.7-flash|9.3 %|90.7 %|91.6 %|71.8|
 |CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
