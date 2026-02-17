@@ -40,6 +40,14 @@
     "avg_word_count": 106.9
   },
   {
+    "model_name": "MiniMaxAI/minimax-m2p5",
+    "date_code": "",
+    "hallucination_rate": 9.1,
+    "confidence_interval": -1,
+    "answer_rate": 98.2,
+    "avg_word_count": 137.2
+  },
+  {
     "model_name": "ai21labs/jamba-large-1.7-2025-07",
     "date_code": "2025-07",
     "hallucination_rate": 9.7,
@@ -584,6 +592,14 @@
     "avg_word_count": 70.9
   },
   {
+    "model_name": "qwen/qwen3.5-plus-2026-02-15",
+    "date_code": "2026-02-15",
+    "hallucination_rate": 10.7,
+    "confidence_interval": -1,
+    "answer_rate": 99.8,
+    "avg_word_count": 92.1
+  },
+  {
     "model_name": "snowflake/snowflake-arctic-instruct",
     "date_code": "",
     "hallucination_rate": 4.3,
@@ -662,5 +678,13 @@
     "confidence_interval": -1,
     "answer_rate": 91.6,
     "avg_word_count": 71.8
+  },
+  {
+    "model_name": "zai-org/glm-5",
+    "date_code": "",
+    "hallucination_rate": 10.1,
+    "confidence_interval": -1,
+    "answer_rate": 99.7,
+    "avg_word_count": 74.4
   }
 ]

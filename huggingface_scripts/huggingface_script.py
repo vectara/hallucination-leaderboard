@@ -64,6 +64,7 @@ model_size_map = {
     "microsoft/Phi-4": "small",
     "microsoft/Phi-4-mini-instruct": "small",
     "MiniMaxAI/minimax-m2p1": "large",
+    "MiniMaxAI/minimax-m2p5": "large",
     "mistralai/ministral-3b-2410": "small",
     "mistralai/ministral-8b-2410": "small",
     "mistralai/mistral-large-2411": "large",
@@ -107,6 +108,7 @@ model_size_map = {
     "qwen/qwen3-32b": "small",
     "qwen/qwen3-235b-a22b": "large",
     "qwen/qwen3-next-80b-a3b-thinking": "large",
+    "qwen/qwen3.5-plus-2026-02-15": "large",
     "snowflake/snowflake-arctic-instruct": "large",
     "vectara/mockingbird-2.0": "small",
     "xai-org/grok-3": "large",
@@ -118,6 +120,7 @@ model_size_map = {
     "zai-org/glm-4p7": "large",
     "zai-org/GLM-4.5-AIR-FP8": "large",
     "zai-org/GLM-4.6": "large",
+    "zai-org/glm-5": "large",
 
 }
 
@@ -171,6 +174,7 @@ accessibility_map = {
     "microsoft/Phi-4": "open",
     "microsoft/Phi-4-mini-instruct": "open",
     "MiniMaxAI/minimax-m2p1": "open",
+    "MiniMaxAI/minimax-m2p5": "open",
     "mistralai/ministral-3b-2410": "open", # ?
     "mistralai/ministral-8b-2410": "open",
     "mistralai/mistral-large-2411": "open",
@@ -214,6 +218,7 @@ accessibility_map = {
     "qwen/qwen3-8b": "open",
     "qwen/qwen3-14b": "open",
     "qwen/qwen3-235b-a22b": "open",
+    "qwen/qwen3.5-plus-2026-02-15": "open",
     "snowflake/snowflake-arctic-instruct": "open",
     "vectara/mockingbird-2.0": "commercial",
     "xai-org/grok-3": "commercial",
@@ -225,6 +230,7 @@ accessibility_map = {
     "zai-org/glm-4p7-flash": "open",
     "zai-org/GLM-4.5-AIR-FP8": "open",
     "zai-org/GLM-4.6": "open",
+    "zai-org/glm-5": "open",
 
 }
 
