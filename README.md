@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on February 5, 2026
+Last updated on February 17, 2026
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-01-30.png)
 
@@ -61,6 +61,7 @@ Last updated on February 5, 2026
 |google/gemini-2.5-flash|7.8 %|92.2 %|99.0 %|101.5|
 |meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8|8.2 %|91.8 %|100.0 %|106.0|
 |openai/gpt-5.2-low-2025-12-11|8.4 %|91.6 %|100.0 %|126.5|
+|MiniMaxAI/minimax-m2p5|9.1 %|90.9 %|98.2 %|137.2|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
@@ -71,9 +72,11 @@ Last updated on February 5, 2026
 |openai/gpt-4o-2024-08-06|9.6 %|90.4 %|93.8 %|86.6|
 |ai21labs/jamba-large-1.7-2025-07|9.7 %|90.3 %|98.9 %|124.8|
 |anthropic/claude-haiku-4-5-20251001|9.8 %|90.2 %|99.5 %|115.1|
+|zai-org/glm-5|10.1 %|89.9 %|99.7 %|74.4|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
+|qwen/qwen3.5-plus-2026-02-15|10.7 %|89.3 %|99.8 %|92.1|
 |openai/gpt-5.2-high-2025-12-11|10.8 %|89.2 %|100.0 %|186.3|
 |anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
