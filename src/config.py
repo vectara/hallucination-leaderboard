@@ -217,7 +217,8 @@ Here is the passage:
         # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "api_type": "fireworks", "date_code": "", "temperature": 0.0}),
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0, "api_type": "huggingface"}),
-        QwenConfig(**{"model_name": "qwen3.5-plus", "date_code": "2026-02-15", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
+        # QwenConfig(**{"model_name": "qwen3.5-plus", "date_code": "2026-02-15", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
+        AnthropicConfig(**{"model_name": "claude-sonnet-4-6", "temperature": 0.0, "api_type": "default"}),
         # MoonshotAIConfig(**{"model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
         # NvidiaConfig(**{"threads": 8, "model_name": "Nemotron-3-Nano-30B-A3B", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0, "api_type": "deepinfra"}),
         # OpenAIConfig(**{"threads": 32, "model_name": "gpt-5-high", "date_code": "2025-08-07", "reasoning_effort": "high", "temperature": -1.0, "max_tokens": 32768, "api_type": "default"}),
@@ -326,7 +327,7 @@ Here is the passage:
         # CPU 1
 
         # CPU 2
-        QwenConfig(**{"model_name": "qwen3.5-plus", "date_code": "2026-02-15", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
+        AnthropicConfig(**{"model_name": "claude-sonnet-4-6", "threads": 4, "temperature": 0.0, "api_type": "default"}),
 
         # CPU 3
 
@@ -357,6 +358,7 @@ Here is the passage:
         # AnthropicConfig(**{"model_name": "claude-opus-4-6", "threads": 3, "temperature": 0.0, "api_type": "default"}),
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
         # ZhipuAIConfig(**{"model_name": "glm-5", "api_type": "fireworks", "temperature": 0.0}),
+        # QwenConfig(**{"model_name": "qwen3.5-plus", "date_code": "2026-02-15", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
 
 
         # # Completed Models

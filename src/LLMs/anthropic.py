@@ -49,6 +49,7 @@ class AnthropicConfig(BasicLLMConfig):
     company: Literal["anthropic"] = "anthropic"
     model_name: Literal[
         "claude-opus-4-6",
+        "claude-sonnet-4-6",
         "claude-opus-4-5",
         "claude-sonnet-4-5",
         "claude-opus-4-1",
@@ -126,6 +127,9 @@ class LocalMode(Enum):
 # invoke the Anthropic API. All Claude models use the messages API.
 client_mode_group = {
     "claude-opus-4-6": {
+        "chat": ClientMode.CHAT_DEFAULT
+    },
+    "claude-sonnet-4-6": {
         "chat": ClientMode.CHAT_DEFAULT
     },
     "claude-opus-4-5": {
