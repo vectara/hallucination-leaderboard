@@ -76,6 +76,7 @@ Last updated on February 17, 2026
 |zai-org/glm-5|10.1 %|89.9 %|99.7 %|74.4|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
+|anthropic/claude-sonnet-4-6|10.6 %|89.4 %|99.9 %|114.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
 |qwen/qwen3.5-plus-2026-02-15|10.7 %|89.3 %|99.8 %|92.1|
 |openai/gpt-5.2-high-2025-12-11|10.8 %|89.2 %|100.0 %|186.3|
