@@ -12,9 +12,9 @@ The codebase is organized around **providers** (companies like OpenAI, Anthropic
 
 ## The Basics
 
-This section serves as an introduction to using the basic and critical features of the leaderboard. Largely to add a model, test it, and then run the experiment associated with results on the public leaderboard.
+This section covers adding a model, testing it, and running the evaluation associated with results on the public leaderboard.
 
-#### Files
+### Files
 
 ```plaintext
 src/
@@ -33,7 +33,7 @@ src/
 ├── ...
 ```
 
-#### Initial Preparation
+### Initial Preparation
 
 This step does not need to be followed exactly but helps simplify later on for repeated building of the engine.
 
@@ -54,11 +54,11 @@ git checkout lb-engine
 
 **Branch workflow:** The `lb-engine` branch is the main development branch for running evaluations. For adding new models or making changes, you can either work directly on `lb-engine` or create a feature branch from it (e.g., `git checkout -b add-new-model`). Merge back to `lb-engine` when complete.
 
-You will need the .env file containing all the keys, likely this is already shared with you. This is placed in the project root.
+You will need the `.env` file containing all the API keys. Ask a team lead if you don't have it. This is placed in the project root.
 
-You will need the leaderboard_dataset_v2.csv, likely this is already shared with you. This is placed inside the datasets directory.
+You will need the `leaderboard_dataset_v2.csv`. Ask a team lead if you don't have it. This is placed inside the `datasets/` directory.
 
-#### Installation
+### Installation
 
 Before you run you need to install all necessary packages. Start in the root directory.
 
@@ -79,13 +79,11 @@ Then install the package itself:
 ```bash
 pip install -e .
 ```
-**WARNING**
-
-It's possible requirements.txt will be updated in the future and include the custom leaderboard package. This will cause an error when you try to install requirements.txt. In this case the following need to be removed from requirements.txt before beginning the installation sequence.
+> **WARNING:** It's possible `requirements.txt` will be updated in the future and include the custom leaderboard package. This will cause an error when you try to install it. In this case the following line needs to be removed from `requirements.txt` before beginning the installation sequence.
 
 `-e git+https://github.com/vectara/hallucination-leaderboard@c2ef203e475b8a5a3d39724f8f8518a5734b1e66#egg=hhem_leaderboard`
 
-#### Huggingface login
+### Huggingface login
 
 This step is optional but necessary if you plan to:
 - Run HHEM on local GPU (instead of the HHEM API)
@@ -98,14 +96,14 @@ Run the following command and follow the instructions:
 If you are still having issues, it's likely you don't have permissions or access to the required repo on HuggingFace. Contact someone who can grant you access.
 
 
-#### Add New Company and Models
+### Add New Company and Models
 
 **Quick Overview — Files to modify:**
 - [ ] `src/LLMs/{company}.py` — new provider file
 - [ ] `src/LLMs/__init__.py` — add import + registry entry
 - [ ] `src/config.py` — add config import + test config entry
 
-Copy the __example_company.py code and create a new file preferably with the name of the company. If there are unusual characters, then the python file name can be whatever is a proper file name that still clearly refers to the company.
+Copy `src/LLMs/__example_company.py` and create a new file preferably with the name of the company. If there are unusual characters, then the python file name can be whatever is a proper file name that still clearly refers to the company.
 
 Within the python file reference and satisfy all TODO comments. Some TODO comments may not need to be satisfied in which case remove the TODO comment and leave as is. Company name within the file
 should replicate its official name on huggingface or as close to it as possible.
@@ -128,30 +126,35 @@ Once the new python file is complete, update `src/LLMs/__init__.py` with two cha
 
 Lastly import the companies config object(e.g. VectaraConfig) into `src/config.py`. Place the object alphabetically.
 
-#### Add Models to Existing Company
+### Add Models to Existing Company
 
-Decide if the models execution mode is local(cpu/gpu) or api based.
+Decide if the model's execution mode is local (cpu/gpu) or API based.
 
 Search for the company python file within `src/LLMs/`. Within the class find the `class COMPANY_NAMEConfig(BasicLLMConfig)` object and add the model to the field model_name. 
 
 Next you should understand how your model should be ran to get a summary. When you do, inspect the summarize method and at the respective execution modes conditional branch. If there is no case that matches how your model needs to be executed then you will need to add a new case with a new and descriptive enum.
 
-Find either the client_mode_group(You're using an API) or local_mode_group(You are running the model locally) dictionary. Add your model to the dictionary. If there existed a case that matched how your model should run, then simply record that enum value. If there wasn't a case then use then one you should have made in the previous step.
+Find either the `client_mode_group` (for API models) or `local_mode_group` (for locally run models) dictionary. Add your model to the dictionary. If a matching case already exists, use that enum value. If not, use the new one you created in the previous step.
 
 **Hardcoded Model Names:** Some third-party providers (e.g., Together AI) use model identifiers that don't match our `model_fullname` convention (different casing, extra suffixes like `-Instruct`, etc.). In these cases:
 - Create a model-specific `ClientMode` enum (e.g., `QWEN3_235B_A22B_TOGETHER`)
 - Hardcode the provider's exact model ID in the `summarize()` method for that case
 - See `src/LLMs/qwen.py` for an example with `Qwen/Qwen3-235B-A22B-Instruct-2507-tput`
 
-#### Testing your model
+### Testing your model
 
-Before doing a live run its recommended to test your model to make sure it works and the output doesn't have any troublesome artifacts. config.py contains various experimental setups including the test and live runs. Scan for the EvalConfig object with field eval_name assigned to "test"(Should be the first entry in the list). Then under per_LLM_configs add the new model to the list of model configs alphabetically by company.
+Before doing a live run it's recommended to test your model to make sure it works and the output doesn't have any troublesome artifacts.
+
+1. Open `src/config.py` and find the `EvalConfig` object with `eval_name="test"` (should be the first entry in the list).
+2. Under `per_LLM_configs`, add your new model config alphabetically by company.
 
 **Important:** Before running the test, verify that your new model config is the ONLY uncommented entry in the `per_LLM_configs` list. Comment out any other active configs to avoid running unnecessary evaluations.
 
 **Note on model names:** Model names are case-sensitive and must match exactly as defined in the provider's config class. If you use an incorrect model name, the error message will suggest similar valid names to help you find the correct spelling.
 
-The test experiment also serves as an example on how to use your model for other experiments so when you're finished just comment out your new addition. 
+The test experiment also serves as an example on how to use your model for other experiments.
+
+**Important:** When you're finished testing, comment out your new addition so it doesn't run in future test invocations.
 
 To begin the test, run the following command `hhem-leaderboard --eval_name test`
 
@@ -167,16 +170,16 @@ Test case 3 is a yellow flag if failed. Tests if the model can handle the larges
 
 **Important clarification:** If the model responds with "I am unable to summarize this passage." (or similar), this is NOT a failure - it's a valid model response. The model understood the request but chose not to summarize that particular article (e.g., due to token limits or content). This may indicate lower answer rate on long articles but is not something that needs fixing. API errors or token limit exceptions are more concerning but still may not be an issue - monitor the run more closely in these cases. Models can still achieve high answer rates since this test case is at the extreme limit of tokens.
 
-#### Live LB Run
+### Live LB Run
 
-Similar to before we need to adjust the config.py file but this time adjust the EvalConfig object with field eval_name assigned to "live"(Should be the second list entry). Within live find the per_LLM_configs field and remove all other models currently there. Add the models you want to run, save the file, and run the following command.
+Similar to before, adjust the `config.py` file but this time find the `EvalConfig` object with `eval_name="live"` (should be the second list entry). Within live, find the `per_LLM_configs` field and comment out all other models currently there. Add the models you want to run, save the file, and run the following command.
 
 `hhem-leaderboard --eval_name live`
 
-Once complete, commit and push your changes:
+Once complete, commit and push your changes. Be explicit about what you stage to avoid committing secrets or unintended files:
 
 ```bash
-git add .
+git add output/ src/config.py
 git commit -m "adding {model_name}-{date_code}"
 git push
 ```
@@ -185,7 +188,9 @@ Once a model is completed successfully, move its config entry below the "complet
 
 See "Updating README and Leaderboard Plot" below for what happens after you push.
 
-#### Importing External Results
+**Note:** If you need to rebuild the aggregated stats (e.g., after importing output from a remote machine), see "Importing External Results" below for the `compile_results` command.
+
+### Importing External Results
 
 If you run evaluations on a remote machine or separate branch and bring the output data files here (e.g., copying `output/{company}/{model}/` directories), you need to update the aggregated stats file.
 
@@ -195,13 +200,13 @@ Simply run:
 
 No need to modify `config.py` or add any model entries. This command scans all `output/` directories and rebuilds `stats_all_LLMs.json` from the data present.
 
-#### Updating README and Leaderboard Plot
+### Updating README and Leaderboard Plot
 
 When you push to the `lb-engine` branch, GitHub Actions will automatically run `update_readme.py` to update the README and leaderboard plot image. You have two options:
 1. **Let GitHub Actions handle it:** Push your changes, wait for the action to complete, then pull the auto-generated commits.
 2. **Run manually:** Run `python update_readme.py` locally and include the changes in your push.
 
-#### Publishing Results
+### Publishing Results
 
 Publishing results has two parts: GitHub repo and HuggingFace.
 
@@ -234,9 +239,9 @@ Publishing results has two parts: GitHub repo and HuggingFace.
 
 ## Advanced Info
 
-#### Classes 
+### Classes 
 
-Under `src/LLMs/`, for each LLM provider, there is a corresponding file (`src/LLMs/Anthropic.py`, `src/LLMs/OpenAI.py`, etc.) that contains the implementation of the LLM. Each provider has three classes in heritied from the `AbstractLLM`, `BasicLLMConfig`, and `BasicSummary` classes: 
+Under `src/LLMs/`, for each LLM provider, there is a corresponding file (`src/LLMs/Anthropic.py`, `src/LLMs/OpenAI.py`, etc.) that contains the implementation of the LLM. Each provider has three classes inherited from the `AbstractLLM`, `BasicLLMConfig`, and `BasicSummary` classes:
 
 | Class | Parent | Description |
 |-------|--------|-------------|
@@ -244,7 +249,7 @@ Under `src/LLMs/`, for each LLM provider, there is a corresponding file (`src/LL
 | `{Provider_name}Config` | `BasicLLMConfig` in `src/data_model.py` | The parameters for using LLMs of the provider to summarize an article. Because the generation of summaries is provider-specific (e.g., different tags for thinking), their members differ while common ones such as `model_name`, `company`, `temperature` and `max_tokens` are inherited from `BasicLLMConfig`. |
 | `{Provider_name}Summary` | `BasicSummary` in `src/data_model.py` | The class for summaries generated by LLMs of the provider. It usually contains provider-specific fields. |
 
-#### The configuration file
+### The configuration file
 
 All setting of evaluations are stored in `src/config.py` which contains one variable `eval_configs` that is a list of `EvalConfig` (defined in `src/data_model.py`) objects. Briefly, an `EvalConfig` object includes but is not limited to the following fields:
 
@@ -270,21 +275,21 @@ A `BasicLLMConfig` object includes but is not limited to the following fields (n
 - `execution_mode`: The execution mode of the LLM. (Default: `None`)
 - `api_type`: The backend API provider to use. Use `"default"` for the company's native API. If only third-party providers are available, use explicit provider names like `"together"`, `"fireworks"`, `"huggingface"`. (Default: varies by provider)
 
-#### Order of supersedes in LLM configs
+### Order of supersedes in LLM configs
 
 There are many places that a user can specify the parameters of an LLM when it summarizes an article. The order of supersedes is determined by the following order (top to bottom): 
 
-1. Those in `LLM_Configs` in an `EvalConfig` object in `src/config.py` -- specific for an LLM in an evaluation run. 
-2. Those not in `LLM_Configs` in an `EvalConfig` object in `src/config.py` -- default for all LLMs in all evaluation runs.
-3. The default values in `{Provider_name}Config` class.
-4. The default values in `BasicLLMConfig` class.
+1. Those in `per_LLM_configs` in an `EvalConfig` object in `src/config.py` -- specific to a single LLM in an evaluation run.
+2. Those in `common_LLM_config` in an `EvalConfig` object in `src/config.py` -- shared defaults for all LLMs in that evaluation run.
+3. The default values in the `{Provider_name}Config` class.
+4. The default values in the `BasicLLMConfig` class.
 
-#### The pipeline
+### The pipeline
 
 There are three steps in the pipeline defined in `src/pipeline/{summarize, judge, aggregate}.py`: 
 
 1. `summarize`: Generate summaries of for all articles in the dataset specified in `source_article_path` in the `EvalConfig` object. The `source_article_path` is a path to a CSV file of four columns: `article_id`, `text`, `dataset`. See `datasets/test_articles.csv` for an example.
-2. `judge`: Get the HHEM score along with the validity and word count of each summary produced by the LLMs specified in `LLM_Configs`.
-3. `aggregate`: Aggregate the results to get the hallucination rate, average word count, and answer rate of each LLM specified in `LLM_Configs`.
+2. `judge`: Get the HHEM score along with the validity and word count of each summary produced by the LLMs specified in `per_LLM_configs`.
+3. `aggregate`: Aggregate the results to get the hallucination rate, average word count, and answer rate of each LLM specified in `per_LLM_configs`.
 
 You do not have to do all three steps together. You can put them in different `EvalConfig` objects and run them in different runs. 
