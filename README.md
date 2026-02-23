@@ -75,14 +75,15 @@ Last updated on February 23, 2026
 |anthropic/claude-haiku-4-5-20251001|9.8 %|90.2 %|99.5 %|115.1|
 |zai-org/glm-5|10.1 %|89.9 %|99.7 %|74.4|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
+|google/gemini-3.1-pro-preview|10.4 %|89.6 %|99.4 %|107.7|
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
 |anthropic/claude-sonnet-4-6|10.6 %|89.4 %|99.9 %|114.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
 |qwen/qwen3.5-plus-2026-02-15|10.7 %|89.3 %|99.8 %|92.1|
 |openai/gpt-5.2-high-2025-12-11|10.8 %|89.2 %|100.0 %|186.3|
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
-|anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
+|anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |deepseek-ai/DeepSeek-R1|11.3 %|88.7 %|97.0 %|93.5|
 |zai-org/glm-4p7|11.7 %|88.3 %|99.8 %|70.6|
 |MiniMaxAI/minimax-m2p1|11.8 %|88.2 %|98.5 %|106.9|
@@ -94,8 +95,8 @@ Last updated on February 23, 2026
 |openai/gpt-5-mini-2025-08-07|12.9 %|87.1 %|99.9 %|169.7|
 |google/gemini-3-flash-preview|13.5 %|86.5 %|99.8 %|90.2|
 |google/gemini-3-pro-preview|13.6 %|86.4 %|99.4 %|101.9|
-|moonshotai/Kimi-K2.5|14.2 %|85.8 %|92.2 %|112.0|
 |openai/gpt-oss-120b|14.2 %|85.8 %|99.9 %|135.2|
+|moonshotai/Kimi-K2.5|14.2 %|85.8 %|92.2 %|112.0|
 |mistralai/mistral-large-2512|14.5 %|85.5 %|98.8 %|112.7|
 |ai21labs/jamba-mini-1.7-2025-07|14.7 %|85.3 %|99.1 %|136.4|
 |openai/gpt-5-minimal-2025-08-07|14.7 %|85.3 %|99.9 %|109.7|
