@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on February 18, 2026
+Last updated on February 23, 2026
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-02-18.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-02-23.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|

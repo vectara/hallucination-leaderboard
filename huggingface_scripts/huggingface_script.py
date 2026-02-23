@@ -53,6 +53,7 @@ model_size_map = {
     "google/gemini-2.5-flash-lite": "large", #?
     "google/gemini-2.5-pro": "large",
     "google/gemini-3-pro-preview": "large",
+    "google/gemini-3.1-pro-preview": "large",
     "google/gemma-3-4b-it": "small",
     "google/gemma-3-12b-it": "small",
     "google/gemma-3-27b-it": "small",
@@ -165,6 +166,7 @@ accessibility_map = {
     "google/gemini-2.5-flash-lite": "commercial",
     "google/gemini-2.5-pro": "commercial",
     "google/gemini-3-pro-preview": "commercial",
+    "google/gemini-3.1-pro-preview": "commercial",
     "google/gemma-3-4b-it": "open",
     "google/gemma-3-12b-it": "open",
     "google/gemma-3-27b-it": "open",
