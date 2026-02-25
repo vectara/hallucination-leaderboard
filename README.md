@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on February 23, 2026
+Last updated on February 25, 2026
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-02-23.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-02-25.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -62,10 +62,10 @@ Last updated on February 23, 2026
 |meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8|8.2 %|91.8 %|100.0 %|106.0|
 |openai/gpt-5.2-low-2025-12-11|8.4 %|91.6 %|100.0 %|126.5|
 |MiniMaxAI/minimax-m2p5|9.1 %|90.9 %|98.2 %|137.2|
-|qwen/qwen3-235b-a22b|9.3 %|90.7 %|94.9 %|105.6|
-|zai-org/glm-4p7-flash|9.3 %|90.7 %|91.6 %|71.8|
-|zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
+|qwen/qwen3-235b-a22b|9.3 %|90.7 %|94.9 %|105.6|
+|zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
+|zai-org/glm-4p7-flash|9.3 %|90.7 %|91.6 %|71.8|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
 |zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
 |CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
@@ -76,6 +76,8 @@ Last updated on February 23, 2026
 |zai-org/glm-5|10.1 %|89.9 %|99.7 %|74.4|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
 |google/gemini-3.1-pro-preview|10.4 %|89.6 %|99.4 %|107.7|
+|qwen/qwen3.5-flash-2026-02-23|10.5 %|89.5 %|99.8 %|95.0|
+|qwen/qwen3.5-35b-a3b|10.5 %|89.5 %|99.8 %|94.9|
 |openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
 |anthropic/claude-sonnet-4-6|10.6 %|89.4 %|99.9 %|114.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
@@ -84,12 +86,14 @@ Last updated on February 23, 2026
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
 |openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
 |anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
+|qwen/qwen3.5-122b-a10b|11.2 %|88.8 %|99.8 %|86.4|
 |deepseek-ai/DeepSeek-R1|11.3 %|88.7 %|97.0 %|93.5|
 |zai-org/glm-4p7|11.7 %|88.3 %|99.8 %|70.6|
 |MiniMaxAI/minimax-m2p1|11.8 %|88.2 %|98.5 %|106.9|
 |anthropic/claude-opus-4-1-20250805|11.8 %|88.2 %|92.4 %|129.1|
 |anthropic/claude-opus-4-20250514|12.0 %|88.0 %|91.0 %|123.2|
 |anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
+|qwen/qwen3.5-27b|12.1 %|87.9 %|99.8 %|94.4|
 |openai/gpt-5.1-high-2025-11-13|12.1 %|87.9 %|100.0 %|254.4|
 |anthropic/claude-opus-4-6|12.2 %|87.8 %|99.8 %|137.6|
 |openai/gpt-5-mini-2025-08-07|12.9 %|87.1 %|99.9 %|169.7|

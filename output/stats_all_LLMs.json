@@ -608,6 +608,38 @@
     "avg_word_count": 70.9
   },
   {
+    "model_name": "qwen/qwen3.5-122b-a10b",
+    "date_code": "",
+    "hallucination_rate": 11.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.8,
+    "avg_word_count": 86.4
+  },
+  {
+    "model_name": "qwen/qwen3.5-27b",
+    "date_code": "",
+    "hallucination_rate": 12.1,
+    "confidence_interval": -1,
+    "answer_rate": 99.8,
+    "avg_word_count": 94.4
+  },
+  {
+    "model_name": "qwen/qwen3.5-35b-a3b",
+    "date_code": "",
+    "hallucination_rate": 10.5,
+    "confidence_interval": -1,
+    "answer_rate": 99.8,
+    "avg_word_count": 94.9
+  },
+  {
+    "model_name": "qwen/qwen3.5-flash-2026-02-23",
+    "date_code": "2026-02-23",
+    "hallucination_rate": 10.5,
+    "confidence_interval": -1,
+    "answer_rate": 99.8,
+    "avg_word_count": 95.0
+  },
+  {
     "model_name": "qwen/qwen3.5-plus-2026-02-15",
     "date_code": "2026-02-15",
     "hallucination_rate": 10.7,
