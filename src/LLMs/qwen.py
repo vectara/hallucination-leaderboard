@@ -91,6 +91,10 @@ class QwenConfig(BasicLLMConfig):
         "qwen-turbo",
         "qwen-max",
         "qwen3.5-plus",
+        "qwen3.5-flash",
+        "qwen3.5-35b-a3b",
+        "qwen3.5-122b-a10b",
+        "qwen3.5-27b",
         "qwen2.5-72b-instruct",
         "qwen2.5-32b-instruct",
         "qwen2.5-14b-instruct",
@@ -209,6 +213,18 @@ client_mode_group = {
         "chat": ClientMode.CHAT_DEFAULT
     },
     "qwen3.5-plus": {
+        "chat": ClientMode.CHAT_REASONING
+    },
+    "qwen3.5-flash": {
+        "chat": ClientMode.CHAT_REASONING
+    },
+    "qwen3.5-35b-a3b": {
+        "chat": ClientMode.CHAT_REASONING
+    },
+    "qwen3.5-122b-a10b": {
+        "chat": ClientMode.CHAT_REASONING
+    },
+    "qwen3.5-27b": {
         "chat": ClientMode.CHAT_REASONING
     },
     "qwen2.5-72b-instruct": {
