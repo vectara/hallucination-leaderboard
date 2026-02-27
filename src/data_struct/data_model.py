@@ -1,0 +1,123 @@
+from pydantic import BaseModel
+
+class SourceArticle(BaseModel):
+    """
+    Representation of an Article record from LB dataset
+
+    Fields
+        article_id (int): unique id of article
+        text (str): content text of article
+        dataset (str): dataset that article belongs to (TODO: VERIFY TRUE)
+    """
+    article_id: int
+    text: str
+    dataset: str
+
+    class Keys:
+        ARTICLE_ID = "article_id"
+        TEXT = "text"
+        DATASET = "dataset"
+
+class Summary(BaseModel):
+    """
+    Representation of a Summary of an Article
+    
+    Fields:
+        timestamp (str): Date summary was produced
+        summary_uid (str): hash for this summary
+        llm (str): unique llm identifier, matches the label the respective
+            company gave it
+        date_code (str): date code of model
+        temperature (float): temperature of model
+        max_tokens (int): max tokens allocated for model
+        thinking_tokens(int): number of allocated thinking tokens
+        article_id (int): unique id of article
+        summary (str): llm generated summary of the text associated to article_id
+    """
+    timestamp: str
+    summary_uid: str
+    llm: str
+    date_code: str
+    interaction_mode: str
+    temperature: float
+    max_tokens: int
+    thinking_tokens: int
+    article_id: int
+    summary: str
+
+    class Keys:
+        TIMESTAMP = "timestamp"
+        SUMMARY_UID = "summary_uid"
+        LLM = "llm"
+        DATE_CODE = "date_code"
+        TEMPERATURE = "temperature"
+        MAX_TOKENS = "max_tokens"
+        THINKING_TOKENS = "thinking_tokens"
+        ARTICLE_ID = "article_id"
+        SUMMARY = "summary"
+
+class Judgement(BaseModel):
+    """
+    Representation of Judgements/Metrics for the Summary of an Article
+
+    Fields:
+        timestamp (str): date the metrics were performed
+        summary_uid (str): hash for this summary
+        date_code (str): date code of model
+        hhem_version (str): version of hhem applied for hhem score
+        hhem_score (float): Hughes Hallucination Evaluation Metric (HHEM)
+        valid (bool): Validity of the summary, defined in is_valid_summary
+        summary_words (int): word count of summary
+    """
+    timestamp: str
+    summary_uid: str
+    date_code: str
+    hhem_version: str
+    hhem_score: float
+    valid: bool
+    summary_words: int
+
+    class Keys:
+        TIMESTAMP = "timestamp"
+        SUMMARY_UID = "summary_uid"
+        DATE_CODE = "date_code"
+        HHEM_VERSION = "hhem_version"
+        HHEM_SCORE = "hhem_score"
+        VALID = "valid"
+        SUMMARY_WORDS = "summary_words"
+
+class Stats(BaseModel):
+    """
+    Representation of Stats for the Summaries of the Article Dataset. These are
+    aggregated Judgements/Metrics
+
+    Fields:
+        timestamp (str): date the stats were performed
+        llm (str): llm that performed the summarization
+        date_code (str): date code of model
+        hallucination_rate (float): hallucination rate on all summaries
+        confidence_interval (float): variation in the hallucination rate
+        answer_rate (float): For all summaries what percentage of them were
+            valid
+        avg_summary_length (float): Average summary length for all valid
+            summaries
+    """
+    timestamp: str
+    llm: str
+    date_code: str
+    hallucination_rate: float
+    confidence_interval: float
+    answer_rate: float
+    avg_summary_length: float
+
+    class Keys:
+        TIMESTAMP = "timestamp"
+        LLM = "llm"
+        DATE_CODE = "date_code"
+        HALLUCINATION_RATE = "hallucination_rate"
+        CONFIDENCE_INTERVAL = "confidence_interval"
+        ANSWER_RATE = "answer_rate"
+        AVG_SUMMARY_LENGTH = "avg_summary_length"
+
+    
+    
