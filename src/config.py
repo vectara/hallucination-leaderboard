@@ -20,6 +20,7 @@ from . LLMs import (
   IntelConfig,
   InternLmConfig,
   IBMGraniteConfig,
+  InceptionLabsConfig,
   MoonshotAIConfig,
   MistralAIConfig,
   MetaLlamaConfig,
@@ -167,6 +168,7 @@ Here is the passage:
         #     "api_type": "replicate"
         #   }
         # ),
+        # InceptionLabsConfig(**{"model_name": "mercury-2", "temperature": 0.0, "api_type": "default"}),
         # MetaLlamaConfig(**
         #   {
         #     "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",

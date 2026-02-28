@@ -45,6 +45,7 @@ from . databricks import DatabricksLLM, DatabricksConfig, DatabricksSummary
 from . deepseek_ai import DeepSeekAILLM, DeepSeekAIConfig, DeepSeekAISummary
 from . google import GoogleLLM, GoogleConfig, GoogleSummary
 from . ibm_granite import IBMGraniteLLM, IBMGraniteConfig, IBMGraniteSummary
+from . inceptionlabs import InceptionLabsLLM, InceptionLabsConfig, InceptionLabsSummary
 from . intel import IntelLLM, IntelConfig, IntelSummary
 from . internlm import InternLmLLM, InternLmConfig, InternLmSummary
 from . meta_llama import MetaLlamaLLM, MetaLlamaConfig, MetaLlamaSummary
@@ -150,6 +151,11 @@ MODEL_REGISTRY: Dict[str, Dict[str, type]] = {
         "LLM_class": IBMGraniteLLM,
         "config_class": IBMGraniteConfig,
         "summary_class": IBMGraniteSummary
+    },
+    "inceptionlabs": {
+        "LLM_class": InceptionLabsLLM,
+        "config_class": InceptionLabsConfig,
+        "summary_class": InceptionLabsSummary
     },
     "Intel": {
         "LLM_class": IntelLLM,
