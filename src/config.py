@@ -333,7 +333,8 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        GoogleConfig(**{"model_name": "gemini-3.1-flash-lite-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemini-3.1-flash-lite-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
+        InceptionLabsConfig(**{"model_name": "mercury-2", "temperature": 0.0, "api_type": "default"}),
 
         # CPU 2
 
