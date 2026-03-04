@@ -264,6 +264,14 @@
     "avg_word_count": 101.9
   },
   {
+    "model_name": "google/gemini-3.1-flash-lite-preview",
+    "date_code": "",
+    "hallucination_rate": 8.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.6,
+    "avg_word_count": 62.6
+  },
+  {
     "model_name": "google/gemini-3.1-pro-preview",
     "date_code": "",
     "hallucination_rate": 10.4,
@@ -310,6 +318,14 @@
     "confidence_interval": -1,
     "answer_rate": 100.0,
     "avg_word_count": 107.4
+  },
+  {
+    "model_name": "inceptionlabs/mercury-2",
+    "date_code": "",
+    "hallucination_rate": 12.3,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 149.1
   },
   {
     "model_name": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
