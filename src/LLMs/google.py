@@ -68,6 +68,7 @@ class GoogleConfig(BasicLLMConfig):
 
         "gemini-3-flash-preview",
         "gemini-3-pro-preview",
+        "gemini-3.1-flash-lite-preview",
         "gemini-3.1-pro-preview",
         "gemini-2.5-flash-lite",
         "gemini-2.5-flash",
@@ -171,6 +172,9 @@ client_mode_group = {
         "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-3-pro-preview": {
+        "chat": ClientMode.CHAT_DEFAULT
+    },
+    "gemini-3.1-flash-lite-preview": {
         "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-3.1-pro-preview": {

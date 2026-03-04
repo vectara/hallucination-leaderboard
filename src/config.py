@@ -145,6 +145,7 @@ Here is the passage:
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}), # API Bad request
         # GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemini-3.1-flash-lite-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemini-3.1-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemma-3-4b-it", "date_code": "", "temperature": 0.0, "mini_throttle_time": 2.0, "max_tokens": 8192, "api_type": "replicate"}),
         # GoogleConfig(**{"model_name": "gemini-2.5-flash", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
@@ -332,12 +333,9 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        QwenConfig(**{"threads": 4, "model_name": "qwen3.5-flash", "date_code": "2026-02-23", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
-        QwenConfig(**{"threads": 4, "model_name": "qwen3.5-35b-a3b", "date_code": "", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
+        GoogleConfig(**{"model_name": "gemini-3.1-flash-lite-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
 
         # CPU 2
-        QwenConfig(**{"threads": 4, "model_name": "qwen3.5-122b-a10b", "date_code": "", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
-        QwenConfig(**{"threads": 4, "model_name": "qwen3.5-27b", "date_code": "", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
 
         # CPU 3
 
@@ -365,6 +363,10 @@ Here is the passage:
 
 
         # # Complete but sort
+        # QwenConfig(**{"threads": 4, "model_name": "qwen3.5-flash", "date_code": "2026-02-23", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
+        # QwenConfig(**{"threads": 4, "model_name": "qwen3.5-35b-a3b", "date_code": "", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
+        # QwenConfig(**{"threads": 4, "model_name": "qwen3.5-122b-a10b", "date_code": "", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
+        # QwenConfig(**{"threads": 4, "model_name": "qwen3.5-27b", "date_code": "", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
         # AnthropicConfig(**{"model_name": "claude-opus-4-6", "threads": 3, "temperature": 0.0, "api_type": "default"}),
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
         # ZhipuAIConfig(**{"model_name": "glm-5", "api_type": "fireworks", "temperature": 0.0}),
