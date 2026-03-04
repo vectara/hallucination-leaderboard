@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on February 25, 2026
+Last updated on March 04, 2026
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-01-30.png)
 
@@ -60,6 +60,7 @@ Last updated on February 25, 2026
 |meta-llama/Llama-4-Scout-17B-16E-Instruct|7.7 %|92.3 %|99.0 %|137.3|
 |google/gemini-2.5-flash|7.8 %|92.2 %|99.0 %|101.5|
 |meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8|8.2 %|91.8 %|100.0 %|106.0|
+|google/gemini-3.1-flash-lite-preview|8.2 %|91.8 %|99.6 %|62.6|
 |openai/gpt-5.2-low-2025-12-11|8.4 %|91.6 %|100.0 %|126.5|
 |MiniMaxAI/minimax-m2p5|9.1 %|90.9 %|98.2 %|137.2|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
@@ -96,6 +97,7 @@ Last updated on February 25, 2026
 |qwen/qwen3.5-27b|12.1 %|87.9 %|99.8 %|94.4|
 |openai/gpt-5.1-high-2025-11-13|12.1 %|87.9 %|100.0 %|254.4|
 |anthropic/claude-opus-4-6|12.2 %|87.8 %|99.8 %|137.6|
+|inceptionlabs/mercury-2|12.3 %|87.7 %|100.0 %|149.1|
 |openai/gpt-5-mini-2025-08-07|12.9 %|87.1 %|99.9 %|169.7|
 |google/gemini-3-flash-preview|13.5 %|86.5 %|99.8 %|90.2|
 |google/gemini-3-pro-preview|13.6 %|86.4 %|99.4 %|101.9|
