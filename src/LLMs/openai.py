@@ -63,6 +63,8 @@ class OpenAIConfig(BasicLLMConfig):
         "gpt-4.5-preview",
         "o1-preview",
 
+        "gpt-5.4-pro",
+        "gpt-5.4",
         "gpt-5.2-high",
         "gpt-5.2-low",
         "gpt-5.1-high",
@@ -152,6 +154,8 @@ class ClientMode(Enum):
     DEFAULT_REPLICATE_API = auto()
     O4_MINI_LOW = auto()
     O4_MINI_HIGH = auto()
+    GPT_5P4_PRO = auto()
+    GPT_5P4 = auto()
     GPT_5P2_HIGH = auto()
     GPT_5P2_LOW = auto()
     GPT_5P1_HIGH = auto()
@@ -177,6 +181,8 @@ class LocalMode(Enum):
 # Each model maps endpoint types to ClientMode enum values.
 # Models may support chat, response, or both endpoints.
 client_mode_group = {
+    "gpt-5.4-pro": {"chat": ClientMode.GPT_5P4_PRO},
+    "gpt-5.4": {"chat": ClientMode.GPT_5P4},
     "gpt-5.2-low": {"chat": ClientMode.GPT_5P2_LOW},
     "gpt-5.2-high": {"chat": ClientMode.GPT_5P2_HIGH},
     "gpt-5.1-low": {"chat": ClientMode.GPT_5P1_LOW},
@@ -370,6 +376,28 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = chat_package.output[1].content[0].text
+                case ClientMode.GPT_5P4_PRO:
+                    chat_package = self.client.responses.create(
+                        model=self.model_fullname,
+                        input=prepared_text,
+                        max_output_tokens=self.max_tokens,
+                        reasoning={
+                            "effort": self.reasoning_effort
+                        }
+                    )
+                    self.temperature = chat_package.temperature
+                    summary = self.extract_summary(chat_package)
+                case ClientMode.GPT_5P4:
+                    chat_package = self.client.responses.create(
+                        model=self.model_fullname,
+                        input=prepared_text,
+                        max_output_tokens=self.max_tokens,
+                        reasoning={
+                            "effort": self.reasoning_effort
+                        }
+                    )
+                    self.temperature = chat_package.temperature
+                    summary = self.extract_summary(chat_package)
                 case ClientMode.GPT_5P2_LOW:
                     chat_package = self.client.responses.create(
                         model="gpt-5.2-2025-12-11",
