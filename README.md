@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on March 04, 2026
+Last updated on March 05, 2026
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-01-30.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-03-06.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -53,6 +53,7 @@ Last updated on March 04, 2026
 |google/gemma-3-4b-it|6.4 %|93.6 %|67.3 %|77.4|
 |CohereLabs/command-r-plus-08-2024|6.9 %|93.1 %|95.0 %|91.5|
 |arcee-ai/trinity-large-preview|6.9 %|93.1 %|99.0 %|117.3|
+|openai/gpt-5.4-2026-03-05|7.0 %|93.0 %|99.9 %|81.7|
 |google/gemini-2.5-pro|7.0 %|93.0 %|99.1 %|106.4|
 |mistralai/ministral-3b-2410|7.3 %|92.7 %|99.9 %|167.9|
 |google/gemma-3-27b-it|7.4 %|92.6 %|98.8 %|96.4|
