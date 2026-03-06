@@ -544,6 +544,14 @@
     "avg_word_count": 126.5
   },
   {
+    "model_name": "openai/gpt-5.4-2026-03-05",
+    "date_code": "2026-03-05",
+    "hallucination_rate": 7.0,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 81.7
+  },
+  {
     "model_name": "openai/gpt-oss-120b",
     "date_code": "",
     "hallucination_rate": 14.2,
