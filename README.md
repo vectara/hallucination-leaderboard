@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on March 05, 2026
+Last updated on March 10, 2026
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-03-06.png)
 
@@ -62,6 +62,7 @@ Last updated on March 05, 2026
 |google/gemini-2.5-flash|7.8 %|92.2 %|99.0 %|101.5|
 |meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8|8.2 %|91.8 %|100.0 %|106.0|
 |google/gemini-3.1-flash-lite-preview|8.2 %|91.8 %|99.6 %|62.6|
+|openai/gpt-5.4-pro-2026-03-05|8.3 %|91.7 %|100.0 %|148.5|
 |openai/gpt-5.2-low-2025-12-11|8.4 %|91.6 %|100.0 %|126.5|
 |MiniMaxAI/minimax-m2p5|9.1 %|90.9 %|98.2 %|137.2|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
