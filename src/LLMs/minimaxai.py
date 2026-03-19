@@ -49,6 +49,7 @@ class MiniMaxAIConfig(BasicLLMConfig):
     model_name: Literal[
         "minimax-m2p1",
         "minimax-m2p5",
+        "minimax-m2p7",
     ]
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
@@ -91,6 +92,7 @@ class ClientMode(Enum):
     UNDEFINED = auto()
     M2P1 = auto()
     M2P5 = auto()
+    M2P7 = auto()
 
 
 class LocalMode(Enum):
@@ -116,6 +118,9 @@ client_mode_group = {
     },
     "minimax-m2p5": {
         "chat": ClientMode.M2P5
+    },
+    "minimax-m2p7": {
+        "chat": ClientMode.M2P7
     }
 }
 
@@ -184,6 +189,21 @@ class MiniMaxAILLM(AbstractLLM):
 
                     summary = response.choices[0].message.content
                 case ClientMode.M2P5:
+                    self.model_fullname = f"accounts/fireworks/models/{self.model_name}"
+                    response = self.client.chat.completions.create(
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": prepared_text,
+                            }
+                        ],
+                        model=self.model_fullname,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens
+                    )
+
+                    summary = response.choices[0].message.content
+                case ClientMode.M2P7:
                     self.model_fullname = f"accounts/fireworks/models/{self.model_name}"
                     response = self.client.chat.completions.create(
                         messages=[

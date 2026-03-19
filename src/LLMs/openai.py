@@ -65,6 +65,8 @@ class OpenAIConfig(BasicLLMConfig):
 
         "gpt-5.4-pro",
         "gpt-5.4",
+        "gpt-5.4-mini",
+        "gpt-5.4-nano",
         "gpt-5.2-high",
         "gpt-5.2-low",
         "gpt-5.1-high",
@@ -183,6 +185,8 @@ class LocalMode(Enum):
 client_mode_group = {
     "gpt-5.4-pro": {"chat": ClientMode.GPT_5P4_PRO},
     "gpt-5.4": {"chat": ClientMode.GPT_5P4},
+    "gpt-5.4-mini": {"chat": ClientMode.GPT_5P4},
+    "gpt-5.4-nano": {"chat": ClientMode.GPT_5P4},
     "gpt-5.2-low": {"chat": ClientMode.GPT_5P2_LOW},
     "gpt-5.2-high": {"chat": ClientMode.GPT_5P2_HIGH},
     "gpt-5.1-low": {"chat": ClientMode.GPT_5P1_LOW},

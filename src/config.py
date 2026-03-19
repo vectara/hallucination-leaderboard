@@ -172,6 +172,9 @@ Here is the passage:
         # InceptionLabsConfig(**{"model_name": "mercury-2", "temperature": 0.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.4-pro", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.4", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-5.4-mini", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-5.4-nano", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
         # MetaLlamaConfig(**
         #   {
         #     "model_name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
@@ -335,10 +338,10 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # OpenAIConfig(**{"model_name": "gpt-5.4-pro", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-5.4-mini", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-5.4-nano", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),
 
         # CPU 2
-        # OpenAIConfig(**{"model_name": "gpt-5.4", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
 
         # CPU 3
 
@@ -366,6 +369,8 @@ Here is the passage:
 
 
         # # Complete but sort
+        # OpenAIConfig(**{"model_name": "gpt-5.4", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-5.4-pro", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemini-3.1-flash-lite-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # InceptionLabsConfig(**{"model_name": "mercury-2", "temperature": 0.0, "api_type": "default"}),
         # QwenConfig(**{"threads": 4, "model_name": "qwen3.5-flash", "date_code": "2026-02-23", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
