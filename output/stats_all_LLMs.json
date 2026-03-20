@@ -552,6 +552,22 @@
     "avg_word_count": 81.7
   },
   {
+    "model_name": "openai/gpt-5.4-mini-2026-03-17",
+    "date_code": "2026-03-17",
+    "hallucination_rate": 5.5,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 54.7
+  },
+  {
+    "model_name": "openai/gpt-5.4-nano-2026-03-17",
+    "date_code": "2026-03-17",
+    "hallucination_rate": 3.1,
+    "confidence_interval": -1,
+    "answer_rate": 100.0,
+    "avg_word_count": 144.4
+  },
+  {
     "model_name": "openai/gpt-5.4-pro-2026-03-05",
     "date_code": "2026-03-05",
     "hallucination_rate": 8.3,
