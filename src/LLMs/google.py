@@ -75,6 +75,8 @@ class GoogleConfig(BasicLLMConfig):
         "gemini-2.5-pro-preview",
         "gemini-2.5-pro",
         "gemini-2.5-flash-preview",  # 05-20
+        "gemma-4-31b-it",
+        "gemma-4-26b-a4b-it",
         "gemma-3-1b-it",
         "gemma-3-4b-it",
         "gemma-3-12b-it",
@@ -168,6 +170,12 @@ class LocalMode(Enum):
 # invoke the API. Gemini 2.5 models use CHAT_THINKING_BUDGET for thinking
 # configuration. Gemma 3 models use Replicate-specific modes.
 client_mode_group = {
+    "gemma-4-31b-it": {
+        "chat": ClientMode.CHAT_DEFAULT
+    },
+    "gemma-4-26b-a4b-it": {
+        "chat": ClientMode.CHAT_DEFAULT
+    },
     "gemini-3-flash-preview": {
         "chat": ClientMode.CHAT_DEFAULT
     },

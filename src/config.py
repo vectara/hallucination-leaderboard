@@ -143,6 +143,8 @@ Here is the passage:
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V3.2-Exp", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}), # API Bad request
+        # GoogleConfig(**{"model_name": "gemma-4-31b-it", "date_code": "", "temperature": 0.0, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemma-4-26b-a4b-it", "date_code": "", "temperature": 0.0, "api_type": "default"}),
         # GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemini-3.1-flash-lite-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
@@ -226,6 +228,7 @@ Here is the passage:
         # MiniMaxAIConfig(**{"threads": 2, "model_name": "minimax-m2p1", "api_type": "fireworks", "date_code": "", "temperature": 0.0}),
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0, "api_type": "huggingface"}),
+        # QwenConfig(**{"model_name": "qwen3.6-plus-preview", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
         # QwenConfig(**{"model_name": "qwen3.5-plus", "date_code": "2026-02-15", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
         # AnthropicConfig(**{"model_name": "claude-sonnet-4-6", "temperature": 0.0, "api_type": "default"}),
         # MoonshotAIConfig(**{"model_name": "Kimi-K2-Instruct", "date_code": "0905","temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
@@ -338,10 +341,11 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # OpenAIConfig(**{"model_name": "gpt-5.4-mini", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),
-        # OpenAIConfig(**{"model_name": "gpt-5.4-nano", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemma-4-31b-it", "threads": 4, "date_code": "", "temperature": 0.0, "min_throttle_time": 3.0, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemma-4-26b-a4b-it", "threads": 4, "date_code": "", "temperature": 0.0, "min_throttle_time": 3.0, "api_type": "default"}),
 
         # CPU 2
+        # QwenConfig(**{"model_name": "qwen3.6-plus-preview", "threads": 4, "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
 
         # CPU 3
 
@@ -369,6 +373,8 @@ Here is the passage:
 
 
         # # Complete but sort
+        # OpenAIConfig(**{"model_name": "gpt-5.4-mini", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-5.4-nano", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.4", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.4-pro", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemini-3.1-flash-lite-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),

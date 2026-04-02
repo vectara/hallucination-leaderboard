@@ -90,6 +90,7 @@ class QwenConfig(BasicLLMConfig):
         "qwen-plus",
         "qwen-turbo",
         "qwen-max",
+        "qwen3.6-plus-preview",
         "qwen3.5-plus",
         "qwen3.5-flash",
         "qwen3.5-35b-a3b",
@@ -211,6 +212,9 @@ client_mode_group = {
     },
     "qwen-max": {
         "chat": ClientMode.CHAT_DEFAULT
+    },
+    "qwen3.6-plus-preview": {
+        "chat": ClientMode.CHAT_REASONING
     },
     "qwen3.5-plus": {
         "chat": ClientMode.CHAT_REASONING
