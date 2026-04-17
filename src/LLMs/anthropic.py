@@ -48,6 +48,7 @@ class AnthropicConfig(BasicLLMConfig):
 
     company: Literal["anthropic"] = "anthropic"
     model_name: Literal[
+        "claude-opus-4-7",
         "claude-opus-4-6",
         "claude-sonnet-4-6",
         "claude-opus-4-5",
@@ -104,6 +105,7 @@ class ClientMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
+    CHAT_NO_TEMPERATURE = auto()  # For models that deprecated the temperature parameter (e.g., opus-4-7)
 
 
 class LocalMode(Enum):
@@ -126,6 +128,9 @@ class LocalMode(Enum):
 # Each model maps endpoint types to ClientMode enum values indicating how to
 # invoke the Anthropic API. All Claude models use the messages API.
 client_mode_group = {
+    "claude-opus-4-7": {
+        "chat": ClientMode.CHAT_NO_TEMPERATURE
+    },
     "claude-opus-4-6": {
         "chat": ClientMode.CHAT_DEFAULT
     },
@@ -225,6 +230,19 @@ class AnthropicLLM(AbstractLLM):
                     ) as stream:
                         response = stream.get_final_message()
                         summary = response.content[0].text
+                case ClientMode.CHAT_NO_TEMPERATURE:
+                    with self.client.messages.stream(
+                        model=self.model_fullname,
+                        messages=[{"role": "user", "content": prepared_text}],
+                        max_tokens=self.max_tokens,
+                    ) as stream:
+                        response = stream.get_final_message()
+                        # Newer Claude models may return thinking blocks before the text block;
+                        # pick the first text block explicitly.
+                        summary = next(
+                            (block.text for block in response.content if getattr(block, "type", None) == "text"),
+                            "",
+                        )
         elif self.local_model:
             pass
         else:

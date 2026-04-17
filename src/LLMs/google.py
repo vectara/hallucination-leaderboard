@@ -25,6 +25,7 @@ from enum import Enum, auto
 from google import genai
 from google.genai import types
 import torch
+from openai import OpenAI
 
 from .AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
@@ -101,7 +102,7 @@ class GoogleConfig(BasicLLMConfig):
     execution_mode: Literal["api", "gpu", "cpu"] = "api"
     date_code: str = ""
     thinking_budget: Literal[-1, 0] = 0  # -1 is dynamic thinking, 0 thinking is off
-    api_type: Literal["default", "replicate"] = "default"
+    api_type: Literal["default", "replicate", "deepinfra"] = "default"
 
 class GoogleSummary(BasicSummary):
     """Output model for Google summarization results.
@@ -117,7 +118,7 @@ class GoogleSummary(BasicSummary):
 
     endpoint: Literal["chat", "response"] | None = None
     thinking_budget: Literal[-1, 0] | None = None  # -1 is dynamic thinking, 0 thinking is off
-    api_type: Literal["default", "replicate"] | None = None
+    api_type: Literal["default", "replicate", "deepinfra"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -138,6 +139,8 @@ class ClientMode(Enum):
         REPLICATE_GEMMA_27B_IT: Gemma 3 27B via Replicate API.
         REPLICATE_GEMMA_12B_IT: Gemma 3 12B via Replicate API.
         REPLICATE_GEMMA_4B_IT: Gemma 3 4B via Replicate API.
+        DEEPINFRA_GEMMA_4_31B_IT: Gemma 4 31B via DeepInfra OpenAI-compatible API.
+        DEEPINFRA_GEMMA_4_26B_A4B_IT: Gemma 4 26B-A4B via DeepInfra OpenAI-compatible API.
     """
 
     CHAT_DEFAULT = auto()
@@ -147,6 +150,8 @@ class ClientMode(Enum):
     REPLICATE_GEMMA_27B_IT = auto()
     REPLICATE_GEMMA_12B_IT = auto()
     REPLICATE_GEMMA_4B_IT = auto()
+    DEEPINFRA_GEMMA_4_31B_IT = auto()
+    DEEPINFRA_GEMMA_4_26B_A4B_IT = auto()
 
 
 class LocalMode(Enum):
@@ -259,6 +264,18 @@ client_mode_group = {
     },
 }
 
+# deepinfra_client_mode_group: Mapping of model names to their DeepInfra client modes.
+# Used when api_type="deepinfra" to route gemma-4 models through DeepInfra's
+# OpenAI-compatible API instead of the default Google genai SDK.
+deepinfra_client_mode_group = {
+    "gemma-4-31b-it": {
+        "chat": ClientMode.DEEPINFRA_GEMMA_4_31B_IT
+    },
+    "gemma-4-26b-a4b-it": {
+        "chat": ClientMode.DEEPINFRA_GEMMA_4_26B_A4B_IT
+    },
+}
+
 # local_mode_group: Mapping of model names to their supported local execution modes.
 # Smaller Gemma 3 models support local inference via HuggingFace transformers.
 local_mode_group = {
@@ -324,7 +341,11 @@ class GoogleLLM(AbstractLLM):
         """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match client_mode_group[self.model_name][self.endpoint]:
+            if self.api_type == "deepinfra":
+                client_mode = deepinfra_client_mode_group[self.model_name][self.endpoint]
+            else:
+                client_mode = client_mode_group[self.model_name][self.endpoint]
+            match client_mode:
                 case ClientMode.CHAT_DEFAULT:  # Default
                     response = self.client.models.generate_content(
                         model=self.model_fullname,
@@ -379,6 +400,24 @@ class GoogleLLM(AbstractLLM):
                         input=input
                     )
                     summary = summary.replace("<end_of_turn>", "")
+                case ClientMode.DEEPINFRA_GEMMA_4_31B_IT:
+                    deep_infra_name = "google/gemma-4-31B-it"
+                    chat_completion = self.client.chat.completions.create(
+                        model=deep_infra_name,
+                        messages=[{"role": "user", "content": prepared_text}],
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens,
+                    )
+                    summary = chat_completion.choices[0].message.content
+                case ClientMode.DEEPINFRA_GEMMA_4_26B_A4B_IT:
+                    deep_infra_name = "google/gemma-4-26B-A4B-it"
+                    chat_completion = self.client.chat.completions.create(
+                        model=deep_infra_name,
+                        messages=[{"role": "user", "content": prepared_text}],
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens,
+                    )
+                    summary = chat_completion.choices[0].message.content
         elif self.local_model:
             match local_mode_group[self.model_name][self.endpoint]:
                 case LocalMode.CHAT_DEFAULT:  # Uses chat template
@@ -414,7 +453,9 @@ class GoogleLLM(AbstractLLM):
             Exception: If the model does not support the configured execution mode.
         """
         if self.execution_mode == "api":
-            if self.model_name in client_mode_group:
+            if self.model_name in client_mode_group or (
+                self.api_type == "deepinfra" and self.model_name in deepinfra_client_mode_group
+            ):
                 if self.api_type == "default":
                     api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
                     assert api_key is not None, f"Google API key not found in environment variable {COMPANY.upper()}_API_KEY"
@@ -422,6 +463,13 @@ class GoogleLLM(AbstractLLM):
                 elif self.api_type == "replicate":
                     # Replicate uses functional API (replicate.run) with REPLICATE_API_KEY env var
                     self.client = "Replicate doesn't have a client"
+                elif self.api_type == "deepinfra":
+                    api_key = os.getenv("DEEPINFRA_API_KEY")
+                    assert api_key is not None, "DEEPINFRA API key not found in environment variable DEEPINFRA_API_KEY"
+                    self.client = OpenAI(
+                        api_key=api_key,
+                        base_url="https://api.deepinfra.com/v1/openai",
+                    )
                 else:
                     raise ValueError(f"Unknown api_type: {self.api_type}")
             else:

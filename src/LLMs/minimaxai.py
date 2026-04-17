@@ -204,6 +204,7 @@ class MiniMaxAILLM(AbstractLLM):
 
                     summary = response.choices[0].message.content
                 case ClientMode.M2P7:
+                    # Fireworks requires stream=True when max_tokens > 4096
                     self.model_fullname = f"accounts/fireworks/models/{self.model_name}"
                     response = self.client.chat.completions.create(
                         messages=[
@@ -214,10 +215,17 @@ class MiniMaxAILLM(AbstractLLM):
                         ],
                         model=self.model_fullname,
                         temperature=self.temperature,
-                        max_tokens=self.max_tokens
+                        max_tokens=self.max_tokens,
+                        stream=True,
                     )
-
-                    summary = response.choices[0].message.content
+                    chunks = []
+                    for chunk in response:
+                        if not chunk.choices:
+                            continue
+                        delta = chunk.choices[0].delta
+                        if delta and delta.content:
+                            chunks.append(delta.content)
+                    summary = "".join(chunks)
                 case ClientMode.CHAT_DEFAULT:
                     pass
         elif self.local_model: 

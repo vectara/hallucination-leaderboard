@@ -127,6 +127,7 @@ Here is the passage:
         #     "api_type": "default"
         #   }
         # ),
+        # AnthropicConfig(**{"model_name": "claude-opus-4-7", "threads": 1, "temperature": 0.0, "api_type": "default"}),
         # AnthropicConfig(**{"threads": 4, "model_name": "claude-opus-4-5", "date_code": "20251101", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
         # AnthropicConfig(**{"model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0, "api_type": "default"}),
         # AnthropicConfig(**{"model_name": "claude-sonnet-4", "date_code": "20250514", "temperature": 0.0, "api_type": "default"}),
@@ -145,6 +146,8 @@ Here is the passage:
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-R1", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}), # API Bad request
         # GoogleConfig(**{"model_name": "gemma-4-31b-it", "date_code": "", "temperature": 0.0, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemma-4-26b-a4b-it", "date_code": "", "temperature": 0.0, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemma-4-31b-it", "date_code": "", "temperature": 0.0, "api_type": "deepinfra"}),
+        # GoogleConfig(**{"model_name": "gemma-4-26b-a4b-it", "date_code": "", "temperature": 0.0, "api_type": "deepinfra"}),
         # GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemini-3.1-flash-lite-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
@@ -341,11 +344,12 @@ Here is the passage:
         # # GPU # #
 
         # CPU 1
-        # GoogleConfig(**{"model_name": "gemma-4-31b-it", "threads": 4, "date_code": "", "temperature": 0.0, "min_throttle_time": 3.0, "api_type": "default"}),
-        # GoogleConfig(**{"model_name": "gemma-4-26b-a4b-it", "threads": 4, "date_code": "", "temperature": 0.0, "min_throttle_time": 3.0, "api_type": "default"}),
+        # GoogleConfig(**{"model_name": "gemma-4-31b-it", "date_code": "", "temperature": 0.0, "api_type": "deepinfra"}),
+        # GoogleConfig(**{"model_name": "gemma-4-26b-a4b-it", "date_code": "", "temperature": 0.0, "api_type": "deepinfra"}),
 
         # CPU 2
-        # QwenConfig(**{"model_name": "qwen3.6-plus-preview", "threads": 4, "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
+        # AnthropicConfig(**{"model_name": "claude-opus-4-7", "threads": 1, "temperature": 0.0, "api_type": "default"}),
 
         # CPU 3
 
