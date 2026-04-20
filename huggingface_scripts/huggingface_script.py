@@ -1,4 +1,5 @@
 import os
+import glob
 import json
 import argparse
 from datetime import datetime
@@ -8,6 +9,7 @@ from collections import defaultdict
 
 parser = argparse.ArgumentParser(description="Process leaderboard results for HuggingFace")
 parser.add_argument("--verbose", "-v", action="store_true", help="Print progress messages")
+parser.add_argument("--regen-all", action="store_true", help="Regenerate results for every model, wiping prior results_*.json files")
 args = parser.parse_args()
 
 # ===========================
@@ -321,6 +323,12 @@ for root, dirs, files in os.walk(input_base):
     summaries_path = os.path.join(root, "summaries.jsonl")
     judgments_path = os.path.join(root, "judgments.jsonl")
 
+    # Use the actual folder path (relative to input_base) as the model identifier.
+    # The pipeline's folder naming — `model_name` alone when date_code is empty,
+    # `model_name-date_code` otherwise — can't be reconstructed reliably from
+    # stats.jsonl alone, so trust the filesystem layout as the source of truth.
+    relative_path = os.path.relpath(root, input_base)
+
     # Read stats.jsonl
     with open(stats_path, "r", encoding="utf-8") as f:
         stats = json.loads(f.readline().strip())
@@ -329,15 +337,15 @@ for root, dirs, files in os.walk(input_base):
     model_name = stats.get("model_name")
     date_code = stats.get("date_code")
 
-    # Skip if this model already has results in output
-    model_key = f"{company}/{model_name}-{date_code}"
-    if model_key in existing_models:
+    # Skip if already processed, unless --regen-all is set
+    if not args.regen_all and relative_path in existing_models:
         if args.verbose:
-            print(f"Skipping {model_key} (already processed)")
+            print(f"Skipping {relative_path} (already processed)")
         continue
 
     if args.verbose:
-        print(f"Processing {model_key}...")
+        action = "Regenerating" if args.regen_all and relative_path in existing_models else "Processing"
+        print(f"{action} {relative_path}...")
 
     hallucination_rate_total = stats.get("hallucination_rate", 0.0)
     answer_rate_total = stats.get("answer_rate", 0.0)
@@ -541,10 +549,15 @@ for root, dirs, files in os.walk(input_base):
         "text_complexity_results": text_complexity_results,
     }
 
-    # Create output folder
-    relative_path = os.path.relpath(root, input_base)
+    # Create output folder (relative_path computed earlier for the skip check)
     output_dir = os.path.join(output_base, relative_path)
     os.makedirs(output_dir, exist_ok=True)
+
+    # In regen-all mode, clear prior results_*.json so we don't accumulate duplicates
+    if args.regen_all:
+        for old in glob.glob(os.path.join(output_dir, "results_*.json")):
+            os.remove(old)
+
     output_path = os.path.join(output_dir, timestamp)
 
     new_data = round_floats(new_data, ndigits=3)
