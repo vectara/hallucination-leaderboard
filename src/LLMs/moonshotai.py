@@ -62,7 +62,8 @@ class MoonshotAIConfig(BasicLLMConfig):
         "Kimi-K2-Instruct",
         "kimi-k2-thinking",
         "kimi-k2.5-hf",
-        "Kimi-K2.5"
+        "Kimi-K2.5",
+        "kimi-k2.6"
     ]
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
@@ -138,6 +139,9 @@ client_mode_group = {
     },
     "Kimi-K2.5": {
         "chat": ClientMode.KIMI_K2P5_HF
+    },
+    "kimi-k2.6": {
+        "chat": ClientMode.CHAT_DEFAULT
     }
 }
 

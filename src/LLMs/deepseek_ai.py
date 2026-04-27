@@ -48,6 +48,7 @@ class DeepSeekAIConfig(BasicLLMConfig):
 
     company: Literal["deepseek-ai"] = "deepseek-ai"
     model_name: Literal[
+        "DeepSeek-V4-Pro",
         "DeepSeek-V3.1-Terminus",
         "DeepSeek-V3.2",
         "DeepSeek-V3.2-Exp",
@@ -124,6 +125,9 @@ class LocalMode(Enum):
 # Each model maps endpoint types to ClientMode enum values indicating how to
 # invoke the HuggingFace Inference API. V2.5 uses a mode without temperature/tokens.
 client_mode_group = {
+    "DeepSeek-V4-Pro": {
+        "chat": ClientMode.CHAT_DEFAULT
+    },
     "DeepSeek-V3.2": {
         "chat": ClientMode.CHAT_DEFAULT
     },
