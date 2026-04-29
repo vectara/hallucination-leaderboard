@@ -348,7 +348,7 @@ Here is the passage:
 
         # CPU 1
         # OpenAIConfig(**{"model_name": "gpt-5.5", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
-        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "threads": 8, "temperature": 0.0, "min_throttle_time": 32.0, "api_type": "huggingface"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "threads": 1, "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
 
         # CPU 2
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
