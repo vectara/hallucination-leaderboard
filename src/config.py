@@ -140,6 +140,7 @@ Here is the passage:
         # CohereConfig(**{"model_name": "command-a", "date_code": "03-2025", "temperature": 0.0, "max_tokens": 8192, "api_type": "default"}),
         # CohereConfig(**{"model_name": "command-r-plus", "date_code": "08-2024", "temperature": 0.0, "max_tokens": 4096, "api_type": "default"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V3", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}), # API Bad request
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V3.1", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
@@ -234,6 +235,7 @@ Here is the passage:
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p5", "api_type": "fireworks", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"model_name": "Kimi-K2.5", "temperature": 0.01, "min_throttle_time": 4.0, "api_type": "huggingface"}),
         # MoonshotAIConfig(**{"model_name": "kimi-k2.6", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
+        # MoonshotAIConfig(**{"model_name": "kimi-k2.6", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
         # QwenConfig(**{"model_name": "qwen3.6-plus-preview", "temperature": 0.0, "enable_thinking": False, "min_throttle_time": 3.0, "api_type": "default"}),
         # QwenConfig(**{"model_name": "qwen3.5-plus", "date_code": "2026-02-15", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "default"}),
         # AnthropicConfig(**{"model_name": "claude-sonnet-4-6", "temperature": 0.0, "api_type": "default"}),
@@ -349,10 +351,12 @@ Here is the passage:
         # CPU 1
         # OpenAIConfig(**{"model_name": "gpt-5.5", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "threads": 1, "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
+        # MoonshotAIConfig(**{"model_name": "kimi-k2.6", "threads": 8, "temperature": 0.0, "min_throttle_time": 32.0, "api_type": "fireworks"}),
 
         # CPU 2
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
         # AnthropicConfig(**{"model_name": "claude-opus-4-7", "threads": 1, "temperature": 0.0, "api_type": "default"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "threads": 8, "temperature": 0.0, "min_throttle_time": 32.0, "api_type": "fireworks"}),
 
         # CPU 3
 

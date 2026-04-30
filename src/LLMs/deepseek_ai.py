@@ -26,6 +26,7 @@ from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
 
 from huggingface_hub import InferenceClient
+from openai import OpenAI
 
 COMPANY = "deepseek-ai"
 """str: Provider identifier used for model path construction and registration."""
@@ -65,7 +66,7 @@ class DeepSeekAIConfig(BasicLLMConfig):
     execution_mode: Literal["api"] = "api"
     date_code: str = ""
     endpoint: Literal["chat", "response"] = "chat"
-    api_type: Literal["huggingface"] = "huggingface"
+    api_type: Literal["huggingface", "fireworks"] = "huggingface"
 
 class DeepSeekAISummary(BasicSummary):
     """Output model for DeepSeek AI summarization results.
@@ -77,7 +78,7 @@ class DeepSeekAISummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
-    api_type: Literal["huggingface"] | None = None
+    api_type: Literal["huggingface", "fireworks"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -102,6 +103,7 @@ class ClientMode(Enum):
     CHAT_NO_TEMP_NO_TOKENS = auto()
     CHAT_CONVERSATIONAL_NO_TOKENS = auto()
     RESPONSE_DEFAULT = auto()
+    DEEPSEEK_V4_PRO_FIREWORKS = auto()
     UNDEFINED = auto()
 
 
@@ -148,6 +150,14 @@ client_mode_group = {
     },
     "DeepSeek-V2.5": {
         "chat": ClientMode.CHAT_NO_TEMP_NO_TOKENS
+    }
+}
+
+# fireworks_client_mode_group: Used when api_type="fireworks" to route models
+# through Fireworks AI's OpenAI-compatible endpoint.
+fireworks_client_mode_group = {
+    "DeepSeek-V4-Pro": {
+        "chat": ClientMode.DEEPSEEK_V4_PRO_FIREWORKS
     }
 }
 
@@ -201,7 +211,11 @@ class DeepSeekAILLM(AbstractLLM):
         """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match client_mode_group[self.model_name][self.endpoint]:
+            if self.api_type == "fireworks":
+                client_mode = fireworks_client_mode_group[self.model_name][self.endpoint]
+            else:
+                client_mode = client_mode_group[self.model_name][self.endpoint]
+            match client_mode:
                 case ClientMode.CHAT_DEFAULT:
                     messages = [{"role": "user", "content": prepared_text}]
                     client_package = self.client.chat_completion(
@@ -222,6 +236,24 @@ class DeepSeekAILLM(AbstractLLM):
                         temperature=self.temperature
                     )
                     summary = client_package["generated_text"]
+                case ClientMode.DEEPSEEK_V4_PRO_FIREWORKS:
+                    # Fireworks requires stream=True when max_tokens > 4096
+                    fireworks_name = "accounts/fireworks/models/deepseek-v4-pro"
+                    response = self.client.chat.completions.create(
+                        messages=[{"role": "user", "content": prepared_text}],
+                        model=fireworks_name,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens,
+                        stream=True,
+                    )
+                    chunks = []
+                    for chunk in response:
+                        if not chunk.choices:
+                            continue
+                        delta = chunk.choices[0].delta
+                        if delta and delta.content:
+                            chunks.append(delta.content)
+                    summary = "".join(chunks)
         elif self.local_model:
             pass
         else:
@@ -238,9 +270,18 @@ class DeepSeekAILLM(AbstractLLM):
             Exception: If the model does not support the configured execution mode.
         """
         if self.execution_mode == "api":
-            if self.model_name in client_mode_group:
+            if self.model_name in client_mode_group or (
+                self.api_type == "fireworks" and self.model_name in fireworks_client_mode_group
+            ):
                 if self.api_type == "huggingface":
                     self.client = InferenceClient(model=self.model_fullname)
+                elif self.api_type == "fireworks":
+                    api_key = os.getenv("FIREWORKS_API_KEY")
+                    assert api_key is not None, "FIREWORKS_API_KEY not found in environment variable FIREWORKS_API_KEY"
+                    self.client = OpenAI(
+                        api_key=api_key,
+                        base_url="https://api.fireworks.ai/inference/v1",
+                    )
                 else:
                     raise ValueError(f"Unknown api_type: {self.api_type}")
             else:

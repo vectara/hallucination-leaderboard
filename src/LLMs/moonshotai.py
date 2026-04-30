@@ -68,7 +68,7 @@ class MoonshotAIConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
-    api_type: Literal["default", "huggingface"] = "default"
+    api_type: Literal["default", "huggingface", "fireworks"] = "default"
 
 class MoonshotAISummary(BasicSummary):
     """Output model for Moonshot AI summarization results.
@@ -81,7 +81,7 @@ class MoonshotAISummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
-    api_type: Literal["default", "huggingface"] | None = None
+    api_type: Literal["default", "huggingface", "fireworks"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -105,6 +105,7 @@ class ClientMode(Enum):
     RESPONSE_DEFAULT = auto()
     KIMI_K2_INSTRUCT = auto()
     KIMI_K2P5_HF = auto()
+    KIMI_K2P6_FIREWORKS = auto()
     UNDEFINED = auto()
 
 
@@ -142,6 +143,14 @@ client_mode_group = {
     },
     "kimi-k2.6": {
         "chat": ClientMode.CHAT_DEFAULT
+    }
+}
+
+# fireworks_client_mode_group: Used when api_type="fireworks" to route models
+# through Fireworks AI's OpenAI-compatible endpoint instead of the native Moonshot API.
+fireworks_client_mode_group = {
+    "kimi-k2.6": {
+        "chat": ClientMode.KIMI_K2P6_FIREWORKS
     }
 }
 
@@ -193,7 +202,11 @@ class MoonshotAILLM(AbstractLLM):
         """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match client_mode_group[self.model_name][self.endpoint]:
+            if self.api_type == "fireworks":
+                client_mode = fireworks_client_mode_group[self.model_name][self.endpoint]
+            else:
+                client_mode = client_mode_group[self.model_name][self.endpoint]
+            match client_mode:
                 case ClientMode.CHAT_DEFAULT:
                     completion = self.client.chat.completions.create(
                         model = self.model_fullname,
@@ -233,6 +246,24 @@ class MoonshotAILLM(AbstractLLM):
                             max_tokens=self.max_tokens
                         )
                         summary = response.choices[0].message.content
+                case ClientMode.KIMI_K2P6_FIREWORKS:
+                    # Fireworks requires stream=True when max_tokens > 4096
+                    fireworks_name = "accounts/fireworks/models/kimi-k2p6"
+                    response = self.client.chat.completions.create(
+                        messages=[{"role": "user", "content": prepared_text}],
+                        model=fireworks_name,
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens,
+                        stream=True,
+                    )
+                    chunks = []
+                    for chunk in response:
+                        if not chunk.choices:
+                            continue
+                        delta = chunk.choices[0].delta
+                        if delta and delta.content:
+                            chunks.append(delta.content)
+                    summary = "".join(chunks)
                 case ClientMode.KIMI_K2P5_HF:
                     messages = [
                         {"role": "user", "content": [{"type": "text", "text":  prepared_text}]}
@@ -270,7 +301,9 @@ class MoonshotAILLM(AbstractLLM):
             Exception: If the model does not support the configured execution mode.
         """
         if self.execution_mode == "api":
-            if self.model_name in client_mode_group:
+            if self.model_name in client_mode_group or (
+                self.api_type == "fireworks" and self.model_name in fireworks_client_mode_group
+            ):
                 if self.api_type == "huggingface":
                     self.client = InferenceClient(model=self.huggingface_name)
                 elif self.api_type == "default":
@@ -279,6 +312,13 @@ class MoonshotAILLM(AbstractLLM):
                     self.client = OpenAI(
                         api_key = api_key,
                         base_url = "https://api.moonshot.ai/v1",
+                    )
+                elif self.api_type == "fireworks":
+                    api_key = os.getenv("FIREWORKS_API_KEY")
+                    assert api_key is not None, "FIREWORKS_API_KEY not found in environment variable FIREWORKS_API_KEY"
+                    self.client = OpenAI(
+                        api_key=api_key,
+                        base_url="https://api.fireworks.ai/inference/v1",
                     )
                 else:
                     raise ValueError(f"Unknown api_type: {self.api_type}")
