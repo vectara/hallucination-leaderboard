@@ -356,7 +356,7 @@ Here is the passage:
         # CPU 2
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
         # AnthropicConfig(**{"model_name": "claude-opus-4-7", "threads": 1, "temperature": 0.0, "api_type": "default"}),
-        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "threads": 8, "temperature": 0.0, "min_throttle_time": 32.0, "api_type": "fireworks"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "threads": 1, "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
 
         # CPU 3
 
