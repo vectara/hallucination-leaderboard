@@ -20,7 +20,7 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on April 28, 2026
+Last updated on May 11, 2026
 
 ![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-04-20.png)
 
@@ -68,13 +68,14 @@ Last updated on April 28, 2026
 |google/gemini-3.1-flash-lite-preview|8.2 %|91.8 %|99.6 %|62.6|
 |openai/gpt-5.4-pro-2026-03-05|8.3 %|91.7 %|100.0 %|148.5|
 |openai/gpt-5.2-low-2025-12-11|8.4 %|91.6 %|100.0 %|126.5|
+|deepseek-ai/DeepSeek-V4-Pro|8.6 %|91.4 %|97.2 %|153.8|
 |MiniMaxAI/minimax-m2p5|9.1 %|90.9 %|98.2 %|137.2|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
+|openai/gpt-5.5|9.3 %|90.7 %|100.0 %|129.6|
 |zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
 |qwen/qwen3-235b-a22b|9.3 %|90.7 %|94.9 %|105.6|
 |qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
 |zai-org/GLM-4.7-flash|9.3 %|90.7 %|91.6 %|71.8|
-|openai/gpt-5.5|9.3 %|90.7 %|100.0 %|129.6|
 |CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
 |zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
 |nvidia/Nemotron-3-Nano-30B-A3B|9.6 %|90.4 %|99.6 %|104.2|
@@ -91,6 +92,7 @@ Last updated on April 28, 2026
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
 |qwen/qwen3.5-plus-2026-02-15|10.7 %|89.3 %|99.8 %|92.1|
 |openai/gpt-5.2-high-2025-12-11|10.8 %|89.2 %|100.0 %|186.3|
+|moonshotai/kimi-k2.6|10.8 %|89.2 %|99.7 %|116.7|
 |anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
 |openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
