@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.pytest_cache
+
+.env
+log.txt
+TODO.md
+
+config.json
+test_config.json
+
+leaderboard_dataset_revised.csv
+leaderboard_dataset.csv
+temp.py
