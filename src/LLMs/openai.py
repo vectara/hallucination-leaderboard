@@ -63,6 +63,8 @@ class OpenAIConfig(BasicLLMConfig):
         "gpt-4.5-preview",
         "o1-preview",
 
+        "gpt-6-astra",
+        "gpt-5.6-sol",
         "gpt-5.5",
         "gpt-5.4-pro",
         "gpt-5.4",
@@ -98,7 +100,7 @@ class OpenAIConfig(BasicLLMConfig):
     ]
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
-    reasoning_effort: Literal["none", "minimal", "low", "medium", "high"] = None
+    reasoning_effort: Literal["none", "minimal", "low", "medium", "high", "xhigh", "max"] = None
     api_type: Literal["default", "together", "replicate"] = "default"
 
 class OpenAISummary(BasicSummary):
@@ -114,7 +116,7 @@ class OpenAISummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
-    reasoning_effort: Literal["none", "minimal", "low", "medium", "high"] | None = None
+    reasoning_effort: Literal["none", "minimal", "low", "medium", "high", "xhigh", "max"] | None = None
     api_type: Literal["default", "together", "replicate"] | None = None
 
     class Config:
@@ -146,6 +148,8 @@ class ClientMode(Enum):
         GPT_5_HIGH: GPT-5 model with high reasoning effort.
         GPT_5_MINIMAL: GPT-5 model with minimal reasoning effort.
         GPT_5_DEFAULT: GPT-5 model with configurable reasoning effort.
+        GPT_6: GPT-6 family (e.g., gpt-6-astra) via Responses API with configurable reasoning effort.
+        GPT_5P6: GPT-5.6 family (sol/terra/luna) via Responses API with configurable reasoning effort.
     """
 
     CHAT_DEFAULT = auto()
@@ -157,6 +161,8 @@ class ClientMode(Enum):
     DEFAULT_REPLICATE_API = auto()
     O4_MINI_LOW = auto()
     O4_MINI_HIGH = auto()
+    GPT_6 = auto()
+    GPT_5P6 = auto()
     GPT_5P5 = auto()
     GPT_5P4_PRO = auto()
     GPT_5P4 = auto()
@@ -185,6 +191,8 @@ class LocalMode(Enum):
 # Each model maps endpoint types to ClientMode enum values.
 # Models may support chat, response, or both endpoints.
 client_mode_group = {
+    "gpt-6-astra": {"chat": ClientMode.GPT_6},
+    "gpt-5.6-sol": {"chat": ClientMode.GPT_5P6},
     "gpt-5.5": {"chat": ClientMode.GPT_5P5},
     "gpt-5.4-pro": {"chat": ClientMode.GPT_5P4_PRO},
     "gpt-5.4": {"chat": ClientMode.GPT_5P4},
@@ -383,6 +391,17 @@ class OpenAILLM(AbstractLLM):
                     )
                     self.temperature = chat_package.temperature
                     summary = chat_package.output[1].content[0].text
+                case ClientMode.GPT_6 | ClientMode.GPT_5P6:
+                    chat_package = self.client.responses.create(
+                        model=self.model_fullname,
+                        input=prepared_text,
+                        max_output_tokens=self.max_tokens,
+                        reasoning={
+                            "effort": self.reasoning_effort
+                        }
+                    )
+                    self.temperature = chat_package.temperature
+                    summary = self.extract_summary(chat_package)
                 case ClientMode.GPT_5P5:
                     chat_package = self.client.responses.create(
                         model=self.model_fullname,

@@ -177,6 +177,8 @@ Here is the passage:
         #   }
         # ),
         # InceptionLabsConfig(**{"model_name": "mercury-2", "temperature": 0.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-6-astra", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
+        # OpenAIConfig(**{"model_name": "gpt-5.6-sol", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.5", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.4-pro", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.4", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
@@ -352,6 +354,10 @@ Here is the passage:
         # OpenAIConfig(**{"model_name": "gpt-5.5", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "threads": 1, "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
         # MoonshotAIConfig(**{"model_name": "kimi-k2.6", "threads": 8, "temperature": 0.0, "min_throttle_time": 32.0, "api_type": "fireworks"}),
+
+        # CPU 3
+        OpenAIConfig(**{"model_name": "gpt-6-astra", "threads": 8, "min_throttle_time": 2.0, "temperature": -1.0, "api_type": "default"}),
+        OpenAIConfig(**{"model_name": "gpt-5.6-sol", "threads": 8, "min_throttle_time": 2.0, "temperature": -1.0, "api_type": "default"}),
 
         # CPU 2
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
