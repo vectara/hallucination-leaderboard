@@ -202,9 +202,9 @@ No need to modify `config.py` or add any model entries. This command scans all `
 
 ### Updating README and Leaderboard Plot
 
-When you push to the `lb-engine` branch, GitHub Actions will automatically run `update_readme.py` to update the README and leaderboard plot image. You have two options:
-1. **Let GitHub Actions handle it:** Push your changes, wait for the action to complete, then pull the auto-generated commits.
-2. **Run manually:** Run `python update_readme.py` locally and include the changes in your push.
+Run `python update_readme.py` locally and include the changes (`README.md` and the new `img/` plot) in your push.
+
+The GitHub Action (`.github/workflows/update-readme.yml`) no longer runs automatically on push. It is kept as a manual fallback: on GitHub, open the Actions tab, select "Update Leaderboard", choose the `lb-engine` branch, and click "Run workflow". It will regenerate the README and plot and push an "Auto-update leaderboard and plot" commit, so pull afterwards.
 
 ### Publishing Results
 

@@ -357,7 +357,6 @@ Here is the passage:
         # MoonshotAIConfig(**{"model_name": "kimi-k2.6", "threads": 8, "temperature": 0.0, "min_throttle_time": 32.0, "api_type": "fireworks"}),
 
         # CPU 3
-        OpenAIConfig(**{"model_name": "gpt-6-sol", "threads": 8, "min_throttle_time": 2.0, "temperature": -1.0, "api_type": "default"}),
 
         # CPU 2
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
@@ -390,6 +389,7 @@ Here is the passage:
 
 
         # # Complete but sort
+        # OpenAIConfig(**{"model_name": "gpt-6-sol", "threads": 8, "min_throttle_time": 2.0, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-6-astra", "threads": 8, "min_throttle_time": 2.0, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.6-sol", "threads": 8, "min_throttle_time": 2.0, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.4-mini", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),

@@ -1,9 +1,10 @@
 name: Update Leaderboard
 
+# Manual only: run from the Actions tab ("Run workflow") when you want the
+# README table and plot regenerated on GitHub. It no longer fires on push;
+# the normal flow is to run `python update_readme.py` locally and push the result.
 on:
-  push:
-    paths:
-      - output/stats_all_LLMs.json
+  workflow_dispatch:
 
 permissions:
   contents: write
