@@ -31,6 +31,7 @@ import replicate
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+from .. Logger import logger
 
 COMPANY = "openai"
 """str: Provider identifier used for API key lookup and model registration."""
@@ -580,17 +581,22 @@ class OpenAILLM(AbstractLLM):
     def teardown(self):
         """Clean up resources after inference is complete.
 
-        Releases any held resources from the client or local model.
-        Currently a no-op as cleanup is handled automatically.
+        Closes the API client so its HTTP connection pool releases its file
+        descriptors immediately. Without this, one client per article leaked
+        sockets until the cyclic GC ran; under `ulimit -n` pressure the next
+        client's constructor then failed while loading CA certs (EMFILE).
         """
         if self.client:
-            pass
+            self.close_client()
         elif self.local_model:
             pass
 
     def close_client(self):
-        """Close the API client connection.
-
-        Currently a no-op as the OpenAI client does not require explicit cleanup.
-        """
-        pass
+        """Close the API client connection, if the client supports it."""
+        close = getattr(self.client, "close", None)
+        if callable(close):
+            try:
+                close()
+            except Exception as e:
+                logger.warning(f"Failed to close {self.model_name} client: {e}")
+        self.client = None

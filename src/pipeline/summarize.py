@@ -33,7 +33,7 @@ from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_excep
 import pandas as pd
 from tqdm import tqdm
 
-from .. data_model import SourceArticle, ModelInstantiationError, BasicLLMConfig, BasicSummary, EvalConfig
+from .. data_model import SourceArticle, ModelInstantiationError, BasicLLMConfig, BasicSummary, EvalConfig, SummaryError
 from .. json_utils import append_record_to_jsonl
 from .. LLMs import AbstractLLM, MODEL_REGISTRY
 from .. Logger import logger
@@ -278,6 +278,7 @@ def generate_summaries_for_one_llm_multithreaded(
 
     
     def worker(article_text, article_id):
+        llm = None
         try:
             llm = llm_factory(eval_config, llm_config)
             with llm as m:
@@ -311,23 +312,29 @@ def generate_summaries_for_one_llm_multithreaded(
                 q.put(record.model_dump())
     
         except Exception as e:
-            summary_uid = generate_summary_uid(
-                m.model_fullname,
-                "THREAD ERROR",
-                current_date
-            )
-            error_record = {
-                "article_id": article_id,
-                "summary_uid": summary_uid,
-                "summary": f"THREAD ERROR",
-                "eval_name": eval_name,
-                "summary_date": eval_date,
-                **m.__dict__
-            }
-            error_record.pop("prompt", None)
-            error_record = LLM_SUMMARY_CLASS(**error_record)
-            q.put(error_record)
-            logger.error(f"Worker failed for article_id={article_id}: {e}")
+            # Log with traceback first so the failure is never invisible, even if
+            # building the error record below fails for the same reason.
+            logger.exception(f"Worker failed for article_id={article_id}: {e}")
+            try:
+                # `llm` is None if llm_factory() raised; its setup() may also have
+                # raised before `m` was bound. Never depend on `m` here.
+                provenance = dict(llm.__dict__) if llm is not None else llm_config.model_dump()
+                model_fullname = getattr(llm, "model_fullname", None) or llm_config.model_name
+                error_record = {
+                    **provenance,
+                    "article_id": article_id,
+                    "summary_uid": generate_summary_uid(model_fullname, SummaryError.THREAD_ERROR.value, current_date),
+                    "summary": SummaryError.THREAD_ERROR.value,
+                    "eval_name": eval_name,
+                    "summary_date": eval_date,
+                }
+                error_record.pop("prompt", None)
+                q.put(LLM_SUMMARY_CLASS(**error_record).model_dump())
+            except Exception as record_err:
+                logger.exception(
+                    f"Could not write THREAD ERROR record for article_id={article_id}: {record_err}. "
+                    f"This article will be MISSING from {summaries_jsonl_path}."
+                )
 
     # THREAD EXECUTOR
     futures = []
@@ -335,8 +342,13 @@ def generate_summaries_for_one_llm_multithreaded(
         for text, aid in zip(article_texts, article_ids):
             futures.append(ex.submit(worker, text, aid))
 
-        for _ in tqdm(as_completed(futures), total=len(futures), desc="Summaries"):
-            pass
+        for fut in tqdm(as_completed(futures), total=len(futures), desc="Summaries"):
+            # worker() handles its own errors; this only catches what escapes it,
+            # so nothing can be dropped without a trace in the log.
+            try:
+                fut.result()
+            except Exception as e:
+                logger.exception(f"Unhandled exception escaped a summarization worker: {e}")
 
     writer_done.set()
     wt.join()
