@@ -64,6 +64,7 @@ class OpenAIConfig(BasicLLMConfig):
         "o1-preview",
 
         "gpt-6-astra",
+        "gpt-6-sol",
         "gpt-5.6-sol",
         "gpt-5.5",
         "gpt-5.4-pro",
@@ -148,7 +149,7 @@ class ClientMode(Enum):
         GPT_5_HIGH: GPT-5 model with high reasoning effort.
         GPT_5_MINIMAL: GPT-5 model with minimal reasoning effort.
         GPT_5_DEFAULT: GPT-5 model with configurable reasoning effort.
-        GPT_6: GPT-6 family (e.g., gpt-6-astra) via Responses API with configurable reasoning effort.
+        GPT_6: GPT-6 family (gpt-6-astra, gpt-6-sol) via Responses API with configurable reasoning effort.
         GPT_5P6: GPT-5.6 family (sol/terra/luna) via Responses API with configurable reasoning effort.
     """
 
@@ -192,6 +193,7 @@ class LocalMode(Enum):
 # Models may support chat, response, or both endpoints.
 client_mode_group = {
     "gpt-6-astra": {"chat": ClientMode.GPT_6},
+    "gpt-6-sol": {"chat": ClientMode.GPT_6},
     "gpt-5.6-sol": {"chat": ClientMode.GPT_5P6},
     "gpt-5.5": {"chat": ClientMode.GPT_5P5},
     "gpt-5.4-pro": {"chat": ClientMode.GPT_5P4_PRO},
