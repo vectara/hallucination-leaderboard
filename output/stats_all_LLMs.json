@@ -240,6 +240,14 @@
     "avg_word_count": 64.6
   },
   {
+    "model_name": "deepseek-ai/DeepSeek-V4-Pro",
+    "date_code": "",
+    "hallucination_rate": 8.6,
+    "confidence_interval": -1,
+    "answer_rate": 97.2,
+    "avg_word_count": 153.8
+  },
+  {
     "model_name": "google/gemini-2.5-flash",
     "date_code": "",
     "hallucination_rate": 7.8,
@@ -486,6 +494,14 @@
     "confidence_interval": -1,
     "answer_rate": 92.2,
     "avg_word_count": 112.0
+  },
+  {
+    "model_name": "moonshotai/kimi-k2.6",
+    "date_code": "",
+    "hallucination_rate": 10.8,
+    "confidence_interval": -1,
+    "answer_rate": 99.7,
+    "avg_word_count": 116.7
   },
   {
     "model_name": "nvidia/Nemotron-3-Nano-30B-A3B",
