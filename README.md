@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on May 11, 2026
+Last updated on September 22, 2026
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-04-20.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-09-22.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -55,12 +55,14 @@ Last updated on May 11, 2026
 |deepseek-ai/DeepSeek-V3.2|6.3 %|93.7 %|92.6 %|62.0|
 |google/gemma-3-4b-it|6.4 %|93.6 %|67.3 %|77.4|
 |CohereLabs/command-r-plus-08-2024|6.9 %|93.1 %|95.0 %|91.5|
+|openai/gpt-6-sol|6.5 %|93.5 %|100.0 %|71.4|
 |arcee-ai/trinity-large-preview|6.9 %|93.1 %|99.0 %|117.3|
 |openai/gpt-5.4-2026-03-05|7.0 %|93.0 %|99.9 %|81.7|
 |google/gemini-2.5-pro|7.0 %|93.0 %|99.1 %|106.4|
 |mistralai/ministral-3b-2410|7.3 %|92.7 %|99.9 %|167.9|
 |google/gemma-3-27b-it|7.4 %|92.6 %|98.8 %|96.4|
 |google/gemma-4-31b-it|7.4 %|92.6 %|100.0 %|75.8|
+|openai/gpt-6-astra|8.7 %|91.3 %|100.0 %|148.5|
 |mistralai/ministral-8b-2410|7.4 %|92.6 %|99.9 %|196.0|
 |meta-llama/Llama-4-Scout-17B-16E-Instruct|7.7 %|92.3 %|99.0 %|137.3|
 |google/gemini-2.5-flash|7.8 %|92.2 %|99.0 %|101.5|
@@ -105,6 +107,7 @@ Last updated on May 11, 2026
 |anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
 |anthropic/claude-opus-4-7|12.0 %|88.0 %|98.0 %|149.1|
 |qwen/qwen3.5-27b|12.1 %|87.9 %|99.8 %|94.4|
+|openai/gpt-5.6-sol|12.4 %|87.6 %|99.1 %|131.1|
 |openai/gpt-5.1-high-2025-11-13|12.1 %|87.9 %|100.0 %|254.4|
 |anthropic/claude-opus-4-6|12.2 %|87.8 %|99.8 %|137.6|
 |inceptionlabs/mercury-2|12.3 %|87.7 %|100.0 %|149.1|
