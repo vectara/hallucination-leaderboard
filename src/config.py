@@ -150,6 +150,7 @@ Here is the passage:
         # GoogleConfig(**{"model_name": "gemma-4-26b-a4b-it", "date_code": "", "temperature": 0.0, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemma-4-31b-it", "date_code": "", "temperature": 0.0, "api_type": "deepinfra"}),
         # GoogleConfig(**{"model_name": "gemma-4-26b-a4b-it", "date_code": "", "temperature": 0.0, "api_type": "deepinfra"}),
+        # GoogleConfig(**{"model_name": "gemini-4-argon", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # GoogleConfig(**{"threads": 8, "model_name": "gemini-3-flash-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemini-3-pro-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
         # GoogleConfig(**{"model_name": "gemini-3.1-flash-lite-preview", "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
@@ -357,6 +358,7 @@ Here is the passage:
         # MoonshotAIConfig(**{"model_name": "kimi-k2.6", "threads": 8, "temperature": 0.0, "min_throttle_time": 32.0, "api_type": "fireworks"}),
 
         # CPU 3
+        GoogleConfig(**{"model_name": "gemini-4-argon", "threads": 8, "min_throttle_time": 2.0, "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),
 
         # CPU 2
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),

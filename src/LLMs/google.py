@@ -67,6 +67,7 @@ class GoogleConfig(BasicLLMConfig):
         "gemini-2.5-pro-exp",
         "text-bison-001",
 
+        "gemini-4-argon",
         "gemini-3-flash-preview",
         "gemini-3-pro-preview",
         "gemini-3.1-flash-lite-preview",
@@ -179,6 +180,9 @@ client_mode_group = {
         "chat": ClientMode.CHAT_DEFAULT
     },
     "gemma-4-26b-a4b-it": {
+        "chat": ClientMode.CHAT_DEFAULT
+    },
+    "gemini-4-argon": {
         "chat": ClientMode.CHAT_DEFAULT
     },
     "gemini-3-flash-preview": {
