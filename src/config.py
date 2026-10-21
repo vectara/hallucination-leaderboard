@@ -140,6 +140,7 @@ Here is the passage:
         # CohereConfig(**{"model_name": "c4ai-aya-expanse-8b", "temperature": 0.0, "max_tokens": 4096, "api_type": "default"}),
         # CohereConfig(**{"model_name": "command-a", "date_code": "03-2025", "temperature": 0.0, "max_tokens": 8192, "api_type": "default"}),
         # CohereConfig(**{"model_name": "command-r-plus", "date_code": "08-2024", "temperature": 0.0, "max_tokens": 4096, "api_type": "default"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4.1-Flash", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Pro", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V3.2", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "huggingface"}),
@@ -360,6 +361,7 @@ Here is the passage:
 
         # CPU 3
         AnthropicConfig(**{"model_name": "claude-opus-5-5", "threads": 8, "min_throttle_time": 2.0, "temperature": -1.0, "api_type": "default"}),
+        DeepSeekAIConfig(**{"model_name": "DeepSeek-V4.1-Flash", "threads": 4, "min_throttle_time": 16.0, "temperature": 0.0, "api_type": "huggingface"}),
 
         # CPU 2
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
