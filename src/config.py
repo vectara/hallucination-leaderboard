@@ -127,6 +127,7 @@ Here is the passage:
         #     "api_type": "default"
         #   }
         # ),
+        # AnthropicConfig(**{"model_name": "claude-opus-5-5", "temperature": -1.0, "api_type": "default"}),
         # AnthropicConfig(**{"model_name": "claude-opus-4-7", "threads": 1, "temperature": 0.0, "api_type": "default"}),
         # AnthropicConfig(**{"threads": 4, "model_name": "claude-opus-4-5", "date_code": "20251101", "temperature": 0.0, "min_throttle_time": 2.0, "api_type": "default"}),
         # AnthropicConfig(**{"model_name": "claude-haiku-4-5", "date_code": "20251001", "temperature": 0.0, "api_type": "default"}),
@@ -358,6 +359,7 @@ Here is the passage:
         # MoonshotAIConfig(**{"model_name": "kimi-k2.6", "threads": 8, "temperature": 0.0, "min_throttle_time": 32.0, "api_type": "fireworks"}),
 
         # CPU 3
+        AnthropicConfig(**{"model_name": "claude-opus-5-5", "threads": 8, "min_throttle_time": 2.0, "temperature": -1.0, "api_type": "default"}),
 
         # CPU 2
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),

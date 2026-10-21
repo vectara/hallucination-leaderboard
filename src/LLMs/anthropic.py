@@ -48,6 +48,7 @@ class AnthropicConfig(BasicLLMConfig):
 
     company: Literal["anthropic"] = "anthropic"
     model_name: Literal[
+        "claude-opus-5-5",
         "claude-opus-4-7",
         "claude-opus-4-6",
         "claude-sonnet-4-6",
@@ -128,6 +129,9 @@ class LocalMode(Enum):
 # Each model maps endpoint types to ClientMode enum values indicating how to
 # invoke the Anthropic API. All Claude models use the messages API.
 client_mode_group = {
+    "claude-opus-5-5": {
+        "chat": ClientMode.CHAT_NO_TEMPERATURE
+    },
     "claude-opus-4-7": {
         "chat": ClientMode.CHAT_NO_TEMPERATURE
     },
@@ -279,17 +283,17 @@ class AnthropicLLM(AbstractLLM):
     def teardown(self):
         """Clean up resources after inference is complete.
 
-        Releases any held resources from the client or local model.
-        Currently a no-op as cleanup is handled automatically.
+        Closes the API client so its HTTP connection pool releases its file
+        descriptors immediately. The threaded pipeline builds one client per
+        article; unclosed clients leak sockets (see OpenAILLM.teardown).
         """
         if self.client:
-            pass
+            self.close_client()
         elif self.local_model:
             pass
 
     def close_client(self):
-        """Close the Anthropic API client connection.
-
-        Currently a no-op as the Anthropic client does not require explicit cleanup.
-        """
-        pass
+        """Close the Anthropic API client connection."""
+        if self.client:
+            self.client.close()
+        self.client = None
