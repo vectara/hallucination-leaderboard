@@ -40,6 +40,7 @@ model_size_map = {
     "anthropic/claude-haiku-4-5": "small",
     "anthropic/claude-opus-4-1": "large",
     "anthropic/claude-opus-4-7": "large",
+    "anthropic/claude-opus-5-5": "large",
     "arcee-ai/trinity-large-preview": "large",
     "CohereLabs/c4ai-aya-expanse-32b": "small",
     "CohereLabs/c4ai-aya-expanse-8b": "small",
@@ -53,6 +54,7 @@ model_size_map = {
     "deepseek-ai/DeepSeek-R1": "large",
     "deepseek-ai/DeepSeek-V3.2": "large",
     "deepseek-ai/DeepSeek-V4-Pro": "large",
+    "deepseek-ai/DeepSeek-V4.1-Flash": "large",
     "google/gemini-2.5-flash": "large", #?
     "google/gemini-2.5-flash-lite": "large", #?
     "google/gemini-2.5-pro": "large",
@@ -173,6 +175,7 @@ accessibility_map = {
     "anthropic/claude-haiku-4-5": "commercial",
     "anthropic/claude-opus-4-1": "commercial",
     "anthropic/claude-opus-4-7": "commercial",
+    "anthropic/claude-opus-5-5": "commercial",
     "arcee-ai/trinity-large-preview": "open",
     "CohereLabs/c4ai-aya-expanse-32b": "open",
     "CohereLabs/c4ai-aya-expanse-8b": "open",
@@ -186,6 +189,7 @@ accessibility_map = {
     "deepseek-ai/DeepSeek-R1": "open",
     "deepseek-ai/DeepSeek-V3.2": "open",
     "deepseek-ai/DeepSeek-V4-Pro": "open",
+    "deepseek-ai/DeepSeek-V4.1-Flash": "open",
     "google/gemini-2.5-flash": "commercial",
     "google/gemini-3-flash-preview": "commercial",
     "google/gemini-3.1-flash-lite-preview": "commercial",
