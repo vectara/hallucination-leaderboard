@@ -168,6 +168,14 @@
     "avg_word_count": 149.1
   },
   {
+    "model_name": "anthropic/claude-opus-5-5",
+    "date_code": "",
+    "hallucination_rate": 9.9,
+    "confidence_interval": -1,
+    "answer_rate": 99.7,
+    "avg_word_count": 192.1
+  },
+  {
     "model_name": "anthropic/claude-sonnet-4-20250514",
     "date_code": "20250514",
     "hallucination_rate": 10.3,
@@ -246,6 +254,14 @@
     "confidence_interval": -1,
     "answer_rate": 97.2,
     "avg_word_count": 153.8
+  },
+  {
+    "model_name": "deepseek-ai/DeepSeek-V4.1-Flash",
+    "date_code": "",
+    "hallucination_rate": 4.2,
+    "confidence_interval": -1,
+    "answer_rate": 99.9,
+    "avg_word_count": 108.2
   },
   {
     "model_name": "google/gemini-2.5-flash",
