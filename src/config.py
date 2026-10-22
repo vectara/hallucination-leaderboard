@@ -188,6 +188,7 @@ Here is the passage:
         # OpenAIConfig(**{"model_name": "gpt-5.4", "date_code": "2026-03-05", "threads": 3, "min_throttle_time": 3.0, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.4-mini", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),
         # OpenAIConfig(**{"model_name": "gpt-5.4-nano", "date_code": "2026-03-17", "threads": 4, "temperature": -1.0, "api_type": "default"}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m3.1-flash", "temperature": 0.0, "api_type": "openrouter"}),
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
         # MetaLlamaConfig(**
         #   {

@@ -50,11 +50,12 @@ class MiniMaxAIConfig(BasicLLMConfig):
         "minimax-m2p1",
         "minimax-m2p5",
         "minimax-m2p7",
+        "minimax-m3.1-flash",
     ]
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
-    api_type: Literal["fireworks"] = "fireworks"
+    api_type: Literal["fireworks", "openrouter"] = "fireworks"
 
 class MiniMaxAISummary(BasicSummary):
     """Output model for MiniMax AI summarization results.
@@ -67,7 +68,7 @@ class MiniMaxAISummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
-    api_type: Literal["fireworks"] | None = None
+    api_type: Literal["fireworks", "openrouter"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -93,6 +94,7 @@ class ClientMode(Enum):
     M2P1 = auto()
     M2P5 = auto()
     M2P7 = auto()
+    M3P1_FLASH_OPENROUTER = auto()
 
 
 class LocalMode(Enum):
@@ -121,6 +123,9 @@ client_mode_group = {
     },
     "minimax-m2p7": {
         "chat": ClientMode.M2P7
+    },
+    "minimax-m3.1-flash": {
+        "chat": ClientMode.M3P1_FLASH_OPENROUTER
     }
 }
 
@@ -226,6 +231,15 @@ class MiniMaxAILLM(AbstractLLM):
                         if delta and delta.content:
                             chunks.append(delta.content)
                     summary = "".join(chunks)
+                case ClientMode.M3P1_FLASH_OPENROUTER:
+                    # Weights not released yet; only served via OpenRouter (upstream: MiniMax API)
+                    response = self.client.chat.completions.create(
+                        messages=[{"role": "user", "content": prepared_text}],
+                        model=f"minimax/{self.model_name}",
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens,
+                    )
+                    summary = response.choices[0].message.content
                 case ClientMode.CHAT_DEFAULT:
                     pass
         elif self.local_model: 
@@ -260,6 +274,13 @@ class MiniMaxAILLM(AbstractLLM):
                         api_key=api_key,
                         base_url="https://api.fireworks.ai/inference/v1"
                     )
+                elif self.api_type == "openrouter":
+                    api_key = os.getenv("OPENROUTER_API_KEY")
+                    assert api_key is not None, "OPENROUTER_API_KEY not found in environment variable OPENROUTER_API_KEY"
+                    self.client = OpenAI(
+                        api_key=api_key,
+                        base_url="https://openrouter.ai/api/v1"
+                    )
                 else:
                     raise ValueError(f"Unknown api_type: {self.api_type}")
             else:
@@ -285,11 +306,13 @@ class MiniMaxAILLM(AbstractLLM):
     def teardown(self):
         """Clean up resources after inference is complete.
 
-        Releases any held resources from the client or local model.
-        Currently a no-op as cleanup is handled automatically.
+        Closes the API client so its HTTP connection pool releases its file
+        descriptors immediately; the threaded pipeline builds one client per
+        article (see OpenAILLM.teardown).
         """
         if self.client:
-            pass
+            self.client.close()
+            self.client = None
         elif self.local_model:
             pass
 
