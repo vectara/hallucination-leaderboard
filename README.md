@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on October 16, 2026
+Last updated on October 22, 2026
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-09-22.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-10-22.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -31,6 +31,7 @@ Last updated on October 16, 2026
 |google/gemini-2.5-flash-lite|3.3 %|96.7 %|99.5 %|95.7|
 |microsoft/Phi-4|3.7 %|96.3 %|80.7 %|120.9|
 |meta-llama/Llama-3.3-70B-Instruct-Turbo|4.1 %|95.9 %|99.5 %|64.6|
+|deepseek-ai/DeepSeek-V4.1-Flash|4.2 %|95.8 %|99.9 %|108.2|
 |snowflake/snowflake-arctic-instruct|4.3 %|95.7 %|62.7 %|81.4|
 |google/gemma-3-12b-it|4.4 %|95.6 %|97.4 %|89.7|
 |mistralai/mistral-large-2411|4.5 %|95.5 %|99.9 %|85.0|
@@ -84,6 +85,7 @@ Last updated on October 16, 2026
 |openai/gpt-4o-2024-08-06|9.6 %|90.4 %|93.8 %|86.6|
 |ai21labs/jamba-large-1.7-2025-07|9.7 %|90.3 %|98.9 %|124.8|
 |anthropic/claude-haiku-4-5-20251001|9.8 %|90.2 %|99.5 %|115.1|
+|anthropic/claude-opus-5-5|9.9 %|90.1 %|99.7 %|192.1|
 |zai-org/glm-5|10.1 %|89.9 %|99.7 %|74.4|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
 |google/gemini-3.1-pro-preview|10.4 %|89.6 %|99.4 %|107.7|
