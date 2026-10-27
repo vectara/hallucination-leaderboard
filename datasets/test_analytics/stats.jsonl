@@ -1,0 +1,2 @@
+{"timestamp":"2025-06-10","llm":"dummy-llm","date_code":"061024","hallucination_rate":33.3,"confidence_interval":-1.0,"answer_rate":60.0,"avg_summary_length":10.7}
+{"timestamp":"2025-06-10","llm":"dummy-llm","date_code":"061025","hallucination_rate":50.0,"confidence_interval":-1.0,"answer_rate":40.0,"avg_summary_length":20.5}

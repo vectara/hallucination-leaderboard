@@ -1,0 +1,10 @@
+{"timestamp":"2025-06-10","summary_uid":"uid0","llm":"dummy-llm","date_code":"061024","temperature":0.0,"article_id":1,"summary":"This is Summary 1, it is a good summary and has a high HHEM score."}
+{"timestamp":"2025-06-10","summary_uid":"uid1","llm":"dummy-llm","date_code":"061024","temperature":0.0,"article_id":2,"summary":"This Summary 2, it is a poor summary"}
+{"timestamp":"2025-06-10","summary_uid":"uid2","llm":"dummy-llm","date_code":"061024","temperature":0.0,"article_id":3,"summary":"FOUND <think> WITH NO CLOSING </think>"}
+{"timestamp":"2025-06-10","summary_uid":"uid3","llm":"dummy-llm","date_code":"061024","temperature":0.0,"article_id":4,"summary":"Bad Summary"}
+{"timestamp":"2025-06-10","summary_uid":"uid4","llm":"dummy-llm","date_code":"061024","temperature":0.0,"article_id":5,"summary":"This is Summary 5, it is a good summary."}
+{"timestamp":"2025-06-10","summary_uid":"uid5","llm":"dummy-llm","date_code":"061025","temperature":0.0,"article_id":6,"summary":"MODEL FAILED TO RETURN ANY OUTPUT"}
+{"timestamp":"2025-06-10","summary_uid":"uid6","llm":"dummy-llm","date_code":"061025","temperature":0.0,"article_id":7,"summary":"DID NOT RECIEVE A STRING TYPE FROM OUTPUT"}
+{"timestamp":"2025-06-10","summary_uid":"uid7","llm":"dummy-llm","date_code":"061025","temperature":0.0,"article_id":8,"summary":"THIS SUMMARY IS EMPTY, THIS IS THE DEFAULT VALUE A SUMMARY VARIABLE GETS. A REAL SUMMARY WAS NOT ASSIGNED TO THIS VARIABLE."}
+{"timestamp":"2025-06-10","summary_uid":"uid8","llm":"dummy-llm","date_code":"061025","temperature":0.0,"article_id":9,"summary":"This is Summary 9, it is a questionable summary but it's HHEM score is right at the threshold. Since threshold is >= 0.5 this will be judged as a factually consistant summary."}
+{"timestamp":"2025-06-10","summary_uid":"uid9","llm":"dummy-llm","date_code":"061025","temperature":0.0,"article_id":10,"summary":"This is Summary 10, it is a poor summary"}
