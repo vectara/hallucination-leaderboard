@@ -236,6 +236,14 @@ def generate_and_save_results(
         total=len(grouped_judgments_df),
         desc="Date Group Loop"
     ):
+        if not subset_df[BasicJudgment.Keys.IS_VALID].any():
+            logger.warning(
+                f"Skipping stats for {llm_config.model_name}, summary_date "
+                f"{summary_date}, judgment_date {judgment_date}: no valid "
+                f"summaries in this group"
+            )
+            continue
+
         hr = round(compute_hallucination_rate(subset_df)*100.0, 1)
         ar = round(compute_answer_rate(subset_df)*100.0, 1)
         awc = round(compute_avg_word_count(subset_df), 1)
