@@ -57,6 +57,18 @@ from .. Logger import logger
 #     INCOMPLETE_THINK_TAG
 # ]
 
+def is_rate_limit_error(exception) -> bool:
+    """Return True if an exception looks like an HTTP 429 / rate-limit error.
+
+    Checks a ``status_code`` attribute first, then the message text, so it works
+    across provider SDKs (OpenAI, Anthropic, HF, Together, Cohere, ...).
+    """
+    if getattr(exception, "status_code", None) == 429:
+        return True
+    message = str(exception)
+    return "429" in message or "rate limit" in message.lower()
+
+
 class AbstractLLM(ABC):
     """Abstract base class for all LLM provider implementations.
 
@@ -183,6 +195,10 @@ class AbstractLLM(ABC):
             The generated summary text, or an error message string if
             summarization fails (e.g., MODEL_FAILED_TO_RETURN_OUTPUT,
             MODEL_RETURNED_NON_STRING_TYPE_OUTPUT).
+
+        Raises:
+            Exception: Rate-limit errors (see is_rate_limit_error) are re-raised
+                so summarize_with_retry in the pipeline can back off and retry.
         """
 
         prepared_llm_input = self.prompt.format(article=article)
@@ -192,6 +208,10 @@ class AbstractLLM(ABC):
         try:
             llm_summary = self.summarize(prepared_llm_input)
         except Exception as e:
+            if is_rate_limit_error(e):
+                # Let the pipeline's retry/backoff handle it instead of recording a failure.
+                logger.warning(f"Rate limited for {self.model_name}, backing off: {e}")
+                raise
             logger.warning((
                 f"Model call failed for {self.model_name}: {e} "
             ))

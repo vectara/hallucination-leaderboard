@@ -28,7 +28,7 @@ from typing import List, Literal, Tuple, Any
 import threading
 from queue import Queue, Empty
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
+from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception
 
 import pandas as pd
 from tqdm import tqdm
@@ -36,6 +36,7 @@ from tqdm import tqdm
 from .. data_model import SourceArticle, ModelInstantiationError, BasicLLMConfig, BasicSummary, EvalConfig, SummaryError
 from .. json_utils import append_record_to_jsonl
 from .. LLMs import AbstractLLM, MODEL_REGISTRY
+from .. LLMs.AbstractLLM import is_rate_limit_error
 from .. Logger import logger
 
 class TooManyRequestsError(Exception):
@@ -48,25 +49,31 @@ class TooManyRequestsError(Exception):
     pass
 
 
-def is_rate_limit_error(exception):
-    """Check if an exception indicates a rate limit error.
+@retry(
+    retry=retry_if_exception(is_rate_limit_error),
+    wait=wait_exponential(multiplier=1, min=2, max=60),
+    stop=stop_after_attempt(10),
+    reraise=True,
+)
+def _summarize_retrying_rate_limits(llm: AbstractLLM, article_text: str) -> str:
+    return llm.try_to_summarize_one_article(article_text)
 
-    Performs a general-purpose check for HTTP 429 errors by examining
-    the exception's status_code attribute and string representation.
 
-    Args:
-        exception: The exception to check for rate limit indicators.
+def summarize_with_retry(llm: AbstractLLM, article_text: str) -> str:
+    """Summarize one article, backing off and retrying on rate-limit errors.
 
-    Returns:
-        True if the exception appears to be a rate limit error, False otherwise.
+    try_to_summarize_one_article re-raises rate limits; they are retried with
+    exponential backoff (2-60 s, 10 attempts). If the article is still rate
+    limited after that, it is recorded as MODEL_FAILED_TO_RETURN_OUTPUT, the same
+    as any other failed call, so a run never stops on a rate limit.
     """
-    # If the exception has a `status_code` attribute
-    if hasattr(exception, "status_code") and exception.status_code == 429:
-        return True
-    # If the exception has a string message containing 429 or rate limit
-    if "429" in str(exception) or "rate limit" in str(exception).lower():
-        return True
-    return False
+    try:
+        return _summarize_retrying_rate_limits(llm, article_text)
+    except Exception as e:
+        if not is_rate_limit_error(e):
+            raise
+        logger.warning(f"Still rate limited after retries for {llm.model_name}; recording failure: {e}")
+        return SummaryError.MODEL_FAILED_TO_RETURN_OUTPUT
 
 def prepare_llm(
     eval_config: EvalConfig,
@@ -282,15 +289,7 @@ def generate_summaries_for_one_llm_multithreaded(
         try:
             llm = llm_factory(eval_config, llm_config)
             with llm as m:
-                @retry(
-                    retry=retry_if_exception_type(is_rate_limit_error),
-                    wait=wait_exponential(multiplier=1, min=2, max=60),
-                    stop=stop_after_attempt(10)
-                )
-                def summarize_with_retry(text):
-                    return m.try_to_summarize_one_article(text)
-    
-                summary = summarize_with_retry(article_text)
+                summary = summarize_with_retry(m, article_text)
     
                 summary_uid = generate_summary_uid(
                     m.model_fullname,
@@ -386,7 +385,7 @@ def generate_summaries_for_one_llm(
             total=len(article_texts),
             desc="Article Loop"
         ):
-            summary = m.try_to_summarize_one_article(article_text)
+            summary = summarize_with_retry(m, article_text)
             summary_uid = generate_summary_uid(
                 llm.model_fullname,
                 summary,
