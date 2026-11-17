@@ -364,6 +364,17 @@ Here is the passage:
         # XAIConfig(**{"model_name": "grok-4", "temperature": 0.0, "date_code": "0709", "min_throttle_time": 4.0}), # failed need money
 
         # Not assigned yet
+        # HF batch 2026-11-17, smoke passed; NOT authorized for live yet. Uncomment under a # CPU N header at go.
+        # Throttle = 4 * threads (user's HF rule).
+        # QwenConfig(**{"model_name": "qwen3.5-397b-a17b", "threads": 16, "min_throttle_time": 64.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # QwenConfig(**{"model_name": "qwen3.6-27b", "threads": 16, "min_throttle_time": 64.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # QwenConfig(**{"model_name": "qwen3.6-35b-a3b", "threads": 16, "min_throttle_time": 64.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # ZhipuAIConfig(**{"model_name": "GLM-5.2", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # ZhipuAIConfig(**{"model_name": "GLM-5.3-Flash", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m3.1-flash", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # MoonshotAIConfig(**{"model_name": "Kimi-K2-Instruct", "threads": 1, "min_throttle_time": 4.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m3", "threads": 1, "min_throttle_time": 4.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Flash", "threads": 1, "min_throttle_time": 4.0, "temperature": 0.0, "api_type": "huggingface"}),
         # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
 
