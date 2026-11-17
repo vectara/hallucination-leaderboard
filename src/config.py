@@ -85,6 +85,20 @@ Here is the passage:
           }
         ),
       "per_LLM_configs": [
+        # HF router smoke batch 2026-11-17
+        # QwenConfig(**{"model_name": "qwen3.6-35b-a3b", "temperature": 0.0, "api_type": "huggingface"}),
+        # QwenConfig(**{"model_name": "qwen3.6-27b", "temperature": 0.0, "api_type": "huggingface"}),
+        # QwenConfig(**{"model_name": "qwen3.8-flash-next", "temperature": 0.0, "api_type": "huggingface"}),
+        # QwenConfig(**{"model_name": "qwen3-vl-235b-a22b-instruct", "temperature": 0.0, "api_type": "huggingface"}),
+        # QwenConfig(**{"model_name": "qwen3.5-397b-a17b", "temperature": 0.0, "api_type": "huggingface"}),
+        # QwenConfig(**{"model_name": "qwen3-vl-30b-a3b-instruct", "temperature": 0.0, "api_type": "huggingface"}),
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Flash", "temperature": 0.0, "api_type": "huggingface"}),
+        # MoonshotAIConfig(**{"model_name": "Kimi-K2-Instruct", "temperature": 0.0, "api_type": "huggingface"}),
+        # ZhipuAIConfig(**{"model_name": "GLM-5.3-Flash", "temperature": 0.0, "api_type": "huggingface"}),
+        # ZhipuAIConfig(**{"model_name": "GLM-5.2", "temperature": 0.0, "api_type": "huggingface"}),
+        # CohereConfig(**{"model_name": "command-a-plus", "date_code": "05-2026", "temperature": 0.0, "api_type": "default"}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m3", "temperature": 0.0, "api_type": "huggingface"}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m3.1-flash", "temperature": 0.0, "api_type": "huggingface"}),
         # AI21LabsConfig(**
         #   {
         #     "model_name": "jamba-mini-2",

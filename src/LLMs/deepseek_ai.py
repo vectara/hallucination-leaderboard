@@ -24,6 +24,7 @@ from enum import Enum, auto
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+from .hf_router import hf_router_client, hf_router_summarize
 
 from huggingface_hub import InferenceClient
 from openai import OpenAI
@@ -49,6 +50,7 @@ class DeepSeekAIConfig(BasicLLMConfig):
 
     company: Literal["deepseek-ai"] = "deepseek-ai"
     model_name: Literal[
+        "DeepSeek-V4-Flash",
         "DeepSeek-V4.1-Flash",
         "DeepSeek-V4-Pro",
         "DeepSeek-V3.1-Terminus",
@@ -105,6 +107,7 @@ class ClientMode(Enum):
     CHAT_CONVERSATIONAL_NO_TOKENS = auto()
     RESPONSE_DEFAULT = auto()
     DEEPSEEK_V4_PRO_FIREWORKS = auto()
+    HF_ROUTER = auto()  # HuggingFace router, provider pinned in hf_router_models
     UNDEFINED = auto()
 
 
@@ -124,10 +127,19 @@ class LocalMode(Enum):
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+# hf_router_models: models served via HuggingFace's OpenAI-compatible router
+# (api_type="huggingface"), pinned to one inference provider as "<repo>:<provider>".
+hf_router_models = {
+    "DeepSeek-V4-Flash": "deepseek-ai/DeepSeek-V4-Flash:deepinfra",
+}
+
 # client_mode_group: Mapping of model names to their supported API client modes.
 # Each model maps endpoint types to ClientMode enum values indicating how to
 # invoke the HuggingFace Inference API. V2.5 uses a mode without temperature/tokens.
 client_mode_group = {
+    "DeepSeek-V4-Flash": {
+        "chat": ClientMode.HF_ROUTER
+    },
     "DeepSeek-V4.1-Flash": {
         "chat": ClientMode.CHAT_DEFAULT
     },
@@ -219,7 +231,11 @@ class DeepSeekAILLM(AbstractLLM):
                 client_mode = fireworks_client_mode_group[self.model_name][self.endpoint]
             else:
                 client_mode = client_mode_group[self.model_name][self.endpoint]
-            match client_mode:
+            match (ClientMode.HF_ROUTER if self.api_type == "huggingface" and self.model_name in hf_router_models
+                   else client_mode):
+                case ClientMode.HF_ROUTER:
+                    summary = hf_router_summarize(self.client, hf_router_models[self.model_name], prepared_text,
+                                                  self.temperature, self.max_tokens)
                 case ClientMode.CHAT_DEFAULT:
                     messages = [{"role": "user", "content": prepared_text}]
                     client_package = self.client.chat_completion(
@@ -277,7 +293,9 @@ class DeepSeekAILLM(AbstractLLM):
             if self.model_name in client_mode_group or (
                 self.api_type == "fireworks" and self.model_name in fireworks_client_mode_group
             ):
-                if self.api_type == "huggingface":
+                if self.api_type == "huggingface" and self.model_name in hf_router_models:
+                    self.client = hf_router_client()
+                elif self.api_type == "huggingface":
                     self.client = InferenceClient(model=self.model_fullname)
                 elif self.api_type == "fireworks":
                     api_key = os.getenv("FIREWORKS_API_KEY")
@@ -304,7 +322,10 @@ class DeepSeekAILLM(AbstractLLM):
         Currently a no-op as cleanup is handled automatically.
         """
         if self.client:
-            pass
+            close = getattr(self.client, "close", None)
+            if callable(close):
+                close()
+            self.client = None
         elif self.local_model:
             pass
 

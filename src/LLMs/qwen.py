@@ -28,6 +28,7 @@ from together import Together
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+from .hf_router import hf_router_client, hf_router_summarize
 
 COMPANY = "qwen"
 """str: Provider identifier used for API key lookup and model registration."""
@@ -56,6 +57,12 @@ class QwenConfig(BasicLLMConfig):
 
     company: Literal["qwen"] = "qwen"
     model_name: Literal[
+        "qwen3.6-35b-a3b",
+        "qwen3.6-27b",
+        "qwen3.8-flash-next",
+        "qwen3-vl-235b-a22b-instruct",
+        "qwen3.5-397b-a17b",
+        "qwen3-vl-30b-a3b-instruct",
         "Qwen2-72B-Instruct",
         "Qwen2-VL-2B-Instruct",
         "Qwen2-VL-7B-Instruct",
@@ -106,7 +113,7 @@ class QwenConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat"
     thinking_tokens: bool = None
     enable_thinking: bool = False
-    api_type: Literal["default", "together"] = "default"
+    api_type: Literal["default", "together", "huggingface"] = "default"
 
 class QwenSummary(BasicSummary):
     """Output model for Qwen summarization results.
@@ -121,7 +128,7 @@ class QwenSummary(BasicSummary):
 
     endpoint: Literal["chat", "response"] | None = None
     enable_thinking: bool | None = None
-    api_type: Literal["default", "together"] | None = None
+    api_type: Literal["default", "together", "huggingface"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -145,6 +152,7 @@ class ClientMode(Enum):
     CHAT_REASONING = auto()
     QWEN3_235B_A22B_TOGETHER = auto()
     RESPONSE_DEFAULT = auto()
+    HF_ROUTER = auto()  # HuggingFace router, provider pinned in hf_router_models
     UNDEFINED = auto()
 
 
@@ -164,10 +172,39 @@ class LocalMode(Enum):
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+# hf_router_models: models served via HuggingFace's OpenAI-compatible router
+# (api_type="huggingface"), pinned to one inference provider as "<repo>:<provider>".
+hf_router_models = {
+    "qwen3.6-35b-a3b": "Qwen/Qwen3.6-35B-A3B:deepinfra",
+    "qwen3.6-27b": "Qwen/Qwen3.6-27B:deepinfra",
+    "qwen3.8-flash-next": "Qwen/Qwen3.8-Flash-Next:featherless-ai",
+    "qwen3-vl-235b-a22b-instruct": "Qwen/Qwen3-VL-235B-A22B-Instruct:deepinfra",
+    "qwen3.5-397b-a17b": "Qwen/Qwen3.5-397B-A17B:novita",
+    "qwen3-vl-30b-a3b-instruct": "Qwen/Qwen3-VL-30B-A3B-Instruct:deepinfra",
+}
+
 # client_mode_group: Mapping of model names to their supported API client modes.
 # Each model maps endpoint types to ClientMode enum values. Models with CHAT_REASONING
 # support the enable_thinking parameter for reasoning/thinking mode.
 client_mode_group = {
+    "qwen3.6-35b-a3b": {
+        "chat": ClientMode.HF_ROUTER
+    },
+    "qwen3.6-27b": {
+        "chat": ClientMode.HF_ROUTER
+    },
+    "qwen3.8-flash-next": {
+        "chat": ClientMode.HF_ROUTER
+    },
+    "qwen3-vl-235b-a22b-instruct": {
+        "chat": ClientMode.HF_ROUTER
+    },
+    "qwen3.5-397b-a17b": {
+        "chat": ClientMode.HF_ROUTER
+    },
+    "qwen3-vl-30b-a3b-instruct": {
+        "chat": ClientMode.HF_ROUTER
+    },
     "qwen3-235b-a22b": {
         "chat": ClientMode.QWEN3_235B_A22B_TOGETHER
     },
@@ -293,7 +330,11 @@ class QwenLLM(AbstractLLM):
         """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match client_mode_group[self.model_name][self.endpoint]:
+            match (ClientMode.HF_ROUTER if self.api_type == "huggingface" and self.model_name in hf_router_models
+                   else client_mode_group[self.model_name][self.endpoint]):
+                case ClientMode.HF_ROUTER:
+                    summary = hf_router_summarize(self.client, hf_router_models[self.model_name], prepared_text,
+                                                  self.temperature, self.max_tokens)
                 case ClientMode.CHAT_DEFAULT:
                     completion = self.client.chat.completions.create(
                         model=self.model_fullname,
@@ -345,7 +386,9 @@ class QwenLLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                if self.api_type == "together":
+                if self.api_type == "huggingface" and self.model_name in hf_router_models:
+                    self.client = hf_router_client()
+                elif self.api_type == "together":
                     api_key = os.getenv("TOGETHER_API_KEY")
                     assert api_key is not None, (
                         "TOGETHER API key not found in environment variable "
@@ -382,7 +425,10 @@ class QwenLLM(AbstractLLM):
         Currently a no-op as cleanup is handled automatically.
         """
         if self.client:
-            pass
+            close = getattr(self.client, "close", None)
+            if callable(close):
+                close()
+            self.client = None
         elif self.local_model:
             pass
 

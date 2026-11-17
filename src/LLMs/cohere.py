@@ -48,6 +48,7 @@ class CohereConfig(BasicLLMConfig):
 
     company: Literal["CohereLabs"] = "CohereLabs"
     model_name: Literal[
+        "command-a-plus",
         "aya-expanse-8b",
         "aya-expanse-32b",
         "c4ai-command-r-plus",
@@ -123,6 +124,9 @@ class LocalMode(Enum):
 # invoke the Cohere API. Reasoning models use CHAT_REASONING for proper
 # response extraction.
 client_mode_group = {
+    "command-a-plus": {
+        "chat": ClientMode.CHAT_REASONING
+    },
     "command-a": {
         "chat": ClientMode.CHAT_DEFAULT
     },

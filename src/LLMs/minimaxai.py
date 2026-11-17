@@ -24,6 +24,7 @@ from openai import OpenAI
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+from .hf_router import hf_router_client, hf_router_summarize
 from enum import Enum, auto
 
 COMPANY = "MiniMaxAI"
@@ -47,6 +48,7 @@ class MiniMaxAIConfig(BasicLLMConfig):
 
     company: Literal["MiniMaxAI"] = "MiniMaxAI"
     model_name: Literal[
+        "minimax-m3",
         "minimax-m2p1",
         "minimax-m2p5",
         "minimax-m2p7",
@@ -55,7 +57,7 @@ class MiniMaxAIConfig(BasicLLMConfig):
     date_code: str = ""
     execution_mode: Literal["api", "cpu", "gpu"] = "api"
     endpoint: Literal["chat", "response"] = "chat"
-    api_type: Literal["fireworks", "openrouter"] = "fireworks"
+    api_type: Literal["fireworks", "openrouter", "huggingface"] = "fireworks"
 
 class MiniMaxAISummary(BasicSummary):
     """Output model for MiniMax AI summarization results.
@@ -68,7 +70,7 @@ class MiniMaxAISummary(BasicSummary):
     """
 
     endpoint: Literal["chat", "response"] | None = None
-    api_type: Literal["fireworks", "openrouter"] | None = None
+    api_type: Literal["fireworks", "openrouter", "huggingface"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -90,6 +92,7 @@ class ClientMode(Enum):
 
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
+    HF_ROUTER = auto()  # HuggingFace router, provider pinned in hf_router_models
     UNDEFINED = auto()
     M2P1 = auto()
     M2P5 = auto()
@@ -112,9 +115,19 @@ class LocalMode(Enum):
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+# hf_router_models: models served via HuggingFace's OpenAI-compatible router
+# (api_type="huggingface"), pinned to one inference provider as "<repo>:<provider>".
+hf_router_models = {
+    "minimax-m3": "MiniMaxAI/MiniMax-M3:novita",
+    "minimax-m3.1-flash": "MiniMaxAI/MiniMax-M3.1-Flash:novita",
+}
+
 # client_mode_group: Mapping of model names to their supported API client modes.
 # Each model maps endpoint types to ClientMode enum values.
 client_mode_group = {
+    "minimax-m3": {
+        "chat": ClientMode.HF_ROUTER
+    },
     "minimax-m2p1": {
         "chat": ClientMode.M2P1
     },
@@ -179,7 +192,11 @@ class MiniMaxAILLM(AbstractLLM):
         """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match client_mode_group[self.model_name][self.endpoint]:
+            match (ClientMode.HF_ROUTER if self.api_type == "huggingface" and self.model_name in hf_router_models
+                   else client_mode_group[self.model_name][self.endpoint]):
+                case ClientMode.HF_ROUTER:
+                    summary = hf_router_summarize(self.client, hf_router_models[self.model_name], prepared_text,
+                                                  self.temperature, self.max_tokens)
                 case ClientMode.M2P1:
                     self.model_fullname = f"accounts/fireworks/models/{self.model_name}"
                     response = self.client.chat.completions.create(
@@ -267,7 +284,9 @@ class MiniMaxAILLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                if self.api_type == "fireworks":
+                if self.api_type == "huggingface" and self.model_name in hf_router_models:
+                    self.client = hf_router_client()
+                elif self.api_type == "fireworks":
                     api_key = os.getenv("FIREWORKS_API_KEY")
                     assert api_key is not None, "FIREWORKS_API_KEY not found in environment variable FIREWORKS_API_KEY"
                     self.client = OpenAI(

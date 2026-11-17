@@ -28,6 +28,7 @@ from enum import Enum, auto
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+from .hf_router import hf_router_client, hf_router_summarize
 from huggingface_hub import InferenceClient
 
 COMPANY = "zai-org"
@@ -55,6 +56,8 @@ class ZhipuAIConfig(BasicLLMConfig):
 
     company: Literal["zai-org"] = "zai-org"
     model_name: Literal[
+        "GLM-5.3-Flash",
+        "GLM-5.2",
         "GLM-4.5-AIR-FP8",  # Together
         "glm-4p5",  # Fireworks but using OpenAI
         "glm-4p7",  # Fireworks but using OpenAI
@@ -114,6 +117,7 @@ class ClientMode(Enum):
     # Depolyment Name: accounts/ahmed-vectara/deployments/j5r4b365
     GLM_5 = auto()
     RESPONSE_DEFAULT = auto()
+    HF_ROUTER = auto()  # HuggingFace router, provider pinned in hf_router_models
     UNDEFINED = auto()
 
 
@@ -133,10 +137,23 @@ class LocalMode(Enum):
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
 
+# hf_router_models: models served via HuggingFace's OpenAI-compatible router
+# (api_type="huggingface"), pinned to one inference provider as "<repo>:<provider>".
+hf_router_models = {
+    "GLM-5.3-Flash": "zai-org/GLM-5.3-Flash:novita",
+    "GLM-5.2": "zai-org/GLM-5.2:novita",
+}
+
 # client_mode_group: Mapping of model names to their supported API client modes.
 # Each model maps endpoint types to ClientMode enum values.
 # Note: api_type is now specified in config, not here.
 client_mode_group = {
+    "GLM-5.3-Flash": {
+        "chat": ClientMode.HF_ROUTER
+    },
+    "GLM-5.2": {
+        "chat": ClientMode.HF_ROUTER
+    },
     "GLM-4.5-AIR-FP8": {"chat": ClientMode.GLM_4P5_AIR_FP8},
     "glm-4p5": {"chat": ClientMode.GLM_4P5},
     "GLM-4.7-Flash": {"chat": ClientMode.GLM_4P7_FLASH},
@@ -194,7 +211,11 @@ class ZhipuAILLM(AbstractLLM):
         """
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
-            match client_mode_group[self.model_name][self.endpoint]:
+            match (ClientMode.HF_ROUTER if self.api_type == "huggingface" and self.model_name in hf_router_models
+                   else client_mode_group[self.model_name][self.endpoint]):
+                case ClientMode.HF_ROUTER:
+                    summary = hf_router_summarize(self.client, hf_router_models[self.model_name], prepared_text,
+                                                  self.temperature, self.max_tokens)
                 case ClientMode.GLM_4P5_AIR_FP8:
                     together_name = f"zai-org/{self.model_fullname}"
                     response = self.client.chat.completions.create(
@@ -304,7 +325,9 @@ class ZhipuAILLM(AbstractLLM):
         """
         if self.execution_mode == "api":
             if self.model_name in client_mode_group:
-                if self.api_type == "together":
+                if self.api_type == "huggingface" and self.model_name in hf_router_models:
+                    self.client = hf_router_client()
+                elif self.api_type == "together":
                     api_key = os.getenv(f"TOGETHER_API_KEY")
                     assert api_key is not None, f"TOGETHER API key not found in environment variable TOGETHER_API_KEY"
                     self.client = Together(api_key=api_key)
@@ -352,7 +375,10 @@ class ZhipuAILLM(AbstractLLM):
         Currently a no-op as cleanup is handled automatically.
         """
         if self.client:
-            pass
+            close = getattr(self.client, "close", None)
+            if callable(close):
+                close()
+            self.client = None
         elif self.local_model:
             pass
 

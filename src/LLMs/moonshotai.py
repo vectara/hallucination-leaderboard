@@ -29,6 +29,7 @@ from enum import Enum, auto
 from . AbstractLLM import AbstractLLM
 from .. data_model import BasicLLMConfig, BasicSummary, BasicJudgment
 from .. data_model import ModelInstantiationError, SummaryError
+from .hf_router import hf_router_client, hf_router_summarize
 
 from huggingface_hub import InferenceClient
 from together import Together
@@ -106,6 +107,7 @@ class ClientMode(Enum):
     KIMI_K2_INSTRUCT = auto()
     KIMI_K2P5_HF = auto()
     KIMI_K2P6_FIREWORKS = auto()
+    HF_ROUTER = auto()  # HuggingFace router, provider pinned in hf_router_models
     UNDEFINED = auto()
 
 
@@ -124,6 +126,12 @@ class LocalMode(Enum):
     CHAT_DEFAULT = auto()
     RESPONSE_DEFAULT = auto()
     UNDEFINED = auto()
+
+# hf_router_models: models served via HuggingFace's OpenAI-compatible router
+# (api_type="huggingface"), pinned to one inference provider as "<repo>:<provider>".
+hf_router_models = {
+    "Kimi-K2-Instruct": "moonshotai/Kimi-K2-Instruct:novita",
+}
 
 # client_mode_group: Mapping of model names to their supported API client modes.
 # Each model maps endpoint types to ClientMode enum values indicating how to
@@ -206,7 +214,11 @@ class MoonshotAILLM(AbstractLLM):
                 client_mode = fireworks_client_mode_group[self.model_name][self.endpoint]
             else:
                 client_mode = client_mode_group[self.model_name][self.endpoint]
-            match client_mode:
+            match (ClientMode.HF_ROUTER if self.api_type == "huggingface" and self.model_name in hf_router_models
+                   else client_mode):
+                case ClientMode.HF_ROUTER:
+                    summary = hf_router_summarize(self.client, hf_router_models[self.model_name], prepared_text,
+                                                  self.temperature, self.max_tokens)
                 case ClientMode.CHAT_DEFAULT:
                     completion = self.client.chat.completions.create(
                         model = self.model_fullname,
@@ -304,7 +316,9 @@ class MoonshotAILLM(AbstractLLM):
             if self.model_name in client_mode_group or (
                 self.api_type == "fireworks" and self.model_name in fireworks_client_mode_group
             ):
-                if self.api_type == "huggingface":
+                if self.api_type == "huggingface" and self.model_name in hf_router_models:
+                    self.client = hf_router_client()
+                elif self.api_type == "huggingface":
                     self.client = InferenceClient(model=self.huggingface_name)
                 elif self.api_type == "default":
                     api_key = os.getenv(f"{COMPANY.upper()}_API_KEY")
@@ -340,7 +354,10 @@ class MoonshotAILLM(AbstractLLM):
         Currently a no-op as cleanup is handled automatically.
         """
         if self.client:
-            pass
+            close = getattr(self.client, "close", None)
+            if callable(close):
+                close()
+            self.client = None
         elif self.local_model:
             pass
 
