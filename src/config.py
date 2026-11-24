@@ -368,11 +368,6 @@ Here is the passage:
         # Not assigned yet
         # HF batch 2026-11-17, smoke passed; NOT authorized for live yet. Uncomment under a # CPU N header at go.
         # Throttle = 4 * threads (user's HF rule).
-        # QwenConfig(**{"model_name": "qwen3.6-27b", "threads": 16, "min_throttle_time": 64.0, "temperature": 0.0, "enable_thinking": True, "api_type": "huggingface"}),
-        # QwenConfig(**{"model_name": "qwen3.6-35b-a3b", "threads": 16, "min_throttle_time": 64.0, "temperature": 0.0, "enable_thinking": True, "api_type": "huggingface"}),
-        # QwenConfig(**{"model_name": "qwen3-vl-235b-a22b-instruct", "threads": 8, "min_throttle_time": 32.0, "temperature": 0.0, "enable_thinking": True, "api_type": "huggingface"}),
-        # QwenConfig(**{"model_name": "qwen3.8-flash", "date_code": "", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "enable_thinking": True, "api_type": "deepinfra"}),
-        # MistralAIConfig(**{"model_name": "mistral-small", "date_code": "2603", "temperature": 0.0, "api_type": "default"}),
         # AllenAIConfig(**{"model_name": "Olmo-3-32B-Think", "temperature": 0.0, "min_throttle_time": 4.0}),
         # MoonshotAIConfig(**{"threads": 4, "company": "moonshotai", "model_name": "kimi-k2-thinking", "date_code": "","temperature": 0.01, "min_throttle_time": 2.0}),
 
@@ -384,6 +379,11 @@ Here is the passage:
         # MoonshotAIConfig(**{"model_name": "kimi-k2.6", "threads": 8, "temperature": 0.0, "min_throttle_time": 32.0, "api_type": "fireworks"}),
 
         # CPU 3
+        QwenConfig(**{"model_name": "qwen3.6-27b", "threads": 16, "min_throttle_time": 64.0, "temperature": 0.0, "enable_thinking": True, "api_type": "huggingface"}),
+        QwenConfig(**{"model_name": "qwen3.6-35b-a3b", "threads": 16, "min_throttle_time": 64.0, "temperature": 0.0, "enable_thinking": True, "api_type": "huggingface"}),
+        QwenConfig(**{"model_name": "qwen3-vl-235b-a22b-instruct", "threads": 8, "min_throttle_time": 32.0, "temperature": 0.0, "enable_thinking": True, "api_type": "huggingface"}),
+        QwenConfig(**{"model_name": "qwen3.8-flash", "date_code": "", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "enable_thinking": True, "api_type": "deepinfra"}),
+        MistralAIConfig(**{"model_name": "mistral-small", "date_code": "2603", "temperature": 0.0, "api_type": "default"}),
 
         # CPU 2
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
