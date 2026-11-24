@@ -86,6 +86,7 @@ Here is the passage:
         ),
       "per_LLM_configs": [
         # HF router smoke batch 2026-11-17
+        # QwenConfig(**{"model_name": "qwen3.8-flash", "date_code": "", "temperature": 0.0, "enable_thinking": False, "api_type": "deepinfra"}),
         # MistralAIConfig(**{"model_name": "mistral-small", "date_code": "2603", "temperature": 0.0, "api_type": "default"}),
         # QwenConfig(**{"model_name": "qwen3.6-35b-a3b", "temperature": 0.0, "api_type": "huggingface"}),
         # QwenConfig(**{"model_name": "qwen3.6-27b", "temperature": 0.0, "api_type": "huggingface"}),

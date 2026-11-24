@@ -106,6 +106,14 @@ def compile_results_for_all_llms(eval_config: EvalConfig) -> None:
         )
     # df_all_llms.to_json(os.path.join(output_dir, "stats_all_LLMs.json"), orient="records", indent=2)
 
+# Companies whose native API (api_type="default") reads a key whose name is not
+# f"{company.upper()}_API_KEY"; must match the getenv() in the provider file.
+DEFAULT_API_KEY_OVERRIDES = {
+    "CohereLabs": "COHERE_API_KEY",        # src/LLMs/cohere.py
+    "xai-org": "XAI_API_KEY",              # src/LLMs/xai.py
+    "amazon": "AWS_SECRET_ACCESS_KEY",     # src/LLMs/amazon.py (AWS credentials)
+}
+
 # TODO: Move the main function to pipeline/__init__.py
 def main(eval_config: EvalConfig) -> None:
     """Execute the evaluation pipeline based on configuration.
@@ -227,7 +235,9 @@ def cli_main():
             continue  # Uses cached login, no API key needed
         elif api_type == "default":
             company = getattr(llm_config, 'company', '')
-            if company:
+            if company in DEFAULT_API_KEY_OVERRIDES:
+                required_keys.add(DEFAULT_API_KEY_OVERRIDES[company])
+            elif company:
                 # Replace hyphens with underscores for valid env var names
                 key_name = company.upper().replace("-", "_")
                 required_keys.add(f"{key_name}_API_KEY")

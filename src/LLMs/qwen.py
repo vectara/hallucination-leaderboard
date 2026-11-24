@@ -99,6 +99,7 @@ class QwenConfig(BasicLLMConfig):
         "qwen-max",
         "qwen3.6-plus-preview",
         "qwen3.5-plus",
+        "qwen3.8-flash",
         "qwen3.5-flash",
         "qwen3.5-35b-a3b",
         "qwen3.5-122b-a10b",
@@ -113,7 +114,7 @@ class QwenConfig(BasicLLMConfig):
     endpoint: Literal["chat", "response"] = "chat"
     thinking_tokens: bool = None
     enable_thinking: bool = False
-    api_type: Literal["default", "together", "huggingface"] = "default"
+    api_type: Literal["default", "together", "huggingface", "deepinfra"] = "default"
 
 class QwenSummary(BasicSummary):
     """Output model for Qwen summarization results.
@@ -128,7 +129,7 @@ class QwenSummary(BasicSummary):
 
     endpoint: Literal["chat", "response"] | None = None
     enable_thinking: bool | None = None
-    api_type: Literal["default", "together", "huggingface"] | None = None
+    api_type: Literal["default", "together", "huggingface", "deepinfra"] | None = None
 
     class Config:
         """Pydantic configuration to ignore extra fields during parsing."""
@@ -153,6 +154,7 @@ class ClientMode(Enum):
     QWEN3_235B_A22B_TOGETHER = auto()
     RESPONSE_DEFAULT = auto()
     HF_ROUTER = auto()  # HuggingFace router, provider pinned in hf_router_models
+    DEEPINFRA_CHAT = auto()  # DeepInfra OpenAI-compatible API, model ids in deepinfra_models
     UNDEFINED = auto()
 
 
@@ -186,6 +188,11 @@ hf_router_models = {
 # client_mode_group: Mapping of model names to their supported API client modes.
 # Each model maps endpoint types to ClientMode enum values. Models with CHAT_REASONING
 # support the enable_thinking parameter for reasoning/thinking mode.
+# deepinfra_models: models served via DeepInfra's OpenAI-compatible API (api_type="deepinfra").
+deepinfra_models = {
+    "qwen3.8-flash": "Qwen/Qwen3.8-Flash",  # Alibaba access not purchased on our account (2026-11-24)
+}
+
 client_mode_group = {
     "qwen3.6-35b-a3b": {
         "chat": ClientMode.HF_ROUTER
@@ -254,6 +261,9 @@ client_mode_group = {
         "chat": ClientMode.CHAT_REASONING
     },
     "qwen3.5-plus": {
+        "chat": ClientMode.CHAT_REASONING
+    },
+    "qwen3.8-flash": {
         "chat": ClientMode.CHAT_REASONING
     },
     "qwen3.5-flash": {
@@ -331,6 +341,7 @@ class QwenLLM(AbstractLLM):
         summary = SummaryError.EMPTY_SUMMARY
         if self.client:
             match (ClientMode.HF_ROUTER if self.api_type == "huggingface" and self.model_name in hf_router_models
+                   else ClientMode.DEEPINFRA_CHAT if self.api_type == "deepinfra" and self.model_name in deepinfra_models
                    else client_mode_group[self.model_name][self.endpoint]):
                 case ClientMode.HF_ROUTER:
                     summary = hf_router_summarize(self.client, hf_router_models[self.model_name], prepared_text,
@@ -343,6 +354,15 @@ class QwenLLM(AbstractLLM):
                         messages=[
                             {"role": "user", "content": prepared_text}],
                         )
+                    summary = completion.choices[0].message.content
+                case ClientMode.DEEPINFRA_CHAT:
+                    completion = self.client.chat.completions.create(
+                        model=deepinfra_models[self.model_name],
+                        temperature=self.temperature,
+                        max_tokens=self.max_tokens,
+                        extra_body={"chat_template_kwargs": {"enable_thinking": self.enable_thinking}},
+                        messages=[{"role": "user", "content": prepared_text}],
+                    )
                     summary = completion.choices[0].message.content
                 case ClientMode.CHAT_REASONING:
                     completion = self.client.chat.completions.create(
@@ -388,6 +408,10 @@ class QwenLLM(AbstractLLM):
             if self.model_name in client_mode_group:
                 if self.api_type == "huggingface" and self.model_name in hf_router_models:
                     self.client = hf_router_client()
+                elif self.api_type == "deepinfra" and self.model_name in deepinfra_models:
+                    api_key = os.getenv("DEEPINFRA_API_KEY")
+                    assert api_key is not None, "DEEPINFRA_API_KEY not found in environment variable DEEPINFRA_API_KEY"
+                    self.client = OpenAI(api_key=api_key, base_url="https://api.deepinfra.com/v1/openai")
                 elif self.api_type == "together":
                     api_key = os.getenv("TOGETHER_API_KEY")
                     assert api_key is not None, (
