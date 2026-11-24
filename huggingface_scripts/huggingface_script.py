@@ -55,6 +55,7 @@ model_size_map = {
     "deepseek-ai/DeepSeek-V3.2": "large",
     "deepseek-ai/DeepSeek-V4-Pro": "large",
     "deepseek-ai/DeepSeek-V4.1-Flash": "large",
+    "deepseek-ai/DeepSeek-V4-Flash": "large",
     "google/gemini-2.5-flash": "large", #?
     "google/gemini-2.5-flash-lite": "large", #?
     "google/gemini-2.5-pro": "large",
@@ -79,6 +80,8 @@ model_size_map = {
     "MiniMaxAI/minimax-m2p1": "large",
     "MiniMaxAI/minimax-m2p5": "large",
     "MiniMaxAI/minimax-m2p7": "large",
+    "MiniMaxAI/minimax-m3": "large",
+    "MiniMaxAI/minimax-m3.1-flash": "large",
     "mistralai/ministral-3b-2410": "small",
     "mistralai/ministral-8b-2410": "small",
     "mistralai/mistral-large-2411": "large",
@@ -91,6 +94,7 @@ model_size_map = {
     "mistralai/mistral-large": "large",
     "mistralai/mistral-small": "small",
     "moonshotai/Kimi-K2-Instruct-0905": "large",
+    "moonshotai/Kimi-K2-Instruct": "large",
     "moonshotai/Kimi-K2-Instruct": "large",
     "moonshotai/Kimi-K2.5": "large",
     "moonshotai/kimi-k2.6": "large",
@@ -148,6 +152,8 @@ model_size_map = {
     "zai-org/GLM-4.5-AIR-FP8": "large",
     "zai-org/GLM-4.6": "large",
     "zai-org/glm-5": "large",
+    "zai-org/GLM-5.3-Flash": "large",
+    "zai-org/GLM-5.2": "large",
 
 }
 
@@ -190,6 +196,7 @@ accessibility_map = {
     "deepseek-ai/DeepSeek-V3.2": "open",
     "deepseek-ai/DeepSeek-V4-Pro": "open",
     "deepseek-ai/DeepSeek-V4.1-Flash": "open",
+    "deepseek-ai/DeepSeek-V4-Flash": "open",
     "google/gemini-2.5-flash": "commercial",
     "google/gemini-3-flash-preview": "commercial",
     "google/gemini-3.1-flash-lite-preview": "commercial",
@@ -214,6 +221,8 @@ accessibility_map = {
     "MiniMaxAI/minimax-m2p1": "open",
     "MiniMaxAI/minimax-m2p5": "open",
     "MiniMaxAI/minimax-m2p7": "open",
+    "MiniMaxAI/minimax-m3": "open",
+    "MiniMaxAI/minimax-m3.1-flash": "open",
     "mistralai/ministral-3b-2410": "open", # ?
     "mistralai/ministral-8b-2410": "open",
     "mistralai/mistral-large-2411": "open",
@@ -226,6 +235,7 @@ accessibility_map = {
     "mistralai/mistral-large": "open",
     "mistralai/mistral-small": "open",
     "moonshotai/Kimi-K2-Instruct-0905": "open",
+    "moonshotai/Kimi-K2-Instruct": "open",
     "moonshotai/Kimi-K2-Instruct": "open",
     "moonshotai/Kimi-K2.5": "open",
     "moonshotai/kimi-k2.6": "open",
@@ -283,6 +293,8 @@ accessibility_map = {
     "zai-org/GLM-4.5-AIR-FP8": "open",
     "zai-org/GLM-4.6": "open",
     "zai-org/glm-5": "open",
+    "zai-org/GLM-5.3-Flash": "open",
+    "zai-org/GLM-5.2": "open",
 
 }
 
