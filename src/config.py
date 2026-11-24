@@ -380,12 +380,6 @@ Here is the passage:
         # MoonshotAIConfig(**{"model_name": "kimi-k2.6", "threads": 8, "temperature": 0.0, "min_throttle_time": 32.0, "api_type": "fireworks"}),
 
         # CPU 3
-        DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Flash", "threads": 1, "min_throttle_time": 4.0, "temperature": 0.0, "api_type": "huggingface"}),
-        MoonshotAIConfig(**{"model_name": "Kimi-K2-Instruct", "threads": 1, "min_throttle_time": 4.0, "temperature": 0.0, "api_type": "huggingface"}),
-        MiniMaxAIConfig(**{"model_name": "minimax-m3", "threads": 1, "min_throttle_time": 4.0, "temperature": 0.0, "api_type": "huggingface"}),
-        MiniMaxAIConfig(**{"model_name": "minimax-m3.1-flash", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "api_type": "huggingface"}),
-        ZhipuAIConfig(**{"model_name": "GLM-5.3-Flash", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "api_type": "huggingface"}),
-        ZhipuAIConfig(**{"model_name": "GLM-5.2", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "api_type": "huggingface"}),
 
         # CPU 2
         # MiniMaxAIConfig(**{"model_name": "minimax-m2p7", "temperature": 0.0, "min_throttle_time": 4.0, "api_type": "fireworks"}),
@@ -418,6 +412,12 @@ Here is the passage:
 
 
         # # Complete but sort
+        # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4-Flash", "threads": 1, "min_throttle_time": 4.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # MoonshotAIConfig(**{"model_name": "Kimi-K2-Instruct", "threads": 1, "min_throttle_time": 4.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m3", "threads": 1, "min_throttle_time": 4.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # MiniMaxAIConfig(**{"model_name": "minimax-m3.1-flash", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # ZhipuAIConfig(**{"model_name": "GLM-5.3-Flash", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "api_type": "huggingface"}),
+        # ZhipuAIConfig(**{"model_name": "GLM-5.2", "threads": 2, "min_throttle_time": 8.0, "temperature": 0.0, "api_type": "huggingface"}),
         # AnthropicConfig(**{"model_name": "claude-opus-5-5", "threads": 8, "min_throttle_time": 2.0, "temperature": -1.0, "api_type": "default"}),
         # DeepSeekAIConfig(**{"model_name": "DeepSeek-V4.1-Flash", "threads": 4, "min_throttle_time": 16.0, "temperature": 0.0, "api_type": "huggingface"}),
         # GoogleConfig(**{"model_name": "gemini-4-argon", "threads": 8, "min_throttle_time": 2.0, "date_code": "", "temperature": 0.0, "thinking_budget": -1, "api_type": "default"}),

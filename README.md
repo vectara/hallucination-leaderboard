@@ -20,9 +20,9 @@ If you are interested in previous versions os this leaderboard:
 </table>
 
 <!-- LEADERBOARD_START -->
-Last updated on October 22, 2026
+Last updated on November 24, 2026
 
-![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-10-22.png)
+![Plot: hallucination rates of various LLMs](./img/top25_hallucination_rates_2026-11-24.png)
 
 |Model|Hallucination Rate|Factual Consistency Rate|Answer Rate|Average Summary Length (Words)|
 |----|----:|----:|----:|----:|
@@ -39,75 +39,80 @@ Last updated on October 22, 2026
 |amazon/nova-pro-v1:0|5.1 %|94.9 %|99.3 %|66.2|
 |amazon/nova-2-lite-v1:0|5.1 %|94.9 %|99.6 %|94.1|
 |mistralai/mistral-small-2501|5.1 %|94.9 %|97.9 %|98.8|
-|google/gemma-4-26b-a4b-it|5.2 %|94.8 %|99.8 %|67.1|
 |ibm-granite/granite-4.0-h-small|5.2 %|94.8 %|100.0 %|107.4|
-|deepseek-ai/DeepSeek-V3.2-Exp|5.3 %|94.7 %|96.6 %|64.6|
+|google/gemma-4-26b-a4b-it|5.2 %|94.8 %|99.8 %|67.1|
 |ai21labs/jamba-mini-2|5.3 %|94.7 %|99.6 %|109.4|
+|deepseek-ai/DeepSeek-V3.2-Exp|5.3 %|94.7 %|96.6 %|64.6|
 |qwen/qwen3-14b|5.4 %|94.6 %|99.9 %|111.1|
-|deepseek-ai/DeepSeek-V3.1|5.5 %|94.5 %|94.5 %|63.7|
 |openai/gpt-5.4-mini-2026-03-17|5.5 %|94.5 %|100.0 %|54.7|
+|deepseek-ai/DeepSeek-V3.1|5.5 %|94.5 %|94.5 %|63.7|
 |amazon/nova-micro-v1:0|5.5 %|94.5 %|100.0 %|100.0|
 |openai/gpt-4.1-2025-04-14|5.6 %|94.4 %|99.9 %|91.7|
 |qwen/qwen3-4b|5.7 %|94.3 %|99.9 %|104.7|
 |xai-org/grok-3|5.8 %|94.2 %|93.0 %|95.9|
 |qwen/qwen3-32b|5.9 %|94.1 %|99.9 %|115.8|
-|deepseek-ai/DeepSeek-V3|6.1 %|93.9 %|97.5 %|81.7|
 |amazon/nova-lite-v1:0|6.1 %|93.9 %|99.9 %|91.8|
+|deepseek-ai/DeepSeek-V3|6.1 %|93.9 %|97.5 %|81.7|
 |deepseek-ai/DeepSeek-V3.2|6.3 %|93.7 %|92.6 %|62.0|
 |google/gemma-3-4b-it|6.4 %|93.6 %|67.3 %|77.4|
+|deepseek-ai/DeepSeek-V4-Flash|6.4 %|93.6 %|97.7 %|64.8|
 |openai/gpt-6-sol|6.5 %|93.5 %|100.0 %|71.4|
-|CohereLabs/command-r-plus-08-2024|6.9 %|93.1 %|95.0 %|91.5|
 |arcee-ai/trinity-large-preview|6.9 %|93.1 %|99.0 %|117.3|
-|google/gemini-2.5-pro|7.0 %|93.0 %|99.1 %|106.4|
+|CohereLabs/command-r-plus-08-2024|6.9 %|93.1 %|95.0 %|91.5|
 |openai/gpt-5.4-2026-03-05|7.0 %|93.0 %|99.9 %|81.7|
+|google/gemini-2.5-pro|7.0 %|93.0 %|99.1 %|106.4|
 |mistralai/ministral-3b-2410|7.3 %|92.7 %|99.9 %|167.9|
 |google/gemma-4-31b-it|7.4 %|92.6 %|100.0 %|75.8|
-|google/gemma-3-27b-it|7.4 %|92.6 %|98.8 %|96.4|
 |mistralai/ministral-8b-2410|7.4 %|92.6 %|99.9 %|196.0|
+|google/gemma-3-27b-it|7.4 %|92.6 %|98.8 %|96.4|
 |meta-llama/Llama-4-Scout-17B-16E-Instruct|7.7 %|92.3 %|99.0 %|137.3|
 |google/gemini-2.5-flash|7.8 %|92.2 %|99.0 %|101.5|
 |meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8|8.2 %|91.8 %|100.0 %|106.0|
 |google/gemini-3.1-flash-lite-preview|8.2 %|91.8 %|99.6 %|62.6|
 |openai/gpt-5.4-pro-2026-03-05|8.3 %|91.7 %|100.0 %|148.5|
 |openai/gpt-5.2-low-2025-12-11|8.4 %|91.6 %|100.0 %|126.5|
+|zai-org/GLM-5.3-Flash|8.5 %|91.5 %|99.8 %|140.6|
 |deepseek-ai/DeepSeek-V4-Pro|8.6 %|91.4 %|97.2 %|153.8|
 |openai/gpt-6-astra|8.7 %|91.3 %|100.0 %|148.5|
 |MiniMaxAI/minimax-m2p5|9.1 %|90.9 %|98.2 %|137.2|
 |CohereLabs/command-a-03-2025|9.3 %|90.7 %|97.6 %|101.7|
-|qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
-|openai/gpt-5.5|9.3 %|90.7 %|100.0 %|129.6|
 |zai-org/glm-4p7-flash|9.3 %|90.7 %|91.6 %|71.8|
-|zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
 |qwen/qwen3-235b-a22b|9.3 %|90.7 %|94.9 %|105.6|
-|zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
+|openai/gpt-5.5|9.3 %|90.7 %|100.0 %|129.6|
+|qwen/qwen3-next-80b-a3b-thinking|9.3 %|90.7 %|94.4 %|70.9|
+|zai-org/GLM-4.5-AIR-FP8|9.3 %|90.7 %|98.1 %|70.6|
 |CohereLabs/c4ai-aya-expanse-8b|9.5 %|90.5 %|77.5 %|88.2|
+|zai-org/GLM-4.6|9.5 %|90.5 %|94.5 %|77.2|
 |openai/gpt-4o-2024-08-06|9.6 %|90.4 %|93.8 %|86.6|
 |nvidia/Nemotron-3-Nano-30B-A3B|9.6 %|90.4 %|99.6 %|104.2|
 |ai21labs/jamba-large-1.7-2025-07|9.7 %|90.3 %|98.9 %|124.8|
+|zai-org/GLM-5.2|9.7 %|90.3 %|99.7 %|92.6|
 |anthropic/claude-haiku-4-5-20251001|9.8 %|90.2 %|99.5 %|115.1|
 |anthropic/claude-opus-5-5|9.9 %|90.1 %|99.7 %|192.1|
 |zai-org/glm-5|10.1 %|89.9 %|99.7 %|74.4|
 |anthropic/claude-sonnet-4-20250514|10.3 %|89.7 %|98.6 %|145.8|
 |google/gemini-3.1-pro-preview|10.4 %|89.6 %|99.4 %|107.7|
-|openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
-|qwen/qwen3.5-flash-2026-02-23|10.5 %|89.5 %|99.8 %|95.0|
 |qwen/qwen3.5-35b-a3b|10.5 %|89.5 %|99.8 %|94.9|
-|anthropic/claude-sonnet-4-6|10.6 %|89.4 %|99.9 %|114.7|
+|qwen/qwen3.5-flash-2026-02-23|10.5 %|89.5 %|99.8 %|95.0|
+|openai/gpt-5-nano-2025-08-07|10.5 %|89.5 %|100.0 %|105.7|
 |ibm-granite/granite-3.3-8b-instruct|10.6 %|89.4 %|100.0 %|131.4|
+|anthropic/claude-sonnet-4-6|10.6 %|89.4 %|99.9 %|114.7|
 |qwen/qwen3.5-plus-2026-02-15|10.7 %|89.3 %|99.8 %|92.1|
 |openai/gpt-5.2-high-2025-12-11|10.8 %|89.2 %|100.0 %|186.3|
 |moonshotai/kimi-k2.6|10.8 %|89.2 %|99.7 %|116.7|
+|openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
 |anthropic/claude-opus-4-5-20251101|10.9 %|89.1 %|98.7 %|114.5|
 |CohereLabs/c4ai-aya-expanse-32b|10.9 %|89.1 %|99.8 %|112.7|
-|openai/gpt-5.1-low-2025-11-13|10.9 %|89.1 %|100.0 %|165.5|
+|MiniMaxAI/minimax-m3.1-flash|11.0 %|89.0 %|100.0 %|167.6|
+|MiniMaxAI/minimax-m3|11.2 %|88.8 %|100.0 %|171.0|
 |qwen/qwen3.5-122b-a10b|11.2 %|88.8 %|99.8 %|86.4|
 |deepseek-ai/DeepSeek-R1|11.3 %|88.7 %|97.0 %|93.5|
 |zai-org/glm-4p7|11.7 %|88.3 %|99.8 %|70.6|
 |MiniMaxAI/minimax-m2p1|11.8 %|88.2 %|98.5 %|106.9|
 |anthropic/claude-opus-4-1-20250805|11.8 %|88.2 %|92.4 %|129.1|
-|anthropic/claude-opus-4-20250514|12.0 %|88.0 %|91.0 %|123.2|
-|anthropic/claude-opus-4-7|12.0 %|88.0 %|98.0 %|149.1|
 |anthropic/claude-sonnet-4-5-20250929|12.0 %|88.0 %|95.6 %|127.8|
+|anthropic/claude-opus-4-7|12.0 %|88.0 %|98.0 %|149.1|
+|anthropic/claude-opus-4-20250514|12.0 %|88.0 %|91.0 %|123.2|
 |qwen/qwen3.5-27b|12.1 %|87.9 %|99.8 %|94.4|
 |openai/gpt-5.1-high-2025-11-13|12.1 %|87.9 %|100.0 %|254.4|
 |google/gemini-4-argon|12.1 %|87.9 %|99.1 %|178.2|
@@ -118,16 +123,17 @@ Last updated on October 22, 2026
 |openai/gpt-5-mini-2025-08-07|12.9 %|87.1 %|99.9 %|169.7|
 |google/gemini-3-flash-preview|13.5 %|86.5 %|99.8 %|90.2|
 |google/gemini-3-pro-preview|13.6 %|86.4 %|99.4 %|101.9|
-|openai/gpt-oss-120b|14.2 %|85.8 %|99.9 %|135.2|
+|moonshotai/Kimi-K2-Instruct|13.9 %|86.1 %|97.0 %|114.3|
 |moonshotai/Kimi-K2.5|14.2 %|85.8 %|92.2 %|112.0|
+|openai/gpt-oss-120b|14.2 %|85.8 %|99.9 %|135.2|
 |mistralai/mistral-large-2512|14.5 %|85.5 %|98.8 %|112.7|
 |ai21labs/jamba-mini-1.7-2025-07|14.7 %|85.3 %|99.1 %|136.4|
 |openai/gpt-5-minimal-2025-08-07|14.7 %|85.3 %|99.9 %|109.7|
 |openai/gpt-5-high-2025-08-07|15.1 %|84.9 %|99.9 %|162.7|
 |xai-org/grok-4-1-fast-non-reasoning|17.8 %|82.2 %|98.5 %|87.5|
 |moonshotai/Kimi-K2-Instruct-0905|17.9 %|82.1 %|98.6 %|59.2|
-|openai/o4-mini-low-2025-04-16|18.6 %|81.4 %|98.7 %|130.9|
 |openai/o4-mini-high-2025-04-16|18.6 %|81.4 %|99.2 %|127.7|
+|openai/o4-mini-low-2025-04-16|18.6 %|81.4 %|98.7 %|130.9|
 |xai-org/grok-4-1-fast-reasoning|19.2 %|80.8 %|99.7 %|99.5|
 |mistralai/ministral-14b-2512|19.4 %|80.6 %|99.6 %|135.8|
 |xai-org/grok-4-fast-non-reasoning|19.7 %|80.3 %|99.2 %|141.9|
