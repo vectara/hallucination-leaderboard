@@ -504,7 +504,10 @@ class GoogleLLM(AbstractLLM):
         Currently a no-op as cleanup is handled automatically.
         """
         if self.client:
-            pass
+            close = getattr(self.client, "close", None)
+            if callable(close):
+                close()
+            self.client = None
         elif self.local_model:
             pass
 
